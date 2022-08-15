@@ -6,6 +6,7 @@ module.exports = (sequelize) => {
   sequelize.define('professionals', {
     id: {
         type: DataTypes.INTEGER,
+        primaryKey: true,
         allowNull: false,
         primaryKey: true
     },
