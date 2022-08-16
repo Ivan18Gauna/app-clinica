@@ -22,23 +22,33 @@ const { Professionals, Specialties } = require("../db");
 // console.log(getProfInfo)
 
 const getInfoApi = async ()=>{
-    const apiEndPoint = await axios.get(`https://historia-clinica-31f40-default-rtdb.firebaseio.com/results.json`)
-    const infoApiEndPoint = await apiEndPoint.data.map((e)=>{
-        return {
-            id: e.id,
-            name:e.name, 
-            license: e.license,
-            birth: e.birth, 
-            phone: e.phone,
-            mail: e.mail, 
-            domicile: e.domicile
-            
-        }}) 
-    return infoApiEndPoint
+    const dbProf = await Professionals.findAll()
+    if (!dbProf.length) {
+        const apiProf = await axios.get(`https://historia-clinica-31f40-default-rtdb.firebaseio.com/results.json`)
+        const prof = await apiProf.data
+        prof.forEach((e) => {
+            Professionals.findOrCreate({
+                where: {
+                    id: e.id,
+                    name: e.name,
+                    license: e.license,
+                    birth: e.birth,
+                    phone: e.phone,
+                    mail: e.mail,
+                    country: e.domicile.country,
+                    city: e.domicile.city,
+                    number: e.domicile.number,
+                    street: e.domicile.street
+                }
+            })
+        })
+        return await Professionals.findAll()
+    }
+    return await Professionals.findAll()
 };
 
 
-const getDbInfo= async ()=>{
+/* const getDbInfo= async ()=>{
     const profesionalsDb= await Professionals.findAll({include:[{model:Specialties}]});
     const res =  profesionalsDb.map(e=>{
         return {
@@ -60,12 +70,12 @@ const getAllProfessionals = async ()=>{
     const allInfoApiDb = await infoApi.concat(dbInfo);
     // console.log(allInfoApiDb)
     return allInfoApiDb;
-};
+}; */
 
 
 
 
 
 module.exports = {
-    getAllProfessionals
+    getInfoApi
 };
