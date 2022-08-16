@@ -5,17 +5,17 @@ import LandingPage from './components/landingPage/LandingPage';
 import Details from './components/detail/Details';
 
 function App() {
-	return (
-		<BrowserRouter>
-			<div>
-				<Switch>
-					<Route exact path="/" component={LandingPage} />
-					<Route path="/home" component={Home} />
-					<Route path="/details" component={Details} />
-				</Switch>
-			</div>
-		</BrowserRouter>
-	);
+  return (
+    <BrowserRouter>
+      <div>
+        <Switch>
+          <Route exact  path="/" component={LandingPage} />
+          <Route path="/home" component={Home} />
+          <Route path='/details' component={Details}/>
+        </Switch>
+      </div>
+    </BrowserRouter>
+  );
 }
 
 export default App;
