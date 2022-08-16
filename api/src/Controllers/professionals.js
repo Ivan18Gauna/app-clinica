@@ -21,7 +21,7 @@ const { Professionals, Specialties } = require("../db");
 // }
 // console.log(getProfInfo)
 
-const getInfoApi = async ()=>{
+const getInfoApi = async(req, res) => {
     const dbProf = await Professionals.findAll()
     if (!dbProf.length) {
         const apiProf = await axios.get(`https://historia-clinica-31f40-default-rtdb.firebaseio.com/results.json`)
@@ -42,10 +42,20 @@ const getInfoApi = async ()=>{
                 }
             })
         })
-        return await Professionals.findAll()
+        return res.status(200).send(await Professionals.findAll())
     }
-    return await Professionals.findAll()
+    res.status(200).send(await Professionals.findAll())
 };
+
+const getProfById = async(req, res) => {
+    let { id } = req.params
+    const dbProfId = await Professionals.findOne({
+        where: {
+            id: id
+        }
+    })
+    res.status(200).send(dbProfId)
+}
 
 
 /* const getDbInfo= async ()=>{
@@ -77,5 +87,6 @@ const getAllProfessionals = async ()=>{
 
 
 module.exports = {
-    getInfoApi
+    getInfoApi,
+    getProfById
 };
