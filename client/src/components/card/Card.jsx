@@ -16,3 +16,4 @@ export default function Card({ name, id }) {
         </div>
     )
 }
+
