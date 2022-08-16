@@ -13,6 +13,7 @@ export default function Cards({doctors}){
         {doctors.map((e)=>{
             return(
                 <Card
+                id= {e.id}
                 name = {e.name}
                 
  /*                specialties = {e.specialties} */

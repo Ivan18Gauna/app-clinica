@@ -8,7 +8,7 @@ export default function Home (){
 
     const dispatch = useDispatch();
     const doctors = useSelector(state => state.doctors);
-console.log(doctors)
+
     useEffect(()=>{
         dispatch(get_Doctors());
     }, [dispatch]);
