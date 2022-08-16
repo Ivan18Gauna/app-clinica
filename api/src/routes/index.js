@@ -1,5 +1,7 @@
 const { Router } = require('express');
-const {routesProfessionals} = require('./routesProfessionals')
+const routesProfessionals = require('./routesProfessionals')
+const {Professionals, Specialties} = require ('../db')
+
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 
