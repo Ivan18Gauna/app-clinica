@@ -5,6 +5,8 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {Provider} from "react-redux"
 import store from './redux/store/index'
+import bootstrap from 'bootstrap/dist/css/bootstrap.css'
+
 
 import axios from 'axios';
 import dotenv from "dotenv";

@@ -1,0 +1,29 @@
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import {Link} from "react-router-dom";
+
+function navBarEdit() {
+  return (
+    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+      <Container>
+        <Navbar.Brand as={Link} to="/home">+Salud</Navbar.Brand>
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="me-auto">
+            <Nav.Link href="#features">Nosotros</Nav.Link>
+            <Nav.Link href="#pricing">Precios</Nav.Link>
+          </Nav>
+          <Nav>
+            <Nav.Link as={Link} to="/signin">Registrarse</Nav.Link>
+            <Nav.Link /* eventKey={2} */as={Link} to="/login" >
+              Ingresar
+            </Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
+  );
+}
+
+export default navBarEdit;
