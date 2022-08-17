@@ -6,6 +6,10 @@ import Details from './components/detail/Details'
 import Login from './Login/Login';
 import SignIn from './components/SignIn/SignIn';
 import navBarEdit from './components/navBar/NavBar';
+import FormProfessionals from './components/formProfessionals/FormProfesionals';
+import FormPatients from './components/formPatients/FormPatients';
+import healthData from './components/healthData/healthData';
+
 function App() {
   return (
     <BrowserRouter>
@@ -17,6 +21,9 @@ function App() {
           <Route path='/details/:id' component={Details}/>
           <Route path='/login' component={Login}/>
           <Route path='/signin' component={SignIn}/>
+          <Route path='/formprofessionals' component={FormProfessionals}/>
+          <Route path='/formpatients' component={FormPatients}/>
+          <Route path='/healthData' component={healthData}/>
         </Switch>
       </div>
     </BrowserRouter>

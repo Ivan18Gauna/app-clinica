@@ -1,4 +1,4 @@
-import { GET_DOCTORS, GET_DOCTORS_DETAIL } from "../actions/actions";
+import { GET_DOCTORS, GET_DOCTORS_DETAIL, POST_REGISTER_DOCTOR } from "../actions/actions";
 
 const initialState = {
 	doctors: [],
@@ -14,6 +14,10 @@ function rootReducer(state = initialState, action) {
 			return {
 				...state,
 				detail: action.payload
+			}
+		case POST_REGISTER_DOCTOR:
+			return{
+				...state
 			}
 
 		default: return state
