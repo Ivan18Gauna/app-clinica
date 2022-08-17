@@ -92,10 +92,10 @@ const postProfessionals = async (req, res) => {
         }
     }catch (error){
         console.log(error)
-    }
+    };
 };
 
-
+//x
 
 
 module.exports = {
