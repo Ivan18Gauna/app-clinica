@@ -1,5 +1,6 @@
 const Sequelize = require("sequelize");
 const { default: axios } = require("axios");
+const { v4: uuidv4 } = require("uuid");
 const { Op } = require("sequelize");
 const { Professionals, Specialties } = require("../db");
 const professionals = require("../models/professionals");
@@ -81,33 +82,34 @@ const getFilterByCity = async(req,res)=>{
 
 const postProfessionals = async (req, res) => {
     let {
-        id,
         name,
         license,
         birth,
         phone,
         mail,
-        country,
+        province,
         city,
         number,
         street,
         specialty       
     } = req.body;
+    let idv4 = uuidv4();
+    const dbId = idv4.slice(0, 4);
     try{
         const professional = {
-        id: id,
+        id: dbId,
         name: name,
         license: license,
         birth: birth,
         phone: phone,
         mail: mail,
-        country: country,
+        province: province,
         city: city,
         number: number,
         street: street     
         };
         if(isNaN(name) === false)return res.send("El valor ingresado no debe ser numerico.")
-        if(!name || !license || !birth || !phone || !mail || !country || !city || !number || !street){
+        if(!name || !license || !birth || !phone || !mail || !province || !city || !number || !street){
             res.send("Falta infornacion")
         }
         const validate = await Professionals.findOne({
