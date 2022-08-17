@@ -1,6 +1,8 @@
 const Sequelize = require("sequelize");
 const { default: axios } = require("axios");
+const { Op } = require("sequelize");
 const { Professionals, Specialties } = require("../db");
+const professionals = require("../models/professionals");
 
 const getInfoApi = async(req, res) => {
     const dbProf = await Professionals.findAll()
@@ -20,6 +22,14 @@ const getInfoApi = async(req, res) => {
                     city: e.domicile.city,
                     number: e.domicile.number,
                     street: e.domicile.street
+                }
+            })
+            
+        })
+        prof.forEach((e) => {
+            Specialties.findOrCreate({
+                where: {
+                    name: e.specialty,
                 }
             })
         })
@@ -45,7 +55,65 @@ const getProfById = async(req, res) => {
     res.status(200).send(dbProfId)
 }
 
+const getProfByName = async(req, res) => {
+    let {name} = req.params
+    const dbProfName = await Professionals.findAll({
+        where: {
+            name: { [Op.iLike]: `%${name}%` },
+        }
+    })
+    res.status(200).send(dbProfName)
+};
+
+const postProfessionals = async (req, res) => {
+    let {
+        id,
+        name,
+        license,
+        birth,
+        phone,
+        mail,
+        country,
+        city,
+        number,
+        street       
+    } = req.body;
+    try{
+        const professional = {
+        id: id,
+        name: name,
+        license: license,
+        birth: birth,
+        phone: phone,
+        mail: mail,
+        country: country,
+        city: city,
+        number: number,
+        street: street     
+        };
+        if(isNaN(name) === false)return res.send("El valor ingresado no debe ser numerico.")
+        if(!name || !license || !birth || !phone || !mail || !country || !city || !number || !street){
+            res.send("Falta infornacion")
+        }
+        const validate = await Professionals.findOne({
+            where:{name}
+          })
+        if(!validate){
+            let newProfessional = await Professionals.create(professional);
+            res.status(200).send(professional);
+        }else{
+            res.status(400).send('Professional ya existente')
+        }
+    }catch (error){
+        console.log(error)
+    };
+};
+
+
 module.exports = {
     getInfoApi,
-    getProfById
+    getProfByName,
+    getProfById,
+    postProfessionals
 };
+
