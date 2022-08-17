@@ -1,10 +1,11 @@
 import { GET_DOCTORS, GET_DOCTORS_DETAIL } from "../actions/actions";
 import axios from "axios";
 
+const URL = "http://localhost:3001"
 
 export function get_Doctors() {
     return async function (dispatch) {
-        const doctors = await axios("http://localhost:3001/professionals");
+        const doctors = await axios(`${URL}/professionals`);
         console.log('doctors', doctors)
         return dispatch({
             type: GET_DOCTORS,
@@ -15,7 +16,7 @@ export function get_Doctors() {
 
 export function get_DoctorsDetail(id) {
     return async function (dispatch) {
-        const doctors_detail = await axios(`http://localhost:3001/professionals/${id}`)
+        const doctors_detail = await axios(`${URL}/professionals/${id}`)
         console.log('id', doctors_detail)
         return dispatch({
             type: GET_DOCTORS_DETAIL,
