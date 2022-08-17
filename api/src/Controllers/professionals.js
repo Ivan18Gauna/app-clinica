@@ -73,12 +73,73 @@ const getFilterByCity = async(req,res)=>{
     })
 
 
+
     res.status(200).send(dbFilterCity)
 }
+
+const postProfessionals = async (req, res) => {
+    let {
+        id,
+        name,
+        license,
+        birth,
+        phone,
+        mail,
+        country,
+        city,
+        number,
+        street,
+        specialty       
+    } = req.body;
+    try{
+        const professional = {
+        id: id,
+        name: name,
+        license: license,
+        birth: birth,
+        phone: phone,
+        mail: mail,
+        country: country,
+        city: city,
+        number: number,
+        street: street     
+        };
+        if(isNaN(name) === false)return res.send("El valor ingresado no debe ser numerico.")
+        if(!name || !license || !birth || !phone || !mail || !country || !city || !number || !street){
+            res.send("Falta infornacion")
+        }
+        const validate = await Professionals.findOne({
+            where:{name}
+          })
+        if(!validate){
+            let newProfessional = await Professionals.create(professional);
+            specialty.map(async(s) => {
+                const [postSpecialties, succes] = await Specialties.findOrCreate({
+                    where: {
+                        name: s,
+                    },
+                    defaults: {
+                        name: s,
+                      },
+                });
+                await newProfessional.addSpecialties(postSpecialties);
+            })
+            res.status(200).send(professional);
+        }else{
+            res.status(400).send('Professional ya existente')
+        }
+    }catch (error){
+        console.log(error)
+    };
+};
+
 
 module.exports = {
     getInfoApi,
     getProfByName,
     getProfById,
-    getFilterByCity
+    getFilterByCity,
+    postProfessionals
+
 };
+
