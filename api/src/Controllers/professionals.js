@@ -43,7 +43,7 @@ const getInfoApi = async(req, res) => {
                 });
                 await newProf.addSpecialties(postSpecialties);
             })
-        })
+        }) 
         return res.status(200).send(await Professionals.findAll())
     }
     res.status(200).send(await Professionals.findAll({
