@@ -65,6 +65,20 @@ const getProfByName = async(req, res) => {
     res.status(200).send(dbProfName)
 };
 
+const getFilterByCity = async(req,res)=>{
+    let {filterCity} = req.params
+ 
+    const dbFilterCity=await Professionals.findAll({
+        where:{
+            city:req.params.filterCity
+        },
+        // order:[['name', req.params.order]]
+    })
+
+
+    res.status(200).send(dbFilterCity)
+}
+
 const postProfessionals = async (req, res) => {
     let {
         id,
@@ -126,6 +140,7 @@ module.exports = {
     getInfoApi,
     getProfByName,
     getProfById,
-    postProfessionals
+    postProfessionals,
+    getFilterByCity
 };
 
