@@ -1,16 +1,23 @@
-import { GET_DOCTORS } from "../actions/actions";
+import { GET_DOCTORS, GET_DOCTORS_DETAIL } from "../actions/actions";
 
 const initialState = {
-    doctors: [],
+	doctors: [],
+	detail: [],
 }
 
 function rootReducer(state = initialState, action) {
-    switch (action.type){
-        case GET_DOCTORS:
-            return {...state, doctors: action.payload}
+	switch (action.type) {
+		case GET_DOCTORS:
+			return { ...state, doctors: action.payload }
 
-        default: return state
-    }
+		case GET_DOCTORS_DETAIL:
+			return {
+				...state,
+				detail: action.payload
+			}
+
+		default: return state
+	}
 }
 
 export default rootReducer;
