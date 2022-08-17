@@ -5,6 +5,8 @@ const { Professionals, Specialties } = require("../db");
 const professionals = require("../models/professionals");
 
 
+
+
 const getInfoApi = async(req, res) => {
     const dbProf = await Professionals.findAll()
     if (!dbProf.length) {
@@ -23,6 +25,14 @@ const getInfoApi = async(req, res) => {
                     city: e.domicile.city,
                     number: e.domicile.number,
                     street: e.domicile.street
+                }
+            })
+            
+        })
+        prof.forEach((e) => {
+            Specialties.findOrCreate({
+                where: {
+                    name: e.specialty,
                 }
             })
         })
