@@ -59,7 +59,7 @@ const getProfByName = async(req, res) => {
     let {name} = req.params
     const dbProfName = await Professionals.findAll({
         where: {
-            name: { [Op.iLike]: `%${name}%` },
+            name: { [Op.iLike]: `${name}%` },
         }
     })
     res.status(200).send(dbProfName)
