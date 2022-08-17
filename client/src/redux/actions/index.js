@@ -24,3 +24,10 @@ export function get_DoctorsDetail(id) {
         })
     }
 }
+
+export function registerDoctors(payload) {
+    return async function () {
+        const registerDoctors = await axios.post(`${URL}/professionals`, payload)
+        return registerDoctors;
+    }
+}
