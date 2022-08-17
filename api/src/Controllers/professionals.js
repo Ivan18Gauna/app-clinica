@@ -95,7 +95,6 @@ const postProfessionals = async (req, res) => {
     };
 };
 
-//x
 
 
 module.exports = {
