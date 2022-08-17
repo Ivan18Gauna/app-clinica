@@ -2,25 +2,7 @@ const Sequelize = require("sequelize");
 const { default: axios } = require("axios");
 const { Op } = require("sequelize");
 const { Professionals, Specialties } = require("../db");
-
-// const getProfInfo = async() => {
-//     const dbProf = await Professionals.findAll();
-//     if (!dbProf.length) {
-//         const apiProf = await axios.get('https://historia-clinica-31f40-default-rtdb.firebaseio.com/results.json').data;
-//         await apiProf.map(async(e) => {
-//             await Professionals.findOrCreate({
-//                 where: {
-//                     name: e.name
-//                 }
-//             })
-//         })
-//         res.status(200).send(dbProf)
-//     }else {
-//         res.status(200).send(dbProf)
-//     }
-//     return res.status(400).send('no data')
-// }
-// console.log(getProfInfo)
+const professionals = require("../models/professionals");
 
 const getInfoApi = async(req, res) => {
     const dbProf = await Professionals.findAll()
@@ -40,6 +22,21 @@ const getInfoApi = async(req, res) => {
                     city: e.domicile.city,
                     number: e.domicile.number,
                     street: e.domicile.street
+                }
+            })
+            
+        })
+        prof.forEach((e) => {
+            Specialties.findOrCreate({
+                where: {
+                    name: e.specialty,
+                }
+            })
+        })
+        prof.forEach((e) => {
+            Specialties.findOrCreate({
+                where: {
+                    name: e.specialty
                 }
             })
         })
@@ -62,15 +59,61 @@ const getProfByName = async(req, res) => {
     let {name} = req.params
     const dbProfName = await Professionals.findAll({
         where: {
-            name: { [Op.iLike]: `%${name}%` },
+            name: { [Op.iLike]: `${name}%` },
         }
     })
     res.status(200).send(dbProfName)
-}
+};
+
+const postProfessionals = async (req, res) => {
+    let {
+        id,
+        name,
+        license,
+        birth,
+        phone,
+        mail,
+        country,
+        city,
+        number,
+        street       
+    } = req.body;
+    try{
+        const professional = {
+        id: id,
+        name: name,
+        license: license,
+        birth: birth,
+        phone: phone,
+        mail: mail,
+        country: country,
+        city: city,
+        number: number,
+        street: street     
+        };
+        if(isNaN(name) === false)return res.send("El valor ingresado no debe ser numerico.")
+        if(!name || !license || !birth || !phone || !mail || !country || !city || !number || !street){
+            res.send("Falta infornacion")
+        }
+        const validate = await Professionals.findOne({
+            where:{name}
+          })
+        if(!validate){
+            let newProfessional = await Professionals.create(professional);
+            res.status(200).send(professional);
+        }else{
+            res.status(400).send('Professional ya existente')
+        }
+    }catch (error){
+        console.log(error)
+    };
+};
 
 
 module.exports = {
     getInfoApi,
     getProfByName,
-    getProfById
+    getProfById,
+    postProfessionals
 };
+
