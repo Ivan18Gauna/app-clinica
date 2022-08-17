@@ -105,13 +105,3 @@ module.exports = {
     postProfessionals
 };
 
-// "id": "101",
-// "name": "Carlos Nabarro Montoya",
-// "license": "111111",
-// "birth": "12/12/1970",
-// "phone": "11111111",
-// "mail": "carlosnabarromontoya@gmail.com",
-// "country": "Argentina",
-// "city": "Calamuchita",
-// "number": "111",
-// "street": "Siempre Viva" 
