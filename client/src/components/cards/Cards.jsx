@@ -1,5 +1,5 @@
-import React from "react";
-import Card from "../card/Card";
+import React from 'react';
+import Card from '../card/Card';
 
 
 export default function Cards({doctors}){
@@ -13,6 +13,7 @@ export default function Cards({doctors}){
         {doctors.map((e)=>{
             return(
                 <Card
+                id= {e.id}
                 name = {e.name}
                 
  /*                specialties = {e.specialties} */

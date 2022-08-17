@@ -1,1 +1,2 @@
 export const GET_DOCTORS = 'GET_DOCTORS';
+export const GET_DOCTORS_DETAIL = 'GET_DOCTORS_DETAIL';
