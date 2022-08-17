@@ -76,7 +76,8 @@ const postProfessionals = async (req, res) => {
         country,
         city,
         number,
-        street       
+        street,
+        specialty       
     } = req.body;
     try{
         const professional = {
@@ -100,6 +101,17 @@ const postProfessionals = async (req, res) => {
           })
         if(!validate){
             let newProfessional = await Professionals.create(professional);
+            specialty.map(async(s) => {
+                const [postSpecialties, succes] = await Specialties.findOrCreate({
+                    where: {
+                        name: s,
+                    },
+                    defaults: {
+                        name: s,
+                      },
+                });
+                await newProfessional.addSpecialties(postSpecialties);
+            })
             res.status(200).send(professional);
         }else{
             res.status(400).send('Professional ya existente')
