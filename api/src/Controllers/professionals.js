@@ -76,7 +76,6 @@ const getFilterByCity = async(req,res)=>{
     res.status(200).send(dbFilterCity)
 }
 
-
 module.exports = {
     getInfoApi,
     getProfByName,
