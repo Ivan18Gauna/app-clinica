@@ -4,9 +4,6 @@ const { Op } = require("sequelize");
 const { Professionals, Specialties } = require("../db");
 const professionals = require("../models/professionals");
 
-
-
-
 const getInfoApi = async(req, res) => {
     const dbProf = await Professionals.findAll()
     if (!dbProf.length) {
@@ -36,6 +33,13 @@ const getInfoApi = async(req, res) => {
                 }
             })
         })
+        prof.forEach((e) => {
+            Specialties.findOrCreate({
+                where: {
+                    name: e.specialty
+                }
+            })
+        })
         return res.status(200).send(await Professionals.findAll())
     }
     res.status(200).send(await Professionals.findAll())
@@ -55,7 +59,7 @@ const getProfByName = async(req, res) => {
     let {name} = req.params
     const dbProfName = await Professionals.findAll({
         where: {
-            name: { [Op.iLike]: `%${name}%` },
+            name: { [Op.iLike]: `${name}%` },
         }
     })
     res.status(200).send(dbProfName)
@@ -104,7 +108,6 @@ const postProfessionals = async (req, res) => {
         console.log(error)
     };
 };
-
 
 
 module.exports = {
