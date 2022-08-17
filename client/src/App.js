@@ -5,11 +5,12 @@ import LandingPage from './components/landingPage/LandingPage'
 import Details from './components/detail/Details'
 import Login from './Login/Login';
 import SignIn from './components/SignIn/SignIn';
-
+import navBarEdit from './components/navBar/NavBar';
 function App() {
   return (
     <BrowserRouter>
       <div>
+        <Route path="/" component={navBarEdit}/>
         <Switch>
           <Route exact  path="/" component={LandingPage} />
           <Route path="/home" component={Home} />
