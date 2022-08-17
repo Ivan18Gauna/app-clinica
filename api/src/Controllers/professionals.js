@@ -2,25 +2,8 @@ const Sequelize = require("sequelize");
 const { default: axios } = require("axios");
 const { Op } = require("sequelize");
 const { Professionals, Specialties } = require("../db");
+const professionals = require("../models/professionals");
 
-// const getProfInfo = async() => {
-//     const dbProf = await Professionals.findAll();
-//     if (!dbProf.length) {
-//         const apiProf = await axios.get('https://historia-clinica-31f40-default-rtdb.firebaseio.com/results.json').data;
-//         await apiProf.map(async(e) => {
-//             await Professionals.findOrCreate({
-//                 where: {
-//                     name: e.name
-//                 }
-//             })
-//         })
-//         res.status(200).send(dbProf)
-//     }else {
-//         res.status(200).send(dbProf)
-//     }
-//     return res.status(400).send('no data')
-// }
-// console.log(getProfInfo)
 
 const getInfoApi = async(req, res) => {
     const dbProf = await Professionals.findAll()
@@ -66,11 +49,69 @@ const getProfByName = async(req, res) => {
         }
     })
     res.status(200).send(dbProfName)
-}
+};
+
+const postProfessionals = async (req, res) => {
+    let {
+        id,
+        name,
+        license,
+        birth,
+        phone,
+        mail,
+        country,
+        city,
+        number,
+        street       
+    } = req.body;
+    try{
+        const professional = {
+        id: id,
+        name: name,
+        license: license,
+        birth: birth,
+        phone: phone,
+        mail: mail,
+        country: country,
+        city: city,
+        number: number,
+        street: street     
+        };
+        if(isNaN(name) === false)return res.send("El valor ingresado no debe ser numerico.")
+        if(!name || !license || !birth || !phone || !mail || !country || !city || !number || !street){
+            res.send("Falta infornacion")
+        }
+        const validate = await Professionals.findOne({
+            where:{name}
+          })
+        if(!validate){
+            let newProfessional = await Professionals.create(professional);
+            res.status(200).send(professional);
+        }else{
+            res.status(400).send('Professional ya existente')
+        }
+    }catch (error){
+        console.log(error)
+    }
+};
+
+
 
 
 module.exports = {
     getInfoApi,
     getProfByName,
-    getProfById
+    getProfById,
+    postProfessionals
 };
+
+// "id": "101",
+// "name": "Carlos Nabarro Montoya",
+// "license": "111111",
+// "birth": "12/12/1970",
+// "phone": "11111111",
+// "mail": "carlosnabarromontoya@gmail.com",
+// "country": "Argentina",
+// "city": "Calamuchita",
+// "number": "111",
+// "street": "Siempre Viva" 
