@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
 const { default: axios } = require("axios");
+const { Op } = require("sequelize");
 const { Professionals, Specialties } = require("../db");
-
 
 const getInfoApi = async(req, res) => {
     const dbProf = await Professionals.findAll()
@@ -23,6 +23,14 @@ const getInfoApi = async(req, res) => {
                     street: e.domicile.street
                 }
             })
+            
+        })
+        prof.forEach((e) => {
+            Specialties.findOrCreate({
+                where: {
+                    name: e.specialty,
+                }
+            })
         })
         return res.status(200).send(await Professionals.findAll())
     }
@@ -39,36 +47,19 @@ const getProfById = async(req, res) => {
     res.status(200).send(dbProfId)
 }
 
-
-/* const getDbInfo= async ()=>{
-    const profesionalsDb= await Professionals.findAll({include:[{model:Specialties}]});
-    const res =  profesionalsDb.map(e=>{
-        return {
-            id: e.id,
-            name:e.name, 
-            license: e.license,
-            birth: e.birth, 
-            phone: e.phone,
-            mail: e.mail, 
-            domicile: e.domicile          
+const getProfByName = async(req, res) => {
+    let {name} = req.params
+    const dbProfName = await Professionals.findAll({
+        where: {
+            name: { [Op.iLike]: `%${name}%` },
         }
     })
-    return res
-};
-//
-const getAllProfessionals = async ()=>{
-    const infoApi = await getInfoApi();
-    const dbInfo = await getDbInfo();
-    const allInfoApiDb = await infoApi.concat(dbInfo);
-    // console.log(allInfoApiDb)
-    return allInfoApiDb;
-}; */
-
-
-
+    res.status(200).send(dbProfName)
+}
 
 
 module.exports = {
     getInfoApi,
+    getProfByName,
     getProfById
 };
