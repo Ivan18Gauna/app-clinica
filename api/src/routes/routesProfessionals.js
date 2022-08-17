@@ -4,7 +4,6 @@ const express = require('express')
 const router =express.Router();
 
 const {Professionals, Specialties} = require ('../db')
-//.
 router.get('/', getInfoApi)
 
 router.get('/:id', getProfById)
