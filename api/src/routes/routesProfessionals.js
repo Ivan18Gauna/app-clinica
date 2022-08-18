@@ -10,7 +10,7 @@ router.get('/:id', getProfById)
 router.get('/search/:name', getProfByName)
 router.get('/filter/:filterCity', getFilterByCity)
 router.post('/', postProfessionals)
-router.put('/', putProfessionals)
+router.put('/edit/:id', putProfessionals)
 
 
 module.exports= router;
