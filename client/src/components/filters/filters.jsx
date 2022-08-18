@@ -7,17 +7,16 @@ import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import styles from './Filters.module.css';
 
 const Filters = () => {
 	return (
 		<Container>
-			<Row className={`justify-content-md-center mt-5 ${styles.contenedor}`}>
-				<Col xs={14} md={3} className="p-0 me-4">
+			<Row className={`justify-content-md-center`}>
+				<Col lg={3}>
 					<Form.Control type={'text'} placeholder={'Por nombre...'} />
 				</Col>
-				<Col xs={6} md={3} className={'p-0'}>
-					<ButtonGroup className={'me-2'}>
+				<Col lg={3}>
+					<ButtonGroup>
 						<DropdownButton as={ButtonGroup} title={'Especialidad'}>
 							<Dropdown.Item eventKey="1">Alergia</Dropdown.Item>
 							<Dropdown.Item eventKey="2">Actividad Fisica</Dropdown.Item>
@@ -27,7 +26,7 @@ const Filters = () => {
 						</DropdownButton>
 					</ButtonGroup>
 				</Col>
-				<Col xs={6} md={1} className={'p-0'}>
+				<Col lg={1}>
 					<Button type={'submit'}>Buscar</Button>
 				</Col>
 			</Row>
