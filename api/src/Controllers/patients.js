@@ -69,7 +69,7 @@ const getAllPatients =async(req,res)=>{
     let allPatient = await AllPatients()
     res.status(200).send(allPatient)
 }
-console.log(getAllPatients)
+//console.log(getAllPatients)
 module.exports = {
     getInfoApiPatients,
     getPatById,
