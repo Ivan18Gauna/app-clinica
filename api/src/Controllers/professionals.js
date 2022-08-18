@@ -142,12 +142,48 @@ const postProfessionals = async (req, res) => {
     };
 };
 
+const putProfessionals = async (req, res) => {
+    try {
+      const id = req.params.id;
+      const {
+        name,
+        license,
+        birth,
+        phone,
+        mail,
+        province,
+        city,
+        number,
+        street,
+        specialty 
+      } = req.body;
+      const editProfessionals = await Professionals.update(
+        {
+            name,
+            license,
+            birth,
+            phone,
+            mail,
+            province,
+            city,
+            number,
+            street,
+            specialty 
+        },
+        { where: { id } }
+      );
+      res.send(editProfessionals);
+    } catch (error) {
+      return error;
+    }
+  };
 
 module.exports = {
     getInfoApi,
     getProfByName,
     getProfById,
     postProfessionals,
-    getFilterByCity
+    getFilterByCity,
+    putProfessionals
 };
 
