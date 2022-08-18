@@ -60,7 +60,7 @@ const getInfoApiPatients= async(req, res) =>
         })
         res.status(200).send(dbPatDocuent)
     }
-
+//.funcion
 
 const AllPatients = async (req,res)=>{
    return await Patients.findAll()
