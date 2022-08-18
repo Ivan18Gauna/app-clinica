@@ -11,7 +11,7 @@ const router =express.Router();
 
 // const {Professionals, Specialties} = require ('../db')
 
-//router.get('/', getAllPatients),
+router.get('/', getAllPatients),
 router.get('/search/', getPatByName)
 router.get('/:id', getPatById),
 router.get('/document/:document', getPatByDocument),

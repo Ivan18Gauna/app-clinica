@@ -3,23 +3,16 @@ const axios = require("axios");
 // const { v4: uuidv4 } = require("uuid");
 const { Op } = require("sequelize");
 const { Patients } = require("../db");
-const { v4: uuidv4 } = require("uuid"
+const { v4: uuidv4 } = require("uuid")
+
 const getInfoApiPatients= async(req, res) => 
 {
-    
     const apiPatients = await axios.get('https://patients-4a60b-default-rtdb.firebaseio.com/.json')
     const patient = await apiPatients.data
     //console.log(patient)
-
-const getInfoApiPatients = async (req, res) => {
-  const apiPatients = await axios.get(
-    "https://patients-4a60b-default-rtdb.firebaseio.com/.json"
-  );
-  const patient = await apiPatients.data;
-  //console.log(patient)
-  let idv4 = uuidv4();
-  let dbId = idv4.slice(0, 4);
-  patient.forEach((e) => {
+    let idv4 = uuidv4();
+    let dbId = idv4.slice(0, 4);
+    patient.forEach((e) => {
     Patients.findOrCreate({
       where: {
         id: dbId,
@@ -71,40 +64,6 @@ const getAllPatients = async (req, res) => {
   res.status(200).send(allPatient);
 };
 //console.log(getAllPatients)
-
-const putPatients = async (req, res) => {
-    try {
-      const id = req.params.id;
-      const {
-        name,
-        document,
-        birth,
-        phone,
-        mail,
-        province,
-        city,
-        number,
-        street
-      } = req.body;
-      const editPatients = await Patients.update(
-        {
-            name,
-            document,
-            birth,
-            phone,
-            mail,
-            province,
-            city,
-            number,
-            street
-        },
-        { where: { id:id } }
-      );
-      res.send(editPatients);
-    } catch (error) {
-      return error;
-    }
-  };
 
 
 const getPatByName = async(req, res) => {
@@ -170,6 +129,85 @@ const getPatByName = async(req, res) => {
    }
    
 }
+
+const postPatients = async (req, res) => {
+    let {
+        name,
+        birth,
+        phone,
+        mail,
+        province,
+        city,
+        number,
+        street,
+        document       
+    } = req.body;
+    let idv4 = uuidv4();
+    const dbId = idv4.slice(0, 4);
+    try{
+        const patients = {
+        id: dbId,
+        name: name,
+        birth: birth,
+        phone: phone,
+        mail: mail,
+        province: province,
+        city: city,
+        number: number,
+        street: street,
+        document: document     
+        };
+        if(isNaN(name) === false)return res.send("El valor ingresado no debe ser numerico.")
+        if(!name || !birth || !phone || !mail || !province || !city || !number || !street || !document){
+            res.send("Falta infornacion")
+        }
+        const validate = await Patients.findOne({
+            where:{name}
+          })
+        if(!validate){
+            let newPatients = await Patients.create(patients);   
+            res.status(200).send(patients);
+        }else{
+            res.status(400).send('Pacientes ya existente')
+        }
+    }catch (error){
+        console.log(error)
+    };
+};
+
+const putPatients = async (req, res) => {
+    try {
+      const id = req.params.id;
+      const {
+        name,
+        document,
+        birth,
+        phone,
+        mail,
+        province,
+        city,
+        number,
+        street
+      } = req.body;
+      const editPatients = await Patients.update(
+        {
+            name,
+            document,
+            birth,
+            phone,
+            mail,
+            province,
+            city,
+            number,
+            street
+        },
+        { where: { id:id } }
+      );
+      res.send(editPatients);
+    } catch (error) {
+      return error;
+    }
+  };
 
 module.exports = {
     getInfoApiPatients,
