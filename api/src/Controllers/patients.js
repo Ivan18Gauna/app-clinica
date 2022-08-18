@@ -3,7 +3,13 @@ const axios = require("axios");
 // const { v4: uuidv4 } = require("uuid");
 const { Op } = require("sequelize");
 const { Patients } = require("../db");
-const { v4: uuidv4 } = require("uuid");
+const { v4: uuidv4 } = require("uuid"
+const getInfoApiPatients= async(req, res) => 
+{
+    
+    const apiPatients = await axios.get('https://patients-4a60b-default-rtdb.firebaseio.com/.json')
+    const patient = await apiPatients.data
+    //console.log(patient)
 
 const getInfoApiPatients = async (req, res) => {
   const apiPatients = await axios.get(
@@ -45,16 +51,6 @@ const getPatById = async (req, res) => {
   res.status(200).send(dbPatId);
 };
 
-const getPatByName = async (req, res) => {
-  let { name } = req.params;
-  const dbPatfName = await Patients.findAll({
-    where: {
-      name: { [Op.iLike]: name + "%" },
-    },
-  });
-  res.status(200).send(dbPatfName);
-};
-
 const getPatByDocument = async (req, res) => {
   let { document } = req.params;
   const dbPatDocuent = await Patients.findOne({
@@ -75,51 +71,6 @@ const getAllPatients = async (req, res) => {
   res.status(200).send(allPatient);
 };
 //console.log(getAllPatients)
-
-const postPatients = async (req, res) => {
-    let {
-        name,
-        birth,
-        phone,
-        mail,
-        province,
-        city,
-        number,
-        street,
-        document       
-    } = req.body;
-    let idv4 = uuidv4();
-    const dbId = idv4.slice(0, 4);
-    try{
-        const patients = {
-        id: dbId,
-        name: name,
-        birth: birth,
-        phone: phone,
-        mail: mail,
-        province: province,
-        city: city,
-        number: number,
-        street: street,
-        document: document     
-        };
-        if(isNaN(name) === false)return res.send("El valor ingresado no debe ser numerico.")
-        if(!name || !birth || !phone || !mail || !province || !city || !number || !street || !document){
-            res.send("Falta infornacion")
-        }
-        const validate = await Patients.findOne({
-            where:{name}
-          })
-        if(!validate){
-            let newPatients = await Patients.create(patients);   
-            res.status(200).send(patients);
-        }else{
-            res.status(400).send('Pacientes ya existente')
-        }
-    }catch (error){
-        console.log(error)
-    };
-};
 
 const putPatients = async (req, res) => {
     try {
@@ -155,6 +106,70 @@ const putPatients = async (req, res) => {
     }
   };
 
+
+const getPatByName = async(req, res) => {
+    let {name} = req.query
+    if(name){
+       try {
+           let dbPatfName = await Patients.findAll({
+               where: {
+                   
+                   name: { [Op.iLike]: name +'%' },                  }
+                   
+               })
+           res.status(200).send(dbPatfName)
+       
+       } catch (error) {
+       console.log(error)        
+       }
+       if(req.query.filterP){
+           try {
+               let dbPatfName = await Patients.findAll({
+                   where:{
+                       province:req.query.filterP
+                   },
+                   limit: 9,
+                   order:[['name', req.query.order]] //ASC DESC
+               });
+               return res.send(dbPatfName)
+           } catch (error) {
+               console.log(error)
+           }
+           if(req.query.filterC){
+               try {
+                   let dbPatfName = await Patients.findAll({
+                       where:{
+                           city:req.query.filterC
+                       },
+                       limit:9,
+                       order:[['name', req.query.order]]//ASC DESC
+                   }); return res.send(dbPatfName)
+               } catch (error) {
+                   console.log(error)
+               }
+           }
+       
+    }
+       else{
+           try {
+               let dbPatfName =getAllPatients(
+                  {
+                   limit:9,
+                   offset: req.query.page,
+                   order:[['name', req.query.order]],
+                  }
+               )
+               //let dbPatfName = await Patients.findAll({
+                   
+               //})
+               return res.send(dbPatfName)
+           } catch (error) {
+               console.log(error)
+           }
+       }
+   }
+   
+}
 
 module.exports = {
     getInfoApiPatients,
