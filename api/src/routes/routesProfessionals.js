@@ -1,5 +1,5 @@
 const axios = require ('axios')
-const {getInfoApi, getProfById, getProfByName, postProfessionals,getFilterByCity}= require ('../Controllers/professionals')
+const {putProfessionals,getInfoApi, getProfById, getProfByName, postProfessionals,getFilterByCity}= require ('../Controllers/professionals')
 const express = require('express')
 const router =express.Router();
 
