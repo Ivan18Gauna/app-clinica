@@ -23,7 +23,8 @@ const getInfoApi = async(req, res) =>
             let dbId = idv4.slice(0, 4);
             const dbProf = {
                 id: dbId,
-                name: e.name,
+                name: e.name.split(' ')[0],
+                lastname: e.name.split(' ')[1],
                 license: e.license,
                 birth: e.birth,
                 phone: e.phone,
