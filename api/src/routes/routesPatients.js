@@ -11,7 +11,7 @@ const router =express.Router();
 
 router.get('/', getAllPatients),
 router.get('/:id', getPatById),
-router.get('/:document', getPatByDocument),
+router.get('/document/:document', getPatByDocument),
 router.get('/search/:name', getPatByName)
 
 module.exports=router;
