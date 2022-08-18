@@ -10,7 +10,7 @@ const getInfoApiPatients= async(req, res) =>
     
     const apiPatients = await axios.get('https://patients-4a60b-default-rtdb.firebaseio.com/.json')
     const patient = await apiPatients.data
-    console.log(patient)
+    //console.log(patient)
     let idv4 = uuidv4();
     let dbId = idv4.slice(0,4)
     patient.forEach((e) => {Patients.findOrCreate({
@@ -69,12 +69,12 @@ const getAllPatients =async(req,res)=>{
     let allPatient = await AllPatients()
     res.status(200).send(allPatient)
 }
-
+//console.log(getAllPatients)
 module.exports = {
     getInfoApiPatients,
     getPatById,
     getPatByName,
     getPatByDocument,
-   getAllPatients
+    getAllPatients
 
 };
