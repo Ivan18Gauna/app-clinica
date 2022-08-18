@@ -15,11 +15,11 @@ export default function Home() {
 	}, [dispatch]);
 
 	return (
-		<Container>
+		<Container className='justify-content-center mt-5'>
+			<Filters />
 			<Portada/>
 			{/* Darle a los filtros un diseño para que quede en el medio 
 			y con mayor estilo */}
-			<Filters />
 			<CardsTriple/>
 		    <Cards doctors={doctors} />
 		</Container>

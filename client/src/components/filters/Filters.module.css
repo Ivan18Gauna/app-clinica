@@ -1,0 +1,13 @@
+.contenedor {
+  display: flex;
+  justify-content: center;
+  background-color: #A9E7F0;
+  width: 50rem;
+  padding: 2rem 0 2rem;
+  border-radius: .5rem;
+  box-shadow: .2rem .2rem 10px;
+}
+
+.btn {
+  width: 100%;
+}
