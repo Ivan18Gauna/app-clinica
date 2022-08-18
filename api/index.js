@@ -23,7 +23,7 @@ const {getInfoApiPatients}= require ('./src/Controllers/patients')
 
 
 // Syncing all the models at once.
-conn.sync({ force: true }).then(() => {
+conn.sync({ force: false }).then(() => {
   server.listen(process.env.PORT, () => {
     getInfoApiPatients();
     console.log('%s listening at 3001'); // eslint-disable-line no-console
