@@ -11,24 +11,30 @@ import styles from './Filters.module.css';
 
 const Filters = () => {
 	return (
-		<div className={`${styles.contenedor}`}>
-			<Row className={`justify-content-center`}>
-				<Col lg={4}>
+		<div className={`${styles.contenedorSearch}`}>
+			<Row sm={1} md={1} lg={3} className={`justify-content-center`}>
+				<Col>
 					<Form.Control type={'text'} placeholder={'Nombre...'} />
 				</Col>
-				<Col>
-					<ButtonGroup>
-						<DropdownButton as={ButtonGroup} title={'Especialidad'}>
+				<Col lg={6}>
+					<ButtonGroup className={`${styles.buttonGroup}`}>
+						<DropdownButton className={`${styles.buttonGroup}`}as={ButtonGroup} title={'Especialidad'}>
 							<Dropdown.Item>Alergia</Dropdown.Item>
 							<Dropdown.Item>Actividad Fisica</Dropdown.Item>
 						</DropdownButton>
-						<DropdownButton as={ButtonGroup} title={'Ubicacion'}>
+						<DropdownButton
+							className={`${styles.buttonGroup}`}
+							as={ButtonGroup}
+							title={'Ubicacion'}
+						>
 							<Dropdown.Item>Argentina</Dropdown.Item>
 						</DropdownButton>
 					</ButtonGroup>
 				</Col>
-				<Col>
-					<Button className={`${styles.btn}`} type={'submit'}>Buscar</Button>
+				<Col lg={2} md={3}>
+					<Button className={`${styles.btn}`} type={'submit'}>
+						Buscar
+					</Button>
 				</Col>
 			</Row>
 		</div>
