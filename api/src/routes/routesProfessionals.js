@@ -1,5 +1,5 @@
 const axios = require ('axios')
-const {getAllProfessionals, getInfoApi, getProfById, getProfByName, getFilterByCity, postProfessionals}= require ('../Controllers/professionals')
+const {getInfoApi, getProfById, getProfByName, postProfessionals,getFilterByCity}= require ('../Controllers/professionals')
 const express = require('express')
 const router =express.Router();
 
@@ -10,9 +10,7 @@ router.get('/', getInfoApi)
 router.get('/:id', getProfById)
 
 router.get('/search/:name', getProfByName)
-
 router.get('/filter/:filterCity', getFilterByCity)
-
 router.post('/', postProfessionals)
 
 
