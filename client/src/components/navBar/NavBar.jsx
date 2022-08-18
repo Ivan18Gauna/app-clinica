@@ -6,7 +6,7 @@ import "./navBar.css"
 
 function navBarEdit() {
   return (
-    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+    <Navbar collapseOnSelect expand="lg" bg="primary" variant="dark">
       <div className='Div-Salud'>
         <Navbar.Brand as={Link} to="/home">+Salud</Navbar.Brand>
       </div>
