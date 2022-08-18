@@ -155,8 +155,7 @@ const putProfessionals = async (req, res) => {
         province,
         city,
         number,
-        street,
-        specialty 
+        street
       } = req.body;
       const editProfessionals = await Professionals.update(
         {
@@ -168,10 +167,9 @@ const putProfessionals = async (req, res) => {
             province,
             city,
             number,
-            street,
-            specialty 
+            street
         },
-        { where: { id } }
+        { where: { id:id } }
       );
       res.send(editProfessionals);
     } catch (error) {
