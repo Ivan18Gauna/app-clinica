@@ -186,5 +186,6 @@ module.exports = {
     postProfessionals,
     getFilterByCity,
     putProfessionals
+
 };
 
