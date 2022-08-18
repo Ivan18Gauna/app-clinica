@@ -1,13 +1,21 @@
 import React from "react";
 import {Link} from "react-router-dom";
+import videoplayback from "./videoplayback.mp4"
+import  "./landing.css"
+import Button from "react-bootstrap/esm/Button";
 
 export default function LandingPage (){
     return(
         <div className="landing">
-            <h1 >App Clinica</h1>
+            <div className="fondo"></div>
+            <video src={videoplayback} autoPlay loop muted></video>
+            <div className="texto">
+
+            <p>+ Salud</p>
             <Link to = "/home">
-                <button>Ingresar</button>
+            <Button variant="outline-success">Ingresar</Button>{' '}
             </Link>
+            </div>
         </div>
     )
 }

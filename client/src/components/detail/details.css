@@ -1,0 +1,18 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.text {
+    margin-top: 30px;
+    justify-content: center;
+    justify-items: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.btnHome {
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+}
