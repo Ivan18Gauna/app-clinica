@@ -10,7 +10,8 @@ export default function LandingPage (){
             <div className="fondo"></div>
             <video src={videoplayback} autoPlay loop muted></video>
             <div className="texto">
-      {/*      <h1>+Salud</h1> */}
+
+            <p>+ Salud</p>
             <Link to = "/home">
             <Button variant="outline-success">Ingresar</Button>{' '}
             </Link>
