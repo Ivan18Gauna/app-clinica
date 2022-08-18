@@ -10,12 +10,19 @@ const getInfoApi = async(req, res) =>
     if (!dbProf.length) {
         const apiProf = await axios.get(`https://historia-clinica-31f40-default-rtdb.firebaseio.com/results.json`)
         const prof = await apiProf.data
-        prof.forEach((e) => 
-        {
-            Professionals.findOrCreate(
-            {
+
+        prof.forEach((e) => {
+            Specialties.findOrCreate({
             where: {
-                id: e.id,
+                name: e.specialty[0],
+            }
+        })
+        })
+        await prof.forEach(async(e) => {
+            let idv4 = uuidv4();
+            let dbId = idv4.slice(0, 4);
+            const dbProf = {
+                id: dbId,
                 name: e.name,
                 license: e.license,
                 birth: e.birth,
@@ -25,14 +32,26 @@ const getInfoApi = async(req, res) =>
                 city: e.domicile.city,
                 number: e.domicile.number,
                 street: e.domicile.street
-                }
+            }
+            const newProf = await Professionals.create(dbProf)
+            e.specialty.map(async(s) => {
+                const [postSpecialties, succes] = await Specialties.findOrCreate({
+                    where: {
+                        name: s,
+                    },
+                    defaults: {
+                        name: s,
+                      },
+                });
+                await newProf.addSpecialties(postSpecialties);
             })
-        })
-        prof.forEach((e) => 
-        {Specialties.findOrCreate({where: {name: e.specialty}})})
+        }) 
+
         return res.status(200).send(await Professionals.findAll())
     }
-    res.status(200).send(await Professionals.findAll())
+    res.status(200).send(await Professionals.findAll({
+        include: [{ model: Specialties }],
+    }))
 };
 
 const getProfById = async(req, res) => {
