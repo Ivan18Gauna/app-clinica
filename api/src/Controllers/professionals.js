@@ -207,16 +207,27 @@ const putProfessionals = async (req, res) => {
         province,
         city,
         number,
-        street,
-        specialty,
-      },
-      { where: { id } }
-    );
-    res.send(editProfessionals);
-  } catch (error) {
-    return error;
-  }
-};
+        street
+      } = req.body;
+      const editProfessionals = await Professionals.update(
+        {
+            name,
+            license,
+            birth,
+            phone,
+            mail,
+            province,
+            city,
+            number,
+            street
+        },
+        { where: { id:id } }
+      );
+      res.send(editProfessionals);
+    } catch (error) {
+      return error;
+    }
+  };
 
 module.exports = {
   getInfoApi,

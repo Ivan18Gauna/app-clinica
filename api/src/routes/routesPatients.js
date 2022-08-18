@@ -3,6 +3,8 @@ const {getInfoApiPatients,
     getPatById,
     getPatByName,
    getAllPatients,
+   postPatients,
+   putPatients,
     getPatByDocument}= require ('../Controllers/patients')
 const express = require('express')
 const router =express.Router();
@@ -12,6 +14,9 @@ const router =express.Router();
 router.get('/', getAllPatients),
 router.get('/:id', getPatById),
 router.get('/document/:document', getPatByDocument),
-router.get('/search/:name', getPatByName)
+router.get('/search/:name', getPatByName),
+router.post('/', postPatients),
+router.put('/edit/:id', putPatients)
+
 
 module.exports=router;
