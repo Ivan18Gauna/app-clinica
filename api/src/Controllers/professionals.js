@@ -5,10 +5,11 @@ const { Op } = require("sequelize");
 const { Professionals, Specialties, ObrasSociales } = require("../db");
 
 const getInfoApi = async (req, res) => {
-    res.status(200).send(await Professionals.findAll({
-        include: [{ model: Specialties }],
-      })
-    );
+  res.status(200).send(
+    await Professionals.findAll({
+      include: [{ model: Specialties }],
+    })
+  );
 };
 
 const addProfDb = async () => {
@@ -63,7 +64,7 @@ const addProfDb = async () => {
       });
       await newProf.addObrasSociales(postObrasSociales);
     });
-    console.log('profesionales cargados correctamente')
+    console.log("profesionales cargados correctamente");
   }
 };
 
@@ -195,7 +196,6 @@ const putProfessionals = async (req, res) => {
       city,
       number,
       street,
-      specialty,
     } = req.body;
     const editProfessionals = await Professionals.update(
       {
@@ -207,27 +207,15 @@ const putProfessionals = async (req, res) => {
         province,
         city,
         number,
-        street
-      } = req.body;
-      const editProfessionals = await Professionals.update(
-        {
-            name,
-            license,
-            birth,
-            phone,
-            mail,
-            province,
-            city,
-            number,
-            street
-        },
-        { where: { id:id } }
-      );
-      res.send(editProfessionals);
-    } catch (error) {
-      return error;
-    }
-  };
+        street,
+      },
+      { where: { id: id } }
+    );
+    res.send(editProfessionals);
+  } catch (error) {
+    return error;
+  }
+};
 
 module.exports = {
   getInfoApi,
