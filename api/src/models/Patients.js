@@ -7,12 +7,13 @@ module.exports = (sequelize) => {
     id: {
       type: DataTypes.STRING,
       defaultValue: UUIDV4,
-      primaryKey: true,
+      //primaryKey: true,
       allowNull: false,
     },
   name: {
        type: DataTypes.STRING,
-      allowNull: false,
+       primaryKey: true,
+       allowNull: false,
   },
   document: {
       type: DataTypes.INTEGER,
@@ -30,7 +31,7 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
   },
-  country: {
+  province: {
       type: DataTypes.STRING,
       allowNull: false
   },

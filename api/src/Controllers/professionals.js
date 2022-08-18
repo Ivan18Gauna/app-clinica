@@ -4,36 +4,32 @@ const { v4: uuidv4 } = require("uuid");
 const { Op } = require("sequelize");
 const { Professionals, Specialties } = require("../db");
 
-const professionals = require("../models/professionals");
-
-const getInfoApi = async(req, res) => {
+const getInfoApi = async(req, res) => 
+{
     const dbProf = await Professionals.findAll()
     if (!dbProf.length) {
         const apiProf = await axios.get(`https://historia-clinica-31f40-default-rtdb.firebaseio.com/results.json`)
         const prof = await apiProf.data
-        prof.forEach((e) => {
-            Professionals.findOrCreate({
-                where: {
-                    id: e.id,
-                    name: e.name,
-                    license: e.license,
-                    birth: e.birth,
-                    phone: e.phone,
-                    mail: e.mail,
-                    country: e.domicile.country,
-                    city: e.domicile.city,
-                    number: e.domicile.number,
-                    street: e.domicile.street
+        prof.forEach((e) => 
+        {
+            Professionals.findOrCreate(
+            {
+            where: {
+                id: e.id,
+                name: e.name,
+                license: e.license,
+                birth: e.birth,
+                phone: e.phone,
+                mail: e.mail,
+                province: e.domicile.province,
+                city: e.domicile.city,
+                number: e.domicile.number,
+                street: e.domicile.street
                 }
             })
         })
-        prof.forEach((e) => {
-            Specialties.findOrCreate({
-                where: {
-                    name: e.specialty
-                }
-            })
-        })
+        prof.forEach((e) => 
+        {Specialties.findOrCreate({where: {name: e.specialty}})})
         return res.status(200).send(await Professionals.findAll())
     }
     res.status(200).send(await Professionals.findAll())
@@ -54,11 +50,7 @@ const getProfByName = async(req, res) => {
     const dbProfName = await Professionals.findAll({
         where: {
 
-            name: { [Op.iLike]: name +'%' },
-
-            name: { [Op.iLike]: `${name}%` },
-
-        }
+            name: { [Op.iLike]: name +'%' },                  }
     })
     res.status(200).send(dbProfName)
 }
@@ -73,11 +65,8 @@ const getFilterByCity = async(req,res)=>{
         // order:[['name', req.params.order]]
     })
 
-
-
     res.status(200).send(dbFilterCity)
 }
-
 const postProfessionals = async (req, res) => {
     let {
         name,
