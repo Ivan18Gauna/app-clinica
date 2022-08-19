@@ -5,8 +5,10 @@ export default function SignIn() {
     <div>
       <div class="container w-75 mt-5">
         <div class="row align-items-stretch">
+
           <div class="card-deck col mt-5">
             <div class="card col mt-5">
+
               <div class="col text-center">
                 <img
                   src="https://d2cv8o6xw7nmr6.cloudfront.net/static/img/icon-patient-registration-d8f05efbcc.svg"
@@ -20,9 +22,12 @@ export default function SignIn() {
                 </div>
               </div>
             </div>
+
+
           </div>
           <div class="card-deck col mt-5">
             <div class="card col mt-5">
+
               <div class="col text-center">
                 <img
                   src="https://d2cv8o6xw7nmr6.cloudfront.net/static/img/icon-patient-registration-d8f05efbcc.svg"

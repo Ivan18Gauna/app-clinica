@@ -51,7 +51,7 @@ export default function Login() {
               </div>
               <div class="my-3">
                 <span>¿nuevo en +Salud? </span>
-                <Link to="/singin">
+                <Link to="/signin">
                   <span>Resgistrate</span>
                 </Link>
               </div>
