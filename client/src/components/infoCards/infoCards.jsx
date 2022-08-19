@@ -1,9 +1,10 @@
 import Card from 'react-bootstrap/Card';
 import CardGroup from 'react-bootstrap/CardGroup';
+import "./info.css"
 
 function CardsTriple() {
   return (
-    <CardGroup>
+    <CardGroup className='top'>
       <Card>
         <Card.Img variant="top" src="https://img.freepik.com/vector-gratis/personal-medico-fue-vacunado-contra-covid19-al-paciente_40876-2494.jpg?w=2000" />
         <Card.Body>
