@@ -6,7 +6,7 @@ export default function SignIn() {
     <div>
       <div class="container w-75 mt-5">
         <div class="row align-items-stretch">
-          <Link to="/formulariopaciente">
+          <Link to="/formpatients">
             <div class="card col">
               <div class="col text-center">
                 <img
@@ -22,7 +22,7 @@ export default function SignIn() {
               </div>
             </div>
           </Link>
-          <Link to="/formularioprofecional">
+          <Link to="/formprofessionals">
             <div class="card col">
               <div class="col text-center">
                 <img
