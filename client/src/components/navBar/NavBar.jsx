@@ -18,6 +18,7 @@ function navBarEdit() {
             <Nav.Link as={Link} to="/price">Precios</Nav.Link>
           </Nav>
           <Nav>
+          <Nav.Link as={Link} to="/professionals">Buscar Profecionales</Nav.Link>
             <Nav.Link as={Link} to="/signin">Registrarse</Nav.Link>
             <Nav.Link /* eventKey={2} */as={Link} to="/login" >
               Ingresar

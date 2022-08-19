@@ -22,7 +22,7 @@ export default function Home() {
 			<Filters /> */}
 			<Portada/>
 			<h1>Encontra al profesional que tanto deseas y programa un turno ya!</h1>
-			<Filters />
+			{/* <Filters /> */}
 		
 			{/* Darle a los filtros un diseño para que quede en el medio 
 			y con mayor estilo */}
