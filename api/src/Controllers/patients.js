@@ -9,7 +9,6 @@ const getInfoApiPatients= async(req, res) =>
 {
     const apiPatients = await axios.get('https://patients-4a60b-default-rtdb.firebaseio.com/.json')
     const patient = await apiPatients.data
-    //console.log(patient)
     let idv4 = uuidv4();
     let dbId = idv4.slice(0, 4);
     patient.forEach((e) => {
@@ -32,7 +31,6 @@ const getInfoApiPatients= async(req, res) =>
 
   console.log("Se ha cargado la base de pacientes");
 };
-//}
 
 const getPatById = async (req, res) => {
   let { id } = req.params;
@@ -53,82 +51,61 @@ const getPatByDocument = async (req, res) => {
   });
   res.status(200).send(dbPatDocuent);
 };
-//.funcion
-
-const AllPatients = async (req, res) => {
-  return await Patients.findAll();
-};
-
-const getAllPatients = async (req, res) => {
-  let allPatient = await AllPatients();
-  res.status(200).send(allPatient);
-};
-//console.log(getAllPatients)
-
 
 const getPatByName = async(req, res) => {
     let {name} = req.query
+    console.log({name})
     if(name){
-       try {
-           let dbPatfName = await Patients.findAll({
-               where: {
+        try {
+            let dbPatfName = await Patients.findAll({
+                where: {
                    
-                   name: { [Op.iLike]: name +'%' },                  }
-                   
-               })
-           res.status(200).send(dbPatfName)
+                    name: { [Op.iLike]: name +'%' },                  }
+                    
+                })
+
+            res.status(200).send(dbPatfName)
        
-       } catch (error) {
-       console.log(error)        
-       }
-       if(req.query.filterP){
-           try {
-               let dbPatfName = await Patients.findAll({
-                   where:{
-                       province:req.query.filterP
-                   },
-                   limit: 9,
-                   order:[['name', req.query.order]] //ASC DESC
-               });
-               return res.send(dbPatfName)
-           } catch (error) {
-               console.log(error)
-           }
-           if(req.query.filterC){
-               try {
-                   let dbPatfName = await Patients.findAll({
-                       where:{
-                           city:req.query.filterC
-                       },
-                       limit:9,
-                       order:[['name', req.query.order]]//ASC DESC
-                   }); return res.send(dbPatfName)
-               } catch (error) {
-                   console.log(error)
-               }
-           }
-       
+        } catch (error) {
+        console.log(error)        
+        }
     }
-       else{
-           try {
-               let dbPatfName =getAllPatients(
-                  {
-                   limit:9,
-                   offset: req.query.page,
-                   order:[['name', req.query.order]],
-                  }
-               )
-               //let dbPatfName = await Patients.findAll({
-                   
-               //})
-               return res.send(dbPatfName)
-           } catch (error) {
-               console.log(error)
-           }
-       }
-   }
-   
-}
+    else if(req.query.filterP)
+    {
+        try {
+               let dbPatfName = await Patients.findAll({
+                   where:{province:req.query.filterP},
+                   limit: 9,
+                   order:[['name', req.query.order]] });//ASC DESC
+
+                    return res.send(dbPatfName)
+            } catch (error) {console.log(error)
+    }} else if (req.query.filterC)
+    {
+        try {
+                let dbPatfName = await Patients.findAll({
+                    where:{city:req.query.filterC},
+                    limit:9,
+                    order:[['name', req.query.order]]});//ASC DESC 
+                    return res.send(dbPatfName)
+            } catch (error) {console.log(error)}
+    }
+   else{
+        try {
+                let allPatien = await Patients.findAll({
+                    limit:5,
+                    offset: req.query.page,
+                    filterP:[['province', req.query.filterP]],
+                    filterC:[['city', req.query.filterC]],
+                    order:[['name', req.query.order]],
+
+                });
+             
+                 res.status(200).send(allPatien);
+            } catch (error) {console.log(error)}
+        }     
+  }
+     
 
 const postPatients = async (req, res) => {
     let {
@@ -214,7 +191,6 @@ module.exports = {
     getPatById,
     getPatByName,
     getPatByDocument,
-    getAllPatients,
     postPatients,
     putPatients
 };

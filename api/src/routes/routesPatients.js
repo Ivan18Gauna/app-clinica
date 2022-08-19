@@ -1,18 +1,15 @@
 const axios = require ('axios')
-const {getInfoApiPatients, 
+const { 
     getPatById,
     getPatByName,
-   getAllPatients,
    postPatients,
    putPatients,
    getPatByDocument}= require ('../Controllers/patients')
 const express = require('express')
 const router =express.Router();
 
-// const {Professionals, Specialties} = require ('../db')
 
-router.get('/', getAllPatients),
-router.get('/search/', getPatByName)
+router.get('/', getPatByName)
 router.get('/:id', getPatById),
 router.get('/document/:document', getPatByDocument),
 router.post('/', postPatients),
