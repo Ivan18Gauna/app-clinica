@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Google from "../google/Google";
 import img from "./pngwing.com.png";
 
 export default function Login() {
@@ -8,7 +9,12 @@ export default function Login() {
       <div class="container w-75 mt-5">
         <div class="row align-items-stretch">
           <div class="col d-none d-lg-block">
-            <img src="https://thumbs.dreamstime.com/z/retrato-dise-o-minimalista-exhausto-continuo-de-la-sola-mano-del-dibujo-lineal-doctor-un-forma-vida-linear-aislada-solo-s%C3%ADmbolo-146395118.jpg" alt="not img" width='700' height='700'/>
+            <img
+              src="https://thumbs.dreamstime.com/z/retrato-dise-o-minimalista-exhausto-continuo-de-la-sola-mano-del-dibujo-lineal-doctor-un-forma-vida-linear-aislada-solo-s%C3%ADmbolo-146395118.jpg"
+              alt="not img"
+              width="700"
+              height="700"
+            />
           </div>
           <div class="col">
             <div class="text-end">
@@ -62,7 +68,7 @@ export default function Login() {
               </div>
               <div class="row">
                 <div class="col">
-                  <button class="btn btn-outline-danger w-1">
+                  {/* <button class="btn btn-outline-danger w-1">
                     <div class="row align-items-center">
                       <div class="col-3">
                         <img
@@ -73,7 +79,8 @@ export default function Login() {
                       </div>
                       <div class="col-9 text-center">Google</div>
                     </div>
-                  </button>
+                  </button> */}
+                  <Google/>
                 </div>
               </div>
             </div>

@@ -1,13 +1,17 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 export default function SignIn() {
   return (
     <div>
       <div class="container w-75 mt-5">
         <div class="row align-items-stretch">
+<<<<<<< HEAD
           <Link to="/formpatients">
             <div class="card col">
+=======
+          <div class="card-deck col mt-5">
+            <div class="card col mt-5">
+>>>>>>> 9eb63104de242148c33d9e4fa8e7c386be69f7b1
               <div class="col text-center">
                 <img
                   src="https://d2cv8o6xw7nmr6.cloudfront.net/static/img/icon-patient-registration-d8f05efbcc.svg"
@@ -21,9 +25,15 @@ export default function SignIn() {
                 </div>
               </div>
             </div>
+<<<<<<< HEAD
           </Link>
           <Link to="/formprofessionals">
             <div class="card col">
+=======
+          </div>
+          <div class="card-deck col mt-5">
+            <div class="card col mt-5">
+>>>>>>> 9eb63104de242148c33d9e4fa8e7c386be69f7b1
               <div class="col text-center">
                 <img
                   src="https://d2cv8o6xw7nmr6.cloudfront.net/static/img/icon-patient-registration-d8f05efbcc.svg"
@@ -38,7 +48,7 @@ export default function SignIn() {
                 </div>
               </div>
             </div>
-          </Link>
+          </div>
         </div>
       </div>
     </div>
