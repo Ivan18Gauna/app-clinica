@@ -32,6 +32,8 @@ const addProfDb = async () => {
       const dbProf = {
         id: dbId,
         name: e.name.split(" ")[0],
+        username: e.username,
+        password: e.password,
         lastname: e.name.split(" ")[1],
         license: e.license,
         birth: e.birth,
@@ -116,24 +118,15 @@ const getFilterByCity = async (req, res) => {
   res.status(200).send(dbFilterCity);
 };
 const postProfessionals = async (req, res) => {
-  let {
-    name,
-    license,
-    birth,
-    phone,
-    mail,
-    province,
-    city,
-    number,
-    street,
-    specialty,
-  } = req.body;
+  let { name, username, password, license, birth, phone, mail, province, city, number, street, specialty, } = req.body;
   let idv4 = uuidv4();
   const dbId = idv4.slice(0, 4);
   try {
     const professional = {
       id: dbId,
       name: name,
+      username: username,
+      password: password,
       license: license,
       birth: birth,
       phone: phone,
@@ -147,6 +140,8 @@ const postProfessionals = async (req, res) => {
       return res.send("El valor ingresado no debe ser numerico.");
     if (
       !name ||
+      !username ||
+      !password ||
       !license ||
       !birth ||
       !phone ||
@@ -186,29 +181,9 @@ const postProfessionals = async (req, res) => {
 const putProfessionals = async (req, res) => {
   try {
     const id = req.params.id;
-    const {
-      name,
-      license,
-      birth,
-      phone,
-      mail,
-      province,
-      city,
-      number,
-      street,
-    } = req.body;
+    const { username, license, birth, phone, mail, province, city, number, street, } = req.body;
     const editProfessionals = await Professionals.update(
-      {
-        name,
-        license,
-        birth,
-        phone,
-        mail,
-        province,
-        city,
-        number,
-        street,
-      },
+      { username, license, birth, phone, mail, province, city, number, street, },
       { where: { id: id } }
     );
     res.send(editProfessionals);
