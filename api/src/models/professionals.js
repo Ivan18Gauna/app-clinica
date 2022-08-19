@@ -11,8 +11,12 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
     name: {
-         type: DataTypes.STRING,
+        type: DataTypes.STRING,
         allowNull: false,
+    },
+    lastname: {
+        type: DataTypes.STRING,
+        allowNull: false
     },
     license: {
         type: DataTypes.INTEGER,
@@ -46,5 +50,6 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false
     },
+    paranoid: true,
   });
 };
