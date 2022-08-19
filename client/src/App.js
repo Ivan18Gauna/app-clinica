@@ -12,6 +12,7 @@ import Login from './components/login/Login';
 import About from './components/about/About';
 import Price from './components/Price/Price';
 import Google from './components/google/Google';
+import FormUpProfessionals from './components/formUpProfessionals/FormUpProfessionals';
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
           <Route path='/about' component={About}/>
           <Route path='/price' component={Price}/>
           <Route path='/google' component={Google}/>
+          <Route path='/formupprofessional' component={FormUpProfessionals}/>
         </Switch>
       </div>
     </BrowserRouter>
