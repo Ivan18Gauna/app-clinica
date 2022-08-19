@@ -10,9 +10,9 @@ const getInfoApiPatients = async (req, res) => {
     "https://patients-4a60b-default-rtdb.firebaseio.com/.json"
   );
   const patient = await apiPatients.data;
-  let idv4 = uuidv4();
-  let dbId = idv4.slice(0, 4);
   patient.forEach((e) => {
+    let idv4 = uuidv4();
+    let dbId = idv4.slice(0, 4);
     Patients.findOrCreate({
       where: {
         id: dbId,
