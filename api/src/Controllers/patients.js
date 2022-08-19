@@ -39,7 +39,9 @@ const getPatById = async (req, res) => {
       id: id,
     },
   });
-  res.status(200).send(dbPatId);
+  dbPatId.length?
+  res.status(200).send(dbPatId): res.status(404).send('Id de paciente no encontrado');
+  
 };
 
 const getPatByDocument = async (req, res) => {
