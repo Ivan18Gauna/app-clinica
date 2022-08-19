@@ -1,4 +1,6 @@
+.containerInfo {
+  background-color: #A8D3E1;
+}
 .top {
-    margin-top: 50px;
-    margin-bottom: 50px;
+    margin: 50px;
 }

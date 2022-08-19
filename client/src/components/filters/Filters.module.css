@@ -5,7 +5,11 @@
 	width: 42rem;
 	padding: 2rem 0 2rem;
 	border-radius: 0.5rem;
-	box-shadow: 0.2rem 0.2rem 10px;
+	box-shadow: 0.2rem 0.2rem 10px grey;
+  align-self: center;
+  justify-self: center;
+  margin-bottom: 4rem;
+  margin-top: 4rem;
 }
 
 .btn {

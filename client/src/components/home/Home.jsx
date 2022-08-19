@@ -7,6 +7,7 @@ import Container from 'react-bootstrap/Container';
 import Portada from '../portada/portada';
 import CardsTriple from '../infoCards/infoCards';
 import CardHistory from '../cardHistory/CardHistory';
+import styles from './Home.module.css';
 
 export default function Home() {
 	const dispatch = useDispatch();
@@ -16,19 +17,13 @@ export default function Home() {
 	}, [dispatch]);
 
 	return (
-
-			<Container className='justify-content-center mt-5'>
-			{/* <h1>Encontra al profesional que tanto deseas y programa un turno ya!</h1>
-			<Filters /> */}
-			<Portada/>
-			<h1>Encontra al profesional que tanto deseas y programa un turno ya!</h1>
+		<div className={`${styles.container}`}>
+			<Portada />
+			<h3>Encuentra profesionales online y agenda turnos al instante</h3>
 			<Filters />
-		
-			{/* Darle a los filtros un diseño para que quede en el medio 
-			y con mayor estilo */}
-			<CardHistory/>
-			<CardsTriple/>
-		    <Cards doctors={doctors} />
-		</Container>
+			<CardsTriple />
+			<CardHistory />
+			<Cards doctors={doctors} />
+		</div>
 	);
 }
