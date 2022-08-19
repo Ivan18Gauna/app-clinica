@@ -10,9 +10,8 @@ import FormPatients from './components/formPatients/FormPatients';
 import healthData from './components/healthData/healthData';
 import Login from './components/Login/Login';
 import About from './components/about/About';
-import Price from './components/Price/Price';
-import Google from './components/google/Google';
-
+import Price from './components/price/Price';
+import Professionals from './components/professionals/Professionals';
 
 function App() {
   return (
@@ -32,7 +31,7 @@ function App() {
           <Route path='/healthData' component={healthData}/>
           <Route path='/about' component={About}/>
           <Route path='/price' component={Price}/>
-          <Route path='/google' component={Google}/>
+          <Route path='/professionals' component={Professionals}/>
         </Switch>
       </div>
     </BrowserRouter>
