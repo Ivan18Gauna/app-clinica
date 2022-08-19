@@ -10,7 +10,7 @@ import FormPatients from './components/formPatients/FormPatients';
 import healthData from './components/healthData/healthData';
 import Login from './components/Login/Login';
 import About from './components/about/About';
-import Price from './components/price/Price';
+import Price from './components/Price/Price';
 import Professionals from './components/professionals/Professionals';
 
 function App() {

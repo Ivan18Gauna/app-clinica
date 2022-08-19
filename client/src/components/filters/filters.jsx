@@ -3,7 +3,6 @@ import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
-import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
@@ -12,11 +11,17 @@ import styles from './Filters.module.css';
 const Filters = () => {
 	return (
 		<div className={`${styles.contenedorSearch}`}>
-			<Row xs={1} sm={1} md={1} lg={3} className={`justify-content-center ${styles.searchMin}`}>
-				<Col xs={11} sm={8} className={styles.search}>
+			<Row
+				xs={1}
+				sm={1}
+				md={1}
+				lg={3}
+				className={`justify-content-center ${styles.searchMin}`}
+			>
+				<Col xs={11} sm={8} lg={4} className={styles.search}>
 					<Form.Control type={'text'} placeholder={'Nombre...'} />
 				</Col>
-				<Col xs={11} sm={8} lg={6} className={styles.search}>
+				<Col xs={11} sm={8} lg={4} className={styles.search}>
 					<ButtonGroup className={`${styles.buttonGroup}`}>
 						<DropdownButton
 							className={`${styles.buttonGroup}`}
