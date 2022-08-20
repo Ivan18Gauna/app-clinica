@@ -97,34 +97,38 @@ const getProfByName = async(req, res) => {
   let {lastname} = req.query
   console.log({lastname})
   if(lastname){
-      try {
-          let dbProfName = await Professionals.findAll({
-              where: {
-                 
-                lastname: { [Op.iLike]: lastname +'%' },                  }
-                  
-              })
-
-              dbProfName.length?
-              res.status(200).send(dbProfName):res.status(404).send('No existe registro del profesional a buscar')
-     
-      } catch (error) {
-      console.log(error)        
-      }
+    try {
+        let dbProfName = await Professionals.findAll({
+            include:[{model: Specialties,
+            attributes:['name']}],
+            where: {lastname: { [Op.iLike]: lastname +'%' }},                 
+            limit: 20,
+            //offset: req.query.page,
+            order:[['lastname', req.query.order]] });     
+                         
+            dbProfName.length?
+            res.status(200).send(dbProfName):res.status(404).send('No existe registro del profesional a buscar')
+     } catch (error) {
+    console.log(error)        
+    }
+    
   }
   else if(req.query.filterProfProv)
   {
       try {
              let dbProfName = await Professionals.findAll({
               include: [{ model: Specialties,
-                attributes:['name'] }],     
-              where:{province:req.query.filterProfProv},
-                 limit: 100,
+                attributes:['name']
+               }],     
+                where:{province:req.query.filterProfProv},
+                 limit: 20,
+                 //offset: req.query.page,
                  order:[['name', req.query.order]] });//ASC DESC
 
                   return res.send(dbProfName)
           } catch (error) {console.log(error)
-  }} 
+  }}
+   
   else if (req.query.filterEsp)
   {
       try {
@@ -133,13 +137,44 @@ const getProfByName = async(req, res) => {
             //include: [{ model: Professionals,
            //   attributes:['name'] }],      
             where:{name:req.query.filterEsp}, 
-            include: [{ model: Professionals}]
+            include: [{ model: Professionals}],
+            //include:[{model: Specialties,
+             // attributes:['name']}],
 
                 });//ASC DESC
               console.log(dbPatfName)
-                  return res.send(dbPatfName)
+              let filterEsp = dbPatfName.map(e => e.professionals)
+              
+                  return res.send(filterEsp.flat())
           } catch (error) {console.log(error)}
   }
+   
+  else if(req.query.lastname && req.query.filterProfProv){
+    try {
+      let dbProfName = await Professionals.findAll({
+          include:[{model: Specialties,
+          attributes:['name']}],
+          where: {
+            [Op.and]:[
+            {lastname: { [Op.iLike]: lastname +'%' }}, 
+            {province: req.query.filterProfProv}]},                 
+          limit: 100,
+          offset: req.query.page,
+          order:[['lastname', req.query.order]] });     
+                       
+          dbProfName.length?
+          res.status(200).send(dbProfName):res.status(404).send('No existe registro del profesional a buscarlos')
+   } catch (error) {
+  console.log(error)        
+  }
+  }
+    
+    // else if(!req.query.lastname && !req.query.filterProfProv && !req.query.filterEsp){
+    //   res.status(200).send('Debe seleccionar un valor a consultar')
+    // }
+
+  
+
  else{
       try {
               let allProfessional = await Professionals.findAll({
