@@ -8,11 +8,11 @@ const { v4: uuidv4 } = require("uuid")
 const getInfoApiPatients= async(req, res) => 
 {
     const apiPatients = await axios.get('https://patients-4a60b-default-rtdb.firebaseio.com/.json')
-    const patient = await apiPatients.data
+    const patient = await apiPatients.data 
     patient.forEach((e) => {
-        let idv4 = uuidv4();
-        let dbId = idv4.slice(0, 4);
-    Patients.findOrCreate({
+      let idv4 = uuidv4();
+      let dbId = idv4.slice(0, 4);
+      Patients.findOrCreate({
       where: {
         id: dbId,
         name: e.name.split(' ')[0],
@@ -38,8 +38,10 @@ const getPatById = async (req, res) => {
     where: {
       id: id,
     },
-  });
-  //dbPatId && dbPatId?
+
+  })
+  //console.log(dbPatId)
+  //dbPatId.length? 
   res.status(200).send(dbPatId)
   //:res.status(404).send('Id de paciente no encontrado');
   
@@ -56,18 +58,19 @@ const getPatByDocument = async (req, res) => {
 };
 
 const getPatByName = async(req, res) => {
-    let {name} = req.query
-    console.log({name})
-    if(name){
+    let {lastname} = req.query
+    console.log({lastname})
+    if(lastname){
         try {
             let dbPatfName = await Patients.findAll({
                 where: {
                    
-                    name: { [Op.iLike]: name +'%' },                  }
+                    name: { [Op.iLike]: lastname +'%' },                  }
                     
                 })
 
-            res.status(200).send(dbPatfName)
+                dbPatfName.length?
+                res.status(200).send(dbPatfName):res.status(404).send('No existe registro del paciente a buscar')
        
         } catch (error) {
         console.log(error)        
@@ -78,7 +81,8 @@ const getPatByName = async(req, res) => {
         try {
                let dbPatfName = await Patients.findAll({
                    where:{province:req.query.filterP},
-                   limit: 9,
+                   limit: 100,
+                  // offset: req.query.page,
                    order:[['name', req.query.order]] });//ASC DESC
 
                     return res.send(dbPatfName)
@@ -96,7 +100,7 @@ const getPatByName = async(req, res) => {
    else{
         try {
                 let allPatien = await Patients.findAll({
-                    limit:5,
+                    limit:20,
                     offset: req.query.page,
                     filterP:[['province', req.query.filterP]],
                     filterC:[['city', req.query.filterC]],

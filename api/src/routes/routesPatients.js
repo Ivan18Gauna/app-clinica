@@ -14,6 +14,8 @@ router.get('/', getPatByName)
 router.get('/detail/:id', getPatById),
 router.get('/document/:document', getPatByDocument),
 router.post('/', postPatients),
-router.put('/edit/:id', putPatients)
+router.put('/edit/:id', putPatients),
 router.delete('/delete/:id', deletePatients)
+
 module.exports=router;
+
