@@ -1,11 +1,11 @@
 import { GET_DOCTORS, GET_DOCTORS_DETAIL,GET_SPECIALTIES,GET_CITIES,GET_OS } from "../actions/actions";
 import axios from "axios";
 
-const URL = "http://localhost:3001"
+//const URL = "http://localhost:3001"
 
-export function get_Doctors() {
+export function get_Doctors(order,page,filterProfProv,filterEsp) {
     return async function (dispatch) {
-        const doctors = await axios(`/professionals`);
+        const doctors = await axios("/professionals?page="+page+"&order="+order+"&filterProfProv="+filterProfProv+"&filterEsp="+filterEsp);
         console.log('doctors', doctors)
         return dispatch({
             type: GET_DOCTORS,

@@ -3,6 +3,7 @@ const { default: axios } = require("axios");
 const { v4: uuidv4 } = require("uuid");
 const { Op } = require("sequelize");
 const { Professionals, Specialties, ObrasSociales } = require("../db");
+const { query } = require("express");
 
 const getInfoApi = async (req, res) => {
   res.status(200).send(
@@ -95,17 +96,22 @@ const getProfById = async (req, res) => {
 
 const getProfByName = async(req, res) => {
   let {lastname} = req.query
-  console.log({lastname})
-  if(lastname){
+  let {filterEsp} = req.query
+  let {filterProfProv}= req.query
+  let {page}= req.query
+  //console.log({lastname})
+  //solo se recibe nombre y no recibe especialidad ni provincia
+  if(lastname && !filterEsp && !filterProfProv){
     try {
         let dbProfName = await Professionals.findAll({
-            include:[{model: Specialties,
-            attributes:['name']}],
+            //include:[{model: Specialties,
+            //attributes:['name']}],
             where: {lastname: { [Op.iLike]: lastname +'%' }},                 
-            limit: 20,
+            limit: 5,
             //offset: req.query.page,
-            order:[['lastname', req.query.order]] });     
-                         
+            //order:[['lastname', req.query.order]] 
+          });     
+                       
             dbProfName.length?
             res.status(200).send(dbProfName):res.status(404).send('No existe registro del profesional a buscar')
      } catch (error) {
@@ -113,23 +119,108 @@ const getProfByName = async(req, res) => {
     }
     
   }
-  else if(req.query.filterProfProv)
+  // recibe nombre y provincia pero no recibe especialidad
+  if(lastname && !filterEsp && filterProfProv){
+    try {
+        let dbProfName = await Professionals.findAll({
+            //include:[{model: Specialties,
+            //attributes:['name']}],
+            
+            where: {
+            [Op.and]:[
+            {lastname: { [Op.iLike]: lastname +'%' }},                 
+            {province: req.query.filterProfProv}]},
+            limit: 5,
+                                   
+            //offset: req.query.page,
+            //order:[['lastname', req.query.order]] 
+          });     
+                       
+            dbProfName.length?
+            res.status(200).send(dbProfName):res.status(404).send('No existe registro del profesional a buscar')
+     } catch (error) {
+    console.log(error)        
+    }
+    
+  }
+  //Cuando recibe solo provincia pero no recibe ni apellido ni filtro Especialidad
+  if(!lastname && !filterEsp && filterProfProv)
   {
       try {
              let dbProfName = await Professionals.findAll({
-              include: [{ model: Specialties,
-                attributes:['name']
-               }],     
+                //include: [{ model: Specialties,
+                //attributes:['name']
+               //}],     
                 where:{province:req.query.filterProfProv},
-                 limit: 20,
+                 limit: 5,
                  //offset: req.query.page,
-                 order:[['name', req.query.order]] });//ASC DESC
+                 //order:[['name', req.query.order]]//ASC DESC 
+                });
 
-                  return res.send(dbProfName)
+              dbProfName.length?
+              res.status(200).send(dbProfName):res.status(404).send('No existe registro del profesional a buscar')
           } catch (error) {console.log(error)
   }}
-   
-  else if (req.query.filterEsp)
+  //Cuando recibe solo Especialidad pero no recibe ni apellido ni filtro Provincia
+
+  if (!lastname && filterEsp && !filterProfProv)
+  {
+      try {
+              
+          let dbPatfName = await Professionals.findAll({
+          include: [{ model: Specialties,
+            attributes:['name'],
+            where:{name: req.query.filterEsp
+             // attributes:['name', req.query.name]  
+            } 
+            
+             // where:{name:req.query.filterEsp}
+             
+              
+               }],      
+            //where:{name:req.query.filterEsp}, 
+            //include: [{ model: Professionals}],
+            //include:[{model: Specialties,
+            //attributes:['name']}],
+
+                });//ASC DESC
+            //  console.log(dbPatfName)
+            //  let filterEsp = dbPatfName.map(e => e.professionals)
+            dbPatfName.length?
+              res.status(200).send(dbPatfName):res.status(404).send('No existe registro del profesional a buscar')
+             // return res.send(filterEsp.flat())
+          } catch (error) {console.log(error)}
+  }
+  
+  //Cuando recibe solo especialidad pero no recibe ni apellido ni filtro apellido
+  //=====================solo prueba 
+
+  // if (!lastname && filterEsp && !filterProfProv)
+  // {
+  //     try {
+              
+  //         let dbPatfName = await Specialties.findAll({
+  //           //include: [{ model: Professionals,
+  //          //   attributes:['name'] }],      
+  //           where:{name:req.query.filterEsp}, 
+  //           include: [{ model: Professionals}],
+  //           //include:[{model: Specialties,
+  //           //attributes:['name']}],
+
+  //               });//ASC DESC
+  //             console.log(dbPatfName)
+  //             let filterEsp = dbPatfName.map(e => e.professionals)
+  //              filterEsp.length?
+  //             res.status(200).send(filterEsp.flat()):res.status(404).send('No existe registro del profesional a buscar')
+
+  //            // return res.send(filterEsp.flat())
+  //         } catch (error) {console.log(error)}
+  // }
+  
+  //Cuando recibe solo especialidad y apellido pero no recibe provincia
+    //=============================aqui termina la prueba la funcion debe estar comentada la funcion valida es la de abajo
+  //Cuando recibe solo especialidad y provincia pero no recibe lastname
+  if (!lastname && filterEsp && filterProfProv)
   {
       try {
               
@@ -138,60 +229,72 @@ const getProfByName = async(req, res) => {
            //   attributes:['name'] }],      
             where:{name:req.query.filterEsp}, 
             include: [{ model: Professionals}],
+            
             //include:[{model: Specialties,
-             // attributes:['name']}],
+            //attributes:['name']}],
 
                 });//ASC DESC
-              console.log(dbPatfName)
+              //console.log(dbPatfName)
               let filterEsp = dbPatfName.map(e => e.professionals)
-              
-                  return res.send(filterEsp.flat())
+              console.log(dbPatfName)
+              filterEsp.flat()
+              let fiterEspName =filterEsp.filter(e=>e.province == req.query.filterProfProv)
+              fiterEspName.length?
+              res.status(200).send(fiterEspName):res.status(404).send('No existe registro del profesional a buscar')
+
+             // return res.send(filterEsp.flat())
           } catch (error) {console.log(error)}
   }
-   
-  else if(req.query.lastname && req.query.filterProfProv){
-    try {
-      let dbProfName = await Professionals.findAll({
-          include:[{model: Specialties,
-          attributes:['name']}],
-          where: {
-            [Op.and]:[
-            {lastname: { [Op.iLike]: lastname +'%' }}, 
-            {province: req.query.filterProfProv}]},                 
-          limit: 100,
-          offset: req.query.page,
-          order:[['lastname', req.query.order]] });     
+  
+
+  // else if(req.query.lastname && req.query.filterProfProv){
+  //   try {
+  //     let dbProfName = await Professionals.findAll({
+  //         include:[{model: Specialties,
+  //         attributes:['name']}],
+  //         where: {
+  //           [Op.and]:[
+  //           {lastname: { [Op.iLike]: lastname +'%' }}, 
+  //           {province: req.query.filterProfProv}]},                 
+  //         limit: 100,
+  //         offset: req.query.page,
+  //         order:[['lastname', req.query.order]] });     
                        
-          dbProfName.length?
-          res.status(200).send(dbProfName):res.status(404).send('No existe registro del profesional a buscarlos')
-   } catch (error) {
-  console.log(error)        
-  }
-  }
-    
-    // else if(!req.query.lastname && !req.query.filterProfProv && !req.query.filterEsp){
-    //   res.status(200).send('Debe seleccionar un valor a consultar')
-    // }
+  //         dbProfName.length?
+  //         res.status(200).send(dbProfName):res.status(404).send('No existe registro del profesional a buscarlos')
+  //  } catch (error) {
+  // console.log(error)        
+  // }
+  //}
+  else if(!req.query.lastname && !req.query.filterProfProv && !req.query.filterEsp){
+    try{
+      res.status(404).send('Debe seleccionar un valor a consultar')
+
+    }
+    catch (error){
+      res.status(200).send('Debe seleccionar un filtro a consultar')
+    }
+    }
 
   
 
- else{
-      try {
-              let allProfessional = await Professionals.findAll({
-                include: [{ model: Specialties,
-                attributes:['name'] }],  
+//  else{
+//       try {
+//               let allProfessional = await Professionals.findAll({
+//                 include: [{ model: Specialties,
+//                 attributes:['name'] }],  
 
-                  limit:15,
-                  offset: req.query.page,
-                  filterProfProv:[['province', req.query.filterProfProv]],
-                  filterEsp:[['city', req.query.filterEsp]],
-                  order:[['name', req.query.order]],
+//                   limit:15,
+//                   offset: req.query.page,
+//                   filterProfProv:[['province', req.query.filterProfProv]],
+//                   filterEsp:[['city', req.query.filterEsp]],
+//                   order:[['name', req.query.order]],
 
-              });
+//               });
            
-               res.status(200).send(allProfessional);
-          } catch (error) {console.log(error)}
-      }     
+//                res.status(200).send(allProfessional);
+//           } catch (error) {console.log(error)}
+//       }     
 }
 
 
