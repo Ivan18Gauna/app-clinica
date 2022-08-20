@@ -3,8 +3,8 @@
     position: relative;
     margin: 50px;
     border-radius: 20px;
-    box-shadow: 5px 8px 12px black;
-    width: 100%;
+    box-shadow: 5px 8px 15px grey;
+    width: 90%;
 }
 
 .portada img {
