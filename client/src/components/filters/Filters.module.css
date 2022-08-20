@@ -1,17 +1,17 @@
 .contenedorSearch {
 	display: flex;
 	justify-content: center;
-  align-self: center;
-  width:80%;
+	align-self: center;
+	width: 65%;
 	background-color: #a9e7f0;
 	padding: 2rem 0 2rem;
 	border-radius: 0.5rem;
 	box-shadow: 0.2rem 0.2rem 10px grey;
-  margin: 3rem;
+	margin: 3rem;
 }
 
 .searchMin {
-  width: 100%;
+	width: 100%;
 }
 
 .btn {
@@ -20,6 +20,15 @@
 
 .buttonGroup {
 	width: 100%;
+}
+
+.selects {
+  display: flex;
+  flex-direction: row;
+}
+
+.selects select {
+  text-align: center;
 }
 
 @media screen and (max-width: 991px) {
