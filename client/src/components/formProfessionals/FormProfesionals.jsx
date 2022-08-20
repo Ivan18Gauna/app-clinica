@@ -13,8 +13,9 @@ function validate(input) {
 	if (!/([A-z])/.test(input.lastname)) {
 		error.lastname = 'Ingrese un apellido valido.'
 	}
-
-	if (input.license <= 0) {
+	if (!/[0-9]/.test(input.license)) {
+		error.license = 'Matrícula no valida.'
+	} else if (input.license <= 0) {
 		error.license = 'Matrícula no valida.'
 	}
 	if (!/^\d{10}$$/.test(input.phone)) {
@@ -26,15 +27,27 @@ function validate(input) {
 	if (!/[0-9]/.test(input.number)) {
 		error.number = 'Número no valido.'
 	}
+	else if (input.number <= 0) {
+		error.number = 'Número no valida.'
+	}
+
 	if (!/(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/.test(input.password)) {
 		error.password = 'La contraseña debe contener al menos 8 digitos, una mayúscula, un número y un caracter especial.'
 	}
+
+	if (input.password !== input.new_password) {
+		error.new_password = 'No coincide con la contraseña.'
+	}
+
 	let newDate = input.birth;
 	let Date1 = new Date(newDate)
 	let Date2 = new Date()
+	let Date3 = ((Date2 - Date1) / (1000 * 60 * 60 * 24 * 365))
 
 	if (Date1 >= Date2) {
 		error.birth = 'La fecha de nacimiento no puede ser posterior a la actual.'
+	} else if (Date3 < 18.011) {
+		error.birth = 'Debes ser mayor de 18 años para registrarte.'
 	}
 
 
@@ -54,6 +67,7 @@ export default function RegisterDoctor() {
 	const [input, setInput] = useState({
 		name: '',
 		lastname: '',
+		specialities: [],
 		license: '',
 		birth: '',
 		phone: '',
@@ -63,7 +77,8 @@ export default function RegisterDoctor() {
 		number: '',
 		street: '',
 		username: '',
-		password: ''
+		password: '',
+		new_password: ''
 	});
 
 	const [error, setError] = useState({})
@@ -71,21 +86,21 @@ export default function RegisterDoctor() {
 	function handleInput(e) {
 		setInput({
 			...input,
-			[e.target.name]: [e.target.value]
+			[e.target.name]: e.target.value
 		})
 
 		let objError = validate({
 			...input,
-			[e.target.name]: [e.target.value]
+			[e.target.name]: e.target.value
 		})
 		setError(objError);
 	}
-
+	console.log('error', error)
 	function handleSelect(e) {
 
 		setInput({
 			...input,
-			province: [e.target.value]
+			province: e.target.value
 		})
 
 
@@ -108,7 +123,8 @@ export default function RegisterDoctor() {
 			number: '',
 			street: '',
 			username: '',
-			password: ''
+			password: '',
+			new_password: ''
 		});
 	}
 
@@ -117,21 +133,35 @@ export default function RegisterDoctor() {
 			<form onSubmit={handleSubmit}>
 				<div>
 					<label>Nombre: </label>
-					<input type="text" name="name" value={input.name} onChange={handleInput} />
+					<input type="text" name="name" placeholder='Ingresa tu nombre' value={input.name} onChange={handleInput} />
 					{input.name === '' ? <p>*</p> : ''}
 					{error.name && <p> {error.name} </p>}
 
 				</div>
 				<div>
 					<label> Apellido: </label>
-					<input type="text" name="lastname" value={input.lastname} onChange={handleInput} />
+					<input type="text" name="lastname" placeholder='Ingresa tu apellido' value={input.lastname} onChange={handleInput} />
 					{input.lastname === '' ? <p>*</p> : ''}
 					{error.lastname && <p> {error.lastname} </p>}
 				</div>
 
+				{/* <div>
+				<label>Especialidades: </label>
+					<select onChange={handleSelect} >
+
+						{
+						(e => {
+								return <option key={e} value={e} > {e} </option>
+							})
+						}
+
+					</select>
+					{input.province === '' ? <p>*</p> : ''}
+				</div> */}
+
 				<div>
 					<label>Matricula: </label>
-					<input type="number" name="license" value={input.license} onChange={handleInput} />
+					<input type="number" name="license" placeholder='Número de matricula' value={input.license} onChange={handleInput} />
 					{input.license === '' ? <p>*</p> : ''}
 					{error.license && <p> {error.license} </p>}
 				</div>
@@ -143,19 +173,20 @@ export default function RegisterDoctor() {
 				</div>
 				<div>
 					<label>Número de Telefono: </label>
-					<input type="text" name="phone" value={input.phone} onChange={handleInput} />
+					<input type="text" name="phone" placeholder='XXX-XXXXXXX' value={input.phone} onChange={handleInput} />
 					{input.phone === '' ? <p>*</p> : ''}
 					{error.phone && <p> {error.phone} </p>}
 				</div>
 				<div>
-					<label>Correo electronico: </label>
-					<input type="text" name="mail" value={input.mail} onChange={handleInput} />
+					<label>Email: </label>
+					<input type="text" name="mail" placeholder='Ingresa tu email' value={input.mail} onChange={handleInput} />
 					{input.mail === '' ? <p>*</p> : ''}
 					{input.mail && <p> {error.mail} </p>}
 				</div>
 				<div>
 					<label>Provincia: </label>
-					<select onChange={handleSelect} >
+					<select onChange={handleSelect} defaultValue='Seleccione una opción' >
+						<option value="Seleccione una opción">Seleccione una opción</option>
 
 						{
 							provinces.map(e => {
@@ -168,43 +199,54 @@ export default function RegisterDoctor() {
 				</div>
 				<div>
 					<label>Ciudad: </label>
-					<input type="text" name="city" value={input.country} onChange={handleInput} />
+					<input type="text" name="city" placeholder='Ciudad' value={input.country} onChange={handleInput} />
 					{input.city === '' ? <p>*</p> : ''}
 				</div>
 				<div>
 					<label>Calle: </label>
-					<input type="text" name="street" value={input.street} onChange={handleInput} />
+					<input type="text" name="street" placeholder='Calle' value={input.street} onChange={handleInput} />
 					{input.street === '' ? <p>*</p> : ''}
 				</div>
 				<div>
 					<label>Número: </label>
-					<input type="number" name="number" value={input.number} onChange={handleInput} />
+					<input type="number" name="number" placeholder='Número' value={input.number} onChange={handleInput} />
 					{input.number === '' ? <p>*</p> : ''}
 					{error.number && <p> {error.number} </p>}
 				</div>
 				<div>
 					<label>Nombre de Usuario: </label>
-					<input type="text" name="username" value={input.username} onChange={handleInput} />
+					<input type="text" name="username" placeholder='Nombre de usuario' value={input.username} onChange={handleInput} />
 					{input.username === '' ? <p>*</p> : ''}
 
 				</div>
 				<div>
 					<label>Contraseña: </label>
-					<input type="password" name="password" value={input.password} onChange={handleInput} />
+					<input type="password" name="password" placeholder='Contraseña' value={input.password} onChange={handleInput} />
 					{input.password === '' ? <p>*</p> : ''}
 					{error.password && <p> {error.password} </p>}
 				</div>
+
+				<div>
+					<label>Repetir contraseña: </label>
+					<input type="password" name="new_password" placeholder='Repetir contraseña' value={input.new_password} onChange={handleInput} />
+					{input.new_password === '' ? <p>*</p> : ''}
+					{error.new_password && <p> {error.new_password} </p>}
+				</div>
+
 				<div>
 					<p>* Campos obligatorios</p>
 				</div>
+				<div>
 				{
 					input.name === '' || input.lastname === '' || input.license === '' || input.phone === '' || input.mail === '' ||
 						input.province === '' || input.city === '' || input.street === '' || input.number === '' || input.username === '' ||
-						input.password === '' ?
+						input.password === '' || input.new_password === '' || error.name || error.lastname || error.license || error.phone
+						|| error.mail || error.number || error.password || error.new_password ?
 						<button disabled={true} >Faltan datos por completar</button>
 						:
 						<button type="submit">Enviar</button>
 				}
+				</div>
 			</form>
 		</div>
 	);
