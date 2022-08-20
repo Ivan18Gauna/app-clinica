@@ -1,4 +1,4 @@
-import { GET_DOCTORS, GET_DOCTORS_DETAIL,GET_SPECIALTIES,GET_CITIES } from "../actions/actions";
+import { GET_DOCTORS, GET_DOCTORS_DETAIL,GET_SPECIALTIES,GET_CITIES,GET_OS } from "../actions/actions";
 import axios from "axios";
 
 const URL = "http://localhost:3001"
@@ -54,3 +54,15 @@ export function registerDoctors(payload) {
         return registerDoctors;
     }
 }
+
+export function getObrasSociales(){
+    return async function(dispatch){
+        const apiObras = await axios.get(
+            "https://obras-sociales-be310-default-rtdb.firebaseio.com/results.json"
+          );
+          return dispatch({
+            type: GET_OS,
+            payload: apiObras.data
+          })
+    }
+} 

@@ -22,11 +22,6 @@ export default function SignIn() {
                 </div>
               </div>
             </div>
-
-<<<<<<< HEAD
-=======
-
->>>>>>> 7b00dfb2ee4f0cbd3693769874459757fb2c23d9
           </div>
           <div class="card-deck col mt-5">
             <div class="card col mt-5">

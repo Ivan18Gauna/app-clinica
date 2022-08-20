@@ -4,13 +4,15 @@ import {
   POST_REGISTER_DOCTOR,
   GET_SPECIALTIES,
   GET_CITIES,
+  GET_OS
 } from "../actions/actions";
 
 const initialState = {
   doctors: [],
   detail: [],
   specialties:[],
-  cities:[]
+  cities:[],
+  os:[]
 };
 
 function rootReducer(state = initialState, action) {
@@ -30,6 +32,11 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
       };
+      case GET_OS:
+        return{
+          state,
+          os: action.payload
+        };
 
     default:
       return state;

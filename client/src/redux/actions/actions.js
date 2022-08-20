@@ -3,3 +3,4 @@ export const GET_DOCTORS_DETAIL = 'GET_DOCTORS_DETAIL';
 export const POST_REGISTER_DOCTOR = 'POST_REGISTER_DOCTOR';
 export const GET_SPECIALTIES = 'GET_SPECIALTIES';
 export const GET_CITIES = 'GET_CITIES';
+export const GET_OS = 'GET_OS'
