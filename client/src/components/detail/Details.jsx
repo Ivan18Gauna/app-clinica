@@ -3,6 +3,8 @@ import { Link, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { get_DoctorsDetail } from "../../redux/actions";
+import "./details.css"
+import Button from "react-bootstrap/esm/Button";
 
 export default function Details() {
 
@@ -20,17 +22,26 @@ export default function Details() {
 
 
     return (
-        <div>
-            <h1>Esto es el Details</h1>
-            <h1>Nombre: {doctor.name } </h1>
-            <h2>Especialidad: </h2>
+          <> 
+        <div className="container">
+            <div>
+             <img src="https://cdn2.iconfinder.com/data/icons/coronavirus-8/512/stethoscope-doctor-health-medical-healthcare-512.png" alt="img not found" width="auto" height="auto" />   
+            </div>
+            <div className="text">
+           
+            <h3>Nombre: {doctor.name } </h3>
+            <h3>Especialidad: </h3>
             <h3>Matricula: {doctor.license} </h3>
             <h3>Ciudad: {doctor.city} </h3>
-            <Link to={'/home'}>
-                <button>Volver al inicio</button>
+            </div>
+           </div>
+            <div className="btnHome">
+           <Link to={'/home'}>
+           <Button variant="outline-primary">Volver</Button>{' '}
             </Link>
-
-        </div>
+            </div>    
+        </>
+       
 
     )
 }
