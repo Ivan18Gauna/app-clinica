@@ -93,28 +93,95 @@ const getProfById = async (req, res) => {
   res.status(200).send(dbProfId);
 };
 
-const getProfByName = async (req, res) => {
-  let { name } = req.params;
-  const dbProfName = await Professionals.findAll({
-    where: {
-      name: { [Op.iLike]: name + "%" },
-    },
-  });
-  res.status(200).send(dbProfName);
-};
+const getProfByName = async(req, res) => {
+  let {lastname} = req.query
+  console.log({lastname})
+  if(lastname){
+      try {
+          let dbProfName = await Professionals.findAll({
+              where: {
+                 
+                lastname: { [Op.iLike]: lastname +'%' },                  }
+                  
+              })
 
-const getFilterByCity = async (req, res) => {
-  let { filterCity } = req.params;
+              dbProfName.length?
+              res.status(200).send(dbProfName):res.status(404).send('No existe registro del profesional a buscar')
+     
+      } catch (error) {
+      console.log(error)        
+      }
+  }
+  else if(req.query.filterProfProv)
+  {
+      try {
+             let dbProfName = await Professionals.findAll({
+              include: [{ model: Specialties,
+                attributes:['name'] }],     
+              where:{province:req.query.filterProfProv},
+                 limit: 100,
+                 order:[['name', req.query.order]] });//ASC DESC
 
-  const dbFilterCity = await Professionals.findAll({
-    where: {
-      city: req.params.filterCity,
-    },
-    // order:[['name', req.params.order]]
-  });
+                  return res.send(dbProfName)
+          } catch (error) {console.log(error)
+  }} 
+  else if (req.query.filterEsp)
+  {
+      try {
+              
+          let dbPatfName = await Specialties.findAll({
+            //include: [{ model: Professionals,
+           //   attributes:['name'] }],      
+            where:{name:req.query.filterEsp}, 
+            include: [{ model: Professionals}]
 
-  res.status(200).send(dbFilterCity);
-};
+                });//ASC DESC
+              console.log(dbPatfName)
+                  return res.send(dbPatfName)
+          } catch (error) {console.log(error)}
+  }
+ else{
+      try {
+              let allProfessional = await Professionals.findAll({
+                include: [{ model: Specialties,
+                attributes:['name'] }],  
+
+                  limit:15,
+                  offset: req.query.page,
+                  filterProfProv:[['province', req.query.filterProfProv]],
+                  filterEsp:[['city', req.query.filterEsp]],
+                  order:[['name', req.query.order]],
+
+              });
+           
+               res.status(200).send(allProfessional);
+          } catch (error) {console.log(error)}
+      }     
+}
+
+
+// const getProfByName = async (req, res) => {
+//   let { name } = req.params;
+//   const dbProfName = await Professionals.findAll({
+//     where: {
+//       name: { [Op.iLike]: name + "%" },
+//     },
+//   });
+//   res.status(200).send(dbProfName);
+// };
+
+// const getFilterByCity = async (req, res) => {
+//   let { filterCity } = req.params;
+
+//   const dbFilterCity = await Professionals.findAll({
+//     where: {
+//       city: req.params.filterCity,
+//     },
+//     // order:[['name', req.params.order]]
+//   });
+
+//   res.status(200).send(dbFilterCity);
+// };
 const postProfessionals = async (req, res) => {
   let {
     name,
@@ -219,10 +286,11 @@ const putProfessionals = async (req, res) => {
 
 module.exports = {
   getInfoApi,
+  //getProfByName,
   getProfByName,
   getProfById,
   postProfessionals,
-  getFilterByCity,
+  //getFilterByCity,
   putProfessionals,
   getObrasSociales,
   addProfDb,
