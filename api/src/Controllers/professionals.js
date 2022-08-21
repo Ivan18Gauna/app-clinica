@@ -323,7 +323,7 @@ const getProfByName = async(req, res) => {
 //   res.status(200).send(dbFilterCity);
 // };
 const postProfessionals = async (req, res) => {
-  let { name, username, password, license, birth, phone, mail, province, city, number, street, specialty, } = req.body;
+  let { name, username, password, license, birth, phone, mail, province, city, number, street, specialty, prof, pat } = req.body;
   let idv4 = uuidv4();
   const dbId = idv4.slice(0, 4);
   try {
