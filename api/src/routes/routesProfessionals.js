@@ -1,6 +1,6 @@
 const axios = require ('axios')
 
-const {putProfessionals, getInfoApi, getProfById, getProfByName, getFilterByCity, postProfessionals}= require ('../Controllers/professionals')
+const {putProfessionals, deleteProfessionals, getProfById, getProfByName, getFilterByCity, postProfessionals}= require ('../Controllers/professionals')
 
 const express = require('express')
 const router =express.Router();
@@ -12,8 +12,7 @@ router.get('/', getProfByName)
 //router.get('/filter/:filterCity', getFilterByCity)
 router.post('/', postProfessionals)
 router.put('/edit/:id', putProfessionals)
+router.delete('/delete/:id', deleteProfessionals)
 router.get('/detail/:id', getProfById),
-
-
 
 module.exports= router;

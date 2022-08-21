@@ -9,6 +9,7 @@ module.exports = (sequelize) => {
       defaultValue: UUIDV4,
       primaryKey: true,
       allowNull: false,
+      unique: true
     },
   name: {
        type: DataTypes.STRING,
@@ -51,6 +52,6 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false
   },
-  paranoid: true,
+//   paranoid: true,
   });
 };
