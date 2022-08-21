@@ -18,4 +18,3 @@ router.put('/edit/:id', putPatients),
 router.delete('/delete/:id', deletePatients)
 
 module.exports=router;
-

@@ -15,7 +15,4 @@ router.put('/edit/:id', putProfessionals)
 router.delete('/delete/:id', deleteProfessionals)
 router.get('/detail/:id', getProfById),
 
-
-
-
 module.exports= router;
