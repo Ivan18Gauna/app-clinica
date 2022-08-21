@@ -229,7 +229,7 @@ const postProfessionals = async (req, res) => {
       res.send("Falta infornacion");
     }
     const validate = await Professionals.findOne({
-      where: { name },
+      where: { license },
     });
     if (!validate) {
       let newProfessional = await Professionals.create(professional);

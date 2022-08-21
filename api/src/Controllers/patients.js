@@ -28,7 +28,6 @@ const getInfoApiPatients= async(req, res) =>
       },
     });
   });
-
   console.log("Se ha cargado la base de pacientes");
 };
 
@@ -38,7 +37,6 @@ const getPatById = async (req, res) => {
     where: {
       id: id,
     },
-
   })
   //console.log(dbPatId)
   //dbPatId.length? 
@@ -64,14 +62,10 @@ const getPatByName = async(req, res) => {
         try {
             let dbPatfName = await Patients.findAll({
                 where: {
-                   
                     name: { [Op.iLike]: lastname +'%' },                  }
-                    
                 })
-
                 dbPatfName.length?
                 res.status(200).send(dbPatfName):res.status(404).send('No existe registro del paciente a buscar')
-       
         } catch (error) {
         console.log(error)        
         }
@@ -84,7 +78,6 @@ const getPatByName = async(req, res) => {
                    limit: 100,
                   // offset: req.query.page,
                    order:[['name', req.query.order]] });//ASC DESC
-
                     return res.send(dbPatfName)
             } catch (error) {console.log(error)
     }} else if (req.query.filterC)
@@ -105,9 +98,7 @@ const getPatByName = async(req, res) => {
                     filterP:[['province', req.query.filterP]],
                     filterC:[['city', req.query.filterC]],
                     order:[['name', req.query.order]],
-
                 });
-             
                  res.status(200).send(allPatien);
             } catch (error) {console.log(error)}
         }     
