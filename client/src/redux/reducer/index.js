@@ -23,6 +23,8 @@ function rootReducer(state = initialState, action) {
       return { ...state, specialties: action.payload };
       case GET_CITIES:
       return { ...state, cities: action.payload };
+      case "DILTER_CONVINADO":
+      return { ...state, doctors: action.payload };
     case GET_DOCTORS_DETAIL:
       return {
         ...state,

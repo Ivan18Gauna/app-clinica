@@ -5,7 +5,7 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import styles from './Filters.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { get_cities, get_specialties } from '../../redux/actions';
+import { filterConvinado, get_cities, get_specialties } from '../../redux/actions';
 
 const Filters = () => {
 	const [filter, setFilter] = useState({
@@ -19,7 +19,8 @@ const Filters = () => {
 	useEffect(() => {
 		dispatch(get_specialties());
 		dispatch(get_cities());
-	}, [dispatch]);
+		dispatch(filterConvinado(filter));
+	}, [dispatch, filter]);
 
 	const handleOnChange = (e) => {
 		setFilter({
