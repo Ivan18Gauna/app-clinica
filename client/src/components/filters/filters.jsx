@@ -22,10 +22,10 @@ const Filters = () => {
 	}, [dispatch]);
 
 	const handleOnChange = (e) => {
-		setFilter({
-			...filter,
-			[e.target.name]: e.target.value,
-		});
+		/* setFilter({ */
+		/* 	...filter, */
+		/* 	[e.target.name]: e.target.value, */
+		/* }); */
 	};
 
 	return (
