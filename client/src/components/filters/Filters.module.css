@@ -10,7 +10,14 @@
 	margin: 3rem;
 }
 
+.form {
+  display: flex;
+  justify-content: center;
+}
+
 .searchMin {
+  display: flex;
+  justify-content: center;
 	width: 100%;
 }
 

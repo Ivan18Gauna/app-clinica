@@ -3,7 +3,7 @@ import {
   GET_DOCTORS_DETAIL,
   POST_REGISTER_DOCTOR,
   GET_SPECIALTIES,
-  GET_PROFESSIONALS,
+  GET_CITIES,
   GET_OS
 } from "../actions/actions";
 
@@ -11,7 +11,7 @@ const initialState = {
   doctors: [],
   detail: [],
   specialties:[],
-  professional:[],
+  cities:[],
   os:[]
 };
 
@@ -20,9 +20,11 @@ function rootReducer(state = initialState, action) {
     case GET_DOCTORS:
       return { ...state, doctors: action.payload };
     case GET_SPECIALTIES:
-      return { ...state, specialties: action.payload };
-      case GET_PROFESSIONALS:
-      return { ...state, professional: action.payload };
+      return { ...state, specialties: action.payload  };
+      case GET_CITIES:
+      return { ...state, cities: action.payload };
+      case "DILTER_CONVINADO":
+      return { ...state, doctors: action.payload };
     case GET_DOCTORS_DETAIL:
       return {
         ...state,
