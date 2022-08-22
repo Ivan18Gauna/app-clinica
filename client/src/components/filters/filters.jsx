@@ -24,7 +24,7 @@ const Filters = () => {
 		dispatch(get_specialties());
 		dispatch(get_cities());
 		dispatch(filterConvinado(filter));
-    console.log(filter)
+		console.log(filter);
 	}, [dispatch, filter]);
 
 	const handleSubmit = (e) => {
@@ -41,12 +41,12 @@ const Filters = () => {
 
 	return (
 		<div className={`${styles.contenedorSearch}`}>
-			<Form onSubmit={(e) => handleSubmit(e)}>
+			<Form className={styles.form} onSubmit={(e) => handleSubmit(e)}>
 				<Row
 					xs={1}
 					sm={1}
 					md={1}
-					lg={3}
+					lg={2}
 					className={`justify-content-center ${styles.searchMin}`}
 				>
 					<Col>
@@ -80,11 +80,6 @@ const Filters = () => {
 									</option>
 								))}
 						</Form.Select>
-					</Col>
-					<Col lg={2}>
-						<Button className={`${styles.btn}`} type={'submit'}>
-							Buscar
-						</Button>
 					</Col>
 				</Row>
 			</Form>
