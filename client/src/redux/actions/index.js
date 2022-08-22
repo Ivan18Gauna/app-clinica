@@ -23,7 +23,6 @@ export function get_Doctors() {
 export function get_specialties() {
 	return async function (dispatch) {
 		const specialties = await axios(`${URL}/especialties`);
-		console.log(specialties);
 		return dispatch({
 			type: GET_SPECIALTIES,
 			payload: specialties.data,
@@ -45,8 +44,6 @@ export function get_cities() {
 
 export function filterConvinado(payload) {
 	return async function (dispatch) {
-		console.log('filterConviando', payload);
-    console.log(payload)
 		const doctors_detail = await axios(
 			`${URL}/professionals?lastname=${payload.lastname}&filterEsp=${payload.filterEsp}&filterProfProv=${payload.filterProfProv}`
 		);

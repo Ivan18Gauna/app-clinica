@@ -24,24 +24,19 @@ const Filters = () => {
 		dispatch(get_specialties());
 		dispatch(get_cities());
 		dispatch(filterConvinado(filter));
-		console.log(filter);
 	}, [dispatch, filter]);
-
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		filterConvinado(filter);
-	};
 
 	const handleOnChange = (e) => {
 		setFilter({
 			...filter,
 			[e.target.name]: e.target.value,
 		});
+		filterConvinado(filter);
 	};
 
 	return (
 		<div className={`${styles.contenedorSearch}`}>
-			<Form className={styles.form} onSubmit={(e) => handleSubmit(e)}>
+			<Form className={styles.form}>
 				<Row
 					xs={1}
 					sm={1}
