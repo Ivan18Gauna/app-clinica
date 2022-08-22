@@ -1,6 +1,7 @@
 import {
 	GET_DOCTORS,
 	GET_DOCTORS_DETAIL,
+  FILTER_CONVINADO,
 	GET_SPECIALTIES,
 	GET_CITIES,
 	GET_OS,
@@ -22,7 +23,7 @@ export function get_Doctors() {
 export function get_specialties() {
 	return async function (dispatch) {
 		const specialties = await axios(`/especialties`);
-		
+
 		return dispatch({
 			type: GET_SPECIALTIES,
 			payload: specialties.data,
@@ -44,14 +45,20 @@ export function get_cities() {
 
 export function filterConvinado(payload) {
 	return async function (dispatch) {
-		const doctors_detail = await axios(
-			`${URL}/professionals?lastname=${payload.lastname}&filterEsp=${payload.filterEsp}&filterProfProv=${payload.filterProfProv}`
-		);
-
-		return dispatch({
-			type: 'DILTER_CONVINADO',
-			payload: doctors_detail.data,
-		});
+		try {
+			const doctors_detail = await axios(
+				`${URL}/professionals?lastname=${payload.lastname}&filterEsp=${payload.filterEsp}&filterProfProv=${payload.filterProfProv}`
+			);
+			return dispatch({
+				type: FILTER_CONVINADO,
+				payload: doctors_detail.data,
+			});
+		} catch (error) {
+			return dispatch({
+				type: FILTER_CONVINADO,
+				payload: error.message,
+			});
+		}
 	};
 }
 
@@ -67,7 +74,7 @@ export function get_DoctorsDetail(id) {
 }
 
 export function registerDoctors(payload) {
-	console.log('post',payload)
+	console.log('post', payload);
 	return async function () {
 		const registerDoctors = await axios.post(`/professionals`, payload);
 		return registerDoctors;
