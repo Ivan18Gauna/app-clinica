@@ -12,8 +12,7 @@ function CardEdit({name, lastname, id} ) {
         <Card.Title>{lastname}</Card.Title>
 
         <Card.Text>
-          Somos todos desarolladores exclavizados por el tincho 
-          y oligarca de Martin Figueroa
+          Somos todos desarolladores del Grupo Soy Henry
         </Card.Text>
         <Button as={Link} to={'/details/'+id} variant="primary">Saber Mas</Button>
       </Card.Body>
