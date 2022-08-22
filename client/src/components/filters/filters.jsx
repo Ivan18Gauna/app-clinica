@@ -9,9 +9,9 @@ import { filterConvinado, get_cities, get_specialties } from '../../redux/action
 
 const Filters = () => {
 	const [filter, setFilter] = useState({
-		name: '',
-		especialidad: '',
-		ubicacion: '',
+		lastname: '',
+		filterEsp: '',
+		filterProfProv: '',
 	});
 	const specialties = useSelector((state) => state.specialties);
 	const cities = useSelector((state) => state.cities);
@@ -22,11 +22,16 @@ const Filters = () => {
 		dispatch(filterConvinado(filter));
 	}, [dispatch, filter]);
 
+	// const handleSubmit = (e)=>{
+	// 	e.preventDefault()
+	// 	filterConvinado(filter)
+	// }
+
 	const handleOnChange = (e) => {
-		/* setFilter({ */
-		/* 	...filter, */
-		/* 	[e.target.name]: e.target.value, */
-		/* }); */
+		 setFilter({ 
+		 	...filter, 
+		 	[e.target.name]: e.target.value, 
+		 }) 
 	};
 
 	return (
@@ -43,25 +48,25 @@ const Filters = () => {
 						<Form.Control
 							onChange={(e) => handleOnChange(e)}
 							type={'text'}
-							value={filter.name}
-							name="name"
+							value={filter.lastname}
+							name="lastname"
 							placeholder={'Nombre...'}
 						/>
 					</Col>
 					<Col lg={6} className={styles.selects}>
 						<Form.Select
 							onChange={(e) => handleOnChange(e)}
-							name="especialidad"
+							name="filterEsp"
 						>
 							<option hidden>Especialidad</option>
 							{specialties &&
 								specialties.map((el) => (
-									<option key={el} value={el}>
-										{el}
+									<option key={el.id} value={el.name}>
+										{el.name}
 									</option>
 								))}
 						</Form.Select>
-						<Form.Select onChange={(e) => handleOnChange(e)} name={'ubicacion'}>
+						<Form.Select onChange={(e) => handleOnChange(e)} name='filterProfProv'>
 							<option hidden>Ubicacion</option>
 							{cities &&
 								cities.map((el) => (
@@ -72,7 +77,7 @@ const Filters = () => {
 						</Form.Select>
 					</Col>
 					<Col lg={2}>
-						<Button className={`${styles.btn}`} type={'submit'}>
+						<Button className={`${styles.btn}`} type={'submit'} >
 							Buscar
 						</Button>
 					</Col>
