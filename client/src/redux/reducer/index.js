@@ -1,4 +1,5 @@
 import {
+<<<<<<< HEAD
   GET_DOCTORS,
   GET_DOCTORS_DETAIL,
   POST_REGISTER_DOCTOR,
@@ -7,6 +8,16 @@ import {
   GET_OS,
   FILTER_CONVINADO
 } from "../actions/actions";
+=======
+	GET_DOCTORS,
+	GET_DOCTORS_DETAIL,
+	FILTER_CONVINADO,
+	POST_REGISTER_DOCTOR,
+	GET_SPECIALTIES,
+	GET_CITIES,
+	GET_OS,
+} from '../actions/actions';
+>>>>>>> 7b6484cc0e515b85f9a0087c39f168b21e8b73fd
 
 const initialState = {
   doctors: [],
@@ -47,10 +58,9 @@ function rootReducer(state = initialState, action) {
           state,
           os: action.payload
         };
-
-    default:
-      return state;
-  }
+		default:
+			return state;
+	}
 }
 
 export default rootReducer;

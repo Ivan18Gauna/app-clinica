@@ -5,4 +5,8 @@ export const GET_SPECIALTIES = 'GET_SPECIALTIES';
 export const GET_PROFESSIONALS = 'GET_PROFESSIONALS';
 export const GET_OS = 'GET_OS'
 export const GET_CITIES = 'GET_CITIES';
+<<<<<<< HEAD
 export const FILTER_CONVINADO = 'FILTER_CONVINADO'
+=======
+export const FILTER_CONVINADO = 'FILTER_CONVINADO';
+>>>>>>> 7b6484cc0e515b85f9a0087c39f168b21e8b73fd
