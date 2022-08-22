@@ -24,12 +24,13 @@ const Filters = () => {
 		dispatch(get_specialties());
 		dispatch(get_cities());
 		dispatch(filterConvinado(filter));
+    console.log(filter)
 	}, [dispatch, filter]);
 
-	// const handleSubmit = (e)=>{
-	// 	e.preventDefault()
-	// 	filterConvinado(filter)
-	// }
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		filterConvinado(filter);
+	};
 
 	const handleOnChange = (e) => {
 		setFilter({
@@ -40,7 +41,7 @@ const Filters = () => {
 
 	return (
 		<div className={`${styles.contenedorSearch}`}>
-			<Form>
+			<Form onSubmit={(e) => handleSubmit(e)}>
 				<Row
 					xs={1}
 					sm={1}
