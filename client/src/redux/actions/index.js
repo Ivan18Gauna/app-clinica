@@ -49,7 +49,6 @@ export function filterConvinado(payload) {
 		const doctors_detail = await axios(
 			`/professionals?lastname=${payload.lastname}&filterEsp=${payload.filterEsp}&filterProfProv=${payload.filterProfProv}`
 		);
-
 		return dispatch({
 			type: FILTER_CONVINADO,
 			payload: doctors_detail.data,
