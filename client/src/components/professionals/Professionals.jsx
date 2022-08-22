@@ -7,30 +7,14 @@ import styles from './Professionals.module.css';
 
 export default function Professionals() {
 	const dispatch = useDispatch();
-<<<<<<< HEAD
-	const [order] = useState('ASC');
-	const [page] = useState(0);
-	const [filterProfProv] = useState('');
-	const [filterEsp] = useState('');
-	const doctors = useSelector((state) => state.doctors);
-
-	/* useEffect(() => { */
-	/* 	dispatch(get_Doctors(order, page, filterProfProv, filterEsp)); */
-	/* }, [dispatch, order, page, filterProfProv, filterEsp]); */
-=======
 	// const[order]= useState("ASC");
 	// const [page ]=useState(0);
 	// const [filterProfProv, ]=useState("");
 	// const [filterEsp]=useState("");
-	const doctors = useSelector((state)=>state.doctors)
-	useEffect(()=>{
-		dispatch(get_Doctors())
-	},[dispatch]);
-			
+	const doctors = useSelector((state) => state.doctors);
 	useEffect(() => {
 		dispatch(get_Doctors());
 	}, [dispatch]);
->>>>>>> dev-ivan
 
 	return (
 		<div className={styles.container}>
