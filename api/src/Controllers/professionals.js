@@ -89,7 +89,18 @@ const getProfById = async (req, res) => {
   });
   res.status(200).send(dbProfId);
 };
-
+const getAllProfessionals=async(req,res)=>{
+  try{  
+    let allProfessional = await Professionals.findAll({
+    include: [{ model: Specialties,
+    attributes:['name'] }],  
+    limit:150,
+    //offset: req.query.page,
+    //order:[['name', req.query.order]],
+    })
+    res.status(200).send(allProfessional)
+    } catch (error) {console.log(error)}
+}
 const getProfByName = async(req, res) => {
   let {lastname} = req.query
   let {filterEsp} = req.query
@@ -379,5 +390,6 @@ module.exports = {
   putProfessionals,
   getObrasSociales,
   addProfDb,
-  deleteProfessionals
+  deleteProfessionals,
+  getAllProfessionals
 };

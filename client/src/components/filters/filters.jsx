@@ -5,13 +5,17 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import styles from './Filters.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { filterConvinado, get_cities, get_specialties } from '../../redux/actions';
+import {
+	filterConvinado,
+	get_cities,
+	get_specialties,
+} from '../../redux/actions';
 
 const Filters = () => {
 	const [filter, setFilter] = useState({
-		name: '',
-		especialidad: '',
-		ubicacion: '',
+		lastname: '',
+		filterEsp: '',
+		filterProfProv: '',
 	});
 	const specialties = useSelector((state) => state.specialties);
 	const cities = useSelector((state) => state.cities);
@@ -21,6 +25,11 @@ const Filters = () => {
 		dispatch(get_cities());
 		dispatch(filterConvinado(filter));
 	}, [dispatch, filter]);
+
+	// const handleSubmit = (e)=>{
+	// 	e.preventDefault()
+	// 	filterConvinado(filter)
+	// }
 
 	const handleOnChange = (e) => {
 		setFilter({
@@ -43,25 +52,25 @@ const Filters = () => {
 						<Form.Control
 							onChange={(e) => handleOnChange(e)}
 							type={'text'}
-							value={filter.name}
-							name="name"
+							value={filter.lastname}
+							name="lastname"
 							placeholder={'Nombre...'}
 						/>
 					</Col>
 					<Col lg={6} className={styles.selects}>
-						<Form.Select
-							onChange={(e) => handleOnChange(e)}
-							name="especialidad"
-						>
+						<Form.Select onChange={(e) => handleOnChange(e)} name="filterEsp">
 							<option hidden>Especialidad</option>
 							{specialties &&
 								specialties.map((el) => (
-									<option key={el} value={el}>
-										{el}
+									<option key={el.id} value={el.name}>
+										{el.name}
 									</option>
 								))}
 						</Form.Select>
-						<Form.Select onChange={(e) => handleOnChange(e)} name={'ubicacion'}>
+						<Form.Select
+							onChange={(e) => handleOnChange(e)}
+							name="filterProfProv"
+						>
 							<option hidden>Ubicacion</option>
 							{cities &&
 								cities.map((el) => (
