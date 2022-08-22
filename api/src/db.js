@@ -70,8 +70,8 @@ HistoriaClinica.belongsTo(Professionals)
 Professionals.belongsToMany(ObrasSociales,{through:'professionals-o.sociales'})
 ObrasSociales.belongsToMany(Professionals,{through:'professionals-o.sociales'})
 
-Professionals.belongsToMany(Specialties,{through:'professionals-specialties',})
-Specialties.belongsToMany(Professionals,{through:'professionals-specialties',})
+Professionals.belongsToMany(Specialties,{through:'professionals-specialties'})
+Specialties.belongsToMany(Professionals,{through:'professionals-specialties'})
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
