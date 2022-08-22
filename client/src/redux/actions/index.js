@@ -45,13 +45,15 @@ export function get_cities() {
 
 export function filterConvinado(payload) {
 	return async function (dispatch) {
+
 		const doctors_detail = await axios(
 			`/professionals?lastname=${payload.lastname}&filterEsp=${payload.filterEsp}&filterProfProv=${payload.filterProfProv}`
+
 		);
 
 		return dispatch({
 			type: 'DILTER_CONVINADO',
-			payload: doctors_detail.data,
+			payload: doctors.data,
 		});
 	};
 }
