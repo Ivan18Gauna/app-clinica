@@ -1,7 +1,7 @@
 import React from 'react';
 import CardEdit from '../card/Card';
 
-export default function Cards({ doctors }) {
+export default function Cards({ doctors, setLastName, setFilterProfProv, setFilterEsp }) {
 	return (
 		<div>
 			{doctors.map((e) => {
