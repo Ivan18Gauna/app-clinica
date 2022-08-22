@@ -13,7 +13,7 @@ function CardEdit({ name, lastname, id }) {
         <div class="card-body">
           <h5 class="card-title">{name} {lastname}</h5>
           <p class="card-text">
-            Soy un profecional especialisado con años de experiencia y con muchas referencias
+            Soy un profecional especializado con años de experiencia y con muchas referencias
           </p>
         </div>     
         <Link to={'/details/'+id}>

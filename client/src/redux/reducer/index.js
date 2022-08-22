@@ -4,7 +4,8 @@ import {
   POST_REGISTER_DOCTOR,
   GET_SPECIALTIES,
   GET_CITIES,
-  GET_OS
+  GET_OS,
+  FILTER_CONVINADO
 } from "../actions/actions";
 
 const initialState = {
@@ -28,7 +29,7 @@ function rootReducer(state = initialState, action) {
       return { ...state, specialties: action.payload  };
       case GET_CITIES:
       return { ...state, cities: action.payload };
-      case "DILTER_CONVINADO":
+      case FILTER_CONVINADO:
         var allDoctors = state.allDoc
         allDoctors = action.payload
       return { ...state, doctors: allDoctors };

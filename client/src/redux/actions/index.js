@@ -4,6 +4,7 @@ import {
 	GET_SPECIALTIES,
 	GET_CITIES,
 	GET_OS,
+	FILTER_CONVINADO,
 } from '../actions/actions';
 import axios from 'axios';
 
@@ -52,7 +53,7 @@ export function filterConvinado(payload) {
 		);
 
 		return dispatch({
-			type: 'DILTER_CONVINADO',
+			type: FILTER_CONVINADO,
 			payload: doctors_detail.data,
 		});
 	};
