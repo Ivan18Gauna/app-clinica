@@ -34,7 +34,7 @@ export function get_specialties() {
 export function get_cities() {
 	return async function (dispatch) {
 		const data = await axios(`${URL}/professionals/allProfessional`);
-		const cities = await data.data.map((e) => e.city);
+		const cities = await data.data.map((e) => e.province);
 		const citiesUnique = new Set(cities);
 		return dispatch({
 			type: GET_CITIES,
