@@ -26,14 +26,14 @@ const postHistoriaClinica = async (req, res) => {
       res.send("Falta infornacion");
     } else {
        let newHistoriaClinica = await HistoriaClinica.create(historiaClinica);
-       console.log(Professionals)
-       let professionaldb = await Professionals.findAll({
-        where: {
-          license: professional,
-        }
-       })
+      //  console.log(Professionals)
+      //  let professionaldb = await Professionals.findAll({
+      //   where: {
+      //     license: professional,
+      //   }
+      //  })
        
-       await newHistoriaClinica.addProfessionals(professionaldb);
+      //  await newHistoriaClinica.addProfessionals(professionaldb);
       // const [postProfessionals, succes] = await Professionals.findOrCreate({
       //   where: {
       //     license: professional,
@@ -57,6 +57,22 @@ const postHistoriaClinica = async (req, res) => {
   }
 };
 
+const getHistoriaClinica = async (req, res) => {
+  let { id } = req.params;
+  const dbHistoriaClinica = await HistoriaClinica.findOne({
+    where: {
+      id: id,
+    },
+  })
+  //console.log(dbPatId)
+  //dbPatId.length? 
+  res.status(200).send(dbHistoriaClinica)
+  //:res.status(404).send('Id de paciente no encontrado');
+  
+};
+
+
 module.exports = {
   postHistoriaClinica,
+  getHistoriaClinica
 };

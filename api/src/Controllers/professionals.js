@@ -90,6 +90,19 @@ const getProfById = async (req, res) => {
   res.status(200).send(dbProfId);
 };
 
+const getAllProfessionals=async(req,res)=>{
+  try{  
+    let allProfessional = await Professionals.findAll({
+    include: [{ model: Specialties,
+    attributes:['name'] }],  
+    limit:150,
+    //offset: req.query.page,
+    //order:[['name', req.query.order]],
+    })
+    res.status(200).send(allProfessional)
+    } catch (error) {console.log(error)}
+}
+
 const getProfByName = async(req, res) => {
   let {lastname} = req.query
   let {filterEsp} = req.query
@@ -110,7 +123,7 @@ const getProfByName = async(req, res) => {
           });     
                        
             dbProfName.length?
-            res.status(200).send(dbProfName):res.status(404).send('No existe registro del profesional a buscar')
+            res.status(200).send(dbProfName):res.status(404).send('No existe registro del profesional a buscar por apellido')
      } catch (error) {
     console.log(error)        
     }
@@ -134,7 +147,7 @@ const getProfByName = async(req, res) => {
           });     
                        
             dbProfName.length?
-            res.status(200).send(dbProfName):res.status(404).send('No existe registro del profesional a buscar')
+            res.status(200).send(dbProfName):res.status(404).send('No existe registro del profesional por apellido y provincia a buscar')
      } catch (error) {
     console.log(error)        
     }
@@ -155,7 +168,7 @@ const getProfByName = async(req, res) => {
                 });
 
               dbProfName.length?
-              res.status(200).send(dbProfName):res.status(404).send('No existe registro del profesional a buscar')
+              res.status(200).send(dbProfName):res.status(404).send('No existe registro del profesional en la provincia')
           } catch (error) {console.log(error)
   }}
   //***********FILTRO SE RECIBE ESPECIALIDAD NO SE RECIBE PROVINCIA NI APELLIDO 
@@ -172,7 +185,7 @@ const getProfByName = async(req, res) => {
            //order:[['name', req.query.order]]//ASC DESC
           });//ASC DESC
             dbPatfName.length?
-            res.status(200).send(dbPatfName):res.status(404).send('No existe registro del profesional a buscar')
+            res.status(200).send(dbPatfName):res.status(404).send('No existe registro del profesional en la especialidad a buscar')
           } catch (error) {console.log(error)}
   }
   //***********FILTRO SE RECIBE ESPECIALIDAD  Y PROVINCIA NO SE RECIBE APELLIDO 
@@ -190,7 +203,7 @@ const getProfByName = async(req, res) => {
           }],      
             });//ASC DESC
             dbPatfName.length?
-            res.status(200).send(dbPatfName):res.status(404).send('No existe registro del profesional a buscar')
+            res.status(200).send(dbPatfName):res.status(404).send('No existe registro del profesional a buscar en la Especialidad y Provincia')
           } catch (error) {console.log(error)}
   }
   //***********SE RECIBE ESPECIALIDAD, PROVINCIA, APELLIDO 
@@ -214,7 +227,7 @@ const getProfByName = async(req, res) => {
             });//ASC DESC
             
             dbPatfName.length?
-              res.status(200).send(dbPatfName):res.status(404).send('No existe registro del profesional a buscar')
+              res.status(200).send(dbPatfName):res.status(404).send('No existe registro del profesional con el apellido, especialidad y provincia a buscar')
             } catch (error) {console.log(error)}
   }
   else if(!req.query.lastname && !req.query.filterProfProv && !req.query.filterEsp){
@@ -226,27 +239,7 @@ const getProfByName = async(req, res) => {
       res.status(200).send('Debe seleccionar un filtro a consultar')
     }
     }
-
-  
-//MUESTRA TODOS LOS PROFESSIONALES
-//  else{
-//       try {
-//               let allProfessional = await Professionals.findAll({
-//                 include: [{ model: Specialties,
-//                 attributes:['name'] }],  
-
-//                   limit:15,
-//                   offset: req.query.page,
-//                   filterProfProv:[['province', req.query.filterProfProv]],
-//                   filterEsp:[['city', req.query.filterEsp]],
-//                   order:[['name', req.query.order]],
-
-//               });
-           
-//                res.status(200).send(allProfessional);
-//           } catch (error) {console.log(error)}
-//       }     
-}
+  }
 
 const postProfessionals = async (req, res) => {
   let {
@@ -373,6 +366,7 @@ module.exports = {
   getInfoApi,
   //getProfByName,
   getProfByName,
+  getAllProfessionals,
   getProfById,
   postProfessionals,
   //getFilterByCity,
