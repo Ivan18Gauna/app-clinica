@@ -19,13 +19,16 @@
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
-const {getInfoApiPatients}= require ('./src/Controllers/patients')
+const {getInfoApiPatients}= require ('./src/Controllers/patients');
+const { getObrasSociales, addProfDb } = require('./src/Controllers/professionals.js');
 
 
 // Syncing all the models at once.
 conn.sync({ force: false }).then(() => {
   server.listen(process.env.PORT, () => {
     getInfoApiPatients();
+    getObrasSociales();
+    addProfDb();
     console.log('%s listening at 3001'); // eslint-disable-line no-console
   });
 });

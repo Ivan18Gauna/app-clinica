@@ -5,15 +5,20 @@ module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('patients', {
     id: {
-      type: DataTypes.STRING,
+    type:DataTypes.STRING,
       defaultValue: UUIDV4,
-      //primaryKey: true,
+      primaryKey: true,
       allowNull: false,
+      unique: true
     },
   name: {
        type: DataTypes.STRING,
        primaryKey: true,
        allowNull: false,
+  },
+  lastname: {
+    type: DataTypes.STRING,
+    allowNull: false
   },
   document: {
       type: DataTypes.INTEGER,
@@ -47,5 +52,6 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false
   },
+//   paranoid: true,
   });
 };

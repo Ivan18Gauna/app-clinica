@@ -1,22 +1,20 @@
 const axios = require ('axios')
-const {getInfoApiPatients, 
+const { 
     getPatById,
     getPatByName,
-   getAllPatients,
    postPatients,
    putPatients,
-    getPatByDocument}= require ('../Controllers/patients')
+   deletePatients,
+   getPatByDocument}= require ('../Controllers/patients')
 const express = require('express')
 const router =express.Router();
 
-// const {Professionals, Specialties} = require ('../db')
 
-router.get('/', getAllPatients),
-router.get('/:id', getPatById),
+router.get('/', getPatByName)
+router.get('/detail/:id', getPatById),
 router.get('/document/:document', getPatByDocument),
-router.get('/search/:name', getPatByName),
 router.post('/', postPatients),
-router.put('/edit/:id', putPatients)
-
+router.put('/edit/:id', putPatients),
+router.delete('/delete/:id', deletePatients)
 
 module.exports=router;
