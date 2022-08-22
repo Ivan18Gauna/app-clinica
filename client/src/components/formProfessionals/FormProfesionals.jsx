@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { registerDoctors } from '../../redux/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { get_specialties, registerDoctors } from '../../redux/actions';
 
 
 function validate(input) {
@@ -62,7 +62,12 @@ const provinces = ['Buenos Aires', 'Ciudad Autónoma de Buenos Aires', 'Catamarc
 
 export default function RegisterDoctor() {
 	const dispatch = useDispatch();
-	//tengo que tener las especialidades
+	const especialities_data = useSelector((state) => state.specialties)
+
+
+	useEffect(() => {
+		dispatch(get_specialties())
+	}, [dispatch])
 
 	const [input, setInput] = useState({
 		name: '',
@@ -96,17 +101,37 @@ export default function RegisterDoctor() {
 		setError(objError);
 	}
 	console.log('error', error)
-	function handleSelect(e) {
+
+	function handleSelectProvince(e) {
 
 		setInput({
 			...input,
-			province: e.target.value
+			province: e.target.value,
+
 		})
 
 
 	}
+
+	function handleSelectSpecialities(e) {
+		if (input.specialities.includes(e.target.value)) {
+			alert('Ya se selecciono la especialidad.')
+		} else {
+			setInput({
+				...input,
+				specialities: [...input.specialities, e.target.value]
+			})
+		}
+	}
 	console.log('input', input)
 
+	function handleDelete(e) {
+		e.preventDefault();
+		setInput({
+			...input,
+			specialities: input.specialities.filter(el => el !== e.target.value)
+		})
+	}
 
 	function handleSubmit(e) {
 		e.preventDefault();
@@ -114,6 +139,7 @@ export default function RegisterDoctor() {
 		setInput({
 			name: '',
 			lastname: '',
+			specialities: [],
 			license: '',
 			birth: '',
 			phone: '',
@@ -145,19 +171,32 @@ export default function RegisterDoctor() {
 					{error.lastname && <p> {error.lastname} </p>}
 				</div>
 
-				{/* <div>
-				<label>Especialidades: </label>
-					<select onChange={handleSelect} >
+				<div>
+					<label>Especialidades: </label>
+					<select onChange={handleSelectSpecialities} defaultValue='Seleccione una opción' >
+						<option value="Seleccione una opción">Seleccione una opción</option>
 
 						{
-						(e => {
-								return <option key={e} value={e} > {e} </option>
+							especialities_data.map(e => {
+								return <option key={e.id} value={e.name} > {e.name} </option>
 							})
 						}
 
 					</select>
 					{input.province === '' ? <p>*</p> : ''}
-				</div> */}
+				</div>
+				<div>
+					<ul>
+						<span>Especialidades Seleccionadas: </span>
+						{
+							input.specialities.map((e) => {
+								return <li key={e} value={e} > {e}
+									<button value={e} onClick={handleDelete} >X</button>
+								</li>
+							})
+						}
+					</ul>
+				</div>
 
 				<div>
 					<label>Matricula: </label>
@@ -185,7 +224,7 @@ export default function RegisterDoctor() {
 				</div>
 				<div>
 					<label>Provincia: </label>
-					<select onChange={handleSelect} defaultValue='Seleccione una opción' >
+					<select onChange={handleSelectProvince} defaultValue='Seleccione una opción' >
 						<option value="Seleccione una opción">Seleccione una opción</option>
 
 						{
@@ -237,15 +276,15 @@ export default function RegisterDoctor() {
 					<p>* Campos obligatorios</p>
 				</div>
 				<div>
-				{
-					input.name === '' || input.lastname === '' || input.license === '' || input.phone === '' || input.mail === '' ||
-						input.province === '' || input.city === '' || input.street === '' || input.number === '' || input.username === '' ||
-						input.password === '' || input.new_password === '' || error.name || error.lastname || error.license || error.phone
-						|| error.mail || error.number || error.password || error.new_password ?
-						<button disabled={true} >Faltan datos por completar</button>
-						:
-						<button type="submit">Enviar</button>
-				}
+					{
+						input.name === '' || input.lastname === '' || input.license === '' || input.phone === '' || input.mail === '' ||
+							input.province === '' || input.city === '' || input.street === '' || input.number === '' || input.username === '' ||
+							input.password === '' || input.new_password === '' || input.specialities.length < 1 || error.name || error.lastname || error.license || error.phone
+							|| error.mail || error.number || error.password || error.new_password ?
+							<button disabled={true} >Faltan datos por completar</button>
+							:
+							<button type="submit">Enviar</button>
+					}
 				</div>
 			</form>
 		</div>

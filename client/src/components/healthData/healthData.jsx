@@ -95,6 +95,7 @@ export default function HealthData() {
 
                 <div>
                     <label>Enfermedades Crónicas: </label>
+                    <input type="text" />
                 </div>
                 <div>
                     <label >Obra Social: </label>

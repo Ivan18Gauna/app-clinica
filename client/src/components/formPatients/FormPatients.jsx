@@ -12,7 +12,7 @@ function validate(input) {
 	if (!/([A-z])/.test(input.lastname)) {
 		error.lastname = 'Ingrese un apellido valido.'
 	}
-		if (!/^\d{8}$$/.test(input.document)) {
+	if (!/^\d{8}$$/.test(input.document)) {
 		error.document = 'Número de documento no valido.'
 	}
 	if (!/^\d{10}$$/.test(input.phone)) {
@@ -125,7 +125,7 @@ export default function RegisterPatient() {
 				</div>
 				<div>
 					<label> Apellido: </label>
-					<input type="text" name="lastname" placeholder='Ingresa tu apellido'  value={input.lastname} onChange={handleInput} />
+					<input type="text" name="lastname" placeholder='Ingresa tu apellido' value={input.lastname} onChange={handleInput} />
 					{input.lastname === '' ? <p>*</p> : ''}
 					{error.lastname && <p> {error.lastname} </p>}
 				</div>
@@ -141,6 +141,7 @@ export default function RegisterPatient() {
 					<label>Fecha de Nacimiento: </label>
 					<input type="date" name="birth" value={input.birth} onChange={handleInput} />
 					{input.birth === '' ? <p>*</p> : ''}
+					{error.birth && <p> {error.birth} </p>}
 
 				</div>
 				<div>
@@ -186,7 +187,7 @@ export default function RegisterPatient() {
 				</div>
 				<div>
 					<label>Número: </label>
-					<input type="number" name="number" placeholder='Número' value={input.number}  onChange={handleInput}/>
+					<input type="number" name="number" placeholder='Número' value={input.number} onChange={handleInput} />
 					{input.number === '' ? <p>*</p> : ''}
 					{error.number && <p> {error.number} </p>}
 				</div>
@@ -218,7 +219,7 @@ export default function RegisterPatient() {
 					{
 						input.name === '' || input.lastname === '' || input.document === '' || input.phone === '' || input.mail === '' ||
 							input.province === '' || input.city === '' || input.street === '' || input.number === '' || input.username === '' ||
-							input.password === '' || input.new_password === '' || error.name || error.lastname || error.document || error.phone
+							input.password === '' || input.new_password === '' || error.name || error.lastname || error.document || error.birth || error.phone
 							|| error.mail || error.number || error.password || error.new_password ?
 							<button disabled={true} >Faltan datos por completar</button>
 							:
