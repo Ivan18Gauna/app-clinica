@@ -53,7 +53,7 @@ export function filterConvinado(payload) {
 
 		return dispatch({
 			type: 'DILTER_CONVINADO',
-			payload: doctors.data,
+			payload: doctors_detail.data,
 		});
 	};
 }
