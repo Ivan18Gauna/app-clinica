@@ -50,7 +50,7 @@ export function filterConvinado(payload) {
 			`/professionals?lastname=${payload.lastname}&filterEsp=${payload.filterEsp}&filterProfProv=${payload.filterProfProv}`
 		);
 		return dispatch({
-			type: 'DILTER_CONVINADO',
+			type: FILTER_CONVINADO,
 			payload: doctors_detail.data,
 		});
 	};
