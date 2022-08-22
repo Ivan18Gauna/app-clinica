@@ -1,6 +1,5 @@
 import React from 'react';
 import './About.css';
-import Loading from '../loading/Loading';
 
 export default function About() {
 	return (
