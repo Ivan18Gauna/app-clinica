@@ -5,13 +5,17 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import styles from './Filters.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { get_cities, get_specialties } from '../../redux/actions';
+import {
+	filterConvinado,
+	get_cities,
+	get_specialties,
+} from '../../redux/actions';
 
 const Filters = () => {
 	const [filter, setFilter] = useState({
-		name: '',
-		especialidad: '',
-		ubicacion: '',
+		lastname: '',
+		filterEsp: '',
+		filterProfProv: '',
 	});
 	const specialties = useSelector((state) => state.specialties);
 	const cities = useSelector((state) => state.cities);
@@ -19,48 +23,50 @@ const Filters = () => {
 	useEffect(() => {
 		dispatch(get_specialties());
 		dispatch(get_cities());
-	}, [dispatch]);
+		dispatch(filterConvinado(filter));
+	}, [dispatch, filter]);
 
 	const handleOnChange = (e) => {
 		setFilter({
 			...filter,
 			[e.target.name]: e.target.value,
 		});
+		filterConvinado(filter);
 	};
 
 	return (
 		<div className={`${styles.contenedorSearch}`}>
-			<Form>
+			<Form className={styles.form}>
 				<Row
 					xs={1}
 					sm={1}
 					md={1}
-					lg={3}
+					lg={2}
 					className={`justify-content-center ${styles.searchMin}`}
 				>
 					<Col>
 						<Form.Control
 							onChange={(e) => handleOnChange(e)}
 							type={'text'}
-							value={filter.name}
-							name="name"
+							value={filter.lastname}
+							name="lastname"
 							placeholder={'Nombre...'}
 						/>
 					</Col>
 					<Col lg={6} className={styles.selects}>
-						<Form.Select
-							onChange={(e) => handleOnChange(e)}
-							name="especialidad"
-						>
+						<Form.Select onChange={(e) => handleOnChange(e)} name="filterEsp">
 							<option hidden>Especialidad</option>
 							{specialties &&
 								specialties.map((el) => (
-									<option key={el} value={el}>
-										{el}
+									<option key={el.id} value={el.name}>
+										{el.name}
 									</option>
 								))}
 						</Form.Select>
-						<Form.Select onChange={(e) => handleOnChange(e)} name={'ubicacion'}>
+						<Form.Select
+							onChange={(e) => handleOnChange(e)}
+							name="filterProfProv"
+						>
 							<option hidden>Ubicacion</option>
 							{cities &&
 								cities.map((el) => (
@@ -69,11 +75,6 @@ const Filters = () => {
 									</option>
 								))}
 						</Form.Select>
-					</Col>
-					<Col lg={2}>
-						<Button className={`${styles.btn}`} type={'submit'}>
-							Buscar
-						</Button>
 					</Col>
 				</Row>
 			</Form>

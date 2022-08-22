@@ -13,13 +13,16 @@ export default function Details() {
     const dispatch = useDispatch();
 
     const doctor = useSelector((state) => state.detail)
-    console.log('detail',doctor)
+     
 
     useEffect(() => {
         dispatch(get_DoctorsDetail(id))
     }, [dispatch, id])
 
-
+    if (Array.isArray(doctor.specialties)) {
+        var temp = doctor.specialties.map(e => e.name)
+        
+    } 
 
     return (
           <> 
@@ -30,7 +33,7 @@ export default function Details() {
             <div className="text">
            
             <h3>Nombre: {doctor.name } </h3>
-            <h3>Especialidad: </h3>
+            <h3>Especialidad: {temp} </h3>
             <h3>Matricula: {doctor.license} </h3>
             <h3>Ciudad: {doctor.city} </h3>
             </div>

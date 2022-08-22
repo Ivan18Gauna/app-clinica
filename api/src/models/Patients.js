@@ -6,15 +6,14 @@ module.exports = (sequelize) => {
   sequelize.define('patients', {
     id: {
     type:DataTypes.STRING,
-      defaultValue: UUIDV4,
-      primaryKey: true,
-      allowNull: false,
-      unique: true
+    defaultValue: UUIDV4,
+    primaryKey: true,
+    allowNull: false,
+    unique: true,
     },
   name: {
-       type: DataTypes.STRING,
-       primaryKey: true,
-       allowNull: false,
+    type: DataTypes.STRING,
+    allowNull: false,
   },
   lastname: {
     type: DataTypes.STRING,
@@ -52,6 +51,12 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false
   },
-//   paranoid: true,
+  },
+  {
+    createdAt: false,
+    updatedAt: false,
+    deletedAt: 'deletedAt',
+    paranoid: true,
+    timestamps: true,
   });
 };
