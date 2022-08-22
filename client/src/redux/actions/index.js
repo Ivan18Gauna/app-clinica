@@ -1,7 +1,7 @@
 import {
 	GET_DOCTORS,
 	GET_DOCTORS_DETAIL,
-  FILTER_CONVINADO,
+	FILTER_CONVINADO,
 	GET_SPECIALTIES,
 	GET_CITIES,
 	GET_OS,
@@ -13,6 +13,7 @@ const URL = 'http://localhost:3001';
 export function get_Doctors() {
 	return async function (dispatch) {
 		const doctors = await axios(`/professionals/allProfessional`);
+		console.log('action prof', doctors);
 		return dispatch({
 			type: GET_DOCTORS,
 			payload: doctors.data,
@@ -45,27 +46,21 @@ export function get_cities() {
 
 export function filterConvinado(payload) {
 	return async function (dispatch) {
-		try {
-			const doctors_detail = await axios(
-				`${URL}/professionals?lastname=${payload.lastname}&filterEsp=${payload.filterEsp}&filterProfProv=${payload.filterProfProv}`
-			);
-			return dispatch({
-				type: FILTER_CONVINADO,
-				payload: doctors_detail.data,
-			});
-		} catch (error) {
-			return dispatch({
-				type: FILTER_CONVINADO,
-				payload: error.message,
-			});
-		}
+		const doctors_detail = await axios(
+			`/professionals?lastname=${payload.lastname}&filterEsp=${payload.filterEsp}&filterProfProv=${payload.filterProfProv}`
+		);
+
+		return dispatch({
+			type: FILTER_CONVINADO,
+			payload: doctors_detail.data,
+		});
 	};
 }
 
 export function get_DoctorsDetail(id) {
 	return async function (dispatch) {
-		const doctors_detail = await axios(`/professionals/${id}`);
-		console.log('id', doctors_detail);
+		const doctors_detail = await axios(`/professionals/detail/${id}`);
+
 		return dispatch({
 			type: GET_DOCTORS_DETAIL,
 			payload: doctors_detail.data,
