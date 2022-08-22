@@ -25,7 +25,7 @@ function rootReducer(state = initialState, action) {
         alDoc: action.payload 
       };
     case GET_SPECIALTIES:
-      return { ...state, specialties: action.payload };
+      return { ...state, specialties: action.payload  };
       case GET_CITIES:
       return { ...state, cities: action.payload };
       case "DILTER_CONVINADO":

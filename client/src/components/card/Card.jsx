@@ -4,6 +4,7 @@ import React from "react";
 import { Link } from 'react-router-dom';
 
 
+
 function CardEdit({ name, lastname, id }) {
   return (
     <div class="m-0 row justify-content-center">
@@ -20,6 +21,7 @@ function CardEdit({ name, lastname, id }) {
         </Link>
       </div>
     </div>
+
   );
 }
 
