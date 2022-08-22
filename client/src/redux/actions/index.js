@@ -11,7 +11,7 @@ const URL = 'http://localhost:3001';
 
 export function get_Doctors() {
 	return async function (dispatch) {
-		const doctors = await axios(`${URL}/professionals/allProfessional`);
+		const doctors = await axios(`/professionals/allProfessional`);
 		return dispatch({
 			type: GET_DOCTORS,
 			payload: doctors.data,
@@ -21,7 +21,7 @@ export function get_Doctors() {
 
 export function get_specialties() {
 	return async function (dispatch) {
-		const specialties = await axios(`${URL}/especialties`);
+		const specialties = await axios(`/especialties`);
 		
 		return dispatch({
 			type: GET_SPECIALTIES,
@@ -32,7 +32,7 @@ export function get_specialties() {
 
 export function get_cities() {
 	return async function (dispatch) {
-		const data = await axios(`${URL}/professionals/allProfessional`);
+		const data = await axios(`/professionals/allProfessional`);
 		const cities = await data.data.map((e) => e.province);
 		const citiesUnique = new Set(cities);
 		return dispatch({
@@ -57,7 +57,7 @@ export function filterConvinado(payload) {
 
 export function get_DoctorsDetail(id) {
 	return async function (dispatch) {
-		const doctors_detail = await axios(`${URL}/professionals/${id}`);
+		const doctors_detail = await axios(`/professionals/${id}`);
 		console.log('id', doctors_detail);
 		return dispatch({
 			type: GET_DOCTORS_DETAIL,
@@ -69,7 +69,7 @@ export function get_DoctorsDetail(id) {
 export function registerDoctors(payload) {
 	console.log('post',payload)
 	return async function () {
-		const registerDoctors = await axios.post(`${URL}/professionals`, payload);
+		const registerDoctors = await axios.post(`/professionals`, payload);
 		return registerDoctors;
 	};
 }
