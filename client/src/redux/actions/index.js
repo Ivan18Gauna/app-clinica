@@ -4,7 +4,7 @@ import {
 	FILTER_CONVINADO,
 	GET_SPECIALTIES,
 	GET_CITIES,
-	GET_OS
+	GET_OS,
 } from '../actions/actions';
 import axios from 'axios';
 
