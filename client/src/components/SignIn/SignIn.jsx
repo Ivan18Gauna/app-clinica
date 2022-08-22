@@ -19,7 +19,7 @@ export default function SignIn() {
                     <h5>Paciente</h5>
                   </div>
                   <div class="text-center">
-                    Busca el profecional que nesecitas y reserva un turno.
+                    Busca el profesional que necesitas y reserva un turno.
                   </div>
                 </div>
               </div>
@@ -38,7 +38,7 @@ export default function SignIn() {
                     <h5>Profesional Medico</h5>
                   </div>
                   <div class="text-center">
-                    Simplifica la gestion de turnos y permitele a tus paciente
+                    Simplifica la gestion de turnos y permitele a tus pacientes
                     reservar citas de forma online.
                   </div>
                 </div>
