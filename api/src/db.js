@@ -58,11 +58,14 @@ const { Professionals, Specialties, Patients, ObrasSociales, HistoriaClinica, He
 
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
-HistoriaClinica.belongsTo(Patients,{through:'historiaClinica-patients'})
-Patients.belongsToMany(HistoriaClinica,{through:'historiaClinica-patients'})
+Patients.hasOne(HealthData)
+HealthData.belongsTo(Patients)
 
-HistoriaClinica.belongsTo(Professionals,{through:'historiaClinica-professionals'})
-Professionals.belongsToMany(HistoriaClinica,{through:'historiaClinica-professionals'})
+Patients.hasMany(HistoriaClinica)
+HistoriaClinica.belongsTo(Patients)
+
+Professionals.hasMany(HistoriaClinica)
+HistoriaClinica.belongsTo(Professionals)
 
 Professionals.belongsToMany(ObrasSociales,{through:'professionals-o.sociales'})
 ObrasSociales.belongsToMany(Professionals,{through:'professionals-o.sociales'})
