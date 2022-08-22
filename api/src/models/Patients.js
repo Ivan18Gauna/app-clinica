@@ -7,8 +7,9 @@ module.exports = (sequelize) => {
     id: {
     type:DataTypes.STRING,
       defaultValue: UUIDV4,
-      //primaryKey: true,
+      primaryKey: true,
       allowNull: false,
+      unique: true
     },
   name: {
        type: DataTypes.STRING,
@@ -51,6 +52,6 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false
   },
-  paranoid: true,
+//   paranoid: true,
   });
 };

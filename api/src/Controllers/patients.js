@@ -8,11 +8,11 @@ const { v4: uuidv4 } = require("uuid")
 const getInfoApiPatients= async(req, res) => 
 {
     const apiPatients = await axios.get('https://patients-4a60b-default-rtdb.firebaseio.com/.json')
-    const patient = await apiPatients.data
-    let idv4 = uuidv4();
-    let dbId = idv4.slice(0, 4);
+    const patient = await apiPatients.data 
     patient.forEach((e) => {
-    Patients.findOrCreate({
+      let idv4 = uuidv4();
+      let dbId = idv4.slice(0, 4);
+      Patients.findOrCreate({
       where: {
         id: dbId,
         name: e.name.split(' ')[0],
@@ -28,7 +28,6 @@ const getInfoApiPatients= async(req, res) =>
       },
     });
   });
-
   console.log("Se ha cargado la base de pacientes");
 };
 
@@ -38,9 +37,11 @@ const getPatById = async (req, res) => {
     where: {
       id: id,
     },
-  });
-  dbPatId.length?
-  res.status(200).send(dbPatId): res.status(404).send('Id de paciente no encontrado');
+  })
+  //console.log(dbPatId)
+  //dbPatId.length? 
+  res.status(200).send(dbPatId)
+  //:res.status(404).send('Id de paciente no encontrado');
   
 };
 
@@ -55,19 +56,16 @@ const getPatByDocument = async (req, res) => {
 };
 
 const getPatByName = async(req, res) => {
-    let {name} = req.query
-    console.log({name})
-    if(name){
+    let {lastname} = req.query
+    console.log({lastname})
+    if(lastname){
         try {
             let dbPatfName = await Patients.findAll({
                 where: {
-                   
-                    name: { [Op.iLike]: name +'%' },                  }
-                    
+                    name: { [Op.iLike]: lastname +'%' },                  }
                 })
-
-            res.status(200).send(dbPatfName)
-       
+                dbPatfName.length?
+                res.status(200).send(dbPatfName):res.status(404).send('No existe registro del paciente a buscar')
         } catch (error) {
         console.log(error)        
         }
@@ -77,9 +75,9 @@ const getPatByName = async(req, res) => {
         try {
                let dbPatfName = await Patients.findAll({
                    where:{province:req.query.filterP},
-                   limit: 9,
+                   limit: 100,
+                  // offset: req.query.page,
                    order:[['name', req.query.order]] });//ASC DESC
-
                     return res.send(dbPatfName)
             } catch (error) {console.log(error)
     }} else if (req.query.filterC)
@@ -95,14 +93,12 @@ const getPatByName = async(req, res) => {
    else{
         try {
                 let allPatien = await Patients.findAll({
-                    limit:5,
+                    limit:20,
                     offset: req.query.page,
                     filterP:[['province', req.query.filterP]],
                     filterC:[['city', req.query.filterC]],
                     order:[['name', req.query.order]],
-
                 });
-             
                  res.status(200).send(allPatien);
             } catch (error) {console.log(error)}
         }     
@@ -112,6 +108,7 @@ const getPatByName = async(req, res) => {
 const postPatients = async (req, res) => {
     let {
         name,
+        lastname,
         birth,
         phone,
         mail,
@@ -127,6 +124,7 @@ const postPatients = async (req, res) => {
         const patients = {
         id: dbId,
         name: name,
+        lastname: lastname,
         birth: birth,
         phone: phone,
         mail: mail,
@@ -137,7 +135,7 @@ const postPatients = async (req, res) => {
         document: document     
         };
         if(isNaN(name) === false)return res.send("El valor ingresado no debe ser numerico.")
-        if(!name || !birth || !phone || !mail || !province || !city || !number || !street || !document){
+        if(!name || !lastname || !birth || !phone || !mail || !province || !city || !number || !street || !document){
             res.send("Falta infornacion")
         }
         const validate = await Patients.findOne({
@@ -159,6 +157,7 @@ const putPatients = async (req, res) => {
       const id = req.params.id;
       const {
         name,
+        lastname,
         document,
         birth,
         phone,
@@ -171,6 +170,7 @@ const putPatients = async (req, res) => {
       const editPatients = await Patients.update(
         {
             name,
+            lastname,
             document,
             birth,
             phone,
@@ -188,11 +188,25 @@ const putPatients = async (req, res) => {
     }
   };
 
+  const deletePatients = async (req, res) => {
+    try {
+        const id = req.params.id;
+        await Patients.destroy({
+          where: { id: id },
+        });
+        return res.send(" Patient deleted!");
+      } catch (error) {
+        return error;
+      }
+}
+   
+
 module.exports = {
     getInfoApiPatients,
     getPatById,
     getPatByName,
     getPatByDocument,
     postPatients,
-    putPatients
+    putPatients,
+    deletePatients
 };

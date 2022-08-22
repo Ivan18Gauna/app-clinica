@@ -5,7 +5,7 @@ export default function Cards({ doctors }) {
 	return (
 		<div>
 			{doctors.map((e) => {
-				return <CardEdit key={e.id} id={e.id} name={e.name} />;
+				return <CardEdit key={e.id} id={e.id} name={e.name} lastname={e.lastname} />;
 			})}
 		</div>
 	);
