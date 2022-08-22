@@ -83,13 +83,12 @@ const getObrasSociales = async () => {
 const getProfById = async (req, res) => {
   let { id } = req.params;
   const dbProfId = await Professionals.findOne({
-    where: {
-      id: id,
-    },
+    where: {id: id,
+},
   });
   res.status(200).send(dbProfId);
 };
-
+//.commet
 const getProfByName = async(req, res) => {
   let {lastname} = req.query
   let {filterEsp} = req.query
