@@ -244,6 +244,7 @@ const getProfByName = async(req, res) => {
 const postProfessionals = async (req, res) => {
   let {
     name,
+    lastname,
     license,
     birth,
     phone,
@@ -260,6 +261,7 @@ const postProfessionals = async (req, res) => {
     const professional = {
       id: dbId,
       name: name,
+      lastname: lastname,
       license: license,
       birth: birth,
       phone: phone,
@@ -273,6 +275,7 @@ const postProfessionals = async (req, res) => {
       return res.send("El valor ingresado no debe ser numerico.");
     if (
       !name ||
+      !lastname ||
       !license ||
       !birth ||
       !phone ||
@@ -285,7 +288,7 @@ const postProfessionals = async (req, res) => {
       res.send("Falta infornacion");
     }
     const validate = await Professionals.findOne({
-      where: { name },
+      where: { license },
     });
     if (!validate) {
       let newProfessional = await Professionals.create(professional);
@@ -314,6 +317,7 @@ const putProfessionals = async (req, res) => {
     const id = req.params.id;
     const {
       name,
+      lastname,
       license,
       birth,
       phone,
@@ -326,6 +330,7 @@ const putProfessionals = async (req, res) => {
     const editProfessionals = await Professionals.update(
       {
         name,
+        lastname,
         license,
         birth,
         phone,
@@ -343,13 +348,30 @@ const putProfessionals = async (req, res) => {
   }
 };
 
+const deleteProfessionals = async (req, res) => {
+    try {
+        const id = req.params.id;
+        await Professionals.destroy({
+          where: { id: id },
+        });
+        return res.send("deleted!");
+      } catch (error) {
+        return error;
+      }
+}
+   
+
+
 module.exports = {
   getInfoApi,
+  //getProfByName,
   getProfByName,
   getAllProfessionals,
   getProfById,
   postProfessionals,
+  //getFilterByCity,
   putProfessionals,
   getObrasSociales,
   addProfDb,
+  deleteProfessionals
 };
