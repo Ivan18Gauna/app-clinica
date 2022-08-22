@@ -85,6 +85,8 @@ const getObrasSociales = async () => {
 const getProfById = async (req, res) => {
   let { id } = req.params;
   const dbProfId = await Professionals.findOne({
+    include: [{ model: Specialties,
+      attributes:['name'] }],  
     where: {
       id: id,
     },
