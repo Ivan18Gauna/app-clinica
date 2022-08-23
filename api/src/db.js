@@ -58,10 +58,10 @@ const { Professionals, Specialties, Patients, ObrasSociales, HistoriaClinica } =
 
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
-HistoriaClinica.belongsTo(Patients,{through:'historiaClinica-patients'})
+HistoriaClinica.belongsToMany(Patients,{through:'historiaClinica-patients'})
 Patients.belongsToMany(HistoriaClinica,{through:'historiaClinica-patients'})
 
-HistoriaClinica.belongsTo(Professionals,{through:'historiaClinica-professionals'})
+HistoriaClinica.belongsToMany(Professionals,{through:'historiaClinica-professionals'})
 Professionals.belongsToMany(HistoriaClinica,{through:'historiaClinica-professionals'})
 
 Professionals.belongsToMany(ObrasSociales,{through:'professionals-o.sociales'})
