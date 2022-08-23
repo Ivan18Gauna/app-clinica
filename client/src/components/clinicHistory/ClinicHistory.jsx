@@ -8,7 +8,7 @@ export default function ClinicHistory() {
             <p> Motivo :</p>
             <label>Estudio digital :</label>
             <p>Detalle consulta :</p>
-            <a>Fecha atencion :</a>
+            <p>Fecha atencion :</p>
             <h5>Diagnostico final :</h5>
         </div>
     )
