@@ -20,5 +20,4 @@ router.use('/especialties', routesEspecialties);
 router.use('/historiaclinica', routersHistoriaClinica);
 
 
-
 module.exports = router;
