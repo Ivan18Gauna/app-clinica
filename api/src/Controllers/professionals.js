@@ -31,6 +31,8 @@ const addProfDb = async () => {
       const dbProf = {
         id: dbId,
         name: e.name.split(" ")[0],
+		username: e.username,
+        password: e.password,
         lastname: e.name.split(" ")[1],
         license: e.license,
         birth: e.birth,

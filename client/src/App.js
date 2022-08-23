@@ -23,7 +23,7 @@ function App() {
           <Route path="/" component={navBarEdit}/>
         </Switch>
         <Switch>
-          <Route path="/form" component={FormUpProfessionals}/>
+        {/*   <Route path="/form" component={FormUpProfessionals}/> */}
           <Route path="/home" component={Home} />
           <Route path='/details/:id' component={Details}/>
           <Route path='/login' component={Login}/>
@@ -34,7 +34,7 @@ function App() {
           <Route path='/professionals' component={Professionals}/>
           <Route path='/about' component={About}/>
           <Route path='/price' component={Price}/>
-          <Route path='/google' component={Google}/>
+       {/*    <Route path='/google' component={Google}/> */}
         </Switch>
       </div>
     </BrowserRouter>
