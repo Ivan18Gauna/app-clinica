@@ -39,7 +39,7 @@ export default function Details() {
             </div>
            </div>
             <div className="btnHome">
-           <Link to={'/home'}>
+           <Link to={'/professionals'}>
            <Button variant="outline-primary">Volver</Button>{' '}
             </Link>
             </div>    

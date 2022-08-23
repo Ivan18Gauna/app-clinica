@@ -5,3 +5,4 @@ export const GET_SPECIALTIES = 'GET_SPECIALTIES';
 export const GET_PROFESSIONALS = 'GET_PROFESSIONALS';
 export const GET_OS = 'GET_OS'
 export const GET_CITIES = 'GET_CITIES';
+export const FILTER_CONVINADO = 'FILTER_CONVINADO';
