@@ -3,6 +3,7 @@ const routesProfessionals = require('./routesProfessionals')
 const routesPatients = require('./routesPatients')
 const routesEspecialties = require('./routesEspecialties')
 const routersHistoriaClinica = require('./routersHistoriaClinica')
+const routesHealthData = require('./routesHealthData')
 
 const {Professionals, Specialties} = require ('../db')
 
@@ -17,7 +18,8 @@ const router = Router();
 router.use('/professionals', routesProfessionals);
 router.use('/patients', routesPatients);
 router.use('/especialties', routesEspecialties);
-router.use('/historiaClinica', routersHistoriaClinica)
+router.use('/historiaClinica', routersHistoriaClinica);
+router.use('/healthData', routesHealthData )
 
 
 

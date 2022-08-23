@@ -9,6 +9,7 @@ import {
 
 const initialState = {
   doctors: [],
+  allDoc:[],
   detail: [],
   specialties:[],
   cities:[],
@@ -18,13 +19,19 @@ const initialState = {
 function rootReducer(state = initialState, action) {
   switch (action.type) {
     case GET_DOCTORS:
-      return { ...state, doctors: action.payload };
+      return { 
+        ...state,
+        doctors: action.payload ,
+        alDoc: action.payload 
+      };
     case GET_SPECIALTIES:
-      return { ...state, specialties: action.payload };
+      return { ...state, specialties: action.payload  };
       case GET_CITIES:
       return { ...state, cities: action.payload };
       case "DILTER_CONVINADO":
-      return { ...state, doctors: action.payload };
+        var allDoctors = state.allDoc
+        allDoctors = action.payload
+      return { ...state, doctors: allDoctors };
     case GET_DOCTORS_DETAIL:
       return {
         ...state,

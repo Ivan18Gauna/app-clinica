@@ -11,8 +11,8 @@ const URL = 'http://localhost:3001';
 
 export function get_Doctors() {
 	return async function (dispatch) {
-		const doctors = await axios(`${URL}/professionals/allProfessional`);
-		console.log('doctors', doctors);
+		const doctors = await axios(`/professionals/allProfessional`);
+		console.log('action prof', doctors)
 		return dispatch({
 			type: GET_DOCTORS,
 			payload: doctors.data,
@@ -22,7 +22,8 @@ export function get_Doctors() {
 
 export function get_specialties() {
 	return async function (dispatch) {
-		const specialties = await axios(`${URL}/especialties`);
+		const specialties = await axios(`/especialties`);
+		
 		return dispatch({
 			type: GET_SPECIALTIES,
 			payload: specialties.data,
@@ -32,7 +33,7 @@ export function get_specialties() {
 
 export function get_cities() {
 	return async function (dispatch) {
-		const data = await axios(`${URL}/professionals/allProfessional`);
+		const data = await axios(`/professionals/allProfessional`);
 		const cities = await data.data.map((e) => e.province);
 		const citiesUnique = new Set(cities);
 		return dispatch({
@@ -44,8 +45,10 @@ export function get_cities() {
 
 export function filterConvinado(payload) {
 	return async function (dispatch) {
+
 		const doctors_detail = await axios(
-			`${URL}/professionals?lastname=${payload.lastname}&filterEsp=${payload.filterEsp}&filterProfProv=${payload.filterProfProv}`
+			`/professionals?lastname=${payload.lastname}&filterEsp=${payload.filterEsp}&filterProfProv=${payload.filterProfProv}`
+
 		);
 
 		return dispatch({
@@ -57,8 +60,8 @@ export function filterConvinado(payload) {
 
 export function get_DoctorsDetail(id) {
 	return async function (dispatch) {
-		const doctors_detail = await axios(`${URL}/professionals/${id}`);
-		console.log('id', doctors_detail);
+		const doctors_detail = await axios(`/professionals/detail/${id}`);
+		
 		return dispatch({
 			type: GET_DOCTORS_DETAIL,
 			payload: doctors_detail.data,
@@ -67,8 +70,9 @@ export function get_DoctorsDetail(id) {
 }
 
 export function registerDoctors(payload) {
+	console.log('post',payload)
 	return async function () {
-		const registerDoctors = await axios.post(`${URL}/professionals`, payload);
+		const registerDoctors = await axios.post(`/professionals`, payload);
 		return registerDoctors;
 	};
 }
