@@ -1,6 +1,5 @@
 const Sequelize = require("sequelize");
 const { default: axios } = require("axios");
-const { v4: uuidv4 } = require("uuid");
 const { Op } = require("sequelize");
 const { Professionals, Specialties, ObrasSociales } = require("../db");
 const { query } = require("express");
@@ -26,10 +25,7 @@ const addProfDb = async () => {
       });
     });
     await prof.forEach(async (e) => {
-      let idv4 = uuidv4();
-      let dbId = idv4.slice(0, 4);
       const dbProf = {
-        id: dbId,
         name: e.name.split(" ")[0],
         username: e.username,
         password: e.password,
@@ -114,7 +110,7 @@ const getProfByName = async(req, res) => {
   let {filterProfProv}= req.query
   let {page}= req.query
   
-  //***********FILTRO SE RECIBE APELLIDO Y NO SE RECIBE ESPECIALIDAD NI PROVINCIA
+  //*****FILTRO SE RECIBE APELLIDO Y NO SE RECIBE ESPECIALIDAD NI PROVINCIA
   if(lastname && !filterEsp && !filterProfProv){
     try {
         let dbProfName = await Professionals.findAll({
@@ -134,7 +130,7 @@ const getProfByName = async(req, res) => {
     }
     
   }
-  //***********FILTRO SE RECIBE APELLIDO Y PROVINCIA NO SE RECIBE ESPECIALIDAD  
+  //*****FILTRO SE RECIBE APELLIDO Y PROVINCIA NO SE RECIBE ESPECIALIDAD  
   if(lastname && !filterEsp && filterProfProv){
     try {
         let dbProfName = await Professionals.findAll({
@@ -158,7 +154,7 @@ const getProfByName = async(req, res) => {
     }
     
   }
-  //***********FILTRO SE RECIBE PROVINCIA NO SE RECIBE ESPECIALIDAD NI APELLIDO 
+  //*****FILTRO SE RECIBE PROVINCIA NO SE RECIBE ESPECIALIDAD NI APELLIDO 
   if(!lastname && !filterEsp && filterProfProv)
   {
       try {
@@ -176,7 +172,7 @@ const getProfByName = async(req, res) => {
               res.status(200).send(dbProfName):res.status(404).send('No existe registro del profesional en la provincia')
           } catch (error) {console.log(error)
   }}
-  //***********FILTRO SE RECIBE ESPECIALIDAD NO SE RECIBE PROVINCIA NI APELLIDO 
+  //*****FILTRO SE RECIBE ESPECIALIDAD NO SE RECIBE PROVINCIA NI APELLIDO 
   if (!lastname && filterEsp && !filterProfProv)
   {
       try {
@@ -193,7 +189,7 @@ const getProfByName = async(req, res) => {
             res.status(200).send(dbPatfName):res.status(404).send('No existe registro del profesional en la especialidad a buscar')
           } catch (error) {console.log(error)}
   }
-  //***********FILTRO SE RECIBE ESPECIALIDAD  Y PROVINCIA NO SE RECIBE APELLIDO 
+  //*****FILTRO SE RECIBE ESPECIALIDAD  Y PROVINCIA NO SE RECIBE APELLIDO 
     
   if (!lastname && filterEsp && filterProfProv)
   {
@@ -211,7 +207,7 @@ const getProfByName = async(req, res) => {
             res.status(200).send(dbPatfName):res.status(404).send('No existe registro del profesional a buscar en la Especialidad y Provincia')
           } catch (error) {console.log(error)}
   }
-  //***********SE RECIBE ESPECIALIDAD, PROVINCIA, APELLIDO 
+  //*****SE RECIBE ESPECIALIDAD, PROVINCIA, APELLIDO 
   if (lastname && filterEsp && filterProfProv)
   {
       try {
@@ -260,11 +256,8 @@ const postProfessionals = async (req, res) => {
     street,
     specialty,
   } = req.body;
-  let idv4 = uuidv4();
-  const dbId = idv4.slice(0, 4);
   try {
     const professional = {
-      id: dbId,
       name: name,
       lastname: lastname,
       license: license,
