@@ -28,7 +28,7 @@ function navBarEdit() {
 					<Nav>
 						{URL === 'http://localhost:3000/home' ? (
 							<Nav.Link as={Link} to="/professionals">
-								Buscar Profecionales
+								Buscar Profesionales
 							</Nav.Link>
 						) : null}
 						<Nav.Link as={Link} to="/signin">
