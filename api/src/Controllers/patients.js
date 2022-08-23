@@ -1,6 +1,5 @@
 const Sequelize = require("sequelize");
 const axios = require("axios");
-// const { v4: uuidv4 } = require("uuid");
 const { Op } = require("sequelize");
 const { Patients } = require("../db");
 
@@ -78,8 +77,7 @@ const getPatByName = async(req, res) => {
         } catch (error) {
         console.log(error)        
         }
-    }
-  } else {
+    }else {
     try {
       let allPatien = await Patients.findAll({
         limit: 20,
@@ -92,6 +90,7 @@ const getPatByName = async(req, res) => {
     } catch (error) {
       console.log(error);
     }
+  }
   }
   const getPatByOnsearchName = async(req, res) => {
     let {lastname} = req.query
@@ -109,6 +108,7 @@ const getPatByName = async(req, res) => {
         }
     }
   }
+
 
 const postPatients = async (req, res) => {
   let {

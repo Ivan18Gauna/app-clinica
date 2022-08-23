@@ -50,6 +50,24 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false
   },
+  blood: {
+    type: DataTypes.STRING,
+  },
+  vaccines: {
+      type: DataTypes.STRING,
+  },
+  allergies: {
+      type: DataTypes.STRING,
+    },
+  transfusion: {
+      type: DataTypes.STRING,
+    },
+  chronicles: {
+      type: DataTypes.STRING,
+    },
+  oS: {
+      type: DataTypes.STRING,
+      },  
   },
   {
     createdAt: false,
