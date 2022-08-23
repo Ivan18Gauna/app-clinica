@@ -1,36 +1,84 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownButton from 'react-bootstrap/DropdownButton';
-import Form from 'react-bootstrap/Form';
-import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import styles from './Filters.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+	filterConvinado,
+	get_cities,
+	get_specialties,
+} from '../../redux/actions';
 
 const Filters = () => {
+	const [filter, setFilter] = useState({
+		lastname: '',
+		filterEsp: '',
+		filterProfProv: '',
+	});
+	const specialties = useSelector((state) => state.specialties);
+	const cities = useSelector((state) => state.cities);
+	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch(get_specialties());
+		dispatch(get_cities());
+		dispatch(filterConvinado(filter));
+	}, [dispatch, filter]);
+
+	const handleOnChange = (e) => {
+		setFilter({
+			...filter,
+			[e.target.name]: e.target.value,
+		});
+		filterConvinado(filter);
+	};
+
 	return (
-		<Container>
-			<Row className="justify-content-md-center mt-5">
-				<Col xs={14} md={3} className="p-0 me-4 mt-3">
-					<Form.Control type={'text'} placeholder={'Por nombre...'} />
-				</Col>
-				<Col xs={6} md={3} className={'p-0 mt-3'}>
-					<ButtonGroup className={'me-2'}>
-						<DropdownButton as={ButtonGroup} title={'Especialidad'}>
-							<Dropdown.Item eventKey="1">Alergia</Dropdown.Item>
-							<Dropdown.Item eventKey="2">Actividad Fisica</Dropdown.Item>
-						</DropdownButton>
-						<DropdownButton as={ButtonGroup} title={'Ubicacion'}>
-							<Dropdown.Item eventKey="3">Argentina</Dropdown.Item>
-						</DropdownButton>
-					</ButtonGroup>
-				</Col>
-				<Col xs={6} md={1} className={'p-0 mt-3'}>
-					<Button type={'submit'}>Buscar</Button>
-				</Col>
-			</Row>
-		</Container>
+		<div className={`${styles.contenedorSearch}`}>
+			<Form className={styles.form}>
+				<Row
+					xs={1}
+					sm={1}
+					md={1}
+					lg={2}
+					className={`justify-content-center ${styles.searchMin}`}
+				>
+					<Col>
+						<Form.Control
+							onChange={(e) => handleOnChange(e)}
+							type={'text'}
+							value={filter.lastname}
+							name="lastname"
+							placeholder={'Nombre...'}
+						/>
+					</Col>
+					<Col lg={6} className={styles.selects}>
+						<Form.Select onChange={(e) => handleOnChange(e)} name="filterEsp">
+							<option hidden>Especialidad</option>
+							{specialties &&
+								specialties.map((el) => (
+									<option key={el.id} value={el.name}>
+										{el.name}
+									</option>
+								))}
+						</Form.Select>
+						<Form.Select
+							onChange={(e) => handleOnChange(e)}
+							name="filterProfProv"
+						>
+							<option hidden>Ubicacion</option>
+							{cities &&
+								cities.map((el) => (
+									<option key={el} value={el}>
+										{el}
+									</option>
+								))}
+						</Form.Select>
+					</Col>
+				</Row>
+			</Form>
+		</div>
 	);
 };
 

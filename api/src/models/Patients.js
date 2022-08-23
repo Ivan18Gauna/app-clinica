@@ -5,14 +5,19 @@ module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('patients', {
     id: {
-      type: DataTypes.STRING,
-      defaultValue: UUIDV4,
-      primaryKey: true,
-      allowNull: false,
+    type:DataTypes.STRING,
+    defaultValue: UUIDV4,
+    primaryKey: true,
+    allowNull: false,
+    unique: true,
     },
   name: {
-       type: DataTypes.STRING,
-      allowNull: false,
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  lastname: {
+    type: DataTypes.STRING,
+    allowNull: false
   },
   document: {
       type: DataTypes.INTEGER,
@@ -30,7 +35,7 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
   },
-  country: {
+  province: {
       type: DataTypes.STRING,
       allowNull: false
   },
@@ -46,5 +51,12 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false
   },
+  },
+  {
+    createdAt: false,
+    updatedAt: false,
+    deletedAt: 'deletedAt',
+    paranoid: true,
+    timestamps: true,
   });
 };
