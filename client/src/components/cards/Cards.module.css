@@ -1,5 +1,7 @@
 .container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
 	gap: 2rem;
+  display: grid;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  grid-template-columns: repeat(2, 1fr);
 }
