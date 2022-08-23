@@ -12,7 +12,7 @@ import Login from './components/login/Login';
 import About from './components/about/About';
 import Price from './components/Price/Price';
 import Google from './components/google/Google';
-/* import FormUpProfessionals from './components/formUpProfessionals/FormUpProfessionals'; */
+import FormUpProfessionals from './components/formUpProfessionals/FormUpProfessionals'; 
 import Professionals from './components/professionals/Professionals'; 
 
 
@@ -25,6 +25,7 @@ function App() {
           <Route path="/" component={navBarEdit}/>
         </Switch>
         <Switch>
+          <Route path="/form" component={FormUpProfessionals}/>
           <Route path="/home" component={Home} />
           <Route path='/details/:id' component={Details}/>
           <Route path='/login' component={Login}/>
