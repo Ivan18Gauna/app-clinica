@@ -2,23 +2,22 @@ const Sequelize = require("sequelize");
 const axios = require("axios");
 // const { v4: uuidv4 } = require("uuid");
 const { Op } = require("sequelize");
-const { Professionals, Specialties, ObrasSociales, HistoriaClinica, Patients, HealthData } = require("../db");
-const { v4: uuidv4 } = require("uuid");
+const { Patients, HealthData } = require("../db");
 
 const postHealthData = async (req, res) => {
-    let { blood, vaccines, allergies, transfusion, chronicles, oS } =
-      req.body;
+    let { blood, vaccines, allergies, transfusion, chronicles, oS, patId } = req.body;
     
-  
-    let idv4 = uuidv4();
-    const dbId = idv4.slice(0, 4);
     try {
-      const healthData = { id: dbId, blood, vaccines, allergies, transfusion, chronicles,
-        oS };
+      const pat = await Patients.findOne({
+        where: {
+          id: patId
+        }
+      })
+      const healthData = { blood, vaccines, allergies, transfusion, chronicles, oS };
       if (!blood || !vaccines || !allergies || !transfusion || !chronicles || !oS) {
         res.send("Falta infornacion");
       } else {
-         let newHealthData = await HealthData.create(healthData);
+         await pat.createHealthData(healthData);
          res.status(200).send(healthData);
       }
     } catch (error) {

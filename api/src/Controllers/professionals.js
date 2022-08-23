@@ -1,6 +1,5 @@
 const Sequelize = require("sequelize");
 const { default: axios } = require("axios");
-const { v4: uuidv4 } = require("uuid");
 const { Op } = require("sequelize");
 const { Professionals, Specialties, ObrasSociales } = require("../db");
 const { query } = require("express");
@@ -26,10 +25,7 @@ const addProfDb = async () => {
       });
     });
     await prof.forEach(async (e) => {
-      let idv4 = uuidv4();
-      let dbId = idv4.slice(0, 4);
       const dbProf = {
-        id: dbId,
         name: e.name.split(" ")[0],
         username: e.username,
         password: e.password,
@@ -259,11 +255,8 @@ const postProfessionals = async (req, res) => {
     street,
     specialty,
   } = req.body;
-  let idv4 = uuidv4();
-  const dbId = idv4.slice(0, 4);
   try {
     const professional = {
-      id: dbId,
       name: name,
       lastname: lastname,
       license: license,
