@@ -1,6 +1,5 @@
 const Sequelize = require("sequelize");
 const axios = require("axios");
-// const { v4: uuidv4 } = require("uuid");
 const { Op, where } = require("sequelize");
 
 const {
@@ -11,17 +10,14 @@ const {
   Patients,
 } = require("../db");
 
-const { v4: uuidv4 } = require("uuid");
 
 const postHistoriaClinica = async (req, res) => {
   let { reason, image, description, date, diagnosis, professional, patient } =
     req.body;
 
-  let idv4 = uuidv4();
-  const dbId = idv4.slice(0, 4);
   try {
     const historiaClinica = {
-      id: dbId,
+      id: id,
       reason: reason,
       image: image,
       description: description,

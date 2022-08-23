@@ -3,17 +3,14 @@ const axios = require("axios");
 // const { v4: uuidv4 } = require("uuid");
 const { Op } = require("sequelize");
 const { Professionals, Specialties, ObrasSociales, HistoriaClinica, Patients, HealthData } = require("../db");
-const { v4: uuidv4 } = require("uuid");
+
 
 const postHealthData = async (req, res) => {
     let { blood, vaccines, allergies, transfusion, chronicles, oS } =
       req.body;
     
-  
-    let idv4 = uuidv4();
-    const dbId = idv4.slice(0, 4);
     try {
-      const healthData = { id: dbId, blood, vaccines, allergies, transfusion, chronicles,
+      const healthData = { id: id, blood, vaccines, allergies, transfusion, chronicles,
         oS };
       if (!blood || !vaccines || !allergies || !transfusion || !chronicles || !oS) {
         res.send("Falta infornacion");

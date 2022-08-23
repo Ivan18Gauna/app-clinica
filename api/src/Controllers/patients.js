@@ -1,20 +1,16 @@
 const Sequelize = require("sequelize");
 const axios = require("axios");
-// const { v4: uuidv4 } = require("uuid");
 const { Op } = require("sequelize");
 const { Patients } = require("../db");
-const { v4: uuidv4 } = require("uuid")
 
 const getInfoApiPatients= async(req, res) => 
 {
     const apiPatients = await axios.get('https://patients-4a60b-default-rtdb.firebaseio.com/.json')
     const patient = await apiPatients.data 
     patient.forEach((e) => {
-      let idv4 = uuidv4();
-      let dbId = idv4.slice(0, 4);
       Patients.findOrCreate({
       where: {
-        id: dbId,
+        id: id,
         name: e.name.split(' ')[0],
         lastname: e.name.split(' ')[0],
         birth: e.birth,
@@ -150,11 +146,9 @@ const postPatients = async (req, res) => {
         street,
         document       
     } = req.body;
-    let idv4 = uuidv4();
-    const dbId = idv4.slice(0, 4);
     try{
         const patients = {
-        id: dbId,
+        id: id,
         name: name,
         lastname: lastname,
         birth: birth,
