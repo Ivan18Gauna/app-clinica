@@ -25,7 +25,7 @@ const postHealthData = async (req, res) => {
       console.log(error);
     }
   };
-
+//-----------------//
   const getHealthData = async (req, res) => {
     let { id } = req.params;
     const dbHealthData = await HealthData.findOne({
