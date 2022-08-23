@@ -1,6 +1,6 @@
 import { React } from 'react';
 import Portada from '../portada/portada';
-import CardsTriple from '../infoCards/InfoCards';
+import CardsTriple from '../infoCards/infoCards.jsx';
 import CardHistory from '../cardHistory/CardHistory';
 import styles from './Home.module.css';
 
