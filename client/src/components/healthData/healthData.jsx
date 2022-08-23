@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getObrasSociales } from "../../redux/actions";
 
 const blood_type = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB+', 'AB-', 'O+', 'O-']
-const vaccines_data=['BCG', 'Hepatitis B', 'Neumococo conjugada', 'Quintuple pentavalente', 'Polio', 'Rotavirus','Meningococo', 'Gripe','Hepatitis A', 
-                    'Triple viral', 'Varicela', 'Quintuple', 'Triple Bacteriana Celular','HPV', 'Fiebre Amarilla','COVID' ]
+const vaccines_data = ['BCG', 'Hepatitis B', 'Neumococo conjugada', 'Quintuple pentavalente', 'Polio', 'Rotavirus', 'Meningococo', 'Gripe', 'Hepatitis A',
+    'Triple viral', 'Varicela', 'Quintuple', 'Triple Bacteriana Celular', 'HPV', 'Fiebre Amarilla', 'COVID']
 
 export default function HealthData() {
 
@@ -27,6 +27,32 @@ export default function HealthData() {
         oS: ''
     })
 
+    console.log('input', input)
+
+    function handleSelectBlood(e) {
+        e.preventDefault();
+        setInput({
+            ...input,
+            blood: e.target.value
+        })
+    }
+
+    function handleSelectVaccines(e) {
+        e.preventDefault();
+        setInput({
+            ...input,
+            vaccines: [...input.vaccines, e.target.value]
+        })
+    }
+
+    function handleDeleteVaccines(e) {
+        e.preventDefault();
+        setInput({
+            ...input,
+            vaccines: input.vaccines.filter(el => el !== e.target.value)
+        })
+    }
+
     function handleSubmit(e) {
         e.preventDefault();
         dispatch()      //falta action y reducer
@@ -46,30 +72,45 @@ export default function HealthData() {
             <form onSubmit={handleSubmit}>
                 <div>
                     <label  > Grupo Sanguineo: </label>
-                    <select defaultValue='Seleccione una opción' >
-                    <option value="Seleccione una opcion">Selecione una opción: </option>
+                    <select onChange={handleSelectBlood} defaultValue='Seleccione una opción' >
+                        <option value="Seleccione una opcion">Selecione una opción: </option>
 
                         {
                             blood_type.map(e => {
-                                return <option key={e} value={e} > {e} </option>
+                                return <option value={e} > {e} </option>
                             })
                         }
 
                     </select>
+                    {input.blood.length === 0 ? <p>*</p> : ''}
                 </div>
 
                 <div>
                     <label>Vacunas: </label>
-                    <select>
-                    <option value="Seleccione una opcion">Selecione una opción: </option>
-                    {
-                        vaccines_data.map(e=>{
-                            return <option key={e} value={e}> {e} </option>
-                        })
-                    }
+                    <select onChange={handleSelectVaccines} defaultValue=" Selecione las vacunas que posee colocadas">
+                        <option value=" Selecione las vacunas que posee colocadas">Selecione las vacunas que posee colocadas: </option>
+                        {
+                            vaccines_data.map(e => {
+                                return <option key={e} value={e}> {e} </option>
+                            })
+                        }
 
                     </select>
+                    {input.vaccines.length === 0 ? <p>*</p> : ''}
                 </div>
+                <div>
+                    <ul>
+                        <span>Vacunas seleccionadas: </span>
+                        {
+                            input.vaccines.map(e => {
+                                return <li key={e} value={e} >{e}
+                                    <button value={e} onClick={handleDeleteVaccines} >X</button>
+                                </li>
+                            })
+                        }
+                    </ul>
+                </div>
+
 
                 <div>
                     <label>Alergias</label>
@@ -108,8 +149,13 @@ export default function HealthData() {
                         }
                     </select>
                 </div>
+                <div>
+                    <p>* Campos obligatorios</p>
+                </div>
+                <div>
 
-                <button type="submit" >Enviar</button>
+                    <button type="submit" >Enviar</button>
+                </div>
 
             </form>
         </div >
