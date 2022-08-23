@@ -1,6 +1,5 @@
 const Sequelize = require("sequelize");
 const axios = require("axios");
-// const { v4: uuidv4 } = require("uuid");
 const { Op } = require("sequelize");
 const { Patients } = require("../db");
 
@@ -66,23 +65,21 @@ const getAllPatients = async (req, res) => {
   }
 };
 
-const getPatByName = async (req, res) => {
-  let { lastname } = req.query;
-  console.log({ lastname });
-  if (lastname) {
-    try {
-      let dbPatfName = await Patients.findAll({
-        where: {
-          name: { [Op.iLike]: lastname + "%" },
-        },
-      });
-      dbPatfName.length
-        ? res.status(200).send(dbPatfName)
-        : res.status(404).send("No existe registro del paciente a buscar");
-    } catch (error) {
-      console.log(error);
-    }
-  } else {
+const getPatByName = async(req, res) => {
+    let {lastname} = req.query
+    console.log({lastname})
+    if(lastname){
+        try {
+            let dbPatfName = await Patients.findAll({
+                where: {
+                    name: { [Op.iLike]: lastname +'%' },                  }
+                })
+                dbPatfName.length?
+                res.status(200).send(dbPatfName):res.status(404).send('No existe registro del paciente a buscar')
+        } catch (error) {
+        console.log(error)        
+        }
+    }else {
     try {
       let allPatien = await Patients.findAll({
         limit: 20,
@@ -96,25 +93,25 @@ const getPatByName = async (req, res) => {
       console.log(error);
     }
   }
-  const getPatByOnsearchName = async (req, res) => {
-    let { lastname } = req.query;
-    console.log({ lastname });
-    if (lastname) {
-      try {
-        let dbPatfName = await Patients.findAll({
-          where: {
-            name: { [Op.iLike]: lastname + "%" },
-          },
-        });
-        dbPatfName.length
-          ? res.status(200).send(dbPatfName)
-          : res.status(404).send("No existe registro del paciente a buscar");
-      } catch (error) {
-        console.log(error);
-      }
+  }
+  const getPatByOnsearchName = async(req, res) => {
+    let {lastname} = req.query
+    console.log({lastname})
+    if(lastname){
+        try {
+            let dbPatfName = await Patients.findAll({
+                where: {
+                    name: { [Op.iLike]: lastname +'%' },                  }
+                })
+                dbPatfName.length?
+                res.status(200).send(dbPatfName):res.status(404).send('No existe registro del paciente a buscar')
+        } catch (error) {
+        console.log(error)        
+        }
     }
   };
 };
+
 
 const postPatients = async (req, res) => {
   let {
