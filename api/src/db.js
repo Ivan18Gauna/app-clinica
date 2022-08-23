@@ -54,21 +54,25 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-const { Professionals, Specialties, Patients, ObrasSociales, HistoriaClinica } = sequelize.models;
+const { Professionals, Specialties, Patients, ObrasSociales, HistoriaClinica, HealthData } = sequelize.models;
 
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
-HistoriaClinica.belongsToMany(Patients,{through:'historiaClinica-patients'})
-Patients.belongsToMany(HistoriaClinica,{through:'historiaClinica-patients'})
 
-HistoriaClinica.belongsToMany(Professionals,{through:'historiaClinica-professionals'})
-Professionals.belongsToMany(HistoriaClinica,{through:'historiaClinica-professionals'})
+Patients.hasOne(HealthData)
+HealthData.belongsTo(Patients)
+
+Patients.hasMany(HistoriaClinica)
+HistoriaClinica.belongsTo(Patients)
+
+Professionals.hasMany(HistoriaClinica)
+HistoriaClinica.belongsTo(Professionals)
 
 Professionals.belongsToMany(ObrasSociales,{through:'professionals-o.sociales'})
 ObrasSociales.belongsToMany(Professionals,{through:'professionals-o.sociales'})
 
-Professionals.belongsToMany(Specialties,{through:'professionals-specialties',})
-Specialties.belongsToMany(Professionals,{through:'professionals-specialties',})
+Professionals.belongsToMany(Specialties,{through:'professionals-specialties'})
+Specialties.belongsToMany(Professionals,{through:'professionals-specialties'})
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
