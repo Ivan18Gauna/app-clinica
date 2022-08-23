@@ -58,8 +58,6 @@ const { Professionals, Specialties, Patients, ObrasSociales, HistoriaClinica, He
 
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
-Patients.hasOne(HealthData)
-HealthData.belongsTo(Patients)
 
 Patients.belongsToMany(HistoriaClinica, {through:'patients-historia-clinica'})
 HistoriaClinica.belongsToMany(Patients, {through:'patients-historia-clinica'})
