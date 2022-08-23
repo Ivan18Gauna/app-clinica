@@ -271,8 +271,13 @@ export default function HealthData() {
                 <div>
                     <p>* Campos obligatorios</p>
                 </div>
+
                 <div>
-                    <button type="submit" >Enviar</button>
+                    {
+                    input.blood===''||input.donation===''||input.transfusion===''?
+                        <button disabled>Datos obligatorios no completados</button>:
+                        <button type="submit" >Enviar</button>
+                    }
                 </div>
 
             </form>
