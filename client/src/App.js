@@ -11,9 +11,7 @@ import healthData from './components/healthData/healthData';
 import Login from './components/login/Login';
 import About from './components/about/About';
 import Price from './components/Price/Price';
-import Google from './components/google/Google';
-import FormUpProfessionals from './components/formUpProfessionals/FormUpProfessionals'; 
-import Professionals from './components/professionals/Professionals'; 
+import Professionals from './components/professionals/Professionals';
 
 
 function App() {
