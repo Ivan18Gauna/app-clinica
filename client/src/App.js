@@ -8,7 +8,7 @@ import navBarEdit from './components/navBar/NavBar.jsx';
 import FormProfessionals from './components/formProfessionals/FormProfesionals';
 import FormPatients from './components/formPatients/FormPatients';
 import healthData from './components/healthData/healthData';
-import Login from './components/login/Login';
+import Login from './components/Login/Login';
 import About from './components/about/About';
 import Price from './components/price/Price';
 import Professionals from './components/professionals/Professionals';
