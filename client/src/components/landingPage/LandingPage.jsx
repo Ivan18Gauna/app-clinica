@@ -10,15 +10,10 @@ export default function LandingPage (){
 console.log(añoActual);
     return(
         <div className="landing">
-            <div className="fondo"></div>
             <video src={videoplayback} autoPlay loop muted></video>
-            <div className="texto">
-
-            <p>+ Salud</p>
-            <Link to = "/home">
-            <Button variant="outline-success">Ingresar</Button>{' '}
-            </Link>
-            </div>
+                <Link to = "/home" className="boton">
+                    <Button variant="outline-success" >Ingresar</Button>{' '}
+                </Link>
         </div>
     )
 }
