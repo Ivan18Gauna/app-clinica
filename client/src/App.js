@@ -7,11 +7,12 @@ import SignIn from './components/signIn/SignIn';
 import navBarEdit from './components/navBar/NavBar.jsx';
 import FormProfessionals from './components/formProfessionals/FormProfesionals';
 import FormPatients from './components/formPatients/FormPatients';
-import healthData from './components/healthData/healthData';
+import HealthData from './components/healthData/HealthData';
 import Login from './components/login/Login';
 import About from './components/about/About';
-import Price from './components/Price/Price';
+import Price from './components/price/Price';
 import Professionals from './components/professionals/Professionals';
+import FormUpProfessionals from './components/formUpProfessionals/FormUpProfessionals';
 
 
 function App() {
@@ -23,14 +24,14 @@ function App() {
           <Route path="/" component={navBarEdit}/>
         </Switch>
         <Switch>
-        {/*   <Route path="/form" component={FormUpProfessionals}/> */}
+          <Route path="/form" component={FormUpProfessionals}/>
           <Route path="/home" component={Home} />
           <Route path='/details/:id' component={Details}/>
           <Route path='/login' component={Login}/>
           <Route path='/signin' component={SignIn}/>
           <Route path='/formprofessionals' component={FormProfessionals}/>
           <Route path='/formpatients' component={FormPatients}/>
-          <Route path='/healthData' component={healthData}/>
+          <Route path='/healthData' component={HealthData}/>
           <Route path='/professionals' component={Professionals}/>
           <Route path='/about' component={About}/>
           <Route path='/price' component={Price}/>
