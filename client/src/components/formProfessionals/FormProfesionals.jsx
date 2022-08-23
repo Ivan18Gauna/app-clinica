@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { get_specialties, registerDoctors } from '../../redux/actions';
 
 
@@ -63,6 +64,7 @@ const provinces = ['Buenos Aires', 'Ciudad Autónoma de Buenos Aires', 'Catamarc
 export default function RegisterDoctor() {
 	const dispatch = useDispatch();
 	const especialities_data = useSelector((state) => state.specialties)
+	const history = useHistory();
 
 
 	useEffect(() => {
@@ -152,6 +154,7 @@ export default function RegisterDoctor() {
 			password: '',
 			new_password: ''
 		});
+		history.push('/home')
 	}
 
 	return (
@@ -183,7 +186,7 @@ export default function RegisterDoctor() {
 						}
 
 					</select>
-					{input.province === '' ? <p>*</p> : ''}
+					{input.specialities === '' ? <p>*</p> : ''}
 				</div>
 				<div>
 					<ul>
