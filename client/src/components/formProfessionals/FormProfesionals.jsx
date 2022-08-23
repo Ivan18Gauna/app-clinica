@@ -186,7 +186,7 @@ export default function RegisterDoctor() {
 						}
 
 					</select>
-					{input.province === '' ? <p>*</p> : ''}
+					{input.specialities === '' ? <p>*</p> : ''}
 				</div>
 				<div>
 					<ul>
