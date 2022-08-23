@@ -5,12 +5,11 @@ module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('patients', {
     id: {
-    type:DataTypes.STRING,
-    defaultValue: UUIDV4,
-    primaryKey: true,
-    allowNull: false,
-    unique: true,
-    },
+      type:DataTypes.INTEGER,
+      primaryKey: true,
+      allowNull: false,
+      autoIncrement: true,
+    },  
   name: {
     type: DataTypes.STRING,
     allowNull: false,
