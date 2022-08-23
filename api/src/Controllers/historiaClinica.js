@@ -2,6 +2,7 @@ const Sequelize = require("sequelize");
 const axios = require("axios");
 // const { v4: uuidv4 } = require("uuid");
 const { Op, where } = require("sequelize");
+
 const {
   Professionals,
   Specialties,
@@ -9,6 +10,7 @@ const {
   HistoriaClinica,
   Patients,
 } = require("../db");
+
 const { v4: uuidv4 } = require("uuid");
 
 const postHistoriaClinica = async (req, res) => {
@@ -29,22 +31,40 @@ const postHistoriaClinica = async (req, res) => {
     if (!reason || !image || !description || !date || !diagnosis) {
       res.send("Falta infornacion");
     } else {
-      let newHistoriaClinica = await HistoriaClinica.create(historiaClinica);
-
-      let professionaldb = await Professionals.findAll({
-        where: { name: professional },
-      });
-      let patientdb = await Patients.findAll({
-        where: { name: patient },
-      });
+       let newHistoriaClinica = await HistoriaClinica.create(historiaClinica);
+       
+      let professionaldb = await Professionals.findOne({
+         where: {name: professional}
+        })
+       let patientdb = await Patients.findOne({
+        where:{name:patient}        
+       })
       await newHistoriaClinica.addProfessionals(professionaldb);
       await newHistoriaClinica.addPatients(patientdb);
-      res.status(200).send("Historia Credad con Exito");
+       res.status(200).send("Historia Credad con Exito");
+     
     }
   } catch (error) {
     console.log(error);
   }
 };
+
+const getAllHistoriaClinica=async(req,res)=>{
+  try{  
+    let allHistoriaClinica = await HistoriaClinica.findAll({
+      include: [
+        { model: Professionals, attributes: ["name"] },
+        { model: Patients, attributes: ["name"] },
+      ],  
+    //limit:150,
+    //offset: req.query.page,
+    //order:[['name', req.query.order]],
+    })
+    res.status(200).send(allHistoriaClinica)
+    } catch (error) {console.log(error)}
+}
+
+
 
 const getHistoriaClinica = async (req, res) => {
   let { id } = req.params;
@@ -53,7 +73,6 @@ const getHistoriaClinica = async (req, res) => {
       { model: Professionals, attributes: ["name"] },
       { model: Patients, attributes: ["name"] },
     ],
-
     where: {
       id: id,
     },
@@ -67,4 +86,5 @@ const getHistoriaClinica = async (req, res) => {
 module.exports = {
   postHistoriaClinica,
   getHistoriaClinica,
+  getAllHistoriaClinica
 };
