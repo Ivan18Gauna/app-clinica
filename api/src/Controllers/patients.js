@@ -94,7 +94,8 @@ const getPatByName = async(req, res) => {
     }
   }
   }
-  const getPatByOnsearchName = async(req, res) => {
+
+const getPatByOnsearchName = async(req, res) => {
     let {lastname} = req.query
     console.log({lastname})
     if(lastname){
@@ -109,8 +110,7 @@ const getPatByName = async(req, res) => {
         console.log(error)        
         }
     }
-  };
-};
+  }
 
 
 const postPatients = async (req, res) => {
