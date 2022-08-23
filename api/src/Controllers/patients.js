@@ -51,44 +51,33 @@ const getPatByDocument = async (req, res) => {
   res.status(200).send(dbPatDocuent);
 };
 
-const getPatByName = async (req, res) => {
-  let { lastname } = req.query;
-  console.log({ lastname });
-  if (lastname) {
-    try {
-      let dbPatfName = await Patients.findAll({
-        where: {
-          name: { [Op.iLike]: lastname + "%" },
-        },
-      });
-      dbPatfName.length
-        ? res.status(200).send(dbPatfName)
-        : res.status(404).send("No existe registro del paciente a buscar");
-    } catch (error) {
-      console.log(error);
-    }
-  } else if (req.query.filterP) {
-    try {
-      let dbPatfName = await Patients.findAll({
-        where: { province: req.query.filterP },
-        limit: 100,
-        // offset: req.query.page,
-        order: [["name", req.query.order]],
-      }); //ASC DESC
-      return res.send(dbPatfName);
-    } catch (error) {
-      console.log(error);
-    }
-  } else if (req.query.filterC) {
-    try {
-      let dbPatfName = await Patients.findAll({
-        where: { city: req.query.filterC },
-        limit: 9,
-        order: [["name", req.query.order]],
-      }); //ASC DESC
-      return res.send(dbPatfName);
-    } catch (error) {
-      console.log(error);
+const getAllPatients=async(req,res)=>{
+  try{  
+    let allPatients = await Patients.findAll({
+    //include: [{ model: Specialties,
+    //attributes:['name'] }],  
+    limit:150,
+    //offset: req.query.page,
+    //order:[['name', req.query.order]],
+    })
+    res.status(200).send(allPatients)
+    } catch (error) {console.log(error)}
+}
+
+const getPatByName = async(req, res) => {
+    let {lastname} = req.query
+    console.log({lastname})
+    if(lastname){
+        try {
+            let dbPatfName = await Patients.findAll({
+                where: {
+                    name: { [Op.iLike]: lastname +'%' },                  }
+                })
+                dbPatfName.length?
+                res.status(200).send(dbPatfName):res.status(404).send('No existe registro del paciente a buscar')
+        } catch (error) {
+        console.log(error)        
+        }
     }
   } else {
     try {
@@ -104,7 +93,22 @@ const getPatByName = async (req, res) => {
       console.log(error);
     }
   }
-};
+  const getPatByOnsearchName = async(req, res) => {
+    let {lastname} = req.query
+    console.log({lastname})
+    if(lastname){
+        try {
+            let dbPatfName = await Patients.findAll({
+                where: {
+                    name: { [Op.iLike]: lastname +'%' },                  }
+                })
+                dbPatfName.length?
+                res.status(200).send(dbPatfName):res.status(404).send('No existe registro del paciente a buscar')
+        } catch (error) {
+        console.log(error)        
+        }
+    }
+  }
 
 const postPatients = async (req, res) => {
   let {
@@ -211,11 +215,13 @@ const deletePatients = async (req, res) => {
 };
 
 module.exports = {
-  getInfoApiPatients,
-  getPatById,
-  getPatByName,
-  getPatByDocument,
-  postPatients,
-  putPatients,
-  deletePatients,
+    getInfoApiPatients,
+    getAllPatients,
+    getPatById,
+    getPatByName,
+    getPatByDocument,
+    postPatients,
+    putPatients,
+    getPatByOnsearchName,
+    deletePatients
 };
