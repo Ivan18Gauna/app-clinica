@@ -7,6 +7,7 @@ import { Link, useHistory } from 'react-router-dom';
 import styles from './FormPatients.module.css';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import {registerPatients} from '../../redux/actions/index'
 
 function validate(input) {
 	let error = {};
@@ -124,7 +125,7 @@ export default function RegisterPatient() {
 
 	function handleSubmit(e) {
 		e.preventDefault();
-		dispatch(); //falta action y reducer
+		dispatch(registerPatients(input));
 		setInput({
 			name: '',
 			lastname: '',

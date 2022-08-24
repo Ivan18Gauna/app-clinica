@@ -6,7 +6,7 @@ import {
 	GET_CITIES,
 	GET_OS,
 	GET_PATIENTS,
- 	GET_PATIENTS_NAME
+	GET_PATIENTS_NAME,
 } from '../actions/actions';
 import axios from 'axios';
 
@@ -77,7 +77,6 @@ export function get_DoctorsDetail(id) {
 }
 
 export function registerDoctors(payload) {
-	console.log('post', payload);
 	return async function () {
 		const registerDoctors = await axios.post(`/professionals`, payload);
 		return registerDoctors;
@@ -96,37 +95,37 @@ export function getObrasSociales() {
 	};
 }
 
-export function getPatients(){
-    return async function(dispatch){
-        const allPatients = await axios.get('/patients/allpatients')
-       // console.log("soy patients", allPatients)
-    return dispatch({
-        type: GET_PATIENTS,
-        payload: allPatients.data
-    })
-    }
+export function getPatients() {
+	return async function (dispatch) {
+		const allPatients = await axios.get('/patients/allpatients')
+		// console.log("soy patients", allPatients)
+		return dispatch({
+			type: GET_PATIENTS,
+			payload: allPatients.data
+		})
+	}
 }
-export function getPatientsByName(payload){
-  console.log("soy payload",payload)
-    return async function (dispatch) {
-        try{
-        const patients = await axios.get("/patients/document/" + payload)
-       // console.log("soy patients",patients)
-        return dispatch({
-            type: GET_PATIENTS_NAME,
-            payload: patients.data  
-        }
-        )
-    } catch(error){
-        console.log(error)
-       }
-    }
+export function getPatientsByName(payload) {
+	console.log("soy payload", payload)
+	return async function (dispatch) {
+		try {
+			const patients = await axios.get("/patients/document/" + payload)
+			// console.log("soy patients",patients)
+			return dispatch({
+				type: GET_PATIENTS_NAME,
+				payload: patients.data
+			}
+			)
+		} catch (error) {
+			console.log(error)
+		}
+	}
 }
 
-export function postHistory(payload){
-	return async function(){
+export function postHistory(payload) {
+	return async function () {
 		try {
-			console.log("soy payload history",payload)
+			console.log("soy payload history", payload)
 			const res = await axios.post("/historiaclinica")
 			return res;
 		} catch (error) {
@@ -135,3 +134,16 @@ export function postHistory(payload){
 	}
 }
 
+export function registerPatients(payload) {
+	return async function () {
+		const registerPatients = await axios.post(`/patients`, payload);
+		return registerPatients;
+	};
+}
+
+export function registerHealthData(payload) {
+	return async function () {
+		const healthData = await axios.put(`/patients/edit`, payload);
+		return healthData;
+	};
+}
