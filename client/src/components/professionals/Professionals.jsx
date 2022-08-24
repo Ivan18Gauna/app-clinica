@@ -1,8 +1,8 @@
 import React from 'react';
-import Filters from '../filters/filters';
+import Filters from '../filters/Filters';
 import Cards from '../cards/Cards.jsx';
-import NotFoundPro from '../Error/NotFoundPro.jsx';
-import ModifyFilter from '../Error/ModifyFilter.jsx';
+import NotFoundPro from '../error/NotFoundPro.jsx';
+import ModifyFilter from '../error/ModifyFilter.jsx';
 import { useSelector } from 'react-redux';
 import styles from './Professionals.module.css';
 

@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { get_DoctorsDetail } from "../../redux/actions";
-import "./details.css"
+import "./Details.css"
 import Button from "react-bootstrap/esm/Button";
 
 export default function Details() {
