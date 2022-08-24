@@ -1,25 +1,21 @@
 import React from "react";  
 import { useState, useEffect } from "react";
 import {useDispatch, useSelector} from "react-redux";
-import { getPatients, getPatientsByName } from "../../redux/actions";
+import { getPatients, getPatientsByName, postHistory } from "../../redux/actions";
 
 
 function validate(input){
     let error = {}
 
-    if(!/([A-z])/.test(input.motivo)){
+    if(!/([A-z])/.test(input.reason)){
         error.motivo = "Ingrese un motivo valido"
     }
     
-    if(!/([A-z])/.test(input.consulta)){
-        error.consulta = "Ingrese una consulta valida"
+    if(!/([A-z])/.test(input.description)){
+        error.consulta = "Ingrese una descripcion valida"
     }
 
-    if(!/([A-z])/.test(input.consulta)){
-        error.consulta = "Ingrese una consulta valida"
-    }
-
-    if(!/([A-z])/.test(input.diagnostico)){
+    if(!/([A-z])/.test(input.diagnosis)){
         error.diagnostico = "Ingrese un diagnostico valido"
     }
     return error;
@@ -32,17 +28,18 @@ export default function FormUpProfessionals(){
     const allPatients = useSelector((state) => state.patients)
 	console.log("soy -Paciente",allPatients)
     
+    
     useEffect(() => {
 		dispatch(getPatients())
 	}, [dispatch])  
      
     const [input, setInput] = useState ({
-        search:[],
-        motivo: "",
-        file: "",
-        consulta: "",
+        patient:[],
+        reason: "",
+        image: "",
+        description: "",
         date: "",
-        diagnostico:""
+        diagnosis:""
     })
     console.log("soy search",input.search)
     
@@ -64,60 +61,61 @@ export default function FormUpProfessionals(){
 	
     function handleSubmit(e){
         e.preventDefault(e)
-        console.log(input.search, input.motivo, input.file, input.consulta, input.date, input.diagnostico)
+        console.log("asi va la info",input.patient, input.reason, input.image, input.description, input.date, input.diagnosis)
+        dispatch(postHistory(input));
+        alert("Registraste correctamente tu atencion a  " + input.patient)
         setInput({
-            search:[],
-            motivo: "",
-            file: "",
-            consulta: "",
+            patient:[],
+            reason: "",
+            image: "",
+            description: "",
             date: "",
-            diagnostico:""
+            diagnosis:""
         })
     }
      
-    
 
     function handleSearch(e){
         e.preventDefault()
-        dispatch(getPatientsByName(input.search))
+        dispatch(getPatientsByName(input.patient))
       
     }
  
  
-    
+  
     
     return(
         <div>
             <form onSubmit={handleSubmit} >
                 <label >Paciente :</label>
-                <input type="search" name="search" value={input.search} onChange={handleMotivo}/>
-                     {input.search === '' ? <p>*</p> : ''}
-					{error.search && <p> {error.search} </p>}
-                 
-                  {allPatients && allPatients.length>0 && allPatients[0].name === input.search[0] ? 
+                <input type="search" name="patient" value={input.patient} onChange={handleMotivo}/>
+                     {input.patient === '' ? <p>*</p> : ''}
+					{error.patient && <p> {error.patient} </p>}
+                   
+                  {allPatients && allPatients.document == input.patient[0] ? 
                   <div>
-                    <p>{allPatients[0].document}</p>
-                    <p> {allPatients[0].name}</p>
-                  <p> {allPatients[0].lastname}</p>
+                
+                    <p> {allPatients.name}</p>
+                  <p> {allPatients.lastname}</p>
                   </div> : 
                   <div>"No se encontro paciente"</div>}
                     
                 <button onClick={handleSearch}>Buscar Paciente</button>
       
-               <label > Motivo :</label>
-                <input type="text"  name="motivo" value={input.motivo} onChange={handleMotivo}/>
-                    {input.motivo === '' ? <p>*</p> : ''}
-					{error.motivo && <p> {error.motivo} </p>}
+               <label > Razon:</label>
+                <input type="text"  name="reason" value={input.reason} onChange={handleMotivo}/>
+                    {input.reason === '' ? <p>*</p> : ''}
+					{error.reason && <p> {error.reason} </p>}
 
                 <label>Estudio digital :</label>
-                <input type="file" name="file" value={input.file} onChange={handleMotivo}/>
-                    {input.file === '' ? <p>*</p> : ''}
-					{error.file && <p> {error.file} </p>}
+                <input type="file" name="image" value={input.image} onChange={handleMotivo}/>
+                    {input.image === '' ? <p>*</p> : ''}
+					{error.image && <p> {error.image} </p>}
 
-                <label>Detalle consulta :</label>
-                <input type="textarea" name="consulta" value={input.consulta} onChange={handleMotivo}/>
-                    {input.consulta === '' ? <p>*</p> : ''}
-					{error.consulta && <p> {error.consulta} </p>}
+                <label>Descripcion consulta :</label>
+                <input type="textarea" name="description" value={input.description} onChange={handleMotivo}/>
+                    {input.description === '' ? <p>*</p> : ''}
+					{error.description && <p> {error.description} </p>}
 
                 <label>Fecha atencion :</label>
                 <input type="date" name="date" value={input.date} onChange={handleMotivo}/>
@@ -125,9 +123,9 @@ export default function FormUpProfessionals(){
 					{error.date && <p> {error.date} </p>}
 
                 <label>Diagnostico final :</label>
-                <input type="text" name="diagnostico" value={input.diagnostico} onChange={handleMotivo}/>
-                     {input.diagnostico === '' ? <p>*</p> : ''}
-					{error.diagnostico && <p> {error.diagnostico} </p>}
+                <input type="text" name="diagnosis" value={input.diagnosis} onChange={handleMotivo}/>
+                     {input.diagnosis === '' ? <p>*</p> : ''}
+					{error.diagnosis && <p> {error.diagnosis} </p>}
                  
                  
                  <button type="subtmit">Enviar</button>
