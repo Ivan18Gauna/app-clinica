@@ -1,7 +1,7 @@
 import React from "react";  
 import { useState, useEffect } from "react";
-import {useDispatch, useSelector} from "react";
-//import { getPatients, getPatientsByName } from "../../redux/actions";
+import {useDispatch, useSelector} from "react-redux";
+import { getPatients, getPatientsByName } from "../../redux/actions";
 
 
 function validate(input){
@@ -28,14 +28,14 @@ function validate(input){
 
 
 export default function FormUpProfessionals(){
-    const dispatch = useDispatch;
-    //const allPatients = useSelector((state) => state.patients)
+    const dispatch = useDispatch();
+    const allPatients = useSelector((state) => state.patients)
 	//console.log("soy",allPatients)
     
-    /* useEffect(() => {
+    useEffect(() => {
 		dispatch(getPatients())
-	}, [dispatch])  */
-    
+	}, [dispatch])  
+     
     const [input, setInput] = useState ({
         search:[],
         motivo: "",
@@ -50,12 +50,12 @@ export default function FormUpProfessionals(){
     function handleMotivo(e){
         setInput({
         ...input,
-        [e.target.name]: e.target.value,
+        [e.target.name]: [e.target.value],
     })
     let existeError = validate({
         
          ...input,
-            [e.target.name]: e.target.value,
+            [e.target.name]: [e.target.value],
     })
         setError(existeError)
    
@@ -65,7 +65,7 @@ export default function FormUpProfessionals(){
 
     function handleSubmit(e){
         e.preventDefault(e)
-        console.log(input.motivo, input.file, input.consulta, input.date, input.diagnostico)
+        //console.log(input.motivo, input.file, input.consulta, input.date, input.diagnostico)
         setInput({
             search:[],
             motivo: "",
@@ -76,13 +76,12 @@ export default function FormUpProfessionals(){
         })
         
     }
-    
+     
     function handleSearch(e){
         e.preventDefault()
-       // dispatch(getPatientsByName(input.search))
+        dispatch(getPatientsByName(input.search))
         setInput({search:""})
-
-    }
+ }
 
     
     
@@ -93,7 +92,22 @@ export default function FormUpProfessionals(){
                 <input type="search" name="search" value={input.search} onChange={handleMotivo}/>
                      {input.search === '' ? <p>*</p> : ''}
 					{error.search && <p> {error.search} </p>}
+                    <div> {input.search}</div>
                 <button onClick={handleSearch}>Buscar Paciente</button>
+
+                <div>
+					<ul>
+						<span>Especialidades Seleccionadas: </span>
+						{ 
+                            
+						allPatients.length>0 && allPatients.map((e) => {
+								return <li key={e} value={e} > {e}
+									{/* <button value={e} onClick={handleDelete} >X</button>  */}
+								</li>
+						})
+						}
+					</ul>
+				</div>
 
                <label > Motivo :</label>
                 <input type="text"  name="motivo" value={input.motivo} onChange={handleMotivo}/>
