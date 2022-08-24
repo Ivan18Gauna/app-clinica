@@ -12,25 +12,17 @@ function validate(input) {
 	let error = {};
 	if (!/([A-z])/.test(input.name)) {
 		error.name = 'Ingrese un nombre valido.';
+		return error;
 	}
 	if (!/([A-z])/.test(input.lastname)) {
 		error.lastname = 'Ingrese un apellido valido.';
-	}
-	if (!/^\d{10}$$/.test(input.document)) {
-		error.document = 'Número de documento no valido.';
-	}
-	if (!/^\d{10}$$/.test(input.phone)) {
-		error.phone = 'Número de telefono no valido.';
-	}
-	if (!/\S+@\S+\.\S+/.test(input.mail)) {
-		error.mail = 'Dirección de correo no valida.';
-	}
-	if (!/[0-9]/.test(input.number)) {
-		error.number = 'Número no valido.';
-	} else if (input.number <= 0) {
-		error.number = 'Número no valida.';
+		return error;
 	}
 
+	if (!/\S+@\S+\.\S+/.test(input.mail)) {
+		error.mail = 'Dirección de correo no valida.';
+		return error;
+	}
 	if (
 		!/(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/.test(
 			input.password
@@ -38,19 +30,34 @@ function validate(input) {
 	) {
 		error.password =
 			'La contraseña debe contener al menos 8 digitos, una mayúscula, un número y un caracter especial.';
+		return error;
 	}
-
 	if (input.password !== input.new_password) {
 		error.new_password = 'No coincide con la contraseña.';
+		return error;
 	}
-
 	let newDate = input.birth;
 	let Date1 = new Date(newDate);
 	let Date2 = new Date();
 	if (Date1 >= Date2) {
 		error.birth = 'La fecha de nacimiento no puede ser posterior a la actual.';
+		return error;
 	}
-
+	if (!/^\d{10}$$/.test(input.document)) {
+		error.document = 'Número de documento no valido.';
+		return error;
+	}
+	if (!/^\d{10}$$/.test(input.phone)) {
+		error.phone = 'Número de telefono no valido.';
+		return error;
+	}
+	if (!/[0-9]/.test(input.number)) {
+		error.number = 'Número no valido.';
+		return error;
+	} else if (input.number <= 0) {
+		error.number = 'Número no valida.';
+		return error;
+	}
 	return error;
 }
 const provinces = [
@@ -112,8 +119,6 @@ export default function RegisterPatient() {
 		});
 		setError(objError);
 	}
-	console.log('input', input);
-	console.log('error', error);
 
 	function handleSelect(e) {
 		setInput({
@@ -144,242 +149,240 @@ export default function RegisterPatient() {
 	}
 
 	return (
-		<div>
-			<div className={styles.container}>
-				<Form className={`${styles.form}`} onSubmit={handleSubmit}>
-					<Row className={`${styles.row}`} lg={2}>
-						<Col className={`${styles.col}`} lg={6}>
-							<Form.Control
-								type="text"
-								name="name"
-								placeholder="Nombre"
-								value={input.name}
-								onChange={handleInput}
-								isInvalid={!!error.name}
-							/>
-							<Form.Control.Feedback type="invalid">
-								{error.name}
-							</Form.Control.Feedback>
-						</Col>
-						<Col className={`${styles.col}`} lg={6}>
-							<Form.Control
-								type="text"
-								name="lastname"
-								placeholder="Apellido"
-								value={input.lastname}
-								onChange={handleInput}
-								isInvalid={!!error.lastname}
-							/>
-							<Form.Control.Feedback type="invalid">
-								{error.lastname}
-							</Form.Control.Feedback>
-						</Col>
-					</Row>
-					<Row className="justify-content-center mt-3" lg={1}>
-						<Col className={`${styles.col}`} lg={12}>
-							<Form.Control
-								type="text"
-								name="username"
-								placeholder="Nombre de usuario"
-								value={input.username}
-								onChange={handleInput}
-							/>
-						</Col>
-					</Row>
-					<Row className="justify-content-center mt-3" lg={1}>
-						<Col className={`${styles.col}`} lg={12}>
-							<Form.Control
-								type="email"
-								name="mail"
-								placeholder="Correo electrónico"
-								value={input.mail}
-								onChange={handleInput}
-								isInvalid={!!error.mail}
-							/>
-							<Form.Control.Feedback type="invalid">
-								{error.mail}
-							</Form.Control.Feedback>
-						</Col>
-					</Row>
-					<Row className="justify-content-center mt-3" lg={2}>
-						<Col className={`${styles.col}`} lg={6}>
-							<Form.Control
-								type="password"
-								name="password"
-								placeholder="Contraseña"
-								value={input.password}
-								onChange={handleInput}
-								isInvalid={!!error.password}
-							/>
-							<Form.Control.Feedback type="invalid">
-								{error.password}
-							</Form.Control.Feedback>
-						</Col>
-						<Col className={`${styles.col}`} lg={6}>
-							<Form.Control
-								type="password"
-								name="new_password"
-								placeholder="Repetir contraseña"
-								value={input.new_password}
-								onChange={handleInput}
-								isInvalid={!!error.new_password}
-							/>
-							<Form.Control.Feedback type="invalid">
-								{error.new_password}
-							</Form.Control.Feedback>
-						</Col>
-					</Row>
-					<Row className="justify-content-center mt-3" lg={1}>
-						<Col className={`${styles.col}`} lg={12}>
-							<Form.Label>Fecha de Nacimiento</Form.Label>
-							<Form.Control
-								type="date"
-								name="birth"
-								value={input.birth}
-								onChange={handleInput}
-								isInvalid={!!error.birth}
-							/>
-							<Form.Control.Feedback type="invalid">
-								{error.birth}
-							</Form.Control.Feedback>
-						</Col>
-					</Row>
-					<Row className="justify-content-center mt-3" lg={2}>
-						<Col className={`${styles.col}`} lg={6}>
-							<Form.Control
-								type="number"
-								name="document"
-								placeholder="Documento DNI"
-								value={input.document}
-								onChange={handleInput}
-								isInvalid={!!error.document}
-							/>
-							<Form.Control.Feedback type="invalid">
-								{error.document}
-							</Form.Control.Feedback>
-						</Col>
-						<Col className={`${styles.col}`} lg={6}>
-							<Form.Control
-								type="text"
-								name="phone"
-								placeholder="Número de celular"
-								value={input.phone}
-								onChange={handleInput}
-								isInvalid={!!error.phone}
-							/>
-							<Form.Control.Feedback type="invalid">
-								{error.phone}
-							</Form.Control.Feedback>
-						</Col>
-					</Row>
-					<Row className="justify-content-center mt-3" lg={1}>
-						<Col className={`${styles.col}`} lg={12}>
-							<Form.Label>Domicilio</Form.Label>
-							<Form.Select
-								onChange={handleSelect}
-								defaultValue="Provincia"
+		<div className={styles.container}>
+			<Form className={`${styles.form}`} onSubmit={handleSubmit}>
+				<div className={styles.titulo}>
+					<h3>Crea tu cuenta</h3>
+				</div>
+				<Row className={`${styles.row}`} lg={2}>
+					<Col className={`${styles.col}`}>
+						<Form.Control
+							type="text"
+							name="name"
+							placeholder="Nombre"
+							value={input.name}
+							onChange={handleInput}
+							isInvalid={!!error.name}
+						/>
+						<Form.Control.Feedback type="invalid">
+							{error.name}
+						</Form.Control.Feedback>
+					</Col>
+					<Col className={`${styles.col}`}>
+						<Form.Control
+							type="text"
+							name="lastname"
+							placeholder="Apellido"
+							value={input.lastname}
+							onChange={handleInput}
+							isInvalid={!!error.lastname}
+						/>
+						<Form.Control.Feedback type="invalid">
+							{error.lastname}
+						</Form.Control.Feedback>
+					</Col>
+				</Row>
+				<Row className={`${styles.row}`} lg={1}>
+					<Col className={`${styles.col}`}>
+						<Form.Control
+							type="text"
+							name="username"
+							placeholder="Nombre de usuario"
+							value={input.username}
+							onChange={handleInput}
+						/>
+					</Col>
+				</Row>
+				<Row className={`${styles.row}`} lg={1}>
+					<Col className={`${styles.col}`}>
+						<Form.Control
+							type="email"
+							name="mail"
+							placeholder="Correo electrónico"
+							value={input.mail}
+							onChange={handleInput}
+							isInvalid={!!error.mail}
+						/>
+						<Form.Control.Feedback type="invalid">
+							{error.mail}
+						</Form.Control.Feedback>
+					</Col>
+				</Row>
+				<Row className={`${styles.row}`} lg={2}>
+					<Col className={`${styles.col}`}>
+						<Form.Control
+							type="password"
+							name="password"
+							placeholder="Contraseña"
+							value={input.password}
+							onChange={handleInput}
+							isInvalid={!!error.password}
+						/>
+						<Form.Control.Feedback type="invalid">
+							{error.password}
+						</Form.Control.Feedback>
+					</Col>
+					<Col className={`${styles.col}`}>
+						<Form.Control
+							type="password"
+							name="new_password"
+							placeholder="Repetir contraseña"
+							value={input.new_password}
+							onChange={handleInput}
+							isInvalid={!!error.new_password}
+						/>
+						<Form.Control.Feedback type="invalid">
+							{error.new_password}
+						</Form.Control.Feedback>
+					</Col>
+				</Row>
+				<Row className={`${styles.row}`} lg={1}>
+					<Col className={`${styles.col}`}>
+						<Form.Label>Fecha de Nacimiento</Form.Label>
+						<Form.Control
+							type="date"
+							name="birth"
+							value={input.birth}
+							onChange={handleInput}
+							isInvalid={!!error.birth}
+						/>
+						<Form.Control.Feedback type="invalid">
+							{error.birth}
+						</Form.Control.Feedback>
+					</Col>
+				</Row>
+				<Row className={`${styles.row}`} lg={2}>
+					<Col className={`${styles.col}`}>
+						<Form.Control
+							type="number"
+							name="document"
+							placeholder="Documento DNI"
+							value={input.document}
+							onChange={handleInput}
+							isInvalid={!!error.document}
+						/>
+						<Form.Control.Feedback type="invalid">
+							{error.document}
+						</Form.Control.Feedback>
+					</Col>
+					<Col className={`${styles.col}`}>
+						<Form.Control
+							type="text"
+							name="phone"
+							placeholder="Número de celular"
+							value={input.phone}
+							onChange={handleInput}
+							isInvalid={!!error.phone}
+						/>
+						<Form.Control.Feedback type="invalid">
+							{error.phone}
+						</Form.Control.Feedback>
+					</Col>
+				</Row>
+				<Row className={`${styles.row}`} lg={1}>
+					<Col className={`${styles.col}`}>
+						<Form.Label>Domicilio</Form.Label>
+						<Form.Select onChange={handleSelect} defaultValue="Provincia">
+							<option value="Provincia" hidden>
+								Provincia
+							</option>
+							{provinces.map((e) => {
+								return (
+									<option key={e} value={e}>
+										{e}
+									</option>
+								);
+							})}
+						</Form.Select>
+					</Col>
+				</Row>
+				<Row className={`${styles.row}`} lg={1}>
+					<Col className={`${styles.col}`}>
+						<Form.Control
+							type="text"
+							name="city"
+							placeholder="Ciudad"
+							value={input.city}
+							onChange={handleInput}
+							isInvalid={!!error.city}
+						/>
+						<Form.Control.Feedback type="invalid">
+							{error.phone}
+						</Form.Control.Feedback>
+					</Col>
+				</Row>
+				<Row className={`${styles.row}`} lg={2}>
+					<Col className={`${styles.col}`}>
+						<Form.Control
+							type="text"
+							name="street"
+							placeholder="Calle"
+							value={input.street}
+							onChange={handleInput}
+							isInvalid={!!error.street}
+						/>
+						<Form.Control.Feedback type="invalid">
+							{error.street}
+						</Form.Control.Feedback>
+					</Col>
+					<Col className={`${styles.col}`}>
+						<Form.Control
+							type="number"
+							name="number"
+							placeholder="Número"
+							value={input.number}
+							onChange={handleInput}
+							isInvalid={!!error.number}
+						/>
+						<Form.Control.Feedback type="invalid">
+							{error.number}
+						</Form.Control.Feedback>
+					</Col>
+				</Row>
+				<Row className={`${styles.row}`} lg={1}>
+					<Col className={`${styles.col}`}>
+						{input.name === '' ||
+						input.lastname === '' ||
+						input.document === '' ||
+						input.phone === '' ||
+						input.mail === '' ||
+						input.province === '' ||
+						input.city === '' ||
+						input.street === '' ||
+						input.number === '' ||
+						input.username === '' ||
+						input.password === '' ||
+						input.new_password === '' ||
+						error.name ||
+						error.lastname ||
+						error.document ||
+						error.birth ||
+						error.phone ||
+						error.mail ||
+						error.number ||
+						error.password ||
+						error.new_password ? (
+							<Button
+								disabled
+								variant="danger"
+								className={`${styles.buttonSubmit}`}
 							>
-								<option value="Provincia" hidden>
-									Provincia
-								</option>
-								{provinces.map((e) => {
-									return (
-										<option key={e} value={e}>
-											{e}
-										</option>
-									);
-								})}
-							</Form.Select>
-						</Col>
-					</Row>
-					<Row className="justify-content-center mt-3" lg={1}>
-						<Col className={`${styles.col}`} lg={12}>
-							<Form.Control
-								type="text"
-								name="city"
-								placeholder="Ciudad"
-								value={input.city}
-								onChange={handleInput}
-								isInvalid={!!error.city}
-							/>
-							<Form.Control.Feedback type="invalid">
-								{error.phone}
-							</Form.Control.Feedback>
-						</Col>
-					</Row>
-					<Row className="justify-content-center mt-3" lg={2}>
-						<Col className={`${styles.col}`} lg={6}>
-							<Form.Control
-								type="text"
-								name="street"
-								placeholder="Calle"
-								value={input.street}
-								onChange={handleInput}
-								isInvalid={!!error.street}
-							/>
-							<Form.Control.Feedback type="invalid">
-								{error.street}
-							</Form.Control.Feedback>
-						</Col>
-						<Col className={`${styles.col}`} lg={6}>
-							<Form.Control
-								type="number"
-								name="number"
-								placeholder="Número"
-								value={input.number}
-								onChange={handleInput}
-								isInvalid={!!error.number}
-							/>
-							<Form.Control.Feedback type="invalid">
-								{error.number}
-							</Form.Control.Feedback>
-						</Col>
-					</Row>
-					<Row className="justify-content-center mt-3" lg={1}>
-						<Col className={`${styles.col}`} lg={5}>
-							{input.name === '' ||
-							input.lastname === '' ||
-							input.document === '' ||
-							input.phone === '' ||
-							input.mail === '' ||
-							input.province === '' ||
-							input.city === '' ||
-							input.street === '' ||
-							input.number === '' ||
-							input.username === '' ||
-							input.password === '' ||
-							input.new_password === '' ||
-							error.name ||
-							error.lastname ||
-							error.document ||
-							error.birth ||
-							error.phone ||
-							error.mail ||
-							error.number ||
-							error.password ||
-							error.new_password ? (
+								Faltan datos por completar
+							</Button>
+						) : (
+							<Link to="/healthData">
 								<Button
-									disabled
-									variant="danger"
 									className={`${styles.buttonSubmit}`}
+									type="submit"
+									variant="success"
 								>
-									Faltan datos por completar
+									Siguiente
 								</Button>
-							) : (
-								<Link to="/healthData">
-									<Button
-										className={`${styles.buttonSubmit}`}
-										type="submit"
-										variant="success"
-									>
-										Siguiente
-									</Button>
-								</Link>
-							)}
-						</Col>
-					</Row>
-				</Form>
-			</div>
+							</Link>
+						)}
+					</Col>
+				</Row>
+			</Form>
 		</div>
 	);
 }

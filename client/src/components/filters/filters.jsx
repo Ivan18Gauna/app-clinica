@@ -3,6 +3,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import { Route, Switch } from 'react-router-dom';
 import styles from './Filters.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -13,7 +14,6 @@ import {
 import { useHistory } from 'react-router-dom';
 
 const Filters = () => {
-	const URL = window.location.href;
 	const history = useHistory();
 	const [filter, setFilter] = useState({
 		lastname: '',
@@ -85,13 +85,15 @@ const Filters = () => {
 								))}
 						</Form.Select>
 					</Col>
-					{URL === 'http://localhost:3000/home' ? (
-						<Col lg={2}>
-							<Button className={styles.button} variant="info" type="submit">
-								Buscar
-							</Button>
-						</Col>
-					) : null}
+					<Switch>
+						<Route path={'/home'}>
+							<Col lg={2}>
+								<Button className={styles.button} variant="info" type="submit">
+									Buscar
+								</Button>
+							</Col>
+						</Route>
+					</Switch>
 				</Row>
 			</Form>
 		</div>
