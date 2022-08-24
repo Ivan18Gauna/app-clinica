@@ -12,10 +12,13 @@ import Login from './components/login/Login';
 import About from './components/about/About';
 import Price from './components/price/Price';
 import Professionals from './components/professionals/Professionals';
+
 import FormUpProfessionals from './components/formUpProfessionals/FormUpProfessionals';
 import ClinicHistory from './components/clinicHistory/ClinicHistory';
 import HomePatients from './components/homePatients/HomePatients';
 import UserProfile from './components/userProfile/UserProfile';
+
+import Auth0 from './components/auth0/Auth0';
 
 
 function App() {
@@ -38,10 +41,14 @@ function App() {
           <Route path='/professionals' component={Professionals}/>
           <Route path='/about' component={About}/>
           <Route path='/price' component={Price}/>
-       {/*    <Route path='/google' component={Google}/> */}
+
+          <Route path='/google' component={Google}/>
           <Route path='/clinic_history' component={ClinicHistory}/>
           <Route path='/homeUsuarioPrueba' component={HomePatients}/>
           <Route path='/userProfile' component={UserProfile} />
+          <Route path='/professionals' component={Professionals}/>
+          <Route path='/auth0' component={Auth0}/>
+
         </Switch>
       </div>
     </BrowserRouter>
