@@ -7,6 +7,7 @@ import {
 	GET_OS,
 	GET_PATIENTS,
 	GET_PATIENTS_NAME,
+	GET_PATIENTS_ID
 } from '../actions/actions';
 import axios from 'axios';
 
@@ -146,4 +147,14 @@ export function registerHealthData(payload) {
 		const healthData = await axios.put(`/patients/edit`, payload);
 		return healthData;
 	};
+}
+
+export function getPatientsDetail(id){
+	return async function(dispatch){
+		const patients_id= await axios(`/patients/detail/${id}`)
+		return dispatch({
+			type: GET_PATIENTS_ID,
+			payload: patients_id.data
+		})
+	}
 }
