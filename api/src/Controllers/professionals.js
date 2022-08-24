@@ -131,7 +131,7 @@ const getProfByName = async (req, res) => {
 				? res.status(200).send(dbProfName)
 				: res
 						.status(404)
-						.send('No existe registro del profesional a buscar por apellido');
+						.send('No encontramos profesionales con estos filtros');
 		} catch (error) {
 			console.log(error);
 		}
@@ -159,7 +159,7 @@ const getProfByName = async (req, res) => {
 				: res
 						.status(404)
 						.send(
-							'No existe registro del profesional por apellido y provincia a buscar'
+							'No encontramos profesionales con estos filtros'
 						);
 		} catch (error) {
 			console.log(error);
@@ -180,7 +180,7 @@ const getProfByName = async (req, res) => {
 				? res.status(200).send(dbProfName)
 				: res
 						.status(404)
-						.send('No existe registro del profesional en la provincia');
+						.send('No encontramos profesionales con estos filtros');
 		} catch (error) {
 			console.log(error);
 		}
@@ -205,7 +205,7 @@ const getProfByName = async (req, res) => {
 				: res
 						.status(404)
 						.send(
-							'No existe registro del profesional en la especialidad a buscar'
+							'No encontramos profesionales con estos filtros'
 						);
 		} catch (error) {
 			console.log(error);
@@ -231,7 +231,7 @@ const getProfByName = async (req, res) => {
 				: res
 						.status(404)
 						.send(
-							'No existe registro del profesional a buscar en la Especialidad y Provincia'
+							'No encontramos profesionales con estos filtros'
 						);
 		} catch (error) {
 			console.log(error);
@@ -263,7 +263,7 @@ const getProfByName = async (req, res) => {
 				: res
 						.status(404)
 						.send(
-							'No existe registro del profesional con el apellido, especialidad y provincia a buscar'
+							'No encontramos profesionales con estos filtros'
 						);
 		} catch (error) {
 			console.log(error);
@@ -290,7 +290,7 @@ const getProfByName = async (req, res) => {
 				: res
 						.status(404)
 						.send(
-							'No existe registro del profesional con el apellido, especialidad y provincia a buscar'
+							'No encontramos profesionales con estos filtros'
 						);
 		} catch (error) {
 			console.log(error);
