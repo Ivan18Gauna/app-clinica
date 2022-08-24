@@ -156,7 +156,7 @@ const postPatients = async (req, res) => {
       res.send("Falta infornacion");
     }
     const validate = await Patients.findOne({
-      where: { name },
+      where: { document },
     });
     if (!validate) {
       let newPatients = await Patients.create(patients);
