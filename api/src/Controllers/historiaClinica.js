@@ -18,12 +18,11 @@ const postHistoriaClinica = async (req, res) => {
       res.send("Falta infornacion");
     } else {
        let newHistoriaClinica = await HistoriaClinica.create(historiaClinica);
-       
       let professionaldb = await Professionals.findOne({
-         where: {id: professional}
+         where: {license: professional}
         })
        let patientdb = await Patients.findOne({
-        where: {document: patient}        
+        where: {document: patient}
        })
        console.log(professionaldb, patientdb)
       await professionaldb.addHistoriaClinica(newHistoriaClinica);
