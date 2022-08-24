@@ -274,13 +274,13 @@ export default function RegisterPatient() {
 					</Row>
 					<Row className="justify-content-center mt-3" lg={1}>
 						<Col className={`${styles.col}`} lg={12}>
-							<Form.Label>Provincia</Form.Label>
+							<Form.Label>Domicilio</Form.Label>
 							<Form.Select
 								onChange={handleSelect}
-								defaultValue="Seleccione una opción"
+								defaultValue="Provincia"
 							>
-								<option value="Seleccione una opción" hidden>
-									Seleccione una opción
+								<option value="Provincia" hidden>
+									Provincia
 								</option>
 								{provinces.map((e) => {
 									return (
@@ -367,7 +367,11 @@ export default function RegisterPatient() {
 								</Button>
 							) : (
 								<Link to="/healthData">
-									<Button type="submit" variant="success">
+									<Button
+										className={`${styles.buttonSubmit}`}
+										type="submit"
+										variant="success"
+									>
 										Siguiente
 									</Button>
 								</Link>
