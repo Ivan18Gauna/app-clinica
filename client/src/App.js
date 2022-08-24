@@ -13,6 +13,8 @@ import About from './components/about/About';
 import Price from './components/price/Price';
 import Professionals from './components/professionals/Professionals';
 import FormUpProfessionals from './components/formUpProfessionals/FormUpProfessionals';
+import ClinicHistory from './components/clinicHistory/ClinicHistory';
+import HomePatients from './components/homePatients/HomePatients';
 
 
 function App() {
@@ -36,6 +38,8 @@ function App() {
           <Route path='/about' component={About}/>
           <Route path='/price' component={Price}/>
        {/*    <Route path='/google' component={Google}/> */}
+          <Route path='/clinic_history' component={ClinicHistory}/>
+          <Route peth='/homeUsuarioPrueba' component={HomePatients}/>
         </Switch>
       </div>
     </BrowserRouter>

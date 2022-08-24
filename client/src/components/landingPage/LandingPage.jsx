@@ -5,9 +5,7 @@ import  "./landing.css"
 import Button from "react-bootstrap/esm/Button";
 
 export default function LandingPage (){
-    const fecha = new Date('Jul 12 2011');
-    const añoActual = fecha.getFullYear();
-console.log(añoActual);
+    
     return(
         <div className="landing">
             <video src={videoplayback} autoPlay loop muted></video>
