@@ -12,6 +12,7 @@ import Login from './components/login/Login';
 import About from './components/about/About';
 import Price from './components/price/Price';
 import Professionals from './components/professionals/Professionals';
+import Auth0 from './components/auth0/Auth0';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
           <Route path='/about' component={About}/>
           <Route path='/price' component={Price}/>
           <Route path='/professionals' component={Professionals}/>
+          <Route path='/auth0' component={Auth0}/>
         </Switch>
       </div>
     </BrowserRouter>
