@@ -136,6 +136,7 @@ const getProfByName = async (req, res) => {
   let { filterProfProv } = req.query;
   let { page } = req.query;
 
+
   //*****FILTRO SE RECIBE APELLIDO Y NO SE RECIBE ESPECIALIDAD NI PROVINCIA
   if (lastname && !filterEsp && !filterProfProv) {
     try {
@@ -168,6 +169,7 @@ const getProfByName = async (req, res) => {
       console.log(error);
     }
   }
+
   //*****FILTRO SE RECIBE APELLIDO Y PROVINCIA NO SE RECIBE ESPECIALIDAD
   if (lastname && !filterEsp && filterProfProv) {
     try {
@@ -208,6 +210,7 @@ const getProfByName = async (req, res) => {
       console.log(error);
     }
   }
+
   //*****FILTRO SE RECIBE PROVINCIA NO SE RECIBE ESPECIALIDAD NI APELLIDO
   if (!lastname && !filterEsp && filterProfProv) {
     try {
@@ -239,6 +242,7 @@ const getProfByName = async (req, res) => {
       console.log(error);
     }
   }
+
   //*****FILTRO SE RECIBE ESPECIALIDAD NO SE RECIBE PROVINCIA NI APELLIDO
   if (!lastname && filterEsp && !filterProfProv) {
     try {
@@ -271,6 +275,7 @@ const getProfByName = async (req, res) => {
       console.log(error);
     }
   }
+
   //*****FILTRO SE RECIBE ESPECIALIDAD  Y PROVINCIA NO SE RECIBE APELLIDO
 
   if (!lastname && filterEsp && filterProfProv) {
@@ -302,6 +307,7 @@ const getProfByName = async (req, res) => {
       console.log(error);
     }
   }
+
   //*****SE RECIBE ESPECIALIDAD, PROVINCIA, APELLIDO
   if (lastname && filterEsp && filterProfProv) {
     try {
@@ -483,7 +489,9 @@ module.exports = {
   getObrasSociales,
   addProfDb,
   deleteProfessionals
+
 };
+
 
 
 

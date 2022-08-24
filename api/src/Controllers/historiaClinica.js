@@ -10,6 +10,7 @@ const {
   Patients,
 } = require("../db");
 
+
 const postHistoriaClinica = async (req, res) => {
   let { reason, image, description, date, diagnosis, professional, patient } = req.body;
   try {

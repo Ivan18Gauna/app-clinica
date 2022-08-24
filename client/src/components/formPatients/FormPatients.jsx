@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -53,6 +53,7 @@ const provinces = ['Buenos Aires', 'Ciudad Autónoma de Buenos Aires', 'Catamarc
 
 export default function RegisterPatient() {
 	const dispatch = useDispatch();
+	const history = useHistory();
 
 	const [input, setInput] = useState({
 		name: '',
@@ -112,6 +113,7 @@ export default function RegisterPatient() {
 			password: '',
 			new_password: ''
 		});
+		history.push('/home');
 	}
 
 	return (
