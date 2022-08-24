@@ -3,11 +3,12 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { Link } from 'react-router-dom';
 import './NavBar.css';
+import { useAuth0 } from '@auth0/auth0-react';
 
 
-function navBarEdit() {
+function NavBarEdit() {
 
-
+const {isAuthenticated} = useAuth0()
 	
 	//const URL = window.location.href;
 	
@@ -37,7 +38,7 @@ function navBarEdit() {
 						<Nav.Link as={Link} to="/professionals">
 							Buscar Profesionales
 						</Nav.Link>
-						<Nav.Link as={Link} to="/signin">
+						{/* <Nav.Link as={Link} to="/signin">
 
 							Registrarse
 						</Nav.Link>
@@ -45,10 +46,16 @@ function navBarEdit() {
 							Ingresar
 						</Nav.Link> */}
 						
-						
+						{!isAuthenticated ? 
 						<Nav.Link as={Link} to="/auth0">
 							Ingresar
 						</Nav.Link>
+						:
+						<Nav.Link as={Link} to="/auth0">
+							Mi perfil
+						</Nav.Link>
+						}
+						
 			
 			
 					</Nav>
@@ -60,4 +67,4 @@ function navBarEdit() {
 	);
 }
 
-export default navBarEdit;
+export default NavBarEdit;
