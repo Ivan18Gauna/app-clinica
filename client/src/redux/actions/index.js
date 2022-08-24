@@ -107,10 +107,10 @@ export function getPatients(){
     }
 }
 export function getPatientsByName(payload){
- //   console.log("soy payload",payload)
+  console.log("soy payload",payload)
     return async function (dispatch) {
         try{
-        const patients = await axios.get("/patients/onsearch?lastname=" + payload)
+        const patients = await axios.get("/patients/document/" + payload)
        // console.log("soy patients",patients)
         return dispatch({
             type: GET_PATIENTS_NAME,
@@ -123,4 +123,15 @@ export function getPatientsByName(payload){
     }
 }
 
+export function postHistory(payload){
+	return async function(){
+		try {
+			console.log("soy payload history",payload)
+			const res = await axios.post("/historiaclinica")
+			return res;
+		} catch (error) {
+			console.log(error)
+		}
+	}
+}
 
