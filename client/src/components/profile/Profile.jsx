@@ -9,8 +9,7 @@ export default function Profile(){
             <div>
                 <img src={user.picture} alt={user.name} />
                 <h1>{user.name}</h1>
-                <p>{user.email}</p>
-               
+                <p>{user.email}</p>   
             </div>
         </div>
     )

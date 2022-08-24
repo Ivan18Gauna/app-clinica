@@ -1,7 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import videoplayback from "./videoplayback.mp4"
-import  "./Landing.css"
+import  "./landing.css"
 import Button from "react-bootstrap/esm/Button";
 
 export default function LandingPage (){
