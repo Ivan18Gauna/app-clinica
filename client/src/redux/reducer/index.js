@@ -7,7 +7,8 @@ import {
 	GET_CITIES,
 	GET_OS,
   GET_PATIENTS,
-  GET_PATIENTS_NAME
+  GET_PATIENTS_NAME,
+  GET_PATIENTS_ID
 } from '../actions/actions';
 
 const initialState = {
@@ -17,7 +18,8 @@ const initialState = {
   specialties:[],
   cities:[],
   os:[],
-  patientes: []
+  patientes: [],
+  user:[]
 };
 
 function rootReducer(state = initialState, action) {
@@ -60,6 +62,11 @@ function rootReducer(state = initialState, action) {
               ...state, 
               patients: action.payload
             }
+            case GET_PATIENTS_ID:
+              return{
+                ...state,
+                user:action.payload
+              }
 		default:
 			return state;
 	}

@@ -15,6 +15,7 @@ import Professionals from './components/professionals/Professionals';
 import FormUpProfessionals from './components/formUpProfessionals/FormUpProfessionals';
 import ClinicHistory from './components/clinicHistory/ClinicHistory';
 import HomePatients from './components/homePatients/HomePatients';
+import UserProfile from './components/userProfile/UserProfile';
 
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
        {/*    <Route path='/google' component={Google}/> */}
           <Route path='/clinic_history' component={ClinicHistory}/>
           <Route path='/homeUsuarioPrueba' component={HomePatients}/>
+          <Route path='/userProfile' component={UserProfile} />
         </Switch>
       </div>
     </BrowserRouter>
