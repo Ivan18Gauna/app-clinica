@@ -6,9 +6,12 @@ import './NavBar.css';
 
 
 function navBarEdit() {
+
+
 	
-	const URL = window.location.href;
+	//const URL = window.location.href;
 	
+
 	return (
 		
 		<div>
@@ -30,13 +33,12 @@ function navBarEdit() {
 						</Nav.Link>
 					</Nav>
 					<Nav>
-						{URL === 'http://localhost:3000/home' ? (
-							<Nav.Link as={Link} to="/professionals">
-								Buscar Profesionales
-							</Nav.Link>
-						) : null}
-						
-						{/* <Nav.Link as={Link} to="/signin">
+
+						<Nav.Link as={Link} to="/professionals">
+							Buscar Profesionales
+						</Nav.Link>
+						<Nav.Link as={Link} to="/signin">
+
 							Registrarse
 						</Nav.Link>
 						<Nav.Link as={Link} to="/login">

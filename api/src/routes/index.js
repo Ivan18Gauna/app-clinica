@@ -17,8 +17,7 @@ const router = Router();
 router.use('/professionals', routesProfessionals);
 router.use('/patients', routesPatients);
 router.use('/especialties', routesEspecialties);
-router.use('/historiaClinica', routersHistoriaClinica)
-
+router.use('/historiaclinica', routersHistoriaClinica);
 
 
 module.exports = router;

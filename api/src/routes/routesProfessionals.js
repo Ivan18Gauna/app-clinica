@@ -1,7 +1,7 @@
 const axios = require ('axios')
 
 
-const {putProfessionals, deleteProfessionals, getInfoApi, getProfById, getProfByName, getAllProfessionals, postProfessionals}= require ('../Controllers/professionals')
+const {putProfessionals, deleteProfessionals, getProfById, getProfByName, getAllProfessionals, postProfessionals}= require ('../Controllers/professionals')
 
 const express = require('express')
 const router =express.Router();

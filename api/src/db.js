@@ -58,17 +58,18 @@ const { Professionals, Specialties, Patients, ObrasSociales, HistoriaClinica } =
 
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
-HistoriaClinica.belongsTo(Patients,{through:'historiaClinica-patients'})
-Patients.belongsToMany(HistoriaClinica,{through:'historiaClinica-patients'})
 
-HistoriaClinica.belongsTo(Professionals,{through:'historiaClinica-professionals'})
-Professionals.belongsToMany(HistoriaClinica,{through:'historiaClinica-professionals'})
+Patients.belongsToMany(HistoriaClinica, {through:'patients-historia-clinica'})
+HistoriaClinica.belongsToMany(Patients, {through:'patients-historia-clinica'})
+
+Professionals.belongsToMany(HistoriaClinica,{through:'professionals-historia-clinica'})
+HistoriaClinica.belongsToMany(Professionals, {through:'professionals-historia-clinica'})
 
 Professionals.belongsToMany(ObrasSociales,{through:'professionals-o.sociales'})
 ObrasSociales.belongsToMany(Professionals,{through:'professionals-o.sociales'})
 
-Professionals.belongsToMany(Specialties,{through:'professionals-specialties',})
-Specialties.belongsToMany(Professionals,{through:'professionals-specialties',})
+Professionals.belongsToMany(Specialties,{through:'professionals-specialties'})
+Specialties.belongsToMany(Professionals,{through:'professionals-specialties'})
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
