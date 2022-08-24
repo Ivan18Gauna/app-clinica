@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getObrasSociales } from "../../redux/actions";
 import { useHistory } from "react-router-dom";
+import { registerHealthData } from "../../redux/actions";
 
 const blood_type = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB+', 'AB-', 'O+', 'O-']
 const vaccines_data = ['BCG', 'Hepatitis B', 'Neumococo conjugada', 'Quintuple pentavalente', 'Polio', 'Rotavirus', 'Meningococo', 'Gripe', 'Hepatitis A',
@@ -144,7 +145,7 @@ export default function HealthData() {
 
     function handleSubmit(e) {
         e.preventDefault();
-        dispatch()      //falta action y reducer
+        dispatch(registerHealthData(input))
         setInput({
             blood: '',
             vaccines: [],
