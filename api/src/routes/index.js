@@ -3,7 +3,7 @@ const routesProfessionals = require('./routesProfessionals')
 const routesPatients = require('./routesPatients')
 const routesEspecialties = require('./routesEspecialties')
 const routersHistoriaClinica = require('./routersHistoriaClinica')
-const routesHealthData = require('./routesHealthData')
+const routerInvoice = require ('./routesInvoice')
 
 const {Professionals, Specialties} = require ('../db')
 
@@ -19,8 +19,7 @@ router.use('/professionals', routesProfessionals);
 router.use('/patients', routesPatients);
 router.use('/especialties', routesEspecialties);
 router.use('/historiaclinica', routersHistoriaClinica);
-router.use('/healthData', routesHealthData )
-
+router.use('/invoice', routerInvoice);
 
 
 module.exports = router;

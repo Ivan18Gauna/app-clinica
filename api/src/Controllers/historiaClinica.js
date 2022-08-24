@@ -12,31 +12,23 @@ const {
 
 
 const postHistoriaClinica = async (req, res) => {
-  let { reason, image, description, date, diagnosis, professional, patient } =
-    req.body;
-
+  let { reason, image, description, date, diagnosis, professional, patient } = req.body;
   try {
-    const historiaClinica = {
-      id: id,
-      reason: reason,
-      image: image,
-      description: description,
-      date: date,
-      diagnosis: diagnosis,
-    };
+    const historiaClinica = { reason, image, description, date, diagnosis, };
     if (!reason || !image || !description || !date || !diagnosis) {
       res.send("Falta infornacion");
     } else {
        let newHistoriaClinica = await HistoriaClinica.create(historiaClinica);
        
       let professionaldb = await Professionals.findOne({
-         where: {name: professional}
+         where: {id: professional}
         })
        let patientdb = await Patients.findOne({
-        where:{name:patient}        
+        where: {document: patient}        
        })
-      await newHistoriaClinica.addProfessionals(professionaldb);
-      await newHistoriaClinica.addPatients(patientdb);
+       console.log(professionaldb, patientdb)
+      await professionaldb.addHistoriaClinica(newHistoriaClinica);
+      await patientdb.addHistoriaClinica(newHistoriaClinica);
        res.status(200).send("Historia Credad con Exito");
      
     }

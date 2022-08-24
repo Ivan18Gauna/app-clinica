@@ -5,10 +5,11 @@ module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('patients', {
     id: {
-      type: DataTypes.INTEGER,
+      type:DataTypes.INTEGER,
+      primaryKey: true,
+      allowNull: false,
       autoIncrement: true,
-      primaryKey: true
-    },
+    },  
   name: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -50,7 +51,7 @@ module.exports = (sequelize) => {
       allowNull: false
   },
   blood: {
-      type: DataTypes.STRING,
+    type: DataTypes.STRING,
   },
   vaccines: {
       type: DataTypes.STRING,
@@ -66,7 +67,7 @@ module.exports = (sequelize) => {
     },
   oS: {
       type: DataTypes.STRING,
-      },
+      },  
     },
   {
     createdAt: false,

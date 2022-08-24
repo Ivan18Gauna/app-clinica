@@ -5,10 +5,11 @@ module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('historiaClinica', {
     id: {
-      type: DataTypes.INTEGER,
+      type:DataTypes.INTEGER,
+      primaryKey: true,
+      allowNull: false,
       autoIncrement: true,
-      primaryKey: true
-    },
+    },    
     reason: {
       type: DataTypes.STRING,
       allowNull: false,
