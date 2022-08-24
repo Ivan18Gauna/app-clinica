@@ -1,7 +1,7 @@
 import { React } from 'react';
 import Portada from '../portada/portada';
-import Filters from '../filters/filters';
-import CardsTriple from '../infoCards/InfoCards';
+import Filters from '../filters/filters.jsx';
+import CardsTriple from '../infoCards/infoCards';
 import CardHistory from '../cardHistory/CardHistory';
 import styles from './Home.module.css';
 
