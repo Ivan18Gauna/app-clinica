@@ -1,7 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from 'react-redux';
 
 export default function HomePatients() {
+
+    const userInfo = useSelector( state => state/*.user*/ )
 
     return (
         <div>
@@ -14,6 +17,7 @@ export default function HomePatients() {
                     <h5>Profesional</h5>
                 </div>
                 <button>dia evento/hora evento/profesional evento</button>
+                {/* hay que ver como vn a guardar la info de los turnos */}
             </div>
             <Link to='/clinic_history'>
                 <button>Historia Clinica</button>
@@ -24,13 +28,13 @@ export default function HomePatients() {
             <div>
                 <h3>Info Basica</h3>
                 <div>
-                    <label>Grupo Sanguineo: </label>
-                    <label>Vacunas: </label>
-                    <label>Alergias: </label>
-                    <label>Donante: </label>
-                    <label>Transfundible: </label>
-                    <label>Enfermedades crónicas: </label>
-                    <label>Obra Social: </label>
+                    <label>Grupo Sanguineo: {userInfo}</label>
+                    <label>Vacunas: {userInfo}</label>
+                    <label>Alergias: {userInfo}</label>
+                    <label>Donante: {userInfo}</label>
+                    <label>Transfundible: {userInfo}</label>
+                    <label>Enfermedades crónicas: {userInfo}</label>
+                    <label>Obra Social: {userInfo}</label>
                 </div>
             </div>
         </div>
