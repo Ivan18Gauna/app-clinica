@@ -12,10 +12,13 @@ const getInfoApi = async (req, res) => {
   );
 };
 
+
 const addProfDb = async () => {
   const dbProf = await Professionals.findAll();
-    if (!dbProf.length) {
-    const apiProf = await axios.get(`https://historia-clinica-31f40-default-rtdb.firebaseio.com/results.json`);
+  if (!dbProf.length) {
+    const apiProf = await axios.get(
+      `https://historia-clinica-31f40-default-rtdb.firebaseio.com/results.json`
+    );
     const prof = await apiProf.data;
     prof.forEach((e) => {
       Specialties.findOrCreate({
@@ -65,6 +68,7 @@ const addProfDb = async () => {
   }
 };
 
+
 const getObrasSociales = async () => {
   const apiObras = await axios.get("https://obras-sociales-be310-default-rtdb.firebaseio.com/results.json");
   const obras = await apiObras.data;
@@ -80,28 +84,48 @@ const getObrasSociales = async () => {
 
 const getProfById = async (req, res) => {
   let { id } = req.params;
-  const dbProfId = await Professionals.findOne({
-    include: [{ model: Specialties,
-      attributes:['name'] }],  
-    where: {
-      id: id,
-    },
+  let dbProfId = await Professionals.findOne({
+    where: { id },
+    include: [
+      {
+        model: ObrasSociales,
+        attributes: ["name"],
+        through: { attributes: [] },
+      },
+      {
+        model: Specialties,
+        attributes: ["name"],
+        through: { attributes: [] },
+      },
+    ],
   });
   res.status(200).send(dbProfId);
 };
 
-const getAllProfessionals=async(req,res)=>{
-  try{  
+const getAllProfessionals = async (req, res) => {
+  try {
     let allProfessional = await Professionals.findAll({
-    include: [{ model: Specialties,
-    attributes:['name'] }],  
-    limit:150,
-    //offset: req.query.page,
-    //order:[['name', req.query.order]],
-    })
-    res.status(200).send(allProfessional)
-    } catch (error) {console.log(error)}
-}
+      include: [
+        {
+          model: ObrasSociales,
+          attributes: ["name"],
+          through: { attributes: [] },
+        },
+        {
+          model: Specialties,
+          attributes: ["name"],
+          through: { attributes: [] },
+        },
+      ],
+      limit: 150,
+      //offset: req.query.page,
+      //order:[['name', req.query.order]],
+    });
+    res.status(200).send(allProfessional);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 const getProfByName = async(req, res) => {
   let {lastname} = req.query
@@ -240,10 +264,11 @@ const getProfByName = async(req, res) => {
     }
     }
   }
-
 const postProfessionals = async (req, res) => {
   let {
     name,
+    username,
+    password,
     lastname,
     license,
     birth,
@@ -258,6 +283,8 @@ const postProfessionals = async (req, res) => {
   try {
     const professional = {
       name: name,
+      username: username,
+      password: password,
       lastname: lastname,
       license: license,
       birth: birth,
@@ -346,17 +373,17 @@ const putProfessionals = async (req, res) => {
 };
 
 const deleteProfessionals = async (req, res) => {
-    try {
-        const id = req.params.id;
-        await Professionals.destroy({
-          where: { id: id },
-        });
-        return res.send("deleted!");
-      } catch (error) {
-        return error;
-      }
-}
-   
+  try {
+    const id = req.params.id;
+    await Professionals.destroy({
+      where: { id: id },
+    });
+    return res.send("deleted!");
+  } catch (error) {
+    return error;
+  }
+};
+
 
 
 module.exports = {
@@ -372,3 +399,8 @@ module.exports = {
   addProfDb,
   deleteProfessionals
 };
+
+
+
+
+
