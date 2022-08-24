@@ -30,7 +30,7 @@ function validate(input){
 export default function FormUpProfessionals(){
     const dispatch = useDispatch();
     const allPatients = useSelector((state) => state.patients)
-	//console.log("soy",allPatients)
+	console.log("soy -Paciente",allPatients)
     
     useEffect(() => {
 		dispatch(getPatients())
@@ -44,6 +44,7 @@ export default function FormUpProfessionals(){
         date: "",
         diagnostico:""
     })
+    console.log("soy search",input.search)
     
     const [error, setError] = useState({})
     
@@ -61,11 +62,9 @@ export default function FormUpProfessionals(){
    
     }
 	
-    
-
     function handleSubmit(e){
         e.preventDefault(e)
-        //console.log(input.motivo, input.file, input.consulta, input.date, input.diagnostico)
+        console.log(input.search, input.motivo, input.file, input.consulta, input.date, input.diagnostico)
         setInput({
             search:[],
             motivo: "",
@@ -74,15 +73,17 @@ export default function FormUpProfessionals(){
             date: "",
             diagnostico:""
         })
-        
     }
      
+    
+
     function handleSearch(e){
         e.preventDefault()
         dispatch(getPatientsByName(input.search))
-        setInput({search:""})
- }
-
+      
+    }
+ 
+ 
     
     
     return(
@@ -92,23 +93,17 @@ export default function FormUpProfessionals(){
                 <input type="search" name="search" value={input.search} onChange={handleMotivo}/>
                      {input.search === '' ? <p>*</p> : ''}
 					{error.search && <p> {error.search} </p>}
-                    <div> {input.search}</div>
+                 
+                  {allPatients && allPatients.length>0 && allPatients[0].name === input.search[0] ? 
+                  <div>
+                    <p>{allPatients[0].document}</p>
+                    <p> {allPatients[0].name}</p>
+                  <p> {allPatients[0].lastname}</p>
+                  </div> : 
+                  <div>"No se encontro paciente"</div>}
+                    
                 <button onClick={handleSearch}>Buscar Paciente</button>
-
-                <div>
-					<ul>
-						<span>Especialidades Seleccionadas: </span>
-						{ 
-                            
-						allPatients.length>0 && allPatients.map((e) => {
-								return <li key={e} value={e} > {e}
-									{/* <button value={e} onClick={handleDelete} >X</button>  */}
-								</li>
-						})
-						}
-					</ul>
-				</div>
-
+      
                <label > Motivo :</label>
                 <input type="text"  name="motivo" value={input.motivo} onChange={handleMotivo}/>
                     {input.motivo === '' ? <p>*</p> : ''}
