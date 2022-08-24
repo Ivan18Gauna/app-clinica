@@ -321,7 +321,7 @@ export default function RegisterDoctor() {
                 defaultValue="Seleccione una opción"
                 class="form-select"
               >
-                <option value="Seleccione una opción">
+                <option hidden value="Seleccione una opción">
                   Seleccione una opción
                 </option>
                 {provinces.map((e) => {
@@ -480,7 +480,7 @@ export default function RegisterDoctor() {
                 onChange={handleSelectSpecialities}
                 defaultValue="Seleccione una opción"
               >
-                <option value="Seleccione una opción">
+                <option hidden value="Seleccione una opción">
                   Seleccione una opción
                 </option>
                 {especialities_data.map((e) => {
