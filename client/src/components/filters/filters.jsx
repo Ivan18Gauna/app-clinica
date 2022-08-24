@@ -26,10 +26,10 @@ const Filters = () => {
 	useEffect(() => {
 		dispatch(get_cities());
 		dispatch(get_specialties());
-	}, []);
+	}, [dispatch]);
 	useEffect(() => {
 		dispatch(filterConvinado(filter));
-	}, [filter]);
+	}, [dispatch, filter]);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();

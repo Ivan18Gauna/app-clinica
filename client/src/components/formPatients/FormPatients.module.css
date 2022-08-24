@@ -1,0 +1,28 @@
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+.form {
+  background-color: #C4DBFF;
+  border-radius: 1rem;
+  margin: 1rem;
+  padding: 2rem;
+  width: 40rem;
+  box-shadow: .5rem .3rem 2rem grey;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.col {
+  padding-left: .5rem !important;
+  padding-right: .5rem !important;
+}
+
+.buttonSubmit {
+  width: 100%;
+}
