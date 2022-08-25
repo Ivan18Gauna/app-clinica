@@ -12,6 +12,7 @@ const getInfoApi = async (req, res) => {
   );
 };
 
+
 const addProfDb = async () => {
   const dbProf = await Professionals.findAll();
   if (!dbProf.length) {
@@ -66,6 +67,7 @@ const addProfDb = async () => {
     console.log("profesionales cargados correctamente");
   }
 };
+
 
 const getObrasSociales = async () => {
   const apiObras = await axios.get(
@@ -126,6 +128,7 @@ const getAllProfessionals = async (req, res) => {
     console.log(error);
   }
 };
+
 
 const getProfByName = async (req, res) => {
   let { lastname } = req.query;
@@ -346,6 +349,7 @@ const getProfByName = async (req, res) => {
       res.status(200).send("Debe seleccionar un filtro a consultar");
     }
   }
+
 };
 
 const postProfessionals = async (req, res) => {
@@ -468,6 +472,7 @@ const deleteProfessionals = async (req, res) => {
   }
 };
 
+
 module.exports = {
   getInfoApi,
   getProfByName,
@@ -477,5 +482,9 @@ module.exports = {
   putProfessionals,
   getObrasSociales,
   addProfDb,
-  deleteProfessionals,
+  deleteProfessionals
 };
+
+
+
+
