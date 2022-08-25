@@ -9,6 +9,7 @@ import { getPatientsDetail } from "../../redux/actions";
 
 export default function UserProfile() {
 
+    
     const dispatch = useDispatch();
 
     const patient = useSelector((state) => state.user)
