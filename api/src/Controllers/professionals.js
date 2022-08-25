@@ -2,7 +2,6 @@ const Sequelize = require("sequelize");
 const { default: axios } = require("axios");
 const { Op } = require("sequelize");
 const { Professionals, Specialties, ObrasSociales } = require("../db");
-const { query } = require("express");
 
 const getInfoApi = async (req, res) => {
   res.status(200).send(
