@@ -4,7 +4,7 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { Route, Switch } from 'react-router-dom';
-import styles from './filters.module.css';
+import styles from './Filters.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import {
 	filterConvinado,
