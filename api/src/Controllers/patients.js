@@ -183,6 +183,12 @@ const putPatients = async (req, res) => {
       city,
       number,
       street,
+      blood,
+      vaccines,
+      allergies,
+      transfusion,
+      chronicles,
+      oS
     } = req.body;
     const editPatients = await Patients.update(
       {
@@ -196,6 +202,12 @@ const putPatients = async (req, res) => {
         city,
         number,
         street,
+        blood,
+        vaccines,
+        allergies,
+        transfusion,
+        chronicles,
+        oS
       },
       { where: { id: id } }
     );
