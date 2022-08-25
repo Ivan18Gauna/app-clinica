@@ -1,5 +1,5 @@
 import React from "react";
-import "./portada.css"
+import "./Portada.css"
 
 export default function Portada() {
     return (

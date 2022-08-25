@@ -1,6 +1,6 @@
 import Card from 'react-bootstrap/Card';
 import CardGroup from 'react-bootstrap/CardGroup';
-import './info.css';
+import './Info.css';
 
 function CardsTriple() {
 	return (
