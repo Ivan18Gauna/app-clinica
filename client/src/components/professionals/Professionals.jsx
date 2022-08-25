@@ -1,5 +1,5 @@
 import React from 'react';
-import Filters from '../filters/Filters';
+import Filters from '../filters/Filters.jsx';
 import Cards from '../cards/Cards.jsx';
 import NotFoundPro from '../error/NotFoundPro.jsx';
 import ModifyFilter from '../error/ModifyFilter.jsx';

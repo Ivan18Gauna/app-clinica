@@ -1,5 +1,5 @@
 import { React } from 'react';
-import Portada from '../portada/Portada';
+import Portada from '../portada/Portada.jsx';
 import Filters from '../filters/Filters.jsx';
 import CardsTriple from '../infoCards/InfoCards';
 import CardHistory from '../cardHistory/CardHistory';
