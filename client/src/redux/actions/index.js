@@ -151,7 +151,8 @@ export function registerHealthData(payload) {
 
 export function getPatientsDetail(id){
 	return async function(dispatch){
-		const patients_id= await axios(`/patients/detail/${id}`)
+		const patients_id= await axios(`/patients/detail/5`)
+		console.log('action', patients_id)
 		return dispatch({
 			type: GET_PATIENTS_ID,
 			payload: patients_id.data
