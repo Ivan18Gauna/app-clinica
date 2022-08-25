@@ -7,7 +7,7 @@ import { Link, useHistory } from 'react-router-dom';
 import styles from './FormPatients.module.css';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import {registerPatients} from '../../redux/actions/index'
+import { registerPatients } from '../../redux/actions'
 
 function validate(input) {
 	let error = {};
@@ -90,7 +90,8 @@ const provinces = [
 
 export default function RegisterPatient() {
 	const dispatch = useDispatch();
-	const history = useHistory();
+	const history=useHistory()
+
 	const [error, setError] = useState({});
 
 	const [input, setInput] = useState({
@@ -127,6 +128,7 @@ export default function RegisterPatient() {
 			province: e.target.value,
 		});
 	}
+	console.log('input pat', input)
 
 	function handleSubmit(e) {
 		e.preventDefault();
@@ -145,13 +147,14 @@ export default function RegisterPatient() {
 			username: '',
 			password: '',
 			new_password: '',
-		});
-		history.push('/home');
+		}
+		);
+		history.push('/healthData')
 	}
 
 	return (
 		<div className={styles.container}>
-			<Form className={`${styles.form}`} onSubmit={handleSubmit}>
+			<Form className={`${styles.form}`} onSubmit={(e) => handleSubmit(e)}>
 				<div className={styles.titulo}>
 					<h3>Crea tu cuenta</h3>
 				</div>
@@ -343,26 +346,26 @@ export default function RegisterPatient() {
 				<Row className={`${styles.row}`} lg={1}>
 					<Col className={`${styles.col}`}>
 						{input.name === '' ||
-						input.lastname === '' ||
-						input.document === '' ||
-						input.phone === '' ||
-						input.mail === '' ||
-						input.province === '' ||
-						input.city === '' ||
-						input.street === '' ||
-						input.number === '' ||
-						input.username === '' ||
-						input.password === '' ||
-						input.new_password === '' ||
-						error.name ||
-						error.lastname ||
-						error.document ||
-						error.birth ||
-						error.phone ||
-						error.mail ||
-						error.number ||
-						error.password ||
-						error.new_password ? (
+							input.lastname === '' ||
+							input.document === '' ||
+							input.phone === '' ||
+							input.mail === '' ||
+							input.province === '' ||
+							input.city === '' ||
+							input.street === '' ||
+							input.number === '' ||
+							input.username === '' ||
+							input.password === '' ||
+							input.new_password === '' ||
+							error.name ||
+							error.lastname ||
+							error.document ||
+							error.birth ||
+							error.phone ||
+							error.mail ||
+							error.number ||
+							error.password ||
+							error.new_password ? (
 							<Button
 								disabled
 								variant="danger"
@@ -371,15 +374,15 @@ export default function RegisterPatient() {
 								Faltan datos por completar
 							</Button>
 						) : (
-							<Link to="/healthData">
-								<Button
-									className={`${styles.buttonSubmit}`}
-									type="submit"
-									variant="success"
-								>
-									Siguiente
-								</Button>
-							</Link>
+
+							<Button
+								className={`${styles.buttonSubmit}`}
+								type="submit"
+								variant="success"
+							>
+								Siguiente
+							</Button>
+
 						)}
 					</Col>
 				</Row>
