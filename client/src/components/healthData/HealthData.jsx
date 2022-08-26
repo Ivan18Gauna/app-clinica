@@ -1,9 +1,9 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getObrasSociales } from "../../redux/actions";
-import { useHistory } from "react-router-dom";
-import { registerHealthData } from "../../redux/actions";
+import { getObrasSociales, registerPatients } from "../../redux/actions";
+import { useHistory, useLocation } from "react-router-dom";
+
 
 const blood_type = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB+', 'AB-', 'O+', 'O-']
 const vaccines_data = ['BCG', 'Hepatitis B', 'Neumococo conjugada', 'Quintuple pentavalente', 'Polio', 'Rotavirus', 'Meningococo', 'Gripe', 'Hepatitis A',
@@ -16,12 +16,28 @@ export default function HealthData() {
     const dispatch = useDispatch();
 
     const history = useHistory();
+    const location = useLocation();
+    const state = location.state;
+    console.log('socation', state)
 
     useEffect(() => {
         dispatch(getObrasSociales())
     }, [dispatch])
 
     const [input, setInput] = useState({
+        name: state.name,
+        lastname: state.lastname,
+        document: state.document,
+        birth: state.birth,
+        phone: state.phone,
+        mail: state.mail,
+        province: state.province,
+        city: state.city,
+        number: state.number,
+        street: state.street,
+        username: state.username,
+        password: state.password,
+        new_password: state.new_password,
         blood: '',
         vaccines: [],
         allergies: [],
@@ -145,7 +161,7 @@ export default function HealthData() {
 
     function handleSubmit(e) {
         e.preventDefault();
-        dispatch(registerHealthData(input))
+        dispatch(registerPatients(input))
         setInput({
             blood: '',
             vaccines: [],
@@ -275,9 +291,9 @@ export default function HealthData() {
 
                 <div>
                     {
-                    input.blood===''||input.donation===''||input.transfusion===''?
-                        <button disabled>Datos obligatorios no completados</button>:
-                        <button type="submit" >Enviar</button>
+                        input.blood === '' || input.donation === '' || input.transfusion === '' ?
+                            <button disabled>Datos obligatorios no completados</button> :
+                            <button type="submit" >Enviar</button>
                     }
                 </div>
 

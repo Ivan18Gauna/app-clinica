@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import styles from './FormPatients.module.css';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import {registerPatients} from '../../redux/actions/index'
+import { getPatientsDoc, registerPatients } from '../../redux/actions'
 
 function validate(input) {
 	let error = {};
@@ -48,7 +48,7 @@ function validate(input) {
 		error.document = 'Número de documento no valido.';
 		return error;
 	}
-	if (!/^\d{10}$$/.test(input.phone)) {
+	if (!/^\d{8,15}$$/.test(input.phone)) {
 		error.phone = 'Número de telefono no valido.';
 		return error;
 	}
@@ -90,7 +90,8 @@ const provinces = [
 
 export default function RegisterPatient() {
 	const dispatch = useDispatch();
-	const history = useHistory();
+	const history = useHistory()
+
 	const [error, setError] = useState({});
 
 	const [input, setInput] = useState({
@@ -127,10 +128,13 @@ export default function RegisterPatient() {
 			province: e.target.value,
 		});
 	}
+	console.log('input pat', input)
 
 	function handleSubmit(e) {
 		e.preventDefault();
-		dispatch(registerPatients(input));
+		// dispatch(registerPatients(input),
+		// );
+		// dispatch(getPatientsDoc(input.document))
 		setInput({
 			name: '',
 			lastname: '',
@@ -145,13 +149,14 @@ export default function RegisterPatient() {
 			username: '',
 			password: '',
 			new_password: '',
-		});
-		history.push('/home');
+		}
+		);
+		history.push(`/healthData`, input)
 	}
 
 	return (
 		<div className={styles.container}>
-			<Form className={`${styles.form}`} onSubmit={handleSubmit}>
+			<Form className={`${styles.form}`} onSubmit={(e) => handleSubmit(e)}>
 				<div className={styles.titulo}>
 					<h3>Crea tu cuenta</h3>
 				</div>
@@ -343,26 +348,26 @@ export default function RegisterPatient() {
 				<Row className={`${styles.row}`} lg={1}>
 					<Col className={`${styles.col}`}>
 						{input.name === '' ||
-						input.lastname === '' ||
-						input.document === '' ||
-						input.phone === '' ||
-						input.mail === '' ||
-						input.province === '' ||
-						input.city === '' ||
-						input.street === '' ||
-						input.number === '' ||
-						input.username === '' ||
-						input.password === '' ||
-						input.new_password === '' ||
-						error.name ||
-						error.lastname ||
-						error.document ||
-						error.birth ||
-						error.phone ||
-						error.mail ||
-						error.number ||
-						error.password ||
-						error.new_password ? (
+							input.lastname === '' ||
+							input.document === '' ||
+							input.phone === '' ||
+							input.mail === '' ||
+							input.province === '' ||
+							input.city === '' ||
+							input.street === '' ||
+							input.number === '' ||
+							input.username === '' ||
+							input.password === '' ||
+							input.new_password === '' ||
+							error.name ||
+							error.lastname ||
+							error.document ||
+							error.birth ||
+							error.phone ||
+							error.mail ||
+							error.number ||
+							error.password ||
+							error.new_password ? (
 							<Button
 								disabled
 								variant="danger"
@@ -371,15 +376,15 @@ export default function RegisterPatient() {
 								Faltan datos por completar
 							</Button>
 						) : (
-							<Link to="/healthData">
-								<Button
-									className={`${styles.buttonSubmit}`}
-									type="submit"
-									variant="success"
-								>
-									Siguiente
-								</Button>
-							</Link>
+
+							<Button
+								className={`${styles.buttonSubmit}`}
+								type="submit"
+								variant="success"
+							>
+								Siguiente
+							</Button>
+
 						)}
 					</Col>
 				</Row>
