@@ -29,9 +29,6 @@ function NavBarEdit() {
 					</Nav.Link>
 				</Nav>
 				<Nav>
-					<Nav.Link as={Link} to="/professionals">
-						Buscar Profesionales
-					</Nav.Link>
 					{!isAuthenticated ? (
 						<Nav.Link as={Link} to="/auth0">
 							Ingresar
