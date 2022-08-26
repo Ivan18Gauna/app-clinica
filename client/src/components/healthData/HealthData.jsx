@@ -215,22 +215,20 @@ export default function HealthData() {
 					</Col>
 				</Row>
 				<Row>
-					<Col>
-						<Col className={`${styles.col}`}>
-							<ul className={styles.lista}>
-								<span>Vacunas seleccionadas: </span>
-								{input.vaccines.map((e) => {
-									return (
-										<li key={e} value={e}>
-											{e}
-											<Button value={e} onClick={handleDeleteVaccines}>
-												X
-											</Button>
-										</li>
-									);
-								})}
-							</ul>
-						</Col>
+					<Col className={`${styles.col}`}>
+						<ul className={styles.lista}>
+							<span>Vacunas seleccionadas: </span>
+							{input.vaccines.map((e) => {
+								return (
+									<li key={e} value={e}>
+										{e}
+										<Button value={e} onClick={handleDeleteVaccines}>
+											X
+										</Button>
+									</li>
+								);
+							})}
+						</ul>
 					</Col>
 				</Row>
 				<Row className={`${styles.row}`} lg={1}>
@@ -349,8 +347,12 @@ export default function HealthData() {
 							<option value="Seleccione una opción">
 								Seleccione una opción
 							</option>
-							{obras.map((e) => {
-								return <option value={e}> {e} </option>;
+							{obras.map((e, i) => {
+								return (
+									<option key={i} value={e}>
+										{e}
+									</option>
+								);
 							})}
 						</Form.Select>
 					</Col>
@@ -360,7 +362,11 @@ export default function HealthData() {
 						{input.blood === '' ||
 						input.donation === '' ||
 						input.transfusion === '' ? (
-							<Button className={`${styles.buttonSubmit}`} variant='danger' disabled>
+							<Button
+								className={`${styles.buttonSubmit}`}
+								variant="danger"
+								disabled
+							>
 								Datos obligatorios no completados
 							</Button>
 						) : (
