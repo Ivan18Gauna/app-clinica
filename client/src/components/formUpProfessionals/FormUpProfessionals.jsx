@@ -26,7 +26,7 @@ function validate(input){
 export default function FormUpProfessionals(){
     const dispatch = useDispatch();
     const allPatients = useSelector((state) => state.patients)
-	//console.log("soy -Paciente",allPatients)
+	console.log("soy -Paciente",allPatients)
     
     
     useEffect(() => {
@@ -41,7 +41,7 @@ export default function FormUpProfessionals(){
         date: "",
         diagnosis:""
     })
-    //console.log("soy search",input.search)
+    console.log("soy search",input.search)
     
     const [error, setError] = useState({})
     
@@ -61,57 +61,28 @@ export default function FormUpProfessionals(){
 	
     function handleSubmit(e){
         e.preventDefault(e)
-       // console.log("asi va la info",input.patient, input.reason, input.description, input.date, input.diagnosis)
-       
+        console.log("asi va la info",input.patient, input.reason, input.image, input.description, input.date, input.diagnosis)
         dispatch(postHistory(input));
         alert("Registraste correctamente tu atencion a  " + input.patient)
         setInput({
             patient:[],
             reason: "",
+            image: "",
             description: "",
-            image:"",
             date: "",
             diagnosis:""
         })
     }
      
-    
 
     function handleSearch(e){
         e.preventDefault()
         dispatch(getPatientsByName(input.patient))
       
     }
-
-    //Lo relacionado a cloud.
-  /*   const [imagen, setImagen] = useState("");
-    const [loading, setLoading] = useState(false) */
-
-    
-    /* const handleUploadImage = async (e) =>{
-        const files = e.target.files
-        const data = new FormData();
-        data.append("file", files[0]);
-        data.append("upload_preset", "appclinica");
-        setLoading(true);
-        const res = await fetch(
-            "https://api.cloudinary.com/v1_1/appclinica/image/upload",
-            {
-                method: "POST",
-                body: data,
-            }
-        )
-        const file = await res.json();
-        setImagen(file.secure_url)
-        setLoading(false) 
-        setInput({
-            ...input,
-            [e.target.name] : e.target.value
-        })
-              
-    }
-    */
  
+ 
+  
     
     return(
         <div>
@@ -137,9 +108,10 @@ export default function FormUpProfessionals(){
 					{error.reason && <p> {error.reason} </p>}
 
                 <label>Estudio digital :</label>
-                <input type="file" name="image" value={input.image} onChange={handleMotivo} />
-                   {/*  {loading? (<h3>Cargando imagenes</h3>): (<img src={imagen}  style={{width:"300px"}}/>)} */}
-                    
+                <input type="file" name="image" value={input.image} onChange={handleMotivo}/>
+                    {input.image === '' ? <p>*</p> : ''}
+					{error.image && <p> {error.image} </p>}
+
                 <label>Descripcion consulta :</label>
                 <input type="textarea" name="description" value={input.description} onChange={handleMotivo}/>
                     {input.description === '' ? <p>*</p> : ''}
