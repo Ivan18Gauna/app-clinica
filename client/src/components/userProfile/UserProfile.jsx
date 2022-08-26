@@ -2,9 +2,11 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getPatientsDetail } from "../../redux/actions";
-
+import { useAuth0 } from "@auth0/auth0-react";
 
 export default function UserProfile() {
+
+    const {logout} = useAuth0()
 
     const dispatch = useDispatch();
 
@@ -44,7 +46,7 @@ export default function UserProfile() {
                 {patient.donation}
                 <p>Es transfundible?</p>
                 {patient.transfusion}
-
+                <button onClick={logout}>cerrar session</button>
             </div>
         </div>
     )
