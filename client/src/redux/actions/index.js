@@ -48,11 +48,11 @@ export function get_cities() {
 	};
 }
 
-export function filterConvinado(payload) {
+export function filterConvinado(lastname, filterEsp, filterProfProv, order) {
 	return async function (dispatch) {
 		try {
 			const doctors_detail = await axios(
-				`/professionals?lastname=${payload.lastname}&filterEsp=${payload.filterEsp}&filterProfProv=${payload.filterProfProv}`
+				`/professionals?lastname=${lastname}&filterEsp=${filterEsp}&filterProfProv=${filterProfProv}&order=${order}`
 			);
 			return dispatch({
 				type: FILTER_CONVINADO,

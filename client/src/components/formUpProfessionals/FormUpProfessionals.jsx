@@ -26,7 +26,7 @@ function validate(input){
 export default function FormUpProfessionals(){
     const dispatch = useDispatch();
     const allPatients = useSelector((state) => state.patients)
-	console.log("soy -Paciente",allPatients)
+	//console.log("soy -Paciente",allPatients)
     
     
     useEffect(() => {
