@@ -33,9 +33,9 @@ const vaccines_data = [
 export default function HealthData() {
 	const history = useHistory();
 	const dispatch = useDispatch();
-	const location=useLocation();
-	const info_patient=location.state
-	console.log('location', info_patient)
+	const location = useLocation();
+	const info_patient = location.state;
+	/* console.log('location', info_patient) */
 	const obras = useSelector((state) => state.os);
 
 	useEffect(() => {
@@ -67,8 +67,6 @@ export default function HealthData() {
 
 	const [allergies_, setAllergies] = useState('');
 	const [chronicles_, setChronicles] = useState('');
-
-	console.log('input', input);
 
 	function handleSelectBlood(e) {
 		e.preventDefault();
@@ -105,6 +103,7 @@ export default function HealthData() {
 
 	function handleSubmitAllergies(e) {
 		e.preventDefault();
+		console.log('ENTRA AL SUBMIT DE ALLERGIES');
 		if (input.allergies.includes(allergies_)) {
 			alert('Alergia ya ingresada.');
 		} else {
@@ -173,6 +172,7 @@ export default function HealthData() {
 
 	function handleSubmit(e) {
 		e.preventDefault();
+    console.log('ENTRE SUBMIT')
 		dispatch(registerPatients(input));
 		setInput({
 			blood: '',
@@ -260,7 +260,7 @@ export default function HealthData() {
 					<Col className={`${styles.col}`} lg={3}>
 						<Button
 							className={`${styles.buttonSubmit}`}
-							type="submit"
+							type="button"
 							onClick={handleSubmitAllergies}
 						>
 							Agregar
@@ -328,7 +328,7 @@ export default function HealthData() {
 					<Col className={`${styles.col}`} lg={3}>
 						<Button
 							className={`${styles.buttonSubmit}`}
-							type="submit"
+							type="button"
 							onClick={handleSubmitChronicles}
 						>
 							Agregar
