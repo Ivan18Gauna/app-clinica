@@ -288,6 +288,11 @@ export default function HealthData() {
                 <div>
                     <p>* Campos obligatorios</p>
                 </div>
+                <div>
+                    <button onClick={()=>history.goBack()} >
+                    Atras
+                    </button>
+                </div>
 
                 <div>
                     {

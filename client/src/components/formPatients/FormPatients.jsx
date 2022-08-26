@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom';
 import styles from './FormPatients.module.css';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { getPatientsDoc, registerPatients } from '../../redux/actions'
+
 
 function validate(input) {
 	let error = {};
@@ -44,7 +44,7 @@ function validate(input) {
 		error.birth = 'La fecha de nacimiento no puede ser posterior a la actual.';
 		return error;
 	}
-	if (!/^\d{10}$$/.test(input.document)) {
+	if (!/^\d{5,15}$$/.test(input.document)) {
 		error.document = 'Número de documento no valido.';
 		return error;
 	}
@@ -92,6 +92,7 @@ export default function RegisterPatient() {
 	const dispatch = useDispatch();
 	const history = useHistory()
 
+
 	const [error, setError] = useState({});
 
 	const [input, setInput] = useState({
@@ -132,9 +133,6 @@ export default function RegisterPatient() {
 
 	function handleSubmit(e) {
 		e.preventDefault();
-		// dispatch(registerPatients(input),
-		// );
-		// dispatch(getPatientsDoc(input.document))
 		setInput({
 			name: '',
 			lastname: '',
