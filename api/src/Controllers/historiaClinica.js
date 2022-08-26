@@ -4,8 +4,6 @@ const { Op, where } = require("sequelize");
 
 const {
   Professionals,
-  Specialties,
-  ObrasSociales,
   HistoriaClinica,
   Patients,
 } = require("../db");
@@ -19,7 +17,7 @@ const postHistoriaClinica = async (req, res) => {
     } else {
        let newHistoriaClinica = await HistoriaClinica.create(historiaClinica);
       let professionaldb = await Professionals.findOne({
-         where: {license: professional}
+         where: {id: professional}
         })
        let patientdb = await Patients.findOne({
         where: {document: patient}

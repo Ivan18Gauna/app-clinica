@@ -114,45 +114,13 @@ const getPatByOnsearchName = async(req, res) => {
 
 
 const postPatients = async (req, res) => {
-  let {
-    name,
-    lastname,
-    birth,
-    phone,
-    mail,
-    province,
-    city,
-    number,
-    street,
-    document,
+  let { name, lastname, document, birth, phone, mail, province, city, number, street, blood, vaccines, allergies, transfusion, donation, chronicles, oS
   } = req.body;
   try {
-    const patients = {
-      name,
-      lastname,
-      birth,
-      phone,
-      mail,
-      province,
-      city,
-      number,
-      street,
-      document,
-    };
+    const patients = { name, lastname, document, birth, phone, mail, province, city, number, street, blood, vaccines, allergies, transfusion, donation, chronicles, oS };
     if (isNaN(name) === false)
       return res.send("El valor ingresado no debe ser numerico.");
-    if (
-      !name ||
-      !lastname ||
-      !birth ||
-      !phone ||
-      !mail ||
-      !province ||
-      !city ||
-      !number ||
-      !street ||
-      !document
-    ) {
+    if ( !name || !lastname || !document || !birth || !phone || !mail || !province || !city || !number || !street || !blood || !vaccines || !allergies || !transfusion || !donation || !chronicles || !oS ) {
       res.send("Falta infornacion");
     }
     const validate = await Patients.findOne({
@@ -187,6 +155,7 @@ const putPatients = async (req, res) => {
       vaccines,
       allergies,
       transfusion,
+      donation,
       chronicles,
       oS
     } = req.body;
@@ -206,6 +175,7 @@ const putPatients = async (req, res) => {
         vaccines,
         allergies,
         transfusion,
+        donation,
         chronicles,
         oS
       },

@@ -54,16 +54,19 @@ module.exports = (sequelize) => {
     type: DataTypes.STRING,
   },
   vaccines: {
-      type: DataTypes.STRING,
+      type: DataTypes.ARRAY(DataTypes.STRING),
   },
   allergies: {
-      type: DataTypes.STRING,
+      type: DataTypes.ARRAY(DataTypes.STRING),
     },
   transfusion: {
       type: DataTypes.STRING,
     },
+  donation: {
+      type: DataTypes.STRING
+    },
   chronicles: {
-      type: DataTypes.STRING,
+      type: DataTypes.ARRAY(DataTypes.STRING),
     },
   oS: {
       type: DataTypes.STRING,
