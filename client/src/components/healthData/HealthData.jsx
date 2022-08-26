@@ -31,7 +31,6 @@ const vaccines_data = [
 ];
 
 export default function HealthData() {
-
 	const history = useHistory();
 	const dispatch = useDispatch();
 	const obras = useSelector((state) => state.os);
@@ -358,14 +357,16 @@ export default function HealthData() {
 						</Form.Select>
 					</Col>
 				</Row>
-                        <div>
-                    <button onClick={()=>history.goBack()} >
-                    Atras
-                    </button>
-                </div>
-        
-				<Row className={`${styles.row}`}>
-					<Col className={`${styles.col}`} lg={7}>
+				<Row className={`${styles.row}`} lg={2} md={2} sm={2} xs={2}>
+					<Col className={`${styles.col}`} md={6} lg={6}>
+						<Button
+							className={`${styles.buttonSubmit}`}
+							onClick={() => history.goBack()}
+						>
+							Atras
+						</Button>
+					</Col>
+					<Col className={`${styles.col}`} md={6} lg={6}>
 						{input.blood === '' ||
 						input.donation === '' ||
 						input.transfusion === '' ? (
@@ -374,7 +375,7 @@ export default function HealthData() {
 								variant="danger"
 								disabled
 							>
-								Datos obligatorios no completados
+								Faltan datos
 							</Button>
 						) : (
 							<Button className={`${styles.buttonSubmit}`} type="submit">
@@ -387,4 +388,3 @@ export default function HealthData() {
 		</div>
 	);
 }
-
