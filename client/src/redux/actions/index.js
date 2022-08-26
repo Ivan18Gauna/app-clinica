@@ -159,9 +159,9 @@ export function getPatientsDetail(id){
 	}
 }
 
-export function getClinicHistory() {
+export function getClinicHistory(id) {
     return async function (dispatch) {
-        const clinicHistory = await axios('/historiaclinica');
+        const clinicHistory = await axios('/historiaclinica/bypat/' + id);
 
         return dispatch({
             type: GET_CLINIC_HISTORY,
