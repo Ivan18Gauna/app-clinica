@@ -4,10 +4,9 @@ import { Link } from "react-router-dom";
 
 
 export default function Auth0() {
-  const { loginWithPopup, logout, isAuthenticated } = useAuth0();
+  const { loginWithPopup, isAuthenticated } = useAuth0();
   return (
     <div>
-      {isAuthenticated &&  <button onClick={() => logout()}>salir</button> }
       {isAuthenticated && <div>
         <h1>Bienvenido a +Saud</h1>
         <Link to='/signin'>

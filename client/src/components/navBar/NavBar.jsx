@@ -30,11 +30,11 @@ function NavBarEdit() {
         </Nav>
         <Nav>
           {!isAuthenticated ? (
-            <Nav.Link as={Link} to="/auth0">
+            <Nav.Link as={Link} to="/login">
               Ingresar
             </Nav.Link>
           ) : (
-            <Nav.Link as={Link} to="/auth0">
+            <Nav.Link as={Link} to="/userProfile">
               Mi perfil
             </Nav.Link>
           )}
