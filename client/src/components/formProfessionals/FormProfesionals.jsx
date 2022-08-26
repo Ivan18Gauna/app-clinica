@@ -99,6 +99,7 @@ export default function RegisterDoctor() {
 	const dispatch = useDispatch();
 	const especialities_data = useSelector((state) => state.specialties);
 	const history = useHistory();
+	console.log('history', history)
 
 	useEffect(() => {
 		dispatch(get_specialties());
@@ -107,7 +108,7 @@ export default function RegisterDoctor() {
 	const [input, setInput] = useState({
 		name: '',
 		lastname: '',
-		specialities: [],
+		specialty: [],
 		license: '',
 		birth: '',
 		phone: '',
@@ -145,12 +146,12 @@ export default function RegisterDoctor() {
 	}
 
 	function handleSelectSpecialities(e) {
-		if (input.specialities.includes(e.target.value)) {
+		if (input.specialty.includes(e.target.value)) {
 			alert('Ya se selecciono la especialidad.');
 		} else {
 			setInput({
 				...input,
-				specialities: [...input.specialities, e.target.value],
+				specialty: [...input.specialty, e.target.value],
 			});
 		}
 	}
@@ -160,7 +161,7 @@ export default function RegisterDoctor() {
 		e.preventDefault();
 		setInput({
 			...input,
-			specialities: input.specialities.filter((el) => el !== e.target.value),
+			specialities: input.specialty.filter((el) => el !== e.target.value),
 		});
 	}
 
@@ -170,7 +171,7 @@ export default function RegisterDoctor() {
 		setInput({
 			name: '',
 			lastname: '',
-			specialities: [],
+			specialty: [],
 			license: '',
 			birth: '',
 			phone: '',
@@ -397,7 +398,7 @@ export default function RegisterDoctor() {
 				</Row>
 				<div>
 					<ul>
-						{input.specialities.map((e) => (
+						{input.specialty.map((e) => (
 							<li key={e} value={e}>
 								{e}
 								<Button variant="danger" value={e} onClick={handleDelete}>
@@ -421,7 +422,7 @@ export default function RegisterDoctor() {
 						input.username === '' ||
 						input.password === '' ||
 						input.new_password === '' ||
-						input.specialities.length < 1 ||
+						input.specialty.length < 1 ||
 						error.name ||
 						error.lastname ||
 						error.license ||

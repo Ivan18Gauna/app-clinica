@@ -9,10 +9,10 @@ export default function ClinicHistory() {
 
     const dispatch = useDispatch();
     const clinicHistorys = useSelector( state => state.clinicHistory )
-    console.log(clinicHistorys)
+    const user = useSelector( state => state.user )
 
     useEffect(() => {
-        dispatch(getClinicHistory());
+        dispatch(getClinicHistory(user.id));
    }, [dispatch])
 
     return (

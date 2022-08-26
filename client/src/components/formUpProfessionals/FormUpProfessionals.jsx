@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
@@ -14,38 +15,49 @@ import {
 
 function validate(input) {
 	let error = {};
-	if (!/([A-z])/.test(input.reason)) {
-		error.motivo = 'Ingrese un motivo valido';
+	
+    if(/([A-z])/.test(input.patient)){
+        error.patient = "Ingrese un dni valido"
+    }
+    
+    if (!/([A-z])/.test(input.reason)) {
+		error.reason = 'Ingrese un motivo valido';
 	}
 	if (!/([A-z])/.test(input.description)) {
-		error.consulta = 'Ingrese una descripcion valida';
+		error.description = 'Ingrese una descripcion valida';
 	}
 	if (!/([A-z])/.test(input.diagnosis)) {
-		error.diagnostico = 'Ingrese un diagnostico valido';
+		error.diagnosis = 'Ingrese un diagnostico valido';
 	}
 	return error;
 }
 
 export default function FormUpProfessionals() {
-	const dispatch = useDispatch();
+	
+    const dispatch = useDispatch();
 	const allPatients = useSelector((state) => state.patients);
 	console.log('soy -Paciente', allPatients);
+   
+    const [imagen, setImagen] = useState("")
+	const [error, setError] = useState({});
 
-	useEffect(() => {
+    useEffect(() => {
 		dispatch(getPatients());
 	}, [dispatch]);
 
 	const [input, setInput] = useState({
 		patient: [],
 		reason: '',
-		image: '',
+        image: '',
 		description: '',
 		date: '',
 		diagnosis: '',
 	});
-	console.log('soy search', input.search);
 
-	const [error, setError] = useState({});
+    //console.log("soy img ",imagen)
+	//console.log('soy search', input.search);
+
+
 
 	function handleMotivo(e) {
 		setInput({
@@ -59,17 +71,35 @@ export default function FormUpProfessionals() {
 		setError(existeError);
 	}
 
-	function handleSubmit(e) {
+	
+
+	function handleSearch(e) {
+		e.preventDefault();
+		dispatch(getPatientsByName(input.patient));
+	}
+    
+
+    const uploadImage = async (e) => {
+        
+        const files = e.target.files;
+        const data = new FormData();
+        data.append("file", files[0]);
+        data.append("upload_preset", "appclinica");
+    
+        const respuesta = await axios.post(
+          "https://api.cloudinary.com/v1_1/appclinica/image/upload",data
+        );
+    
+        setImagen(respuesta.data.secure_url);
+        setInput({
+        ...input,
+        image: respuesta.data.secure_url
+    })  
+     
+    }
+ 
+      function handleSubmit(e) {
 		e.preventDefault(e);
-		console.log(
-			'asi va la info',
-			input.patient,
-			input.reason,
-			input.image,
-			input.description,
-			input.date,
-			input.diagnosis
-		);
 		dispatch(postHistory(input));
 		alert('Registraste correctamente tu atencion a  ' + input.patient);
 		setInput({
@@ -82,16 +112,12 @@ export default function FormUpProfessionals() {
 		});
 	}
 
-	function handleSearch(e) {
-		e.preventDefault();
-		dispatch(getPatientsByName(input.patient));
-	}
 
 	return (
 		<div className={styles.container}>
 			<Form className={`${styles.form}`} onSubmit={handleSubmit}>
 				<div className={styles.titulo}>
-					<h3>Tiltulo X</h3>
+					<h3>Historia Clinica</h3>
 				</div>
 				<Row lg={2} className={`${styles.row}`}>
 					<Col className={`${styles.col}`} lg={8}>
@@ -115,7 +141,7 @@ export default function FormUpProfessionals() {
 				</Row>
 				<Row className={`${styles.row}`}>
 					<Col className={`${styles.col}`}>
-						{allPatients && allPatients.document === input.patient[0] ? (
+						{allPatients && allPatients.document === parseInt(input.patient[0]) ? (
 							<div>
 								<p> {allPatients.name}</p>
 								<p> {allPatients.lastname}</p>
@@ -136,7 +162,7 @@ export default function FormUpProfessionals() {
 							isInvalid={!!error.reason}
 						/>
 						<Form.Control.Feedback type="invalid">
-							{error.patient}
+							{error.reason}
 						</Form.Control.Feedback>
 					</Col>
 				</Row>
@@ -146,10 +172,14 @@ export default function FormUpProfessionals() {
 						<Form.Control
 							type="file"
 							name="image"
-							value={input.image}
-							onChange={handleMotivo}
+						
+							onChange={uploadImage}
 							isInvalid={!!error.image}
 						/>
+                        <div>
+                            <img src={imagen} alt=""/>
+                        </div>
+                
 						<Form.Control.Feedback type="invalid">
 							{error.image}
 						</Form.Control.Feedback>

@@ -5,75 +5,75 @@ module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('patients', {
     id: {
-      type:DataTypes.INTEGER,
+      type: DataTypes.INTEGER,
       primaryKey: true,
       allowNull: false,
       autoIncrement: true,
-    },  
-  name: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  lastname: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  document: {
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    lastname: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    document: {
       type: DataTypes.INTEGER,
       allowNull: false,
-  },
-  birth: {
+    },
+    birth: {
       type: DataTypes.STRING,
       allowNull: false,
-  },
-  phone: {
+    },
+    phone: {
       type: DataTypes.STRING,
       allowNull: false,
-  },
-  mail: {
+    },
+    mail: {
       type: DataTypes.STRING,
       allowNull: false,
-  },
-  province: {
+    },
+    province: {
       type: DataTypes.STRING,
       allowNull: false
-  },
-  city: {
+    },
+    city: {
       type: DataTypes.STRING,
       allowNull: false
-  },
-  number: {
+    },
+    number: {
       type: DataTypes.INTEGER,
       allowNull: false
-  },
-  street: {
+    },
+    street: {
       type: DataTypes.STRING,
       allowNull: false
-  },
-  blood: {
-    type: DataTypes.STRING,
-  },
-  vaccines: {
-      type: DataTypes.STRING,
-  },
-  allergies: {
+    },
+    blood: {
       type: DataTypes.STRING,
     },
-  transfusion: {
+    vaccines: {
+      type: DataTypes.ARRAY(DataTypes.STRING),
+    },
+    allergies: {
+      type: DataTypes.ARRAY(DataTypes.STRING),
+    },
+    transfusion: {
       type: DataTypes.STRING,
     },
-  chronicles: {
+    chronicles: {
+      type: DataTypes.ARRAY(DataTypes.STRING),
+    },
+    oS: {
       type: DataTypes.STRING,
     },
-  oS: {
-      type: DataTypes.STRING,
-      },  
   },
-  {
-    createdAt: false,
-    updatedAt: false,
-    deletedAt: 'deletedAt',
-    paranoid: true,
-    timestamps: true,
-  });
+    {
+      createdAt: false,
+      updatedAt: false,
+      deletedAt: 'deletedAt',
+      paranoid: true,
+      timestamps: true,
+    });
 };
