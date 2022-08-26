@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
@@ -32,26 +33,31 @@ function validate(input) {
 }
 
 export default function FormUpProfessionals() {
-	const dispatch = useDispatch();
+	
+    const dispatch = useDispatch();
 	const allPatients = useSelector((state) => state.patients);
 	console.log('soy -Paciente', allPatients);
+   
     const [imagen, setImagen] = useState("")
-	useEffect(() => {
+	const [error, setError] = useState({});
+
+    useEffect(() => {
 		dispatch(getPatients());
 	}, [dispatch]);
 
 	const [input, setInput] = useState({
 		patient: [],
 		reason: '',
-		image: '',
+        image: '',
 		description: '',
 		date: '',
 		diagnosis: '',
 	});
-    console.log("soy img ",imagen)
-	console.log('soy search', input.search);
 
-	const [error, setError] = useState({});
+    //console.log("soy img ",imagen)
+	//console.log('soy search', input.search);
+
+
 
 	function handleMotivo(e) {
 		setInput({
@@ -74,40 +80,26 @@ export default function FormUpProfessionals() {
     
 
     const uploadImage = async (e) => {
+        
         const files = e.target.files;
         const data = new FormData();
         data.append("file", files[0]);
         data.append("upload_preset", "appclinica");
     
-        const respuesta = await fetch(
-          "https://api.cloudinary.com/v1_1/appclinica/upload",
-          {
-            method: "POST",
-            body: data,
-          }
+        const respuesta = await axios.post(
+          "https://api.cloudinary.com/v1_1/appclinica/image/upload",data
         );
     
-        const file = await respuesta.json();
-        console.log(file)
-        setImagen(file.secure_url);
+        setImagen(respuesta.data.secure_url);
         setInput({
-            ...input,
-            image : file.secure_url
-        })
-        
-      };
-
+        ...input,
+        image: respuesta.data.secure_url
+    })  
+     
+    }
+ 
       function handleSubmit(e) {
 		e.preventDefault(e);
-		/* console.log(
-			'asi va la info',
-			input.patient,
-			input.reason,
-			input.image,
-			input.description,
-			input.date,
-			input.diagnosis
-		); */
 		dispatch(postHistory(input));
 		alert('Registraste correctamente tu atencion a  ' + input.patient);
 		setInput({
@@ -180,13 +172,14 @@ export default function FormUpProfessionals() {
 						<Form.Control
 							type="file"
 							name="image"
-							value={input.image}
+						
 							onChange={uploadImage}
 							isInvalid={!!error.image}
 						/>
                         <div>
                             <img src={imagen} alt=""/>
                         </div>
+                
 						<Form.Control.Feedback type="invalid">
 							{error.image}
 						</Form.Control.Feedback>
