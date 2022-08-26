@@ -1,11 +1,12 @@
 import {
-  GET_DOCTORS,
-  GET_DOCTORS_DETAIL,
-  POST_REGISTER_DOCTOR,
-  GET_SPECIALTIES,
-  GET_CITIES,
-  GET_OS
-} from "../actions/actions";
+	GET_DOCTORS,
+	GET_DOCTORS_DETAIL,
+	FILTER_CONVINADO,
+	POST_REGISTER_DOCTOR,
+	GET_SPECIALTIES,
+	GET_CITIES,
+	GET_OS,
+} from '../actions/actions';
 
 const initialState = {
   doctors: [],
@@ -28,7 +29,7 @@ function rootReducer(state = initialState, action) {
       return { ...state, specialties: action.payload  };
       case GET_CITIES:
       return { ...state, cities: action.payload };
-      case "DILTER_CONVINADO":
+      case FILTER_CONVINADO:
         var allDoctors = state.allDoc
         allDoctors = action.payload
       return { ...state, doctors: allDoctors };
@@ -46,10 +47,9 @@ function rootReducer(state = initialState, action) {
           state,
           os: action.payload
         };
-
-    default:
-      return state;
-  }
+		default:
+			return state;
+	}
 }
 
 export default rootReducer;
