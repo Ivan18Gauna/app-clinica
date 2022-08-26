@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 
 export default function HomePatients() {
 
-    const userInfo = useSelector( state => state/*.user*/ )
+    // const userInfo = useSelector( state => state/*.user*/ )
 
     return (
         <div>
@@ -28,13 +28,13 @@ export default function HomePatients() {
             <div>
                 <h3>Info Basica</h3>
                 <div>
-                    <label>Grupo Sanguineo: {userInfo}</label>
+                    {/* <label>Grupo Sanguineo: {userInfo}</label>
                     <label>Vacunas: {userInfo}</label>
                     <label>Alergias: {userInfo}</label>
                     <label>Donante: {userInfo}</label>
                     <label>Transfundible: {userInfo}</label>
                     <label>Enfermedades crónicas: {userInfo}</label>
-                    <label>Obra Social: {userInfo}</label>
+                    <label>Obra Social: {userInfo}</label> */}
                 </div>
             </div>
         </div>

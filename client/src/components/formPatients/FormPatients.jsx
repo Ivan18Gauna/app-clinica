@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import styles from './FormPatients.module.css';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { registerPatients } from '../../redux/actions'
+import { getPatientsDoc, registerPatients } from '../../redux/actions'
 
 function validate(input) {
 	let error = {};
@@ -48,7 +48,7 @@ function validate(input) {
 		error.document = 'Número de documento no valido.';
 		return error;
 	}
-	if (!/^\d{10}$$/.test(input.phone)) {
+	if (!/^\d{8,15}$$/.test(input.phone)) {
 		error.phone = 'Número de telefono no valido.';
 		return error;
 	}
@@ -90,7 +90,7 @@ const provinces = [
 
 export default function RegisterPatient() {
 	const dispatch = useDispatch();
-	const history=useHistory()
+	const history = useHistory()
 
 	const [error, setError] = useState({});
 
@@ -132,7 +132,9 @@ export default function RegisterPatient() {
 
 	function handleSubmit(e) {
 		e.preventDefault();
-		dispatch(registerPatients(input));
+		// dispatch(registerPatients(input),
+		// );
+		// dispatch(getPatientsDoc(input.document))
 		setInput({
 			name: '',
 			lastname: '',
@@ -149,7 +151,7 @@ export default function RegisterPatient() {
 			new_password: '',
 		}
 		);
-		history.push('/healthData')
+		history.push(`/healthData`, input)
 	}
 
 	return (

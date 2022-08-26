@@ -7,7 +7,7 @@ import {
 	GET_OS,
 	GET_PATIENTS,
 	GET_PATIENTS_NAME,
-	GET_PATIENTS_ID
+	GET_PATIENTS_DOC
 } from '../actions/actions';
 import axios from 'axios';
 
@@ -78,6 +78,7 @@ export function get_DoctorsDetail(id) {
 }
 
 export function registerDoctors(payload) {
+	console.log('post prof', payload)
 	return async function () {
 		const registerDoctors = await axios.post(`/professionals`, payload);
 		return registerDoctors;
@@ -136,26 +137,39 @@ export function postHistory(payload) {
 }
 
 export function registerPatients(payload) {
+	console.log('post patie', payload)
 	return async function () {
 		const registerPatients = await axios.post(`/patients`, payload);
 		return registerPatients;
 	};
 }
 
-export function registerHealthData(payload) {
+export function registerHealthData(payload, id) {
+	console.log('put health', payload)
 	return async function () {
-		const healthData = await axios.put(`/patients/edit`, payload);
+		const healthData = await axios.put(`/patients/edit/${id}`, payload);
 		return healthData;
 	};
 }
 
-export function getPatientsDetail(id){
-	return async function(dispatch){
-		const patients_id= await axios(`/patients/detail/5`)
-		console.log('action', patients_id)
-		return dispatch({
-			type: GET_PATIENTS_ID,
-			payload: patients_id.data
-		})
-	}
-}
+// export function getPatientsDetail(email) {
+// 	return async function (dispatch) {
+// 		const patients = (await axios(`/patients`)).data
+// 		console.log('action', patients)
+// 		const patient_data = patients.find(el => el.mail === email)
+// 		return dispatch({
+// 			type: GET_PATIENTS_MAIL,
+// 			payload: patient_data
+// 		})
+// 	}
+// }
+
+// export function getPatientsDoc(document) {
+// 	return async function (dispatch) {
+// 		const patients_doc = await axios(`/patients/document/${document}`)
+// 		return dispatch({
+// 			type: GET_PATIENTS_DOC,
+// 			payload: patients_doc.data
+// 		})
+// 	}
+// }
