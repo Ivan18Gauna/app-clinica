@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -6,7 +6,6 @@ import Button from 'react-bootstrap/Button';
 import { useHistory } from 'react-router-dom';
 import styles from './FormPatients.module.css';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
 
 
 function validate(input) {
@@ -89,9 +88,7 @@ const provinces = [
 ];
 
 export default function RegisterPatient() {
-	const dispatch = useDispatch();
 	const history = useHistory()
-
 
 	const [error, setError] = useState({});
 
