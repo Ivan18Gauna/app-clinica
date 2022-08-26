@@ -7,16 +7,26 @@ import { getPatients, getPatientsByName, postHistory } from "../../redux/actions
 function validate(input){
     let error = {}
 
-    if(!/([A-z])/.test(input.reason)){
-        error.motivo = "Ingrese un motivo valido"
-    }
+    if (!/[0-9]/.test(input.patient)) {
+		error.patient = 'Número de documento no valido.';
+		return error;
+	} 
     
+    if(!/([A-z])/.test(input.reason)){
+        error.reason = "Ingrese una razon valida"
+        return error
+    }
+
+ 
+
     if(!/([A-z])/.test(input.description)){
-        error.consulta = "Ingrese una descripcion valida"
+        error.description = "Ingrese una descripcion valida"
+        return error
     }
 
     if(!/([A-z])/.test(input.diagnosis)){
-        error.diagnostico = "Ingrese un diagnostico valido"
+        error.diagnosis = "Ingrese un diagnostico valido"
+        return error
     }
     return error;
 
@@ -48,12 +58,12 @@ export default function FormUpProfessionals(){
     function handleMotivo(e){
         setInput({
         ...input,
-        [e.target.name]: [e.target.value],
+        [e.target.name]: e.target.value,
     })
     let existeError = validate({
         
          ...input,
-            [e.target.name]: [e.target.value],
+            [e.target.name]: e.target.value,
     })
         setError(existeError)
    
@@ -61,7 +71,7 @@ export default function FormUpProfessionals(){
 	
     function handleSubmit(e){
         e.preventDefault(e)
-        console.log("asi va la info",input.patient, input.reason, input.image, input.description, input.date, input.diagnosis)
+        //console.log("asi va la info",input.patient, input.reason, input.image, input.description, input.date, input.diagnosis)
         dispatch(postHistory(input));
         alert("Registraste correctamente tu atencion a  " + input.patient)
         setInput({
@@ -109,8 +119,7 @@ export default function FormUpProfessionals(){
 
                 <label>Estudio digital :</label>
                 <input type="file" name="image" value={input.image} onChange={handleMotivo}/>
-                    {input.image === '' ? <p>*</p> : ''}
-					{error.image && <p> {error.image} </p>}
+                 
 
                 <label>Descripcion consulta :</label>
                 <input type="textarea" name="description" value={input.description} onChange={handleMotivo}/>
@@ -126,6 +135,7 @@ export default function FormUpProfessionals(){
                 <input type="text" name="diagnosis" value={input.diagnosis} onChange={handleMotivo}/>
                      {input.diagnosis === '' ? <p>*</p> : ''}
 					{error.diagnosis && <p> {error.diagnosis} </p>}
+
                  
                  
                  <button type="subtmit">Enviar</button>
