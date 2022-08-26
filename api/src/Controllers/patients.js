@@ -138,62 +138,6 @@ const postPatients = async (req, res) => {
   }
 };
 
-// const postPatients = async (req, res) => {
-//   let {
-//     name,
-//     lastname,
-//     birth,
-//     phone,
-//     mail,
-//     province,
-//     city,
-//     number,
-//     street,
-//     document,
-//   } = req.body;
-//   try {
-//     const patients = {
-//       name,
-//       lastname,
-//       birth,
-//       phone,
-//       mail,
-//       province,
-//       city,
-//       number,
-//       street,
-//       document,
-//     };
-//     if (isNaN(name) === false)
-//       return res.send("El valor ingresado no debe ser numerico.");
-//     if (
-//       !name ||
-//       !lastname ||
-//       !birth ||
-//       !phone ||
-//       !mail ||
-//       !province ||
-//       !city ||
-//       !number ||
-//       !street ||
-//       !document
-//     ) {
-//       res.send("Falta infornacion");
-//     }
-//     const validate = await Patients.findOne({
-//       where: { document },
-//     });
-//     if (!validate) {
-//       let newPatients = await Patients.create(patients);
-//       res.status(200).send(patients);
-//     } else {
-//       res.status(400).send("Pacientes ya existente");
-//     }
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
-
 const putPatients = async (req, res) => {
   try {
     const id = req.params.id;
