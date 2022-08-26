@@ -31,6 +31,7 @@ const vaccines_data = [
 ];
 
 export default function HealthData() {
+
 	const history = useHistory();
 	const dispatch = useDispatch();
 	const obras = useSelector((state) => state.os);
@@ -357,6 +358,12 @@ export default function HealthData() {
 						</Form.Select>
 					</Col>
 				</Row>
+                        <div>
+                    <button onClick={()=>history.goBack()} >
+                    Atras
+                    </button>
+                </div>
+        
 				<Row className={`${styles.row}`}>
 					<Col className={`${styles.col}`} lg={7}>
 						{input.blood === '' ||
@@ -380,3 +387,4 @@ export default function HealthData() {
 		</div>
 	);
 }
+
