@@ -9,18 +9,18 @@ function CardEdit({ id, name, lastname, specialties }) {
 	return (
 		<div className={`${styles.container}`}>
 			<div className={styles.ImgUser}>
-				<img src={doctor} alt='doctor'/>
+				<img src={doctor} />
 			</div>
 			<div className={styles.info}>
 				<div>
-					<img src={doctorIcon} alt='iconDoctor'/>
+					<img src={doctorIcon} />
 					<h5>
 						{name} {lastname}
 					</h5>
 				</div>
 				{specialties
-					? specialties.map((e, i) => {
-							return <p key={i}>{e.name}</p>;
+					? specialties.map((e) => {
+							return <p>{e.name}</p>;
 					  })
 					: null}
 				<h6>
