@@ -3,12 +3,20 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { Link } from 'react-router-dom';
 import './NavBar.css';
+import { useAuth0 } from '@auth0/auth0-react';
 
-function navBarEdit() {
-	const URL = window.location.href;
+
+function NavBarEdit() {
+
+const {isAuthenticated} = useAuth0()
+	
+	//const URL = window.location.href;
+	
 
 	return (
-		<Navbar collapseOnSelect expand="lg" bg="primary" variant="dark">
+		
+		<div>
+			<Navbar collapseOnSelect expand="lg" bg="primary" variant="dark">
 			<div className="Div-Salud">
 				<Navbar.Brand as={Link} to="/home">
 					+Salud
@@ -26,22 +34,37 @@ function navBarEdit() {
 						</Nav.Link>
 					</Nav>
 					<Nav>
-						{URL === 'http://localhost:3000/home' ? (
-							<Nav.Link as={Link} to="/professionals">
-								Buscar Profesionales
-							</Nav.Link>
-						) : null}
-						<Nav.Link as={Link} to="/signin">
+
+						<Nav.Link as={Link} to="/professionals">
+							Buscar Profesionales
+						</Nav.Link>
+						{/* <Nav.Link as={Link} to="/signin">
+
 							Registrarse
 						</Nav.Link>
 						<Nav.Link as={Link} to="/login">
 							Ingresar
+						</Nav.Link> */}
+						
+						{!isAuthenticated ? 
+						<Nav.Link as={Link} to="/auth0">
+							Ingresar
 						</Nav.Link>
+						:
+						<Nav.Link as={Link} to="/auth0">
+							Mi perfil
+						</Nav.Link>
+						}
+						
+			
+			
 					</Nav>
 				</Navbar.Collapse>
 			</Container>
 		</Navbar>
+		
+		</div>
 	);
 }
 
-export default navBarEdit;
+export default NavBarEdit;
