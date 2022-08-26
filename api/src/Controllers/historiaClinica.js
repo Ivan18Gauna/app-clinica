@@ -67,8 +67,34 @@ const getHistoriaClinica = async (req, res) => {
   //:res.status(404).send('Id de paciente no encontrado');
 };
 
+const getHistoriaClinicaByPat = async (req, res) => {
+  let { id } = req.params;
+  const pat = await Patients.findOne({
+    where: {
+      id: id
+    }
+  })
+  const hist = await pat.getHistoriaClinicas({
+    include: [
+      {
+        model: Patients,
+        attributes: ['id', 'name'],
+      },
+      {
+        model: Professionals,
+        attributes: ['id', 'name']
+      }
+    ],
+  })
+  //console.log(dbPatId)
+  //dbPatId.length?
+  res.status(200).send(hist);
+  //:res.status(404).send('Id de paciente no encontrado');
+};
+
 module.exports = {
   postHistoriaClinica,
   getHistoriaClinica,
-  getAllHistoriaClinica
+  getAllHistoriaClinica,
+  getHistoriaClinicaByPat
 };
