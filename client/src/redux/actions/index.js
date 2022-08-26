@@ -7,7 +7,8 @@ import {
 	GET_OS,
 	GET_PATIENTS,
 	GET_PATIENTS_NAME,
-	GET_PATIENTS_ID
+	GET_PATIENTS_ID,
+	GET_CLINIC_HISTORY
 } from '../actions/actions';
 import axios from 'axios';
 
@@ -99,7 +100,6 @@ export function getObrasSociales() {
 export function getPatients() {
 	return async function (dispatch) {
 		const allPatients = await axios.get('/patients/allpatients')
-		// console.log("soy patients", allPatients)
 		return dispatch({
 			type: GET_PATIENTS,
 			payload: allPatients.data
@@ -111,7 +111,6 @@ export function getPatientsByName(payload) {
 	return async function (dispatch) {
 		try {
 			const patients = await axios.get("/patients/document/" + payload)
-			// console.log("soy patients",patients)
 			return dispatch({
 				type: GET_PATIENTS_NAME,
 				payload: patients.data
@@ -152,7 +151,7 @@ export function registerHealthData(payload) {
 export function getPatientsDetail(id){
 	return async function(dispatch){
 		const patients_id= await axios(`/patients/detail/5`)
-		console.log('action', patients_id)
+
 		return dispatch({
 			type: GET_PATIENTS_ID,
 			payload: patients_id.data
