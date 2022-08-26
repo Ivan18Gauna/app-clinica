@@ -103,7 +103,6 @@ export default function HealthData() {
 
 	function handleSubmitAllergies(e) {
 		e.preventDefault();
-		console.log('ENTRA AL SUBMIT DE ALLERGIES');
 		if (input.allergies.includes(allergies_)) {
 			alert('Alergia ya ingresada.');
 		} else {
@@ -169,12 +168,25 @@ export default function HealthData() {
 			oS: e.target.value,
 		});
 	}
-
+console.log('heal', input)
 	function handleSubmit(e) {
 		e.preventDefault();
-    console.log('ENTRE SUBMIT')
+		console.log('ENTRE SUBMIT')
 		dispatch(registerPatients(input));
 		setInput({
+			name: '',
+			lastname: '',
+			document: '',
+			birth: '',
+			phone: '',
+			mail: '',
+			province: '',
+			city: '',
+			number: '',
+			street: '',
+			username: '',
+			password: '',
+			new_password: '',
 			blood: '',
 			vaccines: [],
 			allergies: [],
@@ -384,8 +396,8 @@ export default function HealthData() {
 					</Col>
 					<Col className={`${styles.col}`} md={6} lg={6}>
 						{input.blood === '' ||
-						input.donation === '' ||
-						input.transfusion === '' ? (
+							input.donation === '' ||
+							input.transfusion === '' ? (
 							<Button
 								className={`${styles.buttonSubmit}`}
 								variant="danger"
