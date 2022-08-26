@@ -20,7 +20,6 @@ import UserProfile from './components/userProfile/UserProfile';
 
 import Auth0 from './components/auth0/Auth0';
 
-
 function App() {
   return (
     <BrowserRouter>

@@ -7,7 +7,8 @@ import {
 	GET_OS,
 	GET_PATIENTS,
 	GET_PATIENTS_NAME,
-	GET_PATIENTS_DOC
+	GET_PATIENTS_ID,
+	GET_CLINIC_HISTORY
 } from '../actions/actions';
 import axios from 'axios';
 
@@ -78,7 +79,6 @@ export function get_DoctorsDetail(id) {
 }
 
 export function registerDoctors(payload) {
-	console.log('post prof', payload)
 	return async function () {
 		const registerDoctors = await axios.post(`/professionals`, payload);
 		return registerDoctors;
@@ -100,7 +100,6 @@ export function getObrasSociales() {
 export function getPatients() {
 	return async function (dispatch) {
 		const allPatients = await axios.get('/patients/allpatients')
-		// console.log("soy patients", allPatients)
 		return dispatch({
 			type: GET_PATIENTS,
 			payload: allPatients.data
@@ -112,7 +111,6 @@ export function getPatientsByName(payload) {
 	return async function (dispatch) {
 		try {
 			const patients = await axios.get("/patients/document/" + payload)
-			// console.log("soy patients",patients)
 			return dispatch({
 				type: GET_PATIENTS_NAME,
 				payload: patients.data
@@ -137,39 +135,71 @@ export function postHistory(payload) {
 }
 
 export function registerPatients(payload) {
-	console.log('post patie', payload)
 	return async function () {
 		const registerPatients = await axios.post(`/patients`, payload);
 		return registerPatients;
 	};
 }
 
-export function registerHealthData(payload, id) {
-	console.log('put health', payload)
+export function registerHealthData(payload) {
 	return async function () {
-		const healthData = await axios.put(`/patients/edit/${id}`, payload);
+		const healthData = await axios.put(`/patients/edit`, payload);
 		return healthData;
 	};
 }
 
-// export function getPatientsDetail(email) {
-// 	return async function (dispatch) {
-// 		const patients = (await axios(`/patients`)).data
-// 		console.log('action', patients)
-// 		const patient_data = patients.find(el => el.mail === email)
-// 		return dispatch({
-// 			type: GET_PATIENTS_MAIL,
-// 			payload: patient_data
-// 		})
-// 	}
-// }
+export function getPatientsDetail(id){
+	return async function(dispatch){
+		const patients_id= await axios(`/patients/detail/5`)
 
-// export function getPatientsDoc(document) {
-// 	return async function (dispatch) {
-// 		const patients_doc = await axios(`/patients/document/${document}`)
-// 		return dispatch({
-// 			type: GET_PATIENTS_DOC,
-// 			payload: patients_doc.data
-// 		})
-// 	}
-// }
+		return dispatch({
+			type: GET_PATIENTS_ID,
+			payload: patients_id.data
+		})
+	}
+}
+
+export function getClinicHistory() {
+    return async function (dispatch) {
+        const clinicHistory = await axios('/historiaclinica');
+
+        return dispatch({
+            type: GET_CLINIC_HISTORY,
+            payload: clinicHistory.data
+			// payload: [
+			// 	{
+			// 	  "id": 1,
+			// 	  "reason": "x",
+			// 	  "image": "x",
+			// 	  "description": "x",
+			// 	  "date": "x",
+			// 	  "diagnosis": "x",
+			// 	  "patientId": 3,
+			// 	  "professionalId": 1,
+			// 	  "professional": {
+			// 		"name": "Emilio"
+			// 	  },
+			// 	  "patient": {
+			// 		"name": "Emilio"
+			// 	  }
+			// 	},
+			// 	{
+			// 	  "id": 2,
+			// 	  "reason": "x",
+			// 	  "image": "x",
+			// 	  "description": "x",
+			// 	  "date": "x",
+			// 	  "diagnosis": "x",
+			// 	  "patientId": 3,
+			// 	  "professionalId": 2,
+			// 	  "professional": {
+			// 		"name": "Tania"
+			// 	  },
+			// 	  "patient": {
+			// 		"name": "Emilio"
+			// 	  }
+			// 	}
+			//   ]
+        });
+    };
+}
