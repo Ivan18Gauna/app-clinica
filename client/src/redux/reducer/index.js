@@ -19,7 +19,7 @@ const initialState = {
   specialties:[],
   cities:[],
   os:[],
-  patientes: [],
+  patients: [],
   user:[],
   clinicHistory: []
 };
