@@ -48,11 +48,11 @@ export function get_cities() {
 	};
 }
 
-export function filterConvinado(lastname, filterEsp, filterProfProv, order) {
+export function filterConvinado(payload) {
 	return async function (dispatch) {
 		try {
 			const doctors_detail = await axios(
-				`/professionals?lastname=${lastname}&filterEsp=${filterEsp}&filterProfProv=${filterProfProv}&order=${order}`
+				`/professionals?lastname=${payload.lastname}&filterEsp=${payload.filterEsp}&filterProfProv=${payload.filterProfProv}`
 			);
 			return dispatch({
 				type: FILTER_CONVINADO,
@@ -157,4 +157,49 @@ export function getPatientsDetail(id){
 			payload: patients_id.data
 		})
 	}
+}
+
+export function getClinicHistory() {
+    return async function (dispatch) {
+        const clinicHistory = await axios('/historiaclinica');
+
+        return dispatch({
+            type: GET_CLINIC_HISTORY,
+            payload: clinicHistory.data
+			// payload: [
+			// 	{
+			// 	  "id": 1,
+			// 	  "reason": "x",
+			// 	  "image": "x",
+			// 	  "description": "x",
+			// 	  "date": "x",
+			// 	  "diagnosis": "x",
+			// 	  "patientId": 3,
+			// 	  "professionalId": 1,
+			// 	  "professional": {
+			// 		"name": "Emilio"
+			// 	  },
+			// 	  "patient": {
+			// 		"name": "Emilio"
+			// 	  }
+			// 	},
+			// 	{
+			// 	  "id": 2,
+			// 	  "reason": "x",
+			// 	  "image": "x",
+			// 	  "description": "x",
+			// 	  "date": "x",
+			// 	  "diagnosis": "x",
+			// 	  "patientId": 3,
+			// 	  "professionalId": 2,
+			// 	  "professional": {
+			// 		"name": "Tania"
+			// 	  },
+			// 	  "patient": {
+			// 		"name": "Emilio"
+			// 	  }
+			// 	}
+			//   ]
+        });
+    };
 }
