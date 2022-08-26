@@ -9,11 +9,11 @@ function CardEdit({ id, name, lastname, specialties }) {
 	return (
 		<div className={`${styles.container}`}>
 			<div className={styles.ImgUser}>
-				<img src={doctor} alt='doctor'/>
+				<img src={doctor} alt="doctor" />
 			</div>
 			<div className={styles.info}>
 				<div>
-					<img src={doctorIcon} alt='iconDoctor'/>
+					<img src={doctorIcon} alt="iconDoctor" />
 					<h5>
 						{name} {lastname}
 					</h5>
