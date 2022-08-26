@@ -3,6 +3,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import { Route, Switch } from 'react-router-dom';
 import styles from './Filters.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -95,17 +96,21 @@ const Filters = () => {
 									</option>
 								))}
 						</Form.Select>
-						<Form.Select
-							value={filter.order}
-							onChange={(e) => handleOnChange(e)}
-							name="order"
-						>
-							<option value="ordenar" hidden>
-								Ordernar
-							</option>
-							<option value="ASC">ASC</option>
-							<option value="DESC">DESC</option>
-						</Form.Select>
+						<Switch>
+							<Route path="/professionals">
+								<Form.Select
+									value={filter.order}
+									onChange={(e) => handleOnChange(e)}
+									name="order"
+								>
+									<option value="ordenar" hidden>
+										Ordernar
+									</option>
+									<option value="ASC">ASC</option>
+									<option value="DESC">DESC</option>
+								</Form.Select>
+							</Route>
+						</Switch>
 					</Col>
 					<Col lg={2} md={10} xs={12} className={`${styles.selects}`}>
 						<Button
