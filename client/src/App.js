@@ -17,7 +17,7 @@ import ClinicHistory from './components/clinicHistory/ClinicHistory';
 import UserProfile from './components/userProfile/UserProfile';
 import Auth0 from './components/auth0/Auth0';
 import HomeProfessional from './components/homeProfessionals/HomeProfessionals';
-
+import HomePatients from './components/homePatients/HomePatients';
 function App() {
   return (
     <BrowserRouter>
@@ -44,6 +44,7 @@ function App() {
           <Route path='/userProfile' component={UserProfile} />
           <Route path='/professionals' component={Professionals}/>
           <Route path='/auth0' component={Auth0}/>
+          <Route path="/homepatients" component={HomePatients}/>
         </Switch>
       </div>
     </BrowserRouter>
