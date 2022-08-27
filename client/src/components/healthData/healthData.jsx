@@ -178,8 +178,6 @@ console.log('heal', input)
 		e.preventDefault();
 
 		console.log('ENTRE SUBMIT')
-
-
 		dispatch(registerPatients(input));
 		setInput({
 			name: '',
