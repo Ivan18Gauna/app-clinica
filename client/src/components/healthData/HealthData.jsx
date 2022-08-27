@@ -176,10 +176,9 @@ export default function HealthData() {
 console.log('heal', input)
 	function handleSubmit(e) {
 		e.preventDefault();
-<<<<<<< HEAD
+
 		console.log('ENTRE SUBMIT')
-=======
->>>>>>> 4db9b3e706a008b63334f5297f24fa16cb9bcd15
+
 		dispatch(registerPatients(input));
 		setInput({
 			name: '',

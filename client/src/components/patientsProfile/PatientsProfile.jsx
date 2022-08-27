@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
@@ -14,14 +14,19 @@ export default function UserProfile() {
     const dispatch = useDispatch();
 
     const patient = useSelector((state) => state.user)
-    
+    const [editinfo, setEditInfo] = useState(false)
+
     // useEffect(() => {
     //     dispatch(getPatientsDetail(user.email))
     // }, [dispatch, user.email])
-    
+
     // let patient_=patient.filter(el=>el.mail===user.email)
     console.log('userpr', patient)
 
+    function handleInfoPersonal(e) {
+        e.preventDefault();
+        setEditInfo(true);
+    }
 
     return (
         <div>
@@ -58,6 +63,16 @@ export default function UserProfile() {
                     </p>
                 </div>
             </aside>
+
+            <div>
+                {
+                    editinfo === false ?
+                        <button onClick={handleInfoPersonal} >Editar información</button>
+                }
+
+
+            </div>
+
             <div>
                 <h5>Información de salud básica: </h5>
                 <p>Grupo Sanguineo:</p>
@@ -65,17 +80,17 @@ export default function UserProfile() {
                 <p>Obra Social:</p>
                 {patient.oS}
                 <p>Vacunas que posee aplicadas:</p>
-                {patient.vaccine?patient.blood: 'Sin información'}
+                {patient.vaccine ? patient.blood : 'Sin información'}
                 <p>Alergias: </p>
-                {patient.allergies?patient.allergies: 'Sin información'}
+                {patient.allergies ? patient.allergies : 'Sin información'}
                 <p>Enfermedades Crónicas: </p>
-                {patient.chronicles?patient.chronicles: 'Sin información'}
+                {patient.chronicles ? patient.chronicles : 'Sin información'}
                 <p>Es donante?</p>
-                {patient.donation?patient.donation: 'Sin información'}
+                {patient.donation ? patient.donation : 'Sin información'}
                 <p>Es transfundible?</p>
-                {patient.transfusion?patient.transfusion: 'Sin información'}
+                {patient.transfusion ? patient.transfusion : 'Sin información'}
                 <p>Obra Social:</p>
-                {patient.oS?patient.oS: 'Sin información'}
+                {patient.oS ? patient.oS : 'Sin información'}
 
             </div>
         </div>
