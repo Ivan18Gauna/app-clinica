@@ -67,6 +67,12 @@ export default function HealthData() {
 	const [allergies_, setAllergies] = useState('');
 	const [chronicles_, setChronicles] = useState('');
 
+  function onKeyDown(e) {
+    if(e.code === "Enter"){
+      e.preventDefault()
+      return false;
+    }
+  }
 	function handleSelectBlood(e) {
 		e.preventDefault();
 		setInput({
@@ -333,6 +339,7 @@ console.log('heal', input)
 					<Col className={`${styles.col}`} lg={9}>
 						<Form.Control
 							type="text"
+							onKeyDown={(e) => onKeyDown(e)}
 							placeholder="Enfermedades cronicas que posee"
 							name="chronicles"
 							value={chronicles_}
