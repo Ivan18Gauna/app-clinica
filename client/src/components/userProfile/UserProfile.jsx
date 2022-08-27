@@ -1,20 +1,20 @@
-<<<<<<< HEAD
-=======
+
 import React from "react";
-import { Link, useParams } from "react-router-dom";
+// import { Link, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getPatients } from "../../redux/actions";
 import { useAuth0 } from "@auth0/auth0-react";
 
 export default function UserProfile() {
-  const { user, logout } = useAuth0();
+  const { user, logout, isAuthenticated} = useAuth0();
 
   const dispatch = useDispatch();
 
   const allPatient = useSelector((state) => state.patients);
+  const eluser = useSelector((state) => state.the_user);
+  const patient = isAuthenticated ?allPatient.filter((el) => el.mail === user.email): allPatient.filter((el) => el.mail === eluser.email)
   
-  const patient = allPatient.filter((el) => el.mail === user.email);
   
 
   useEffect(() => {
@@ -23,7 +23,7 @@ export default function UserProfile() {
 
   console.log("allPatient", allPatient);
   console.log("patient", patient);
-  console.log("user", user.picture);
+
 
   return (
     <div>
@@ -74,4 +74,4 @@ export default function UserProfile() {
     </div>
   );
 }
->>>>>>> 6fabd2d3802e4a22fac47d6636b1780f702efe24
+
