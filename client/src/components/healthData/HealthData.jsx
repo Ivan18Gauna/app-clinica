@@ -173,11 +173,28 @@ export default function HealthData() {
 			oS: e.target.value,
 		});
 	}
-
+console.log('heal', input)
 	function handleSubmit(e) {
 		e.preventDefault();
+<<<<<<< HEAD
+		console.log('ENTRE SUBMIT')
+=======
+>>>>>>> b286491abf849a1df6195f9e6e9aa849a29e004f
 		dispatch(registerPatients(input));
 		setInput({
+			name: '',
+			lastname: '',
+			document: '',
+			birth: '',
+			phone: '',
+			mail: '',
+			province: '',
+			city: '',
+			number: '',
+			street: '',
+			username: '',
+			password: '',
+			new_password: '',
 			blood: '',
 			vaccines: [],
 			allergies: [],
@@ -388,8 +405,8 @@ export default function HealthData() {
 					</Col>
 					<Col className={`${styles.col}`} md={6} lg={6}>
 						{input.blood === '' ||
-						input.donation === '' ||
-						input.transfusion === '' ? (
+							input.donation === '' ||
+							input.transfusion === '' ? (
 							<Button
 								className={`${styles.buttonSubmit}`}
 								variant="danger"
