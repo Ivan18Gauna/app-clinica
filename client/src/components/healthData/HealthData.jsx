@@ -35,7 +35,6 @@ export default function HealthData() {
 	const dispatch = useDispatch();
 	const location = useLocation();
 	const info_patient = location.state;
-	/* console.log('location', info_patient) */
 	const obras = useSelector((state) => state.os);
 
 	useEffect(() => {
@@ -68,6 +67,12 @@ export default function HealthData() {
 	const [allergies_, setAllergies] = useState('');
 	const [chronicles_, setChronicles] = useState('');
 
+  function onKeyDown(e) {
+    if(e.code === "Enter"){
+      e.preventDefault()
+      return false;
+    }
+  }
 	function handleSelectBlood(e) {
 		e.preventDefault();
 		setInput({
@@ -171,7 +176,10 @@ export default function HealthData() {
 console.log('heal', input)
 	function handleSubmit(e) {
 		e.preventDefault();
+<<<<<<< HEAD
 		console.log('ENTRE SUBMIT')
+=======
+>>>>>>> 4db9b3e706a008b63334f5297f24fa16cb9bcd15
 		dispatch(registerPatients(input));
 		setInput({
 			name: '',
@@ -331,6 +339,7 @@ console.log('heal', input)
 					<Col className={`${styles.col}`} lg={9}>
 						<Form.Control
 							type="text"
+							onKeyDown={(e) => onKeyDown(e)}
 							placeholder="Enfermedades cronicas que posee"
 							name="chronicles"
 							value={chronicles_}
