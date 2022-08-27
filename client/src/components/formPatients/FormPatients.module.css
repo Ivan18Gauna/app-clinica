@@ -47,3 +47,8 @@
 .buttonSubmit {
 	width: 100%;
 }
+
+.lista {
+  padding: 0;
+  list-style: none;
+}
