@@ -65,22 +65,21 @@ const getAllPatients = async (req, res) => {
   }
 };
 
-const getPatByName = async (req, res) => {
-  let { lastname } = req.query
-  console.log({ lastname })
-  if (lastname) {
-    try {
-      let dbPatfName = await Patients.findAll({
-        where: {
-          name: { [Op.iLike]: lastname + '%' },
+const getPatByName = async(req, res) => {
+    let {lastname} = req.query
+    console.log({lastname})
+    if(lastname){
+        try {
+            let dbPatfName = await Patients.findAll({
+                where: {
+                    name: { [Op.iLike]: lastname +'%' },                  }
+                })
+                dbPatfName.length?
+                res.status(200).send(dbPatfName):res.status(404).send('No existe registro del paciente a buscar')
+        } catch (error) {
+        console.log(error)        
         }
-      })
-      dbPatfName.length ?
-        res.status(200).send(dbPatfName) : res.status(404).send('No existe registro del paciente a buscar')
-    } catch (error) {
-      console.log(error)
-    }
-  } else {
+    }else {
     try {
       let allPatien = await Patients.findAll({
         limit: 20,
@@ -94,25 +93,25 @@ const getPatByName = async (req, res) => {
       console.log(error);
     }
   }
-}
+  }
 
-const getPatByOnsearchName = async (req, res) => {
-  let { lastname } = req.query
-  console.log({ lastname })
-  if (lastname) {
-    try {
-      let dbPatfName = await Patients.findAll({
-        where: {
-          name: { [Op.iLike]: lastname + '%' },
+const getPatByOnsearchName = async(req, res) => {
+    let {lastname} = req.query
+    console.log({lastname})
+    if(lastname){
+        try {
+            let dbPatfName = await Patients.findAll({
+                where: {
+                    name: { [Op.iLike]: lastname +'%' },                  }
+                })
+                dbPatfName.length?
+                res.status(200).send(dbPatfName):res.status(404).send('No existe registro del paciente a buscar')
+        } catch (error) {
+        console.log(error)        
         }
-      })
-      dbPatfName.length ?
-        res.status(200).send(dbPatfName) : res.status(404).send('No existe registro del paciente a buscar')
-    } catch (error) {
-      console.log(error)
     }
   }
-}
+
 
 const postPatients = async (req, res) => {
   let { name, lastname, document, birth, phone, mail, province, city, number, street, blood, vaccines, allergies, transfusion, donation, chronicles, oS
@@ -156,6 +155,7 @@ const putPatients = async (req, res) => {
       vaccines,
       allergies,
       transfusion,
+      donation,
       chronicles,
       oS
     } = req.body;
@@ -175,6 +175,7 @@ const putPatients = async (req, res) => {
         vaccines,
         allergies,
         transfusion,
+        donation,
         chronicles,
         oS
       },
