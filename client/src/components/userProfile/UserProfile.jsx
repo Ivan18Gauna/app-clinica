@@ -6,7 +6,7 @@ import { getPatients } from "../../redux/actions";
 import { useAuth0 } from "@auth0/auth0-react";
 
 export default function UserProfile() {
-  const { user } = useAuth0();
+  const { user, logout } = useAuth0();
 
   const dispatch = useDispatch();
 
@@ -64,6 +64,7 @@ export default function UserProfile() {
             <p>Obra Social:</p>
             {patient[0].oS ? patient[0].oS : "Sin información"}
           </div>
+          <button onClick={logout}>Cerrar sesion</button>
         </div>
       ) : (
         <h1>loading</h1>
