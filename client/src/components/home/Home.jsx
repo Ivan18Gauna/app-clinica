@@ -9,10 +9,12 @@ import styles from './Home.module.css';
 import HomePatients from '../homePatients/HomePatients.jsx';
 import HomeProfessional from '../homeProfessionals/HomeProfessionals.jsx';
 
+
 export default function Home() {
+	
 	// const {isAuthenticated} = useAuth0();
 	const user = useSelector( state => state.user)
-
+console.log("user/home",user);
 	return (
 		<div>
 			{ user.length > 0 && user.document && <HomePatients/> }
@@ -24,7 +26,8 @@ export default function Home() {
 					<CardsTriple />
 					<CardHistory />
 				</div>
-			}
+			 }
+			
 		</div>
 	);
 }

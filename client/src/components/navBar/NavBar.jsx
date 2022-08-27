@@ -3,8 +3,11 @@ import Navbar from "react-bootstrap/Navbar";
 import { Link } from "react-router-dom";
 import styles from "./NavBar.module.css";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useSelector } from "react-redux";
 
 function NavBarEdit() {
+
+  const eluser = useSelector((state) => state.the_user);
   const { isAuthenticated } = useAuth0();
 
   return (
@@ -29,7 +32,7 @@ function NavBarEdit() {
           </Nav.Link>
         </Nav>
         <Nav>
-          {!isAuthenticated ? (
+          {!isAuthenticated && !eluser.email ? (
             <Nav.Link as={Link} to="/login">
               Ingresar
             </Nav.Link>
