@@ -35,7 +35,6 @@ export default function HealthData() {
 	const dispatch = useDispatch();
 	const location = useLocation();
 	const info_patient = location.state;
-	/* console.log('location', info_patient) */
 	const obras = useSelector((state) => state.os);
 
 	useEffect(() => {
@@ -171,7 +170,10 @@ export default function HealthData() {
 console.log('heal', input)
 	function handleSubmit(e) {
 		e.preventDefault();
+<<<<<<< HEAD
 		console.log('ENTRE SUBMIT')
+=======
+>>>>>>> b286491abf849a1df6195f9e6e9aa849a29e004f
 		dispatch(registerPatients(input));
 		setInput({
 			name: '',
