@@ -8,6 +8,7 @@ import store from "./redux/store/index";
 import "bootstrap/dist/css/bootstrap.css";
 import { Auth0Provider } from "@auth0/auth0-react";
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { alpha } from '@material-ui/core/styles'
 import DateFnsUtils from '@date-io/date-fns'
 import esLocale from 'date-fns/locale/es'
 
