@@ -17,6 +17,9 @@ import ClinicHistory from './components/clinicHistory/ClinicHistory';
 import UserProfile from './components/userProfile/UserProfile';
 import Auth0 from './components/auth0/Auth0';
 import HomeProfessional from './components/homeProfessionals/HomeProfessionals';
+
+import PatientProfile from './components/patientsProfile/PatientsProfile'
+
 import Calendar from './components/calendar/Calendar'
 
 function App() {
@@ -43,7 +46,7 @@ function App() {
           {/* <Route path='/google' component={Google}/> */}
           <Route path='/clinic_history' component={ClinicHistory}/>
           <Route path='/homeUsuarioPrueba' component={HomeProfessional}/>
-          <Route path='/userProfile' component={UserProfile} />
+          <Route path='/userProfile' component={PatientProfile} />
           <Route path='/professionals' component={Professionals}/>
           <Route path='/auth0' component={Auth0}/>
         </Switch>
