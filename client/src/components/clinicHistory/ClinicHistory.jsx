@@ -12,11 +12,11 @@ export default function ClinicHistory() {
 
 	useEffect(() => {
 		dispatch(getClinicHistory(user.id));
-	}, []);
+	}, [dispatch, user.id]);
 
 	return (
 		<div>
-			<Link to="homeUsuarioPrueba">
+			<Link to="home">
 				<button>Volver</button>
 			</Link>
 			<h1>clinicHistory</h1>
@@ -27,7 +27,7 @@ export default function ClinicHistory() {
 						<div>
 							<h3>Medico: {oneClinicHistory.professional.name}</h3>
 							<p>Motivo: {oneClinicHistory.reason}</p>
-							{/* <label>Estudio digital: {oneClinicHistory.image}</label> */}
+							<label>Estudio digital: {oneClinicHistory.image}</label>
 							<p>Detalle consulta: {oneClinicHistory.description}</p>
 							<p>Fecha atencion: {oneClinicHistory.date}</p>
 							<h5>Diagnostico final: {oneClinicHistory.diagnosis}</h5>
