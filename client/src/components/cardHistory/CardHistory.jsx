@@ -1,5 +1,6 @@
 import Card from 'react-bootstrap/Card';
 import CardGroup from 'react-bootstrap/CardGroup';
+import question from '../../Icons/question.svg'
 
 function CardHistory() {
 	return (
@@ -7,7 +8,7 @@ function CardHistory() {
 			<Card>
 				<Card.Img
 					variant="top"
-					src="https://angiosur.com/wp-content/uploads/2021/10/Historia-cli%CC%81nica-AngioSur.jpeg"
+					src={question}
 				/>
 				<Card.Body>
 					<Card.Title>¿Como funciona +Salud?</Card.Title>
