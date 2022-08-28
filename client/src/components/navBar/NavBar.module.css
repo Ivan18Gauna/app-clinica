@@ -1,3 +1,15 @@
 .navbar {
   padding: 1rem !important;
 }
+
+.titulo {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.titulo h4 {
+  font-family: 'PT Sans', sans-serif;
+  margin: 0 0 0 0.5rem;
+}
