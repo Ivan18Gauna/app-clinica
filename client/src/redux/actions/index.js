@@ -141,7 +141,7 @@ export function registerPatients(payload) {
 	};
 }
 
-export function registerHealthData(payload) {
+export function modifyUsers(payload) {
 	return async function () {
 		const healthData = await axios.put(`/patients/edit`, payload);
 		return healthData;

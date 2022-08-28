@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { getPatientsDetail, getObrasSociales } from "../../redux/actions";
+import {getPatients, modifyUsers, getObrasSociales } from "../../redux/actions";
 import { useAuth0 } from "@auth0/auth0-react";
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
@@ -55,22 +55,23 @@ const vaccines_data = [
 	'Fiebre Amarilla',
 	'COVID',
 ];
+
 function validate(info) {
 	let error = {};
-	if (!/([A-z])/.test(info.name)) {
+	if (info.name && !/([A-z])/.test(info.name)) {
 		error.name = 'Ingrese un nombre valido.';
 		return error;
 	}
-	if (!/([A-z])/.test(info.lastname)) {
+	if (info.lastname && !/([A-z])/.test(info.lastname)) {
 		error.lastname = 'Ingrese un apellido valido.';
 		return error;
 	}
 
-	if (!/\S+@\S+\.\S+/.test(info.mail)) {
+	if (info.email && !/\S+@\S+\.\S+/.test(info.mail)) {
 		error.mail = 'Dirección de correo no valida.';
 		return error;
 	}
-	if (
+	if (info.password &&
 		!/(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/.test(
 			info.password
 		)
@@ -79,29 +80,29 @@ function validate(info) {
 			'La contraseña debe contener al menos 8 digitos, una mayúscula, un número y un caracter especial.';
 		return error;
 	}
-	if (info.password !== info.new_password) {
+	if (info.new_password && (info.password !== info.new_password)) {
 		error.new_password = 'No coincide con la contraseña.';
 		return error;
 	}
 	let newDate = info.birth;
 	let Date1 = new Date(newDate);
 	let Date2 = new Date();
-	if (Date1 >= Date2) {
+	if (info.birth && (Date1 >= Date2)) {
 		error.birth = 'La fecha de nacimiento no puede ser posterior a la actual.';
 		return error;
 	}
-	if (!/^\d{5,15}$$/.test(info.document)) {
+	if (info.document && !/^\d{5,15}$$/.test(info.document)) {
 		error.document = 'Número de documento no valido.';
 		return error;
 	}
-	if (!/^\d{8,15}$$/.test(info.phone)) {
+	if (info.phone && !/^\d{8,15}$$/.test(info.phone)) {
 		error.phone = 'Número de telefono no valido.';
 		return error;
 	}
-	if (!/[0-9]/.test(info.number)) {
+	if (info.number && !/[0-9]/.test(info.number)) {
 		error.number = 'Número no valido.';
 		return error;
-	} else if (info.number <= 0) {
+	} else if (info.number && (info.number <= 0)) {
 		error.number = 'Número no valida.';
 		return error;
 	}
@@ -111,16 +112,25 @@ function validate(info) {
 
 export default function UserProfile() {
 
-	const { user } = useAuth0()
+	const { user,logout, isAuthenticated } = useAuth0()
 
 	const dispatch = useDispatch();
-	const history = useHistory()
-	const patient = useSelector((state) => state.user)
+
+	// const patient = useSelector((state) => state.user)
+	const allPatient = useSelector((state) => state.patients);
+	const eluser = useSelector((state) => state.the_user);
+	const patient = isAuthenticated ?allPatient.filter((el) => el.mail === user.email): allPatient.filter((el) => el.mail === eluser.email)
 	const obras = useSelector((state) => state.os);
 	const [editInfoPersonal, setEditInfoPersonal] = useState(false)
 	const [editInfoSalud, setEditInfoSalud] = useState(false)
 	const [allergies_, setAllergies] = useState('');
 	const [chronicles_, setChronicles] = useState('');
+	console.log('obras', obras)
+
+	useEffect(() => {
+		dispatch(getPatients());
+		dispatch(getObrasSociales())
+	  }, [dispatch]);
 
 	const [info, setInfo] = useState({
 		name: '',
@@ -145,6 +155,7 @@ export default function UserProfile() {
 		oS: '',
 
 	})
+	
 
 	const [error, setError] = useState({})
 	function onKeyDown(e) {
@@ -178,6 +189,11 @@ export default function UserProfile() {
 			vaccines: info.vaccines.filter((el) => el !== e.target.value),
 		});
 	}
+
+	function handleInputAllergies(e){
+		setAllergies(e.target.value)
+	}
+
 	function handleSubmitAllergies(e) {
 		e.preventDefault();
 		if (info.allergies.includes(allergies_)) {
@@ -291,7 +307,7 @@ export default function UserProfile() {
 
 	function handleSubmit(e) {
 		e.preventDefault()
-
+		dispatch(modifyUsers(info))
 	}
 
 	return (
@@ -544,7 +560,7 @@ export default function UserProfile() {
 										</Button>
 									</Col>
 
-									<Button className={`${styles.buttonSubmit}`} type="submit">
+									<Button className={`${styles.buttonSubmit}`} type="submit" onClick={handleSubmit}>
 										Enviar
 									</Button>
 								</Row>
@@ -651,7 +667,7 @@ export default function UserProfile() {
 										placeholder="Alergias que posee"
 										name="allergies"
 										value={allergies_}
-										onChange={handleInput}
+										onChange={handleInputAllergies}
 									/>
 								</Col>
 								<Col className={`${styles.col}`} lg={3}>
@@ -781,7 +797,7 @@ export default function UserProfile() {
 									</Button>
 								</Col>
 
-								<Button className={`${styles.buttonSubmit}`} type="submit">
+								<Button className={`${styles.buttonSubmit}`} type="submit" onClick={handleSubmit}>
 									Enviar
 								</Button>
 							</Row>
