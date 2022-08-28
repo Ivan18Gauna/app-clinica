@@ -17,12 +17,8 @@ import ClinicHistory from './components/clinicHistory/ClinicHistory';
 import UserProfile from './components/userProfile/UserProfile';
 import Auth0 from './components/auth0/Auth0';
 import HomeProfessional from './components/homeProfessionals/HomeProfessionals';
-<<<<<<< HEAD
 import Calendar from './components/calendar/Calendar'
-
-=======
 import HomePatients from './components/homePatients/HomePatients';
->>>>>>> dev-front
 function App() {
   return (
     <BrowserRouter>
