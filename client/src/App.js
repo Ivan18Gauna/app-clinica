@@ -17,7 +17,11 @@ import ClinicHistory from './components/clinicHistory/ClinicHistory';
 import UserProfile from './components/userProfile/UserProfile';
 import Auth0 from './components/auth0/Auth0';
 import HomeProfessional from './components/homeProfessionals/HomeProfessionals';
+
 import HomePatients from './components/homePatients/HomePatients';
+
+
+
 function App() {
   return (
     <BrowserRouter>
@@ -28,6 +32,7 @@ function App() {
         </Switch>
         <Switch>
           <Route path="/home" component={Home} />
+          <Route path="/calendar" component={Calendar} />
           <Route path='/details/:id' component={Details}/>
           <Route path='/login' component={Login}/>
           <Route path='/signin' component={SignIn}/>
@@ -41,7 +46,7 @@ function App() {
           {/* <Route path='/google' component={Google}/> */}
           <Route path='/clinic_history' component={ClinicHistory}/>
           <Route path='/homeUsuarioPrueba' component={HomeProfessional}/>
-          <Route path='/userProfile' component={UserProfile} />
+          <Route path='/userProfile' component={PatientProfile} />
           <Route path='/professionals' component={Professionals}/>
           <Route path='/auth0' component={Auth0}/>
           <Route path="/homepatients" component={HomePatients}/>
