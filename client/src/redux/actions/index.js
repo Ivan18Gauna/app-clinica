@@ -147,6 +147,13 @@ export function registerHealthData(payload) {
 	};
 }
 
+export function newTurno(payload) {
+	return async function () {
+		const turnoData = await axios.post(`/turnos`, payload);
+		return turnoData;
+	};
+}
+
 export function getPatientsDetail(id) {
 	return async function (dispatch) {
 		const patients_id = await axios(`/patients/detail/5`);
