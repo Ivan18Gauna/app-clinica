@@ -178,6 +178,11 @@ console.log('heal', input)
 		e.preventDefault();
 
 		console.log('ENTRE SUBMIT')
+
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6fabd2d3802e4a22fac47d6636b1780f702efe24
 		dispatch(registerPatients(input));
 		setInput({
 			name: '',
