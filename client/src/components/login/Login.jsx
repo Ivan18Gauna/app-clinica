@@ -1,65 +1,55 @@
-import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
-import img from "../../Icons/logo.svg";
-import { useAuth0 } from "@auth0/auth0-react";
-import { useDispatch, useSelector } from "react-redux";
-import { getUserDetail } from "../../redux/actions";
-import "./Login.css";
-import Loading from "../loading/Loading";
-import "../formPatients/FormPatients.module.css";
-import Button from "react-bootstrap/esm/Button";
-import styles from '../patientsProfile/PatientsProfile.module.css';
-import Auth0 from "../auth0/Auth0";
-import Cookies from 'universal-cookie'
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import img from './pngwing.com.png';
+import { useAuth0 } from '@auth0/auth0-react';
+import Cookie from 'universal-cookie'
+import { useDispatch } from 'react-redux';
+import { getUserDetail } from '../../redux/actions';
 
 export default function Login() {
-
-  const history = useHistory();
-	const globalUser = useSelector( state => state.user);
-  const dispatch = useDispatch();
-  const { loginWithPopup, isAuthenticated, logout } = useAuth0();
-  const [user, setUser] = useState({
-    email: "",
-    password: "",
-  });
-
-  function handleInput(e) {
-    setUser({
-      ...user,
-      [e.target.name]: e.target.value,
-    });
-  }
-
-  function handleSubmit(e) {
-    e.preventDefault();
-	const cookie = new Cookies()
-	cookie.set('userEmail', user.email, {path: '/'})
-	cookie.set('userPassword', user.password, {path: '/'})
-	dispatch(getUserDetail(user.email))
-/*     setUser({
-      email: "",
-      password: "",
-    }); */
-    history.push("/home");
-  }
-  
-  // if((isAuthenticated && !globalUser.document) || (isAuthenticated && !globalUser.license) ){
-  //   history.push('/signin')
-  // }
-  // if((isAuthenticated && globalUser.document) || (isAuthenticated && globalUser.license)){
-  //   history.push('/home')
-  // }
-  // if(isAuthenticated){
-    // setTimeout(()=>{
-    //   dispatch(getUserDetail(user.email));
-    // }, 2000)
-    // history.push('/signin')
-    // history.push('/home');
-  // }
-//commit
+	const dispatch = useDispatch()
+	const { loginWithPopup, isAuthenticated } = useAuth0();
+	const [user, setUser] = useState({
+		email: '',
+		password: '',
+	});
+	function handleInput(e) {
+		setUser({
+			...user,
+			[e.target.name]: e.target.value,
+		});
+	}
+	function handleSubmit(e) {
+		e.preventDefault();
+		dispatch(getUserDetail(cookie.get('userEmail')))
+		const cookie = new Cookie()
+		cookie.set('userEmail', user.email, {path: '/'})
+		cookie.set('userPassword', user.password, {path: '/'})
+		window.location.href = '../homePatients/HomePatients.jsx'
+		console.log(user);
+		// dispatch(funcion a definir(user));
+/* 		setUser({
+			email: '',
+			password: '',
+		}); */
+	}
+	return (
+		<div>
+			{!isAuthenticated ? (
+				<div className="container w-75 mt-5">
+					<div className="row">
+						<div className="col d-none d-lg-block">
+							<img
+								src="https://thumbs.dreamstime.com/z/retrato-dise-o-minimalista-exhausto-continuo-de-la-sola-mano-del-dibujo-lineal-doctor-un-forma-vida-linear-aislada-solo-s%C3%ADmbolo-146395118.jpg"
+								alt="not img"
+								width="700"
+								height="700"
+								className="col-12"
+							/>
+						</div>
   return (
     <div>
-      {!isAuthenticated ? (
+      {!isAuthenticated && !eluser.email ? (
         <div className="container w-75 mt-5">
           <div className="row">
             <div className="col d-none d-lg-block">
@@ -72,13 +62,11 @@ export default function Login() {
               />
             </div>
 
-            <div className="col" id='div-general-login'>
-              <div className="text-end" id="div-image-name">
-                <h2 className="fw-bold text-center py-5" id="name-login">Ingresa a +Salud</h2>
-                <div id="image-logIn">
-                  <img src={img} alt="not img" width="100px" />
-                </div>
+            <div className="col">
+              <div className="text-end">
+                <img src={img} alt="not img" width="100px" />
               </div>
+              <h2 className="fw-bold text-center py-5">Ingresa a +Salud</h2>
               <form onSubmit={handleSubmit}>
                 <div className="mb-4">
                   <label htmlFor="email" className="form-label">
@@ -120,25 +108,25 @@ export default function Login() {
                   </button>
                 </div>
                 <div className="my-3">
-                  <span>¿Nuevo en +Salud? </span>
+                  <span>¿nuevo en +Salud? </span>
                   <Link to="/signin">
                     <span>Resgistrate</span>
                   </Link>
                 </div>
                 <div className="my-3">
-                  <span>¿Olvidaste tu contraseña? </span>
+                  <span>¿olvidaste tu contraseña? </span>
                   <Link to="/sincomponente">
                     <span>Recupera tu contraseña</span>
                   </Link>
                 </div>
               </form>
-              <div className="container w-100 my-5" id='div-otra-manera'>
-                <div className="row text-center" id='text-otra-manera'>
+              <div className="container w-100 my-5">
+                <div className="row text-center">
                   <div className="col-12">Otra manera de iniciar sesión</div>
                 </div>
                 <div className="row">
                   <div className="col">
-                    {/* <br /> */}
+                    <br />
                     <button onClick={() => loginWithPopup()}>Login</button>
                   </div>
                 </div>
@@ -148,31 +136,11 @@ export default function Login() {
         </div>
       ) : (
         <div>
-          <div className="loading-login">
-            <Loading />
-          </div>
-          <div id='loading-num'>
-              { setTimeout(()=>{
-                  dispatch(getUserDetail(user.email));
-// <<<<<<<<< Temporary merge branch 1
-//                 }, 1000)}
-//               { setTimeout( ()=>{
-//                 if(globalUser && globalUser.mail){
-// =========
-
-                }, 1000)}
-              { setTimeout( ()=>{
-                if(globalUser && globalUser.mail){
-
-// >>>>>>>>> Temporary merge branch 2
-                  history.push('/home');
-                } else {
-                  history.push('/signin');
-                }
-              }, 5000)}
-              <Button className={styles.button} onClick={logout}>Cerrar sesion</Button>
-            </div>
-          </div>
+          <h1>Bienvenido a +Salud</h1>
+          <Link to="/signin">
+            <button>Continuar</button>
+          </Link>
+        </div>
       )}
     </div>
   );

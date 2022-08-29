@@ -9,6 +9,7 @@ import {
 	GET_PATIENTS_NAME,
 	GET_USER_MAIL,
 	GET_CLINIC_HISTORY,
+	THE_USER,
 } from '../actions/actions';
 import axios from 'axios';
 
@@ -107,7 +108,7 @@ export function getPatients() {
 	};
 }
 export function getPatientsByName(payload) {
-
+	console.log('soy payload', payload);
 	return async function (dispatch) {
 		try {
 			const patients = await axios.get('/patients/document/' + payload);
@@ -124,6 +125,7 @@ export function getPatientsByName(payload) {
 export function postHistory(payload) {
 	return async function () {
 		try {
+			console.log('soy payload history', payload);
 			const res = await axios.post('/historiaclinica');
 			return res;
 		} catch (error) {
@@ -139,10 +141,9 @@ export function registerPatients(payload) {
 	};
 }
 
-export function modifyUsers(payload, id) {
+export function modifyUsers(payload) {
 	return async function () {
-		const healthData = await axios.put(`/patients/edit/${id}`, payload);
-		console.log("aca toy pa")
+		const healthData = await axios.put(`/patients/edit`, payload);
 		return healthData;
 	};
 }
@@ -150,13 +151,14 @@ export function modifyUsers(payload, id) {
 export function getUserDetail(mail) {
 	return async function (dispatch) {
 		const userMail = await axios(`/user/${mail}`);
-		
+		// console.log("soy user",userMail)
 		return dispatch({
 			type: GET_USER_MAIL,
 			payload: userMail.data,
 		});
 	};
 }
+
 
 export function getClinicHistory(id) {
 	return async function (dispatch) {
