@@ -17,6 +17,7 @@ import Button from 'react-bootstrap/Button';
 import Accordion from 'react-bootstrap/Accordion';
 import stylesForm from '../formPatients/FormPatients.module.css';
 import styles from './PatientsProfile.module.css';
+import Loading from '../loading/Loading';
 
 const blood_type = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB+', 'AB-', 'O+', 'O-'];
 const provinces = [
@@ -121,11 +122,6 @@ function validate(info) {
 export default function UserProfile() {
 	const { user, logout, isAuthenticated } = useAuth0();
 	const dispatch = useDispatch();
-	// const patient = useSelector((state) => state.user)
-	// const allPatient = useSelector((state) => state.patients);
-	// const eluser = useSelector((state) => state.the_user);
-	// const patient = isAuthenticated ?allPatient.filter((el) => el.mail === user.email): allPatient.filter((el) => el.mail === eluser.email)
-
 	const obras = useSelector((state) => state.os);
 	const [editInfoPersonal, setEditInfoPersonal] = useState(false);
 	const [editInfoSalud, setEditInfoSalud] = useState(false);
@@ -133,12 +129,15 @@ export default function UserProfile() {
 	const [chronicles_, setChronicles] = useState('');
 	const [error, setError] = useState({});
 	const globalUser = useSelector((state) => state.user);
-	console.log('Soy user global', globalUser);
+	
 	useEffect(() => {
 		dispatch(getPatients());
 		dispatch(getObrasSociales());
-		dispatch(getUserDetail(user.email));
-	}, [dispatch]);
+	}, [dispatch, user]);
+
+	if((isAuthenticated && !globalUser) || (isAuthenticated && globalUser && !globalUser.name)){
+		dispatch(getUserDetail(user.email))
+	}
 
 	const [info, setInfo] = useState({
 		name: '',
@@ -273,12 +272,6 @@ export default function UserProfile() {
 		});
 	}
 
-	// useEffect(() => {
-	//     dispatch(getPatientsDetail(user.email))
-	// }, [dispatch, user.email])
-
-	// let patient_=patient.filter(el=>el.mail===user.email)
-
 	function handleInfoPersonal(e) {
 		e.preventDefault();
 		setEditInfoPersonal(true);
@@ -326,11 +319,12 @@ export default function UserProfile() {
 
 	return (
 		<div>
+		{ globalUser && globalUser.document ?
 			<div className={styles.container}>
 				<div className={styles.perfil}>
 					<img src={doctor} alt="imagen no disponible" />
 					<h4>
-						{/* {patient.name} */} {/* {patient.lastname} */}Mora Cristian
+						{globalUser.name} {globalUser.lastname}
 					</h4>
 				</div>
 				<div className={styles.acordion}>
@@ -338,14 +332,14 @@ export default function UserProfile() {
 						<Accordion.Item eventKey="0">
 							<Accordion.Header>Mis Datos</Accordion.Header>
 							<Accordion.Body>
-								<p>Fecha de nacimiento: {/* {patient.birth} */}20/11/2003</p>
-								<p>Número de Documento:{/* {patient.document} */}123123</p>
-								<p>Número de telefono: {/* {patient.phone} */}123123123</p>
-								<p>Email: {/* {patient.mail} */}cristian@gmail.com</p>
-								<p>Provincia: {/* {patient.province} */}Asdf</p>
-								<p>Ciudad: {/* {patient.city} */}Bogotá</p>
-								<p>Calle: {/* {patient.street} */}Asdf</p>
-								<p>Número: {/* {patient.number} */}123123</p>
+								<p>Fecha de nacimiento: {globalUser.birth}</p>
+								<p>Número de Documento {globalUser.document}</p>
+								<p>Número de telefono: {globalUser.phone}</p>
+								<p>Email: {globalUser.mail}</p>
+								<p>Provincia: {globalUser.province}</p>
+								<p>Ciudad: {globalUser.city}</p>
+								<p>Calle: {globalUser.street}</p>
+								<p>Número: {globalUser.number}</p>
 								{editInfoPersonal === false ? (
 									<Button onClick={handleInfoPersonal}>
 										Editar información personal
@@ -568,7 +562,7 @@ export default function UserProfile() {
 													type="submit"
 													onClick={handleSubmit}
 												>
-													Enviar
+													Confirmar
 												</Button>
 											</Row>
 										</Form>
@@ -580,21 +574,21 @@ export default function UserProfile() {
 							<Accordion.Header>Información de salud basica</Accordion.Header>
 							<Accordion.Body>
 								<p>Grupo Sanguineo:</p>
-								{/* {patient.blood ? patient.blood : 'Sin información'} */}
-								<p>Obra Social:</p>
-								{/* {patient.oS} */}
+								{globalUser.blood ? globalUser.blood : 'Sin información'}
+								{/* <p>Obra Social:</p>
+								{globalUser.oS} */}
 								<p>Vacunas que posee aplicadas:</p>
-								{/* {patient.vaccine ? patient.blood : 'Sin información'} */}
+								{globalUser.vaccine ? globalUser.blood : 'Sin información'}
 								<p>Alergias: </p>
-								{/* {patient.allergies ? patient.allergies : 'Sin información'} */}
+								{globalUser.allergies ? globalUser.allergies : 'Sin información'}
 								<p>Enfermedades Crónicas: </p>
-								{/* {patient.chronicles ? patient.chronicles : 'Sin información'} */}
+								{globalUser.chronicles ? globalUser.chronicles : 'Sin información'}
 								<p>Es donante?</p>
-								{/* {patient.donation ? patient.donation : 'Sin información'} */}
+								{globalUser.donation ? globalUser.donation : 'Sin información'}
 								<p>Es transfundible?</p>
-								{/* {patient.transfusion ? patient.transfusion : 'Sin información'} */}
+								{globalUser.transfusion ? globalUser.transfusion : 'Sin información'}
 								<p>Obra Social:</p>
-								{/* {patient.oS ? patient.oS : 'Sin información'} */}
+								{globalUser.oS ? globalUser.oS : 'Sin información'}
 								{editInfoSalud === false ? (
 									<Button onClick={handleInfoSalud}>
 										Editar información de salud
@@ -832,6 +826,8 @@ export default function UserProfile() {
 				</div>
 			<Button className={styles.button} onClick={logout}>Cerrar sesion</Button>
 			</div>
+			: <div className='loading-login'><Loading/></div>
+			}
 		</div>
 	);
 }

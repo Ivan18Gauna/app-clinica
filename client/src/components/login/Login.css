@@ -20,3 +20,25 @@
 #name-login {
     margin-right: 15px;
 }
+
+.loading-login {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 15%;
+}
+
+#loading-num {
+    color: white;
+}
+
+#div-otra-manera {
+    display: flex;
+    align-items: center;
+}
+
+#text-otra-manera {
+    margin-right: 5px;
+}
