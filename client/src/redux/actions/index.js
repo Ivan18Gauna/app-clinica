@@ -164,31 +164,31 @@ export function getClinicHistory(id) {
 
 		return dispatch({
 			type: GET_CLINIC_HISTORY,
-			payload: clinicHistory.data,
+			payload: clinicHistory.data
 			// payload: [
 			// 	{
 			// 	  "id": 1,
-			// 	  "reason": "x",
-			// 	  "image": "x",
-			// 	  "description": "x",
-			// 	  "date": "x",
-			// 	  "diagnosis": "x",
+			// 	  "reason": "Dolor de cabeza",
+			// 	  "image": "ninguno",
+			// 	  "description": "Fuertes mareos, con dolor de cabeza prolongado",
+			// 	  "date": "29/1/2019",
+			// 	  "diagnosis": "Cefalia",
 			// 	  "patientId": 3,
 			// 	  "professionalId": 1,
 			// 	  "professional": {
-			// 		"name": "Emilio"
+			// 		"name": "Emilio Petinatto"
 			// 	  },
 			// 	  "patient": {
-			// 		"name": "Emilio"
+			// 		"name": "Sebastian"
 			// 	  }
 			// 	},
 			// 	{
 			// 	  "id": 2,
-			// 	  "reason": "x",
-			// 	  "image": "x",
-			// 	  "description": "x",
-			// 	  "date": "x",
-			// 	  "diagnosis": "x",
+			// 	  "reason": "Mal estar en sona abdominal",
+			// 	  "image": "ninguno",
+			// 	  "description": "Dolores estomacales y punzadas en la sona del abdomen",
+			// 	  "date": "19/09/2021",
+			// 	  "diagnosis": "Hernia umbilical",
 			// 	  "patientId": 3,
 			// 	  "professionalId": 2,
 			// 	  "professional": {
