@@ -350,13 +350,8 @@ export default function UserProfile() {
 					<aside>
 
 						<div>
-<<<<<<< HEAD
 							<p>
-								Nombre:{/* {patient.name} */}
-=======
-							{/* <p>
-								Nombre:{patient.name}
->>>>>>> dev-front
+								Nombre: {/* {patient.name} */}
 							</p>
 							<p>
 								Apellido: {/* {patient.lastname} */}
@@ -383,13 +378,8 @@ export default function UserProfile() {
 								Calle: {/* {patient.street} */}
 							</p>
 							<p>
-<<<<<<< HEAD
 								Número: {/* {patient.number} */}
 							</p>
-=======
-								Número: {patient.number}
-							</p> */}
->>>>>>> dev-front
 						</div>
 
 					</aside>
