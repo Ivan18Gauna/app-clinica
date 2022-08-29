@@ -152,6 +152,7 @@ export default function Login() {
           <div id='loading-num'>
               { setTimeout(()=>{
                   dispatch(getUserDetail(user.email));
+
                 }, 1000)}
               { setTimeout( ()=>{
                 if(globalUser && globalUser.mail){
