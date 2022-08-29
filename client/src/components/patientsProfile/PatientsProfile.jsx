@@ -18,6 +18,7 @@ import Accordion from 'react-bootstrap/Accordion';
 import stylesForm from '../formPatients/FormPatients.module.css';
 import styles from './PatientsProfile.module.css';
 import Loading from '../loading/Loading';
+import Cookies from 'universal-cookie';
 
 const blood_type = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB+', 'AB-', 'O+', 'O-'];
 const provinces = [
@@ -128,18 +129,10 @@ export default function UserProfile() {
 	const [allergies_, setAllergies] = useState('');
 	const [chronicles_, setChronicles] = useState('');
 	const [error, setError] = useState({});
-	const globalUser = useSelector((state) => state.user);
 	let id;
-	if(globalUser && globalUser.id){ id = globalUser.id; }
+/* 	if(globalUser && globalUser.id){ id = globalUser.id; }
+ */	
 	
-	useEffect(() => {
-		dispatch(getPatients());
-		dispatch(getObrasSociales());
-	}, [dispatch, user]);
-
-	if((isAuthenticated && !globalUser) || (isAuthenticated && globalUser && !globalUser.name)){
-		dispatch(getUserDetail(user.email))
-	}
 
 	const [info, setInfo] = useState({
 		name: '',
@@ -316,16 +309,26 @@ export default function UserProfile() {
 
 	function handleSubmit(e) {
 		e.preventDefault();
-		console.log('entreeeee')
 		dispatch(modifyUsers(info, id));
 		setTimeout(()=>{
 			dispatch(getUserDetail(user.email))
 		}, 2000)
 	}
 
+	
+	useEffect(() => {
+		const cookie = new Cookies()
+		dispatch(getUserDetail(cookie.get('userEmail')));
+		dispatch(getObrasSociales());
+	}, []);
+	
+	const globalUser = useSelector((state) => state.user)
+		
+	console.log('soy global',globalUser)
+
 	return (
 		<div>
-		{ globalUser && globalUser.document ?
+		{ globalUser && globalUser.name ?
 			<div className={styles.container}>
 				<div className={styles.perfil}>
 					<img src={doctor} alt="imagen no disponible" />
