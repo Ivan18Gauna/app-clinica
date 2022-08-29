@@ -117,9 +117,9 @@ export default function UserProfile() {
 	const dispatch = useDispatch();
 
 	// const patient = useSelector((state) => state.user)
-	const allPatient = useSelector((state) => state.patients);
-	const eluser = useSelector((state) => state.the_user);
-	const patient = isAuthenticated ?allPatient.filter((el) => el.mail === user.email): allPatient.filter((el) => el.mail === eluser.email)
+	/* const allPatient = useSelector((state) => state.patients); */
+	/* const eluser = useSelector((state) => state.the_user); */
+	/* const patient = isAuthenticated ?allPatient.filter((el) => el.mail === user.email): allPatient.filter((el) => el.mail === eluser.email) */
 	const obras = useSelector((state) => state.os);
 	const [editInfoPersonal, setEditInfoPersonal] = useState(false)
 	const [editInfoSalud, setEditInfoSalud] = useState(false)
@@ -312,42 +312,44 @@ export default function UserProfile() {
 
 	return (
 		<div>
+    <div>
+     <p>Aca iría la foto</p>
+						<img src="https://www.webespacio.com/wp-content/uploads/2012/01/foto-perfil.jpg" alt="imagen no disponible" />
+    </div>
 			{
 				editInfoPersonal === false ?
 					<aside>
-						<p>Aca iría la foto</p>
-						<img src="https://www.webespacio.com/wp-content/uploads/2012/01/foto-perfil.jpg" alt="imagen no disponible" />
 
 						<div>
 							<p>
-								Nombre:{patient.name}
+								Nombre:{/* {patient.name} */}
 							</p>
 							<p>
-								Apellido: {patient.lastname}
+								Apellido: {/* {patient.lastname} */}
 							</p>
 							<p>
-								Fecha de nacimiento: {patient.birth}
+								Fecha de nacimiento: {/* {patient.birth} */}
 							</p>
 							<p>
-								Número de Documento:{patient.document}
+								Número de Documento:{/* {patient.document} */}
 							</p>
 							<p>
-								Número de telefono: {patient.phone}
+								Número de telefono: {/* {patient.phone} */}
 							</p>
 							<p>
-								Email: {patient.mail}
+								Email: {/* {patient.mail} */}
 							</p>
 							<p>
-								Provincia: {patient.province}
+								Provincia: {/* {patient.province} */}
 							</p>
 							<p>
-								Ciudad: {patient.city}
+								Ciudad: {/* {patient.city} */}
 							</p>
 							<p>
-								Calle: {patient.street}
+								Calle: {/* {patient.street} */}
 							</p>
 							<p>
-								Número: {patient.number}
+								Número: {/* {patient.number} */}
 							</p>
 						</div>
 
@@ -575,21 +577,21 @@ export default function UserProfile() {
 					<div>
 						<h5>Información de salud básica: </h5>
 						<p>Grupo Sanguineo:</p>
-						{patient.blood ? patient.blood : 'Sin información'}
+						{/* {patient.blood ? patient.blood : 'Sin información'} */}
 						<p>Obra Social:</p>
-						{patient.oS}
+						{/* {patient.oS} */}
 						<p>Vacunas que posee aplicadas:</p>
-						{patient.vaccine ? patient.blood : 'Sin información'}
+						{/* {patient.vaccine ? patient.blood : 'Sin información'} */}
 						<p>Alergias: </p>
-						{patient.allergies ? patient.allergies : 'Sin información'}
+						{/* {patient.allergies ? patient.allergies : 'Sin información'} */}
 						<p>Enfermedades Crónicas: </p>
-						{patient.chronicles ? patient.chronicles : 'Sin información'}
+						{/* {patient.chronicles ? patient.chronicles : 'Sin información'} */}
 						<p>Es donante?</p>
-						{patient.donation ? patient.donation : 'Sin información'}
+						{/* {patient.donation ? patient.donation : 'Sin información'} */}
 						<p>Es transfundible?</p>
-						{patient.transfusion ? patient.transfusion : 'Sin información'}
+						{/* {patient.transfusion ? patient.transfusion : 'Sin información'} */}
 						<p>Obra Social:</p>
-						{patient.oS ? patient.oS : 'Sin información'}
+						{/* {patient.oS ? patient.oS : 'Sin información'} */}
 
 
 					</div>
