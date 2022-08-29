@@ -54,7 +54,7 @@ export default function Login() {
     // history.push('/signin')
     // history.push('/home');
   // }
-
+//commit
   return (
     <div>
       {!isAuthenticated ? (
@@ -152,9 +152,17 @@ export default function Login() {
           <div id='loading-num'>
               { setTimeout(()=>{
                   dispatch(getUserDetail(user.email));
+// <<<<<<<<< Temporary merge branch 1
+//                 }, 1000)}
+//               { setTimeout( ()=>{
+//                 if(globalUser && globalUser.mail){
+// =========
+
                 }, 1000)}
               { setTimeout( ()=>{
                 if(globalUser && globalUser.mail){
+
+// >>>>>>>>> Temporary merge branch 2
                   history.push('/home');
                 } else {
                   history.push('/signin');
