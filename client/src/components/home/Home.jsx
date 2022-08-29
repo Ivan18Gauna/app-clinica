@@ -14,19 +14,20 @@ export default function Home() {
 	
 	// const {isAuthenticated} = useAuth0();
 	const user = useSelector( state => state.user)
-console.log("user/home",user);
+
 	return (
 		<div>
-			{ user.length > 0 && user.document && <HomePatients/> }
-			{ user.length > 0 && user.license && <HomeProfessional/> }
-			{ user.length < 1 &&
+			{ user && user.length > 0 && user.document && <HomePatients/> }
+			{ user && user.length > 0 && user.license && <HomeProfessional/> }
+			{ !user || user.length < 1 ?
 				<div className={`${styles.container}`}>
 					<Portada />
 					<Filters />
 					<CardsTriple />
 					<CardHistory />
-				</div>
-			 }
+				</div> 
+				: null
+			}
 			
 		</div>
 	);

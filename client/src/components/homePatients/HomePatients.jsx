@@ -19,7 +19,7 @@ export default function HomePatients() {
         <Card style={{ width: '22rem' }}
         >
       <Card.Body>
-        <Card.Title>Proximo Turno</Card.Title>
+        <Card.Title>Proximos Turno</Card.Title>
      
         <Card.Text>
           Recorda pedirle a tu medico que actualice tu historia clinica!
@@ -66,7 +66,7 @@ export default function HomePatients() {
       </Card.Body>
     </Card>
     </div>
-    <div>
+    {/* <div>
     <Card style={{ width: '22rem' }}>
       <Card.Body>
         <Card.Title>Ultima atención</Card.Title>
@@ -88,7 +88,7 @@ export default function HomePatients() {
 
       </Card.Body>
     </Card>
-    </div>
+    </div> */}
     </div>
 <div className="botones">
    

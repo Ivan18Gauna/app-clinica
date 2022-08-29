@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import {getPatients, modifyUsers, getObrasSociales } from "../../redux/actions";
+import {getPatients, modifyUsers, getObrasSociales, getUserDetail } from "../../redux/actions";
 import { useAuth0 } from "@auth0/auth0-react";
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
@@ -112,24 +112,25 @@ function validate(info) {
 
 export default function UserProfile() {
 
-	const { user,logout, isAuthenticated } = useAuth0()
-
+	const { user, logout, isAuthenticated } = useAuth0()
 	const dispatch = useDispatch();
-
 	// const patient = useSelector((state) => state.user)
-	/* const allPatient = useSelector((state) => state.patients); */
-	/* const eluser = useSelector((state) => state.the_user); */
-	/* const patient = isAuthenticated ?allPatient.filter((el) => el.mail === user.email): allPatient.filter((el) => el.mail === eluser.email) */
+	// const allPatient = useSelector((state) => state.patients);
+	// const eluser = useSelector((state) => state.the_user);
+	// const patient = isAuthenticated ?allPatient.filter((el) => el.mail === user.email): allPatient.filter((el) => el.mail === eluser.email)
+
 	const obras = useSelector((state) => state.os);
-	const [editInfoPersonal, setEditInfoPersonal] = useState(false)
-	const [editInfoSalud, setEditInfoSalud] = useState(false)
+	const [editInfoPersonal, setEditInfoPersonal] = useState(false);
+	const [editInfoSalud, setEditInfoSalud] = useState(false);
 	const [allergies_, setAllergies] = useState('');
 	const [chronicles_, setChronicles] = useState('');
-	console.log('obras', obras)
-
+	const [error, setError] = useState({});
+	const globalUser = useSelector(state => state.user)
+	console.log('Soy user global', globalUser)
 	useEffect(() => {
 		dispatch(getPatients());
-		dispatch(getObrasSociales())
+		dispatch(getObrasSociales());
+		dispatch(getUserDetail(user.email))
 	  }, [dispatch]);
 
 	const [info, setInfo] = useState({
@@ -155,15 +156,16 @@ export default function UserProfile() {
 		oS: '',
 
 	})
-	
 
-	const [error, setError] = useState({})
+
 	function onKeyDown(e) {
 		if (e.code === "Enter") {
 			e.preventDefault()
 			return false;
 		}
 	}
+
+
 	function handleSelectBlood(e) {
 		e.preventDefault();
 		setInfo({
@@ -171,6 +173,8 @@ export default function UserProfile() {
 			blood: e.target.value,
 		});
 	}
+
+
 	function handleSelectVaccines(e) {
 		e.preventDefault();
 		if (info.vaccines.includes(e.target.value)) {
@@ -182,6 +186,8 @@ export default function UserProfile() {
 			});
 		}
 	}
+
+
 	function handleDeleteVaccines(e) {
 		e.preventDefault();
 		setInfo({
@@ -190,9 +196,11 @@ export default function UserProfile() {
 		});
 	}
 
+
 	function handleInputAllergies(e){
 		setAllergies(e.target.value)
 	}
+
 
 	function handleSubmitAllergies(e) {
 		e.preventDefault();
@@ -206,6 +214,8 @@ export default function UserProfile() {
 		}
 		setAllergies('');
 	}
+
+
 	function handleDeleteAllergies(e) {
 		e.preventDefault();
 		setInfo({
@@ -213,6 +223,8 @@ export default function UserProfile() {
 			allergies: info.allergies.filter((el) => el !== e.target.value),
 		});
 	}
+
+
 	function handleInputDonate(e) {
 		e.preventDefault();
 		setInfo({
@@ -220,6 +232,8 @@ export default function UserProfile() {
 			donation: e.target.value,
 		});
 	}
+
+
 	function handleInputTransfusion(e) {
 		e.preventDefault();
 		setInfo({
@@ -227,10 +241,14 @@ export default function UserProfile() {
 			transfusion: e.target.value,
 		});
 	}
+
+
 	function handleInputChronicles(e) {
 		e.preventDefault();
 		setChronicles(e.target.value);
 	}
+
+
 	function handleSubmitChronicles(e) {
 		e.preventDefault();
 		if (info.chronicles.includes(chronicles_)) {
@@ -243,6 +261,8 @@ export default function UserProfile() {
 		}
 		setChronicles('');
 	}
+
+
 	function handleDeleteChronicles(e) {
 		e.preventDefault();
 		setInfo({
@@ -250,6 +270,8 @@ export default function UserProfile() {
 			chronicles: info.chronicles.filter((el) => el !== e.target.value),
 		});
 	}
+
+
 	function handleSelectOS(e) {
 		e.preventDefault(e);
 		setInfo({
@@ -270,6 +292,7 @@ export default function UserProfile() {
 		setEditInfoPersonal(true);
 	}
 
+
 	function handleInput(e) {
 		e.preventDefault()
 		setInfo({
@@ -283,6 +306,7 @@ export default function UserProfile() {
 		setError(objError)
 	}
 
+
 	function handleSelect(e) {
 		setInfo({
 			...info,
@@ -290,25 +314,30 @@ export default function UserProfile() {
 		});
 	}
 
-	console.log('info', info)
 
 	function handleCancel(e) {
 		e.preventDefault();
 		setEditInfoPersonal(false)
 	}
+
+
 	function handleInfoSalud(e) {
 		e.preventDefault()
 		setEditInfoSalud(true)
 	}
+
+
 	function handleCancelSalud(e) {
 		e.preventDefault();
 		setEditInfoSalud(false)
 	}
 
+
 	function handleSubmit(e) {
 		e.preventDefault()
 		dispatch(modifyUsers(info))
 	}
+
 
 	return (
 		<div>
@@ -321,8 +350,13 @@ export default function UserProfile() {
 					<aside>
 
 						<div>
+<<<<<<< HEAD
 							<p>
 								Nombre:{/* {patient.name} */}
+=======
+							{/* <p>
+								Nombre:{patient.name}
+>>>>>>> dev-front
 							</p>
 							<p>
 								Apellido: {/* {patient.lastname} */}
@@ -349,8 +383,13 @@ export default function UserProfile() {
 								Calle: {/* {patient.street} */}
 							</p>
 							<p>
+<<<<<<< HEAD
 								Número: {/* {patient.number} */}
 							</p>
+=======
+								Número: {patient.number}
+							</p> */}
+>>>>>>> dev-front
 						</div>
 
 					</aside>
@@ -800,12 +839,13 @@ export default function UserProfile() {
 								</Col>
 
 								<Button className={`${styles.buttonSubmit}`} type="submit" onClick={handleSubmit}>
-									Enviar
+									Confirmar
 								</Button>
 							</Row>
 						</Form>
 					</div>
 			}
+			<button onClick={logout}>Cerrar sesion</button>
 		</div>
 	)
 }
