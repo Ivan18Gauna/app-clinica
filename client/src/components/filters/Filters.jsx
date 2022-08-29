@@ -15,21 +15,21 @@ import { useHistory } from 'react-router-dom';
 
 const Filters = () => {
 	const history = useHistory();
+	const dispatch = useDispatch();
+	const cities = useSelector((state) => state.cities);
+	const specialties = useSelector((state) => state.specialties);
+
 	const [filter, setFilter] = useState({
 		lastname: '',
 		filterEsp: '',
 		filterProfProv: '',
+		order: 'ASC',
 	});
-	const specialties = useSelector((state) => state.specialties);
-	const cities = useSelector((state) => state.cities);
-	const dispatch = useDispatch();
+
 	useEffect(() => {
 		dispatch(get_cities());
 		dispatch(get_specialties());
 	}, [dispatch]);
-	useEffect(() => {
-		dispatch(filterConvinado(filter));
-	}, [dispatch, filter]);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -53,26 +53,31 @@ const Filters = () => {
 					lg={3}
 					className={`justify-content-center ${styles.searchMin}`}
 				>
-					<Col>
+					<Col md={10} className={styles.col}>
 						<Form.Control
 							onChange={(e) => handleOnChange(e)}
 							type={'text'}
 							value={filter.lastname}
 							name="lastname"
-							placeholder={'Nombre...'}
+							placeholder={'Apellido...'}
 						/>
 					</Col>
-					<Col lg={5} className={styles.selects}>
-						<Form.Select onChange={(e) => handleOnChange(e)} name="filterEsp">
+					<Col lg={5} md={10} className={`${styles.selects}`}>
+						<Form.Select
+							value={filter.filterEsp}
+							onChange={(e) => handleOnChange(e)}
+							name="filterEsp"
+						>
 							<option hidden>Especialidad</option>
 							{specialties &&
 								specialties.map((el) => (
-									<option key={el.id} value={el.name}>
+									<option key={el.name} value={el.name}>
 										{el.name}
 									</option>
 								))}
 						</Form.Select>
 						<Form.Select
+							value={filter.filterProfProv}
 							onChange={(e) => handleOnChange(e)}
 							name="filterProfProv"
 						>
@@ -84,16 +89,27 @@ const Filters = () => {
 									</option>
 								))}
 						</Form.Select>
+						<Switch>
+							<Route path="/professionals">
+								<Form.Select
+									value={filter.order}
+									onChange={(e) => handleOnChange(e)}
+									name="order"
+								>
+									<option value="ordenar" hidden>
+										Ordernar
+									</option>
+									<option value="ASC">ASC</option>
+									<option value="DESC">DESC</option>
+								</Form.Select>
+							</Route>
+						</Switch>
 					</Col>
-					<Switch>
-						<Route path={'/home'}>
-							<Col lg={2}>
-								<Button className={styles.button} variant="info" type="submit">
-									Buscar
-								</Button>
-							</Col>
-						</Route>
-					</Switch>
+					<Col lg={2} md={10} xs={12} className={`${styles.selects}`}>
+						<Button className={styles.button} variant="info" type="submit">
+							Buscar
+						</Button>
+					</Col>
 				</Row>
 			</Form>
 		</div>
