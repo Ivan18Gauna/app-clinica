@@ -21,7 +21,6 @@ export default function Home() {
 			{ user && user.length > 0 && user.license && <HomeProfessional/> }
 			{ !user || user.length < 1 ?
 				<div className={`${styles.container}`}>
-				<HomePatients/>
 					<Portada />
 					<Filters />
 					<CardsTriple />
