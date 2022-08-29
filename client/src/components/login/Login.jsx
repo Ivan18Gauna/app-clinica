@@ -2,37 +2,50 @@ import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import img from "./pngwing.com.png";
 import { useAuth0 } from "@auth0/auth0-react";
-import { theUSer } from "../../redux/actions";
+// import { theUSer } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
+import { getUserDetail } from "../../redux/actions";
 
 export default function Login() {
-  let history = useHistory();
-  const eluser = useSelector((state) => state.the_user);
+
+  const history = useHistory();
+	const globalUser = useSelector( state => state.user) || [];
+  // const eluser = useSelector((state) => state.the_user);
   const dispatch = useDispatch();
   const { loginWithPopup, isAuthenticated } = useAuth0();
   const [user, setUser] = useState({
     email: "",
     password: "",
   });
+
   function handleInput(e) {
     setUser({
       ...user,
       [e.target.name]: e.target.value,
     });
   }
+
   function handleSubmit(e) {
     e.preventDefault();
-    dispatch(theUSer(user));
+    // dispatch(theUSer(user));
+    dispatch(getUserDetail(user.email))
     setUser({
       email: "",
       password: "",
     });
     history.push("/home");
   }
+  
+  if(isAuthenticated && globalUser.length < 1){
+    history.push('/signin')
+  }
+  if(isAuthenticated && globalUser.length > 0){
+    history.push('/home')
+  }
 
   return (
     <div>
-      {!isAuthenticated && !eluser.email ? (
+      {!isAuthenticated /* && !eluser.email */ ? (
         <div className="container w-75 mt-5">
           <div className="row">
             <div className="col d-none d-lg-block">
