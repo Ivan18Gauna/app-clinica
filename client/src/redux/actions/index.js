@@ -107,7 +107,7 @@ export function getPatients() {
 	};
 }
 export function getPatientsByName(payload) {
-	console.log('soy payload', payload);
+
 	return async function (dispatch) {
 		try {
 			const patients = await axios.get('/patients/document/' + payload);
@@ -124,7 +124,6 @@ export function getPatientsByName(payload) {
 export function postHistory(payload) {
 	return async function () {
 		try {
-			console.log('soy payload history', payload);
 			const res = await axios.post('/historiaclinica');
 			return res;
 		} catch (error) {
@@ -140,9 +139,10 @@ export function registerPatients(payload) {
 	};
 }
 
-export function modifyUsers(payload) {
+export function modifyUsers(payload, id) {
 	return async function () {
-		const healthData = await axios.put(`/patients/edit`, payload);
+		const healthData = await axios.put(`/patients/edit/${id}`, payload);
+		console.log("aca toy pa")
 		return healthData;
 	};
 }
