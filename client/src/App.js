@@ -25,33 +25,31 @@ import HomePatients from './components/homePatients/HomePatients';
 function App() {
   return (
     <BrowserRouter>
-      <div>
-        <Switch>
-          <Route exact  path="/" component={LandingPage} />
-          <Route path="/" component={NavBarEdit}/>
-        </Switch>
-        <Switch>
-          <Route path="/home" component={Home} />
-          <Route path="/calendar" component={Calendar} />
-          <Route path='/details/:id' component={Details}/>
-          <Route path='/login' component={Login}/>
-          <Route path='/signin' component={SignIn}/>
-          <Route path='/formprofessionals' component={FormProfessionals}/>
-          <Route path='/formpatients' component={FormPatients}/>
-          <Route path='/healthData' component={HealthData}/>
-          <Route path='/professionals' component={Professionals}/>
-          <Route path='/about' component={About}/>
-          <Route path='/price' component={Price}/>
-          <Route path="/form" component={FormUpProfessionals}/>
-          {/* <Route path='/google' component={Google}/> */}
-          <Route path='/clinic_history' component={ClinicHistory}/>
-          <Route path='/homeUsuarioPrueba' component={HomeProfessional}/>
-          <Route path='/userProfile' component={PatientProfile} />
-          <Route path='/professionals' component={Professionals}/>
-          <Route path='/auth0' component={Auth0}/>
-          <Route path="/homepatients" component={HomePatients}/>
-        </Switch>
-      </div>
+      <Switch>
+        <Route exact  path="/" component={LandingPage} />
+        <Route path="/" component={NavBarEdit}/>
+      </Switch>
+      <Switch>
+        <Route path="/home" component={Home} />
+        <Route path="/calendar" component={Calendar} />
+        <Route path='/details/:id' component={Details}/>
+        <Route path='/login' component={Login}/>
+        <Route path='/signin' component={SignIn}/>
+        <Route path='/formprofessionals' component={FormProfessionals}/>
+        <Route path='/formpatients' component={FormPatients}/>
+        <Route path='/healthData' component={HealthData}/>
+        <Route path='/professionals' component={Professionals}/>
+        <Route path='/about' component={About}/>
+        <Route path='/price' component={Price}/>
+        <Route path="/form" component={FormUpProfessionals}/>
+        {/* <Route path='/google' component={Google}/> */}
+        <Route path='/clinic_history' component={ClinicHistory}/>
+        <Route path='/homeUsuarioPrueba' component={HomeProfessional}/>
+        <Route path='/userProfile' component={PatientProfile} />
+        <Route path='/professionals' component={Professionals}/>
+        <Route path='/auth0' component={Auth0}/>
+        <Route path="/homepatients" component={HomePatients}/>
+      </Switch>
     </BrowserRouter>
   );
 }
