@@ -19,13 +19,15 @@ export default function Home() {
 		<div>
 			{ user && user.length > 0 && user.document && <HomePatients/> }
 			{ user && user.length > 0 && user.license && <HomeProfessional/> }
-			{ user && user.length < 1 &&
+			{ !user || user.length < 1 ?
 				<div className={`${styles.container}`}>
+				<HomePatients/>
 					<Portada />
 					<Filters />
 					<CardsTriple />
 					<CardHistory />
-				</div>
+				</div> 
+				: null
 			}
 			
 		</div>
