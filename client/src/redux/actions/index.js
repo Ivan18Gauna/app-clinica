@@ -164,41 +164,41 @@ export function getClinicHistory(id) {
 
 		return dispatch({
 			type: GET_CLINIC_HISTORY,
-			payload: clinicHistory.data,
-			// payload: [
-			// 	{
-			// 	  "id": 1,
-			// 	  "reason": "x",
-			// 	  "image": "x",
-			// 	  "description": "x",
-			// 	  "date": "x",
-			// 	  "diagnosis": "x",
-			// 	  "patientId": 3,
-			// 	  "professionalId": 1,
-			// 	  "professional": {
-			// 		"name": "Emilio"
-			// 	  },
-			// 	  "patient": {
-			// 		"name": "Emilio"
-			// 	  }
-			// 	},
-			// 	{
-			// 	  "id": 2,
-			// 	  "reason": "x",
-			// 	  "image": "x",
-			// 	  "description": "x",
-			// 	  "date": "x",
-			// 	  "diagnosis": "x",
-			// 	  "patientId": 3,
-			// 	  "professionalId": 2,
-			// 	  "professional": {
-			// 		"name": "Tania"
-			// 	  },
-			// 	  "patient": {
-			// 		"name": "Emilio"
-			// 	  }
-			// 	}
-			//   ]
+			// payload: clinicHistory.data,
+			payload: [
+				{
+				  "id": 1,
+				  "reason": "Dolor de cabeza",
+				  "image": "ninguno",
+				  "description": "Fuertes mareos, con dolor de cabeza prolongado",
+				  "date": "29/1/2019",
+				  "diagnosis": "Cefalia",
+				  "patientId": 3,
+				  "professionalId": 1,
+				  "professional": {
+					"name": "Emilio Petinatto"
+				  },
+				  "patient": {
+					"name": "Sebastian"
+				  }
+				},
+				{
+				  "id": 2,
+				  "reason": "Mal estar en sona abdominal",
+				  "image": "ninguno",
+				  "description": "Dolores estomacales y punzadas en la sona del abdomen",
+				  "date": "19/09/2021",
+				  "diagnosis": "Hernia umbilical",
+				  "patientId": 3,
+				  "professionalId": 2,
+				  "professional": {
+					"name": "Tania"
+				  },
+				  "patient": {
+					"name": "Emilio"
+				  }
+				}
+			  ]
 		});
 	};
 }

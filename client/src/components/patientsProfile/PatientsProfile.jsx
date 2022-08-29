@@ -140,6 +140,9 @@ export default function UserProfile() {
 	if((isAuthenticated && !globalUser) || (isAuthenticated && globalUser && !globalUser.name)){
 		dispatch(getUserDetail(user.email))
 	}
+	if(globalUser && globalUser.name){
+		dispatch(getUserDetail(globalUser.mail))
+	}
 
 	const [info, setInfo] = useState({
 		name: '',
