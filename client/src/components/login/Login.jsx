@@ -2,19 +2,21 @@ import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import img from "../../Icons/logo.svg";
 import { useAuth0 } from "@auth0/auth0-react";
-// import { theUSer } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserDetail } from "../../redux/actions";
 import "./Login.css";
 import Loading from "../loading/Loading";
 import "../formPatients/FormPatients.module.css";
+import Button from "react-bootstrap/esm/Button";
+import styles from '../patientsProfile/PatientsProfile.module.css';
+import Auth0 from "../auth0/Auth0";
 
 export default function Login() {
 
   const history = useHistory();
 	const globalUser = useSelector( state => state.user);
   const dispatch = useDispatch();
-  const { loginWithPopup, isAuthenticated } = useAuth0();
+  const { loginWithPopup, isAuthenticated, logout } = useAuth0();
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -36,6 +38,8 @@ export default function Login() {
     });
     history.push("/home");
   }
+  console.log('soy auth0', Auth0)
+  console.log('soy user', user)
   
   // if((isAuthenticated && !globalUser.document) || (isAuthenticated && !globalUser.license) ){
   //   history.push('/signin')
@@ -53,7 +57,7 @@ export default function Login() {
 
   return (
     <div>
-      {!isAuthenticated /* && !eluser.email */ ? (
+      {!isAuthenticated ? (
         <div className="container w-75 mt-5">
           <div className="row">
             <div className="col d-none d-lg-block">
@@ -148,14 +152,15 @@ export default function Login() {
           <div id='loading-num'>
               { setTimeout(()=>{
                   dispatch(getUserDetail(user.email));
-                }, 1000)}{
-                setTimeout( ()=>{
-                if(globalUser){
+                }, 1000)}
+              { setTimeout( ()=>{
+                if(globalUser && globalUser.mail){
                   history.push('/home');
                 } else {
                   history.push('/signin');
                 }
               }, 5000)}
+              <Button className={styles.button} onClick={logout}>Cerrar sesion</Button>
             </div>
           </div>
       )}
