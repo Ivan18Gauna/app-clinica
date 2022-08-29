@@ -10,7 +10,7 @@ import FormPatients from './components/formPatients/FormPatients';
 import healthData from './components/healthData/HealthData.jsx';
 import Login from './components/login/Login';
 import About from './components/about/About';
-import Price from './components/Price/Price';
+import Price from './components/price/Price';
 import Professionals from './components/professionals/Professionals';
 
 import FormUpProfessionals from './components/formUpProfessionals/FormUpProfessionals';
