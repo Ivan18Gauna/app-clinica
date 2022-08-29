@@ -17,9 +17,9 @@ export default function HomeProfessional() {
     });
     const [createNote, setCreateNote] = useState(false);
 
-    // useEffect( ()=>{
+    useEffect( ()=>{
     //     dispatch(getNotes());
-    // }, [dispatch])
+    }, [])
 
     function hanldeChange(e){
         e.preventDefault();

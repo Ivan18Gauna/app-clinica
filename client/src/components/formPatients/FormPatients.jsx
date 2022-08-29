@@ -61,6 +61,7 @@ function validate(input) {
   }
   return error;
 }
+
 const provinces = [
   "Buenos Aires",
   "Ciudad Autónoma de Buenos Aires",
@@ -87,13 +88,13 @@ const provinces = [
   "Tierra del Fuego",
   "Tucumán",
 ];
+
+
 export default function RegisterPatient() {
+
   const { isAuthenticated, user } = useAuth0();
   const history = useHistory();
-
-
   const [error, setError] = useState({});
-
   const [input, setInput] = useState({
     name: "",
     lastname: "",
@@ -128,7 +129,6 @@ export default function RegisterPatient() {
       province: e.target.value,
     });
   }
-  console.log("input pat", input);
 
   function handleSubmit(e) {
     e.preventDefault();

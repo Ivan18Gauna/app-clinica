@@ -31,16 +31,14 @@ const vaccines_data = [
 ];
 
 export default function HealthData() {
+	
 	const history = useHistory();
 	const dispatch = useDispatch();
 	const location = useLocation();
 	const info_patient = location.state;
 	const obras = useSelector((state) => state.os);
-
-	useEffect(() => {
-		dispatch(getObrasSociales());
-	}, [dispatch]);
-
+	const [allergies_, setAllergies] = useState('');
+	const [chronicles_, setChronicles] = useState('');
 	const [input, setInput] = useState({
 		name: info_patient.name,
 		lastname: info_patient.lastname,
@@ -64,8 +62,9 @@ export default function HealthData() {
 		oS: '',
 	});
 
-	const [allergies_, setAllergies] = useState('');
-	const [chronicles_, setChronicles] = useState('');
+	useEffect(() => {
+		dispatch(getObrasSociales());
+	}, [dispatch]);
 
 	function onKeyDown(e) {
 		if (e.code === 'Enter') {
@@ -173,12 +172,9 @@ export default function HealthData() {
 			oS: e.target.value,
 		});
 	}
-	console.log('heal', input);
+
 	function handleSubmit(e) {
 		e.preventDefault();
-
-		console.log('ENTRE SUBMIT');
-
 		dispatch(registerPatients(input));
 		setInput({
 			name: '',
