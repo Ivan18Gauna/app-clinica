@@ -10,6 +10,7 @@ import "../formPatients/FormPatients.module.css";
 import Button from "react-bootstrap/esm/Button";
 import styles from '../patientsProfile/PatientsProfile.module.css';
 import Auth0 from "../auth0/Auth0";
+import Cookies from 'universal-cookie'
 
 export default function Login() {
 
@@ -31,15 +32,16 @@ export default function Login() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    dispatch(getUserDetail(user.email))
-    setUser({
+	const cookie = new Cookies()
+	cookie.set('userEmail', user.email, {path: '/'})
+	cookie.set('userPassword', user.password, {path: '/'})
+	dispatch(getUserDetail(user.email))
+/*     setUser({
       email: "",
       password: "",
-    });
+    }); */
     history.push("/home");
   }
-  console.log('soy auth0', Auth0)
-  console.log('soy user', user)
   
   // if((isAuthenticated && !globalUser.document) || (isAuthenticated && !globalUser.license) ){
   //   history.push('/signin')

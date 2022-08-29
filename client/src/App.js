@@ -20,7 +20,7 @@ import HomeProfessional from './components/homeProfessionals/HomeProfessionals';
 import PatientProfile from '../src/components/patientsProfile/PatientsProfile.jsx'
 import Calendar from '../src/components/calendar/Calendar.jsx'
 import HomePatients from './components/homePatients/HomePatients';
-
+import UserProfile from './components/userProfile/UserProfile';
 
 function App() {
   return (
