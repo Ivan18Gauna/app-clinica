@@ -3,31 +3,22 @@ import React from "react";
 // import { Link, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { getPatients } from "../../redux/actions";
+import { getPatients, getUserDetail } from "../../redux/actions";
 import { useAuth0 } from "@auth0/auth0-react";
+import Cookies from 'universal-cookie'
 
 export default function UserProfile() {
-  const { user, logout, isAuthenticated} = useAuth0();
-
-  const dispatch = useDispatch();
-
-  const allPatient = useSelector((state) => state.patients);
-  const eluser = useSelector((state) => state.the_user);
-  const patient = isAuthenticated ?allPatient.filter((el) => el.mail === user.email): allPatient.filter((el) => el.mail === eluser.email)
-  
-  
-
+  const dispatch = useDispatch()
+  const cookie = new Cookies()
+  const { user, logout } = useAuth0();
+  const state = useSelector((state) => state.user)
   useEffect(() => {
-    dispatch(getPatients());
-  }, [dispatch]);
-
-  console.log("allPatient", allPatient);
-  console.log("patient", patient);
-
+    dispatch(getUserDetail(cookie.get('userEmail')))
+  }, [])
 
   return (
     <div>
-      {patient.length > 0 ? (
+      {state.document ? (
         <div>
           <aside>
             <p>Aca iría la foto</p>
@@ -36,35 +27,35 @@ export default function UserProfile() {
               alt=""
             />
             <div>
-              <p>Nombre:{patient[0].name}</p>
-              <p>Apellido: {patient[0].lastname}</p>
-              <p>Nro de documento:{patient[0].document}</p>
-              <p>Número de telefono: {patient[0].phone}</p>
-              <p>Email: {patient[0].mail}</p>
-              <p>Provincia: {patient[0].province}</p>
-              <p>Ciudad: {patient[0].city}</p>
-              <p>Calle: {patient[0].street}</p>
-              <p>Número: {patient[0].number}</p>
+              <p>Nombre:{state.name}</p>
+              <p>Apellido: {state.lastName}</p>
+              <p>Nro de documento:{state.document}</p>
+              <p>Número de telefono: {state.phone}</p>
+              <p>Email: {state.mail}</p>
+              <p>Provincia: {state.province}</p>
+              <p>Ciudad: {state.city}</p>
+              <p>Calle: {state.street}</p>
+              <p>Número: {state.number}</p>
             </div>
           </aside>
           <div>
             <h5>Información de salud básica: </h5>
             <p>Grupo Sanguineo:</p>
-            {patient[0].blood ? patient[0].blood : "Sin información"}
+            {state.blood ? state.blood : "Sin información"}
             <p>Vacunas que posee aplicadas:</p>
-            {patient[0].vaccine ? patient[0].vaccine : "Sin información"}
+            {state.vaccine ? state.vaccine : "Sin información"}
             <p>Alergias: </p>
-            {patient[0].allergies ? patient[0].allergies : "Sin información"}
+            {state.allergies ? state.allergies : "Sin información"}
             <p>Enfermedades Crónicas: </p>
-            {patient[0].chronicles ? patient[0].chronicles : "Sin información"}
+            {state.chronicles ? state.chronicles : "Sin información"}
             <p>Es donante?</p>
-            {patient[0].donation ? patient[0].donation : "Sin información"}
+            {state.donation ? state.donation : "Sin información"}
             <p>Es transfundible?</p>
-            {patient[0].transfusion
-              ? patient[0].transfusion
+            {state.transfusion
+              ? state.transfusion
               : "Sin información"}
             <p>Obra Social:</p>
-            {patient[0].oS ? patient[0].oS : "Sin información"}
+            {state.oS ? state.oS : "Sin información"}
           </div>
           <button onClick={logout}>Cerrar sesion</button>
         </div>

@@ -9,6 +9,7 @@ import {
 	GET_PATIENTS_NAME,
 	GET_USER_MAIL,
 	GET_CLINIC_HISTORY,
+	THE_USER,
 } from '../actions/actions';
 import axios from 'axios';
 
@@ -150,13 +151,15 @@ export function modifyUsers(payload) {
 export function getUserDetail(mail) {
 	return async function (dispatch) {
 		const userMail = await axios(`/user/${mail}`);
-		
+		// console.log("soy user",userMail)
 		return dispatch({
 			type: GET_USER_MAIL,
 			payload: userMail.data,
 		});
 	};
 }
+
+
 
 export function getClinicHistory(id) {
 	return async function (dispatch) {

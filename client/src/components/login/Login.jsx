@@ -1,56 +1,52 @@
-import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
-import img from "../../Icons/logo.svg";
-import { useAuth0 } from "@auth0/auth0-react";
-// import { theUSer } from "../../redux/actions";
-import { useDispatch, useSelector } from "react-redux";
-import { getUserDetail } from "../../redux/actions";
-import "./Login.css";
-import Loading from "../loading/Loading";
-import "../formPatients/FormPatients.module.css";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import img from './pngwing.com.png';
+import { useAuth0 } from '@auth0/auth0-react';
+import Cookie from 'universal-cookie'
+import { useDispatch } from 'react-redux';
+import { getUserDetail } from '../../redux/actions';
 
 export default function Login() {
-
-  const history = useHistory();
-	const globalUser = useSelector( state => state.user);
-  const dispatch = useDispatch();
-  const { loginWithPopup, isAuthenticated } = useAuth0();
-  const [user, setUser] = useState({
-    email: "",
-    password: "",
-  });
-
-  function handleInput(e) {
-    setUser({
-      ...user,
-      [e.target.name]: e.target.value,
-    });
-  }
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    dispatch(getUserDetail(user.email))
-    setUser({
-      email: "",
-      password: "",
-    });
-    history.push("/home");
-  }
-  
-  // if((isAuthenticated && !globalUser.document) || (isAuthenticated && !globalUser.license) ){
-  //   history.push('/signin')
-  // }
-  // if((isAuthenticated && globalUser.document) || (isAuthenticated && globalUser.license)){
-  //   history.push('/home')
-  // }
-  // if(isAuthenticated){
-    // setTimeout(()=>{
-    //   dispatch(getUserDetail(user.email));
-    // }, 2000)
-    // history.push('/signin')
-    // history.push('/home');
-  // }
-
+	const dispatch = useDispatch()
+	const { loginWithPopup, isAuthenticated } = useAuth0();
+	const [user, setUser] = useState({
+		email: '',
+		password: '',
+	});
+	function handleInput(e) {
+		setUser({
+			...user,
+			[e.target.name]: e.target.value,
+		});
+	}
+	function handleSubmit(e) {
+		e.preventDefault();
+		dispatch(getUserDetail(cookie.get('userEmail')))
+		const cookie = new Cookie()
+		cookie.set('userEmail', user.email, {path: '/'})
+		cookie.set('userPassword', user.password, {path: '/'})
+		window.location.href = '../homePatients/HomePatients.jsx'
+		console.log(user);
+		// dispatch(funcion a definir(user));
+/* 		setUser({
+			email: '',
+			password: '',
+		}); */
+	}
+	return (
+		<div>
+			{!isAuthenticated ? (
+				<div className="container w-75 mt-5">
+					<div className="row">
+						<div className="col d-none d-lg-block">
+							<img
+								src="https://thumbs.dreamstime.com/z/retrato-dise-o-minimalista-exhausto-continuo-de-la-sola-mano-del-dibujo-lineal-doctor-un-forma-vida-linear-aislada-solo-s%C3%ADmbolo-146395118.jpg"
+								alt="not img"
+								width="700"
+								height="700"
+								className="col-12"
+							/>
+						</div>
   return (
     <div>
       {!isAuthenticated /* && !eluser.email */ ? (
@@ -66,13 +62,11 @@ export default function Login() {
               />
             </div>
 
-            <div className="col" id='div-general-login'>
-              <div className="text-end" id="div-image-name">
-                <h2 className="fw-bold text-center py-5" id="name-login">Ingresa a +Salud</h2>
-                <div id="image-logIn">
-                  <img src={img} alt="not img" width="100px" />
-                </div>
+            <div className="col">
+              <div className="text-end">
+                <img src={img} alt="not img" width="100px" />
               </div>
+              <h2 className="fw-bold text-center py-5">Ingresa a +Salud</h2>
               <form onSubmit={handleSubmit}>
                 <div className="mb-4">
                   <label htmlFor="email" className="form-label">
