@@ -7,19 +7,21 @@ import SignIn from './components/signIn/SignIn';
 import NavBarEdit from './components/navBar/NavBar.jsx';
 import FormProfessionals from './components/formProfessionals/FormProfesionals';
 import FormPatients from './components/formPatients/FormPatients';
-import HealthData from './components/healthData/HealthData.jsx';
+import healthData from './components/healthData/healthData.jsx';
 import Login from './components/login/Login';
 import About from './components/about/About';
 import Price from './components/price/Price';
 import Professionals from './components/professionals/Professionals';
 import FormUpProfessionals from './components/formUpProfessionals/FormUpProfessionals';
 import ClinicHistory from './components/clinicHistory/ClinicHistory';
-// import UserProfile from './components/userProfile/UserProfile';
+import UserProfile from './components/userProfile/UserProfile';
 import Auth0 from './components/auth0/Auth0';
 import HomeProfessional from './components/homeProfessionals/HomeProfessionals';
 import PatientProfile from '../src/components/patientsProfile/PatientsProfile.jsx'
 import Calendar from '../src/components/calendar/Calendar.jsx'
+
 import HomePatients from './components/homePatients/HomePatients';
+
 
 
 function App() {
@@ -38,7 +40,7 @@ function App() {
           <Route path='/signin' component={SignIn}/>
           <Route path='/formprofessionals' component={FormProfessionals}/>
           <Route path='/formpatients' component={FormPatients}/>
-          <Route path='/healthData' component={HealthData}/>
+          <Route path='/healthData' component={healthData}/>
           <Route path='/professionals' component={Professionals}/>
           <Route path='/about' component={About}/>
           <Route path='/price' component={Price}/>

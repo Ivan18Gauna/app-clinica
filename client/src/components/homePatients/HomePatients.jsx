@@ -1,12 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from 'react-redux';
+import Cookie from 'universal-cookie'
 import  "./HomePatients.css";
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
 
 export default function HomePatients() {
+    const cookie = new Cookie();
+    console.log(cookie.get('userEmail'))
 
 /*     const userInfo = useSelector( state => state.user ) */
     let userInfo = ["a+", "Covid",  "al Polen", "si, donante", "si, transfundible", "Hipertension", "Accord Salud 3.2"]
