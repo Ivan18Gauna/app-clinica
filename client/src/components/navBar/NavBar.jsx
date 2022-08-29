@@ -5,9 +5,12 @@ import { Link } from 'react-router-dom';
 import styles from './NavBar.module.css';
 import { useAuth0 } from '@auth0/auth0-react';
 import logo from '../../Icons/logo.svg'
+import { useSelector } from 'react-redux';
 
 function NavBarEdit() {
 	const { isAuthenticated } = useAuth0();
+	const globalUser = useSelector(state => state.user);
+	console.log(globalUser)
 
 	return (
 		<Navbar
@@ -32,13 +35,13 @@ function NavBarEdit() {
 					</Nav.Link>
 				</Nav>
 				<Nav>
-					{!isAuthenticated ? (
-						<Nav.Link as={Link} to="/login">
-							Ingresar
-						</Nav.Link>
-					) : (
+					{isAuthenticated || (globalUser && globalUser.mail) ? (
 						<Nav.Link as={Link} to="/userProfile">
 							Mi perfil
+						</Nav.Link>
+					) : (
+						<Nav.Link as={Link} to="/login">
+							Ingresar
 						</Nav.Link>
 					)}
 				</Nav>

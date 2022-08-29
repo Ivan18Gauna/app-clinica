@@ -40,5 +40,7 @@
 }
 
 #text-otra-manera {
+    display: flex;
+    justify-content: center;
     margin-right: 5px;
 }
