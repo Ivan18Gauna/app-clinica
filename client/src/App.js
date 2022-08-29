@@ -17,7 +17,7 @@ import ClinicHistory from './components/clinicHistory/ClinicHistory';
 import UserProfile from './components/userProfile/UserProfile';
 import Auth0 from './components/auth0/Auth0';
 import HomeProfessional from './components/homeProfessionals/HomeProfessionals';
-
+import PatientProfile from './components/patientsProfile/PatientsProfile'
 import HomePatients from './components/homePatients/HomePatients';
 
 
@@ -32,7 +32,7 @@ function App() {
         </Switch>
         <Switch>
           <Route path="/home" component={Home} />
-          <Route path="/calendar" component={Calendar} />
+          {/* <Route path="/calendar" component={Calendar} /> */}
           <Route path='/details/:id' component={Details}/>
           <Route path='/login' component={Login}/>
           <Route path='/signin' component={SignIn}/>

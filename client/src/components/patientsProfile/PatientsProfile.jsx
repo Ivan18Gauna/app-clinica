@@ -116,16 +116,16 @@ export default function UserProfile() {
 
 	const dispatch = useDispatch();
 
-	// const patient = useSelector((state) => state.user)
-	const allPatient = useSelector((state) => state.patients);
-	const eluser = useSelector((state) => state.the_user);
-	const patient = isAuthenticated ?allPatient.filter((el) => el.mail === user.email): allPatient.filter((el) => el.mail === eluser.email)
+	 const patient = useSelector((state) => state.user)
+	// const allPatient = useSelector((state) => state.patients);
+	// const eluser = useSelector((state) => state.the_user);
+	// const patient = isAuthenticated ?allPatient.filter((el) => el.mail === user.email): allPatient.filter((el) => el.mail === eluser.email)
 	const obras = useSelector((state) => state.os);
 	const [editInfoPersonal, setEditInfoPersonal] = useState(false)
 	const [editInfoSalud, setEditInfoSalud] = useState(false)
 	const [allergies_, setAllergies] = useState('');
 	const [chronicles_, setChronicles] = useState('');
-	console.log('obras', obras)
+	
 
 	useEffect(() => {
 		dispatch(getPatients());
@@ -319,7 +319,7 @@ export default function UserProfile() {
 						<img src="https://www.webespacio.com/wp-content/uploads/2012/01/foto-perfil.jpg" alt="imagen no disponible" />
 
 						<div>
-							<p>
+							{/* <p>
 								Nombre:{patient.name}
 							</p>
 							<p>
@@ -348,7 +348,7 @@ export default function UserProfile() {
 							</p>
 							<p>
 								Número: {patient.number}
-							</p>
+							</p> */}
 						</div>
 
 					</aside>
@@ -575,7 +575,7 @@ export default function UserProfile() {
 					<div>
 						<h5>Información de salud básica: </h5>
 						<p>Grupo Sanguineo:</p>
-						{patient.blood ? patient.blood : 'Sin información'}
+						{/* {patient.blood ? patient.blood : 'Sin información'}
 						<p>Obra Social:</p>
 						{patient.oS}
 						<p>Vacunas que posee aplicadas:</p>
@@ -589,7 +589,7 @@ export default function UserProfile() {
 						<p>Es transfundible?</p>
 						{patient.transfusion ? patient.transfusion : 'Sin información'}
 						<p>Obra Social:</p>
-						{patient.oS ? patient.oS : 'Sin información'}
+						{patient.oS ? patient.oS : 'Sin información'} */}
 
 
 					</div>
