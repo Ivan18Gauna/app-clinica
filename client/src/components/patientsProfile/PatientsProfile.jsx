@@ -1,13 +1,21 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
+import doctor from '../../Icons/iconfinder-icon.svg';
 // import { useHistory } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
-import {getPatients, modifyUsers, getObrasSociales, getUserDetail } from "../../redux/actions";
-import { useAuth0 } from "@auth0/auth0-react";
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import {
+	getPatients,
+	modifyUsers,
+	getObrasSociales,
+	getUserDetail,
+} from '../../redux/actions';
+import { useAuth0 } from '@auth0/auth0-react';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
+import Accordion from 'react-bootstrap/Accordion';
+import stylesForm from '../formPatients/FormPatients.module.css';
 import styles from './PatientsProfile.module.css';
 
 const blood_type = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB+', 'AB-', 'O+', 'O-'];
@@ -71,7 +79,8 @@ function validate(info) {
 		error.mail = 'Dirección de correo no valida.';
 		return error;
 	}
-	if (info.password &&
+	if (
+		info.password &&
 		!/(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/.test(
 			info.password
 		)
@@ -80,14 +89,14 @@ function validate(info) {
 			'La contraseña debe contener al menos 8 digitos, una mayúscula, un número y un caracter especial.';
 		return error;
 	}
-	if (info.new_password && (info.password !== info.new_password)) {
+	if (info.new_password && info.password !== info.new_password) {
 		error.new_password = 'No coincide con la contraseña.';
 		return error;
 	}
 	let newDate = info.birth;
 	let Date1 = new Date(newDate);
 	let Date2 = new Date();
-	if (info.birth && (Date1 >= Date2)) {
+	if (info.birth && Date1 >= Date2) {
 		error.birth = 'La fecha de nacimiento no puede ser posterior a la actual.';
 		return error;
 	}
@@ -102,17 +111,15 @@ function validate(info) {
 	if (info.number && !/[0-9]/.test(info.number)) {
 		error.number = 'Número no valido.';
 		return error;
-	} else if (info.number && (info.number <= 0)) {
+	} else if (info.number && info.number <= 0) {
 		error.number = 'Número no valida.';
 		return error;
 	}
 	return error;
 }
 
-
 export default function UserProfile() {
-
-	const { user, logout, isAuthenticated } = useAuth0()
+	const { user, logout, isAuthenticated } = useAuth0();
 	const dispatch = useDispatch();
 	// const patient = useSelector((state) => state.user)
 	// const allPatient = useSelector((state) => state.patients);
@@ -125,13 +132,13 @@ export default function UserProfile() {
 	const [allergies_, setAllergies] = useState('');
 	const [chronicles_, setChronicles] = useState('');
 	const [error, setError] = useState({});
-	const globalUser = useSelector(state => state.user)
-	console.log('Soy user global', globalUser)
+	const globalUser = useSelector((state) => state.user);
+	console.log('Soy user global', globalUser);
 	useEffect(() => {
 		dispatch(getPatients());
 		dispatch(getObrasSociales());
-		dispatch(getUserDetail(user.email))
-	  }, [dispatch]);
+		dispatch(getUserDetail(user.email));
+	}, [dispatch]);
 
 	const [info, setInfo] = useState({
 		name: '',
@@ -154,17 +161,14 @@ export default function UserProfile() {
 		transfusion: '',
 		chronicles: [],
 		oS: '',
-
-	})
-
+	});
 
 	function onKeyDown(e) {
-		if (e.code === "Enter") {
-			e.preventDefault()
+		if (e.code === 'Enter') {
+			e.preventDefault();
 			return false;
 		}
 	}
-
 
 	function handleSelectBlood(e) {
 		e.preventDefault();
@@ -173,7 +177,6 @@ export default function UserProfile() {
 			blood: e.target.value,
 		});
 	}
-
 
 	function handleSelectVaccines(e) {
 		e.preventDefault();
@@ -187,7 +190,6 @@ export default function UserProfile() {
 		}
 	}
 
-
 	function handleDeleteVaccines(e) {
 		e.preventDefault();
 		setInfo({
@@ -196,11 +198,9 @@ export default function UserProfile() {
 		});
 	}
 
-
-	function handleInputAllergies(e){
-		setAllergies(e.target.value)
+	function handleInputAllergies(e) {
+		setAllergies(e.target.value);
 	}
-
 
 	function handleSubmitAllergies(e) {
 		e.preventDefault();
@@ -215,7 +215,6 @@ export default function UserProfile() {
 		setAllergies('');
 	}
 
-
 	function handleDeleteAllergies(e) {
 		e.preventDefault();
 		setInfo({
@@ -223,7 +222,6 @@ export default function UserProfile() {
 			allergies: info.allergies.filter((el) => el !== e.target.value),
 		});
 	}
-
 
 	function handleInputDonate(e) {
 		e.preventDefault();
@@ -233,7 +231,6 @@ export default function UserProfile() {
 		});
 	}
 
-
 	function handleInputTransfusion(e) {
 		e.preventDefault();
 		setInfo({
@@ -242,12 +239,10 @@ export default function UserProfile() {
 		});
 	}
 
-
 	function handleInputChronicles(e) {
 		e.preventDefault();
 		setChronicles(e.target.value);
 	}
-
 
 	function handleSubmitChronicles(e) {
 		e.preventDefault();
@@ -262,7 +257,6 @@ export default function UserProfile() {
 		setChronicles('');
 	}
 
-
 	function handleDeleteChronicles(e) {
 		e.preventDefault();
 		setInfo({
@@ -270,7 +264,6 @@ export default function UserProfile() {
 			chronicles: info.chronicles.filter((el) => el !== e.target.value),
 		});
 	}
-
 
 	function handleSelectOS(e) {
 		e.preventDefault(e);
@@ -286,26 +279,23 @@ export default function UserProfile() {
 
 	// let patient_=patient.filter(el=>el.mail===user.email)
 
-
 	function handleInfoPersonal(e) {
 		e.preventDefault();
 		setEditInfoPersonal(true);
 	}
 
-
 	function handleInput(e) {
-		e.preventDefault()
+		e.preventDefault();
 		setInfo({
 			...info,
 			[e.target.name]: e.target.value,
 		});
 		let objError = validate({
 			...info,
-			[e.target.name]: e.target.value
-		})
-		setError(objError)
+			[e.target.name]: e.target.value,
+		});
+		setError(objError);
 	}
-
 
 	function handleSelect(e) {
 		setInfo({
@@ -314,528 +304,534 @@ export default function UserProfile() {
 		});
 	}
 
-
 	function handleCancel(e) {
 		e.preventDefault();
-		setEditInfoPersonal(false)
+		setEditInfoPersonal(false);
 	}
-
 
 	function handleInfoSalud(e) {
-		e.preventDefault()
-		setEditInfoSalud(true)
+		e.preventDefault();
+		setEditInfoSalud(true);
 	}
-
 
 	function handleCancelSalud(e) {
 		e.preventDefault();
-		setEditInfoSalud(false)
+		setEditInfoSalud(false);
 	}
-
 
 	function handleSubmit(e) {
-		e.preventDefault()
-		dispatch(modifyUsers(info))
+		e.preventDefault();
+		dispatch(modifyUsers(info));
 	}
-
 
 	return (
 		<div>
-    <div>
-     <p>Aca iría la foto</p>
-						<img src="https://www.webespacio.com/wp-content/uploads/2012/01/foto-perfil.jpg" alt="imagen no disponible" />
-    </div>
-			{
-				editInfoPersonal === false ?
-					<aside>
-
-						<div>
-							<p>
-								Nombre: {/* {patient.name} */}
-							</p>
-							<p>
-								Apellido: {/* {patient.lastname} */}
-							</p>
-							<p>
-								Fecha de nacimiento: {/* {patient.birth} */}
-							</p>
-							<p>
-								Número de Documento:{/* {patient.document} */}
-							</p>
-							<p>
-								Número de telefono: {/* {patient.phone} */}
-							</p>
-							<p>
-								Email: {/* {patient.mail} */}
-							</p>
-							<p>
-								Provincia: {/* {patient.province} */}
-							</p>
-							<p>
-								Ciudad: {/* {patient.city} */}
-							</p>
-							<p>
-								Calle: {/* {patient.street} */}
-							</p>
-							<p>
-								Número: {/* {patient.number} */}
-							</p>
-						</div>
-
-					</aside>
-					:
-					null
-			}
-			<div>
-				{
-					editInfoPersonal === false ?
-						<button onClick={handleInfoPersonal} >Editar información personal</button>
-						:
-						<div className={styles.container}>
-							<Form className={`${styles.form}`} onSubmit={(e) => handleSubmit(e)}>
-								<div className={styles.titulo}>
-									<h3>Editar información personal:</h3>
-								</div>
-								<Row className={`${styles.row}`} lg={2}>
-									<Col className={`${styles.col}`}>
-										<Form.Control
-											type="text"
-											name="name"
-											placeholder="Nombre"
-											value={info.name}
-											onChange={handleInput}
-											isInvalid={!!error.name}
-										/>
-										<Form.Control.Feedback type="invalid">
-											{error.name}
-										</Form.Control.Feedback>
-									</Col>
-									<Col className={`${styles.col}`}>
-										<Form.Control
-											type="text"
-											name="lastname"
-											placeholder="Apellido"
-											value={info.lastname}
-											onChange={handleInput}
-											isInvalid={!!error.lastname}
-										/>
-										<Form.Control.Feedback type="invalid">
-											{error.lastname}
-										</Form.Control.Feedback>
-									</Col>
-								</Row>
-								<Row className={`${styles.row}`} lg={1}>
-									<Col className={`${styles.col}`}>
-										<Form.Control
-											type="text"
-											name="username"
-											placeholder="Nombre de usuario"
-											value={info.username}
-											onChange={handleInput}
-										/>
-									</Col>
-								</Row>
-								<Row className={`${styles.row}`} lg={1}>
-									<Col className={`${styles.col}`}>
-										<Form.Control
-											type="email"
-											name="mail"
-											placeholder="Correo electrónico"
-											value={info.mail}
-											onChange={handleInput}
-											isInvalid={!!error.mail}
-										/>
-										<Form.Control.Feedback type="invalid">
-											{error.mail}
-										</Form.Control.Feedback>
-									</Col>
-								</Row>
-								<Row className={`${styles.row}`} lg={2}>
-									<Col className={`${styles.col}`}>
-										<Form.Control
-											type="password"
-											name="password"
-											placeholder="Contraseña"
-											value={info.password}
-											onChange={handleInput}
-											isInvalid={!!error.password}
-										/>
-										<Form.Control.Feedback type="invalid">
-											{error.password}
-										</Form.Control.Feedback>
-									</Col>
-									<Col className={`${styles.col}`}>
-										<Form.Control
-											type="password"
-											name="new_password"
-											placeholder="Repetir contraseña"
-											value={info.new_password}
-											onChange={handleInput}
-											isInvalid={!!error.new_password}
-										/>
-										<Form.Control.Feedback type="invalid">
-											{error.new_password}
-										</Form.Control.Feedback>
-									</Col>
-								</Row>
-								<Row className={`${styles.row}`} lg={1}>
-									<Col className={`${styles.col}`}>
-										<Form.Label>Fecha de Nacimiento</Form.Label>
-										<Form.Control
-											type="date"
-											name="birth"
-											value={info.birth}
-											onChange={handleInput}
-											isInvalid={!!error.birth}
-										/>
-										<Form.Control.Feedback type="invalid">
-											{error.birth}
-										</Form.Control.Feedback>
-									</Col>
-								</Row>
-								<Row className={`${styles.row}`} lg={2}>
-									<Col className={`${styles.col}`}>
-										<Form.Control
-											type="number"
-											name="document"
-											placeholder="Documento DNI"
-											value={info.document}
-											onChange={handleInput}
-											isInvalid={!!error.document}
-										/>
-										<Form.Control.Feedback type="invalid">
-											{error.document}
-										</Form.Control.Feedback>
-									</Col>
-									<Col className={`${styles.col}`}>
-										<Form.Control
-											type="text"
-											name="phone"
-											placeholder="Número de celular"
-											value={info.phone}
-											onChange={handleInput}
-											isInvalid={!!error.phone}
-										/>
-										<Form.Control.Feedback type="invalid">
-											{error.phone}
-										</Form.Control.Feedback>
-									</Col>
-								</Row>
-								<Row className={`${styles.row}`} lg={1}>
-									<Col className={`${styles.col}`}>
-										<Form.Label>Domicilio</Form.Label>
-										<Form.Select onChange={handleSelect} defaultValue="Provincia">
-											<option value="Provincia" hidden>
-												Provincia
-											</option>
-											{provinces.map((e) => {
-												return (
-													<option key={e} value={e}>
-														{e}
-													</option>
-												);
-											})}
-										</Form.Select>
-									</Col>
-								</Row>
-								<Row className={`${styles.row}`} lg={1}>
-									<Col className={`${styles.col}`}>
-										<Form.Control
-											type="text"
-											name="city"
-											placeholder="Ciudad"
-											value={info.city}
-											onChange={handleInput}
-											isInvalid={!!error.city}
-										/>
-										<Form.Control.Feedback type="invalid">
-											{error.phone}
-										</Form.Control.Feedback>
-									</Col>
-								</Row>
-								<Row className={`${styles.row}`} lg={2}>
-									<Col className={`${styles.col}`}>
-										<Form.Control
-											type="text"
-											name="street"
-											placeholder="Calle"
-											value={info.street}
-											onChange={handleInput}
-											isInvalid={!!error.street}
-										/>
-										<Form.Control.Feedback type="invalid">
-											{error.street}
-										</Form.Control.Feedback>
-									</Col>
-									<Col className={`${styles.col}`}>
-										<Form.Control
-											type="number"
-											name="number"
-											placeholder="Número"
-											value={info.number}
-											onChange={handleInput}
-											isInvalid={!!error.number}
-										/>
-										<Form.Control.Feedback type="invalid">
-											{error.number}
-										</Form.Control.Feedback>
-									</Col>
-								</Row>
-								<Row className={`${styles.row}`} lg={2} md={2} sm={2} xs={2}>
-									<Col className={`${styles.col}`} md={6} lg={6}>
-										<Button
-											className={`${styles.buttonSubmit}`}
-											onClick={handleCancel}
+			<div className={styles.container}>
+				<div className={styles.perfil}>
+					<img src={doctor} alt="imagen no disponible" />
+					<h4>
+						{/* {patient.name} */} {/* {patient.lastname} */}Mora Cristian
+					</h4>
+				</div>
+				<div className={styles.acordion}>
+					<Accordion className={styles.acordionContenido}>
+						<Accordion.Item eventKey="0">
+							<Accordion.Header>Mis Datos</Accordion.Header>
+							<Accordion.Body>
+								<p>Fecha de nacimiento: {/* {patient.birth} */}20/11/2003</p>
+								<p>Número de Documento:{/* {patient.document} */}123123</p>
+								<p>Número de telefono: {/* {patient.phone} */}123123123</p>
+								<p>Email: {/* {patient.mail} */}cristian@gmail.com</p>
+								<p>Provincia: {/* {patient.province} */}Asdf</p>
+								<p>Ciudad: {/* {patient.city} */}Bogotá</p>
+								<p>Calle: {/* {patient.street} */}Asdf</p>
+								<p>Número: {/* {patient.number} */}123123</p>
+								{editInfoPersonal === false ? (
+									<Button onClick={handleInfoPersonal}>
+										Editar información personal
+									</Button>
+								) : (
+									<div className={stylesForm.container}>
+										<Form
+											className={`${stylesForm.form}`}
+											onSubmit={(e) => handleSubmit(e)}
 										>
-											Cancelar
-										</Button>
-									</Col>
-
-									<Button className={`${styles.buttonSubmit}`} type="submit" onClick={handleSubmit}>
-										Enviar
-									</Button>
-								</Row>
-							</Form>
-						</div>
-				}
-
-
-			</div>
-			{
-				editInfoSalud === false ?
-					<div>
-						<h5>Información de salud básica: </h5>
-						<p>Grupo Sanguineo:</p>
-						{/* {patient.blood ? patient.blood : 'Sin información'} */}
-						<p>Obra Social:</p>
-						{/* {patient.oS} */}
-						<p>Vacunas que posee aplicadas:</p>
-						{/* {patient.vaccine ? patient.blood : 'Sin información'} */}
-						<p>Alergias: </p>
-						{/* {patient.allergies ? patient.allergies : 'Sin información'} */}
-						<p>Enfermedades Crónicas: </p>
-						{/* {patient.chronicles ? patient.chronicles : 'Sin información'} */}
-						<p>Es donante?</p>
-						{/* {patient.donation ? patient.donation : 'Sin información'} */}
-						<p>Es transfundible?</p>
-						{/* {patient.transfusion ? patient.transfusion : 'Sin información'} */}
-						<p>Obra Social:</p>
-						{/* {patient.oS ? patient.oS : 'Sin información'} */}
-
-
-					</div>
-					:
-					null
-			}
-			{
-				editInfoSalud === false ?
-					<button onClick={handleInfoSalud} >Editar información de salud</button>
-					:
-					<div className={styles.container}>
-						<Form className={styles.form} onSubmit={handleSubmit}>
-							<div className={styles.titulo}>
-								<h3>Editar información de salud</h3>
-							</div>
-							<Row className={`${styles.row}`} lg={1}>
-								<Col className={`${styles.col}`}>
-									<Form.Label>Grupo Sanguineo</Form.Label>
-									<Form.Select
-										onChange={handleSelectBlood}
-										defaultValue="grupo sanguineo"
-									>
-										<option value="grupo sanguineo" hidden>
-											Selecione una opción
-										</option>
-										{blood_type.map((e, i) => (
-											<option key={i} value={e}>
-												{e}
-											</option>
-										))}
-									</Form.Select>
-								</Col>
-							</Row>
-							<Row className={`${styles.row}`} lg={1}>
-								<Col className={`${styles.col}`}>
-									<Form.Label>Vacunas</Form.Label>
-									<Form.Select
-										onChange={handleSelectVaccines}
-										defaultValue="vacunas que posee colocadas"
-									>
-										<option value="vacunas que posee colocadas" hidden>
-											Selecione las vacunas que posee
-										</option>
-										{vaccines_data.map((e) => {
-											return (
-												<option key={e} value={e}>
-													{e}
-												</option>
-											);
-										})}
-									</Form.Select>
-								</Col>
-							</Row>
-							<Row>
-								<Col className={`${styles.col}`}>
-									<ul className={styles.lista}>
-										<span>Vacunas seleccionadas: </span>
-										{info.vaccines.map((e) => {
-											return (
-												<li key={e} value={e}>
-													{e}
-													<Button value={e} onClick={handleDeleteVaccines}>
-														X
+											<div className={stylesForm.titulo}>
+												<h3>Editar información personal:</h3>
+											</div>
+											<Row className={`${stylesForm.row}`} lg={2}>
+												<Col className={`${stylesForm.col}`}>
+													<Form.Control
+														type="text"
+														name="name"
+														placeholder="Nombre"
+														value={info.name}
+														onChange={handleInput}
+														isInvalid={!!error.name}
+													/>
+													<Form.Control.Feedback type="invalid">
+														{error.name}
+													</Form.Control.Feedback>
+												</Col>
+												<Col className={`${stylesForm.col}`}>
+													<Form.Control
+														type="text"
+														name="lastname"
+														placeholder="Apellido"
+														value={info.lastname}
+														onChange={handleInput}
+														isInvalid={!!error.lastname}
+													/>
+													<Form.Control.Feedback type="invalid">
+														{error.lastname}
+													</Form.Control.Feedback>
+												</Col>
+											</Row>
+											<Row className={`${stylesForm.row}`} lg={1}>
+												<Col className={`${stylesForm.col}`}>
+													<Form.Control
+														type="text"
+														name="username"
+														placeholder="Nombre de usuario"
+														value={info.username}
+														onChange={handleInput}
+													/>
+												</Col>
+											</Row>
+											<Row className={`${stylesForm.row}`} lg={1}>
+												<Col className={`${stylesForm.col}`}>
+													<Form.Control
+														type="email"
+														name="mail"
+														placeholder="Correo electrónico"
+														value={info.mail}
+														onChange={handleInput}
+														isInvalid={!!error.mail}
+													/>
+													<Form.Control.Feedback type="invalid">
+														{error.mail}
+													</Form.Control.Feedback>
+												</Col>
+											</Row>
+											<Row className={`${stylesForm.row}`} lg={2}>
+												<Col className={`${stylesForm.col}`}>
+													<Form.Control
+														type="password"
+														name="password"
+														placeholder="Contraseña"
+														value={info.password}
+														onChange={handleInput}
+														isInvalid={!!error.password}
+													/>
+													<Form.Control.Feedback type="invalid">
+														{error.password}
+													</Form.Control.Feedback>
+												</Col>
+												<Col className={`${stylesForm.col}`}>
+													<Form.Control
+														type="password"
+														name="new_password"
+														placeholder="Repetir contraseña"
+														value={info.new_password}
+														onChange={handleInput}
+														isInvalid={!!error.new_password}
+													/>
+													<Form.Control.Feedback type="invalid">
+														{error.new_password}
+													</Form.Control.Feedback>
+												</Col>
+											</Row>
+											<Row className={`${stylesForm.row}`} lg={1}>
+												<Col className={`${stylesForm.col}`}>
+													<Form.Label>Fecha de Nacimiento</Form.Label>
+													<Form.Control
+														type="date"
+														name="birth"
+														value={info.birth}
+														onChange={handleInput}
+														isInvalid={!!error.birth}
+													/>
+													<Form.Control.Feedback type="invalid">
+														{error.birth}
+													</Form.Control.Feedback>
+												</Col>
+											</Row>
+											<Row className={`${stylesForm.row}`} lg={2}>
+												<Col className={`${stylesForm.col}`}>
+													<Form.Control
+														type="number"
+														name="document"
+														placeholder="Documento DNI"
+														value={info.document}
+														onChange={handleInput}
+														isInvalid={!!error.document}
+													/>
+													<Form.Control.Feedback type="invalid">
+														{error.document}
+													</Form.Control.Feedback>
+												</Col>
+												<Col className={`${stylesForm.col}`}>
+													<Form.Control
+														type="text"
+														name="phone"
+														placeholder="Número de celular"
+														value={info.phone}
+														onChange={handleInput}
+														isInvalid={!!error.phone}
+													/>
+													<Form.Control.Feedback type="invalid">
+														{error.phone}
+													</Form.Control.Feedback>
+												</Col>
+											</Row>
+											<Row className={`${stylesForm.row}`} lg={1}>
+												<Col className={`${stylesForm.col}`}>
+													<Form.Label>Domicilio</Form.Label>
+													<Form.Select
+														onChange={handleSelect}
+														defaultValue="Provincia"
+													>
+														<option value="Provincia" hidden>
+															Provincia
+														</option>
+														{provinces.map((e) => {
+															return (
+																<option key={e} value={e}>
+																	{e}
+																</option>
+															);
+														})}
+													</Form.Select>
+												</Col>
+											</Row>
+											<Row className={`${stylesForm.row}`} lg={1}>
+												<Col className={`${stylesForm.col}`}>
+													<Form.Control
+														type="text"
+														name="city"
+														placeholder="Ciudad"
+														value={info.city}
+														onChange={handleInput}
+														isInvalid={!!error.city}
+													/>
+													<Form.Control.Feedback type="invalid">
+														{error.phone}
+													</Form.Control.Feedback>
+												</Col>
+											</Row>
+											<Row className={`${stylesForm.row}`} lg={2}>
+												<Col className={`${stylesForm.col}`}>
+													<Form.Control
+														type="text"
+														name="street"
+														placeholder="Calle"
+														value={info.street}
+														onChange={handleInput}
+														isInvalid={!!error.street}
+													/>
+													<Form.Control.Feedback type="invalid">
+														{error.street}
+													</Form.Control.Feedback>
+												</Col>
+												<Col className={`${stylesForm.col}`}>
+													<Form.Control
+														type="number"
+														name="number"
+														placeholder="Número"
+														value={info.number}
+														onChange={handleInput}
+														isInvalid={!!error.number}
+													/>
+													<Form.Control.Feedback type="invalid">
+														{error.number}
+													</Form.Control.Feedback>
+												</Col>
+											</Row>
+											<Row
+												className={`${stylesForm.row}`}
+												lg={2}
+												md={2}
+												sm={2}
+												xs={2}
+											>
+												<Col className={`${stylesForm.col}`} md={6} lg={6}>
+													<Button
+														className={`${stylesForm.buttonSubmit}`}
+														onClick={handleCancel}
+													>
+														Cancelar
 													</Button>
-												</li>
-											);
-										})}
-									</ul>
-								</Col>
-							</Row>
-							<Row className={`${styles.row}`} lg={1}>
-								<Col className={`${styles.col}`} lg={9}>
-									<Form.Control
-										type="text"
-										placeholder="Alergias que posee"
-										name="allergies"
-										value={allergies_}
-										onChange={handleInputAllergies}
-									/>
-								</Col>
-								<Col className={`${styles.col}`} lg={3}>
-									<Button
-										className={`${styles.buttonSubmit}`}
-										type="button"
-										onClick={handleSubmitAllergies}
-									>
-										Agregar
-									</Button>
-								</Col>
-							</Row>
-							<Row className={`${styles.row}`}>
-								<Col className={`${styles.col}`}>
-									<ul className={styles.lista}>
-										<span>Usted ingreso las siguientes alergias: </span>
-										{info.allergies &&
-											info.allergies.map((al) => {
-												return (
-													<li key={al} value={al}>
-														{al}
-														<Button value={al} onClick={handleDeleteAllergies}>
-															X
-														</Button>
-													</li>
-												);
-											})}
-									</ul>
-								</Col>
-							</Row>
-							<Row className={`${styles.row}`}>
-								<Col className={`${styles.col}`}>
-									<Form.Label>Donante: </Form.Label>
-									<Form.Select
-										defaultValue="Seleccione una opción"
-										onChange={handleInputDonate}
-									>
-										<option value="Seleccione una opción" hidden>
-											Seleccione una opción
-										</option>
-										<option value="yes">Sí</option>
-										<option value="no">No</option>
-									</Form.Select>
-								</Col>
-							</Row>
-							<Row className={`${styles.row}`}>
-								<Col className={`${styles.col}`}>
-									<Form.Label>Transfundible: </Form.Label>
-									<Form.Select
-										defaultValue="Seleccione una opción"
-										onChange={handleInputTransfusion}
-									>
-										<option value="Seleccione una opción" hidden>
-											Seleccione una opción
-										</option>
-										<option value="yes">Sí</option>
-										<option value="no">No</option>
-									</Form.Select>
-								</Col>
-							</Row>
-							<Row className={`${styles.row}`}>
-								<Col className={`${styles.col}`} lg={9}>
-									<Form.Control
-										type="text"
-										onKeyDown={(e) => onKeyDown(e)}
-										placeholder="Enfermedades cronicas que posee"
-										name="chronicles"
-										value={chronicles_}
-										onChange={handleInputChronicles}
-									/>
-								</Col>
-								<Col className={`${styles.col}`} lg={3}>
-									<Button
-										className={`${styles.buttonSubmit}`}
-										type="button"
-										onClick={handleSubmitChronicles}
-									>
-										Agregar
-									</Button>
-								</Col>
-							</Row>
-							<Row className={`${styles.row}`}>
-								<Col className={`${styles.col}`}>
-									<ul className={styles.lista}>
-										<span>Usted ingreso las siguientes enfermedades crónicas: </span>
-										{info.chronicles &&
-											info.chronicles.map((ch) => {
-												return (
-													<li key={ch} value={ch}>
-														{ch}
-														<Button value={ch} onClick={handleDeleteChronicles}>
-															X
-														</Button>
-													</li>
-												);
-											})}
-									</ul>
-								</Col>
-							</Row>
-							<Row className={`${styles.row}`}>
-								<Col className={`${styles.col}`}>
-									<Form.Label>Obra Social</Form.Label>
-									<Form.Select
-										defaultValue="Seleccione una opción"
-										onChange={handleSelectOS}
-									>
-										<option value="Seleccione una opción">
-											Seleccione una opción
-										</option>
-										{obras.map((e, i) => {
-											return (
-												<option key={i} value={e}>
-													{e}
-												</option>
-											);
-										})}
-									</Form.Select>
-								</Col>
-							</Row>
-							<Row className={`${styles.row}`} lg={2} md={2} sm={2} xs={2}>
-								<Col className={`${styles.col}`} md={6} lg={6}>
-									<Button
-										className={`${styles.buttonSubmit}`}
-										onClick={handleCancelSalud}
-									>
-										Cancelar
-									</Button>
-								</Col>
+												</Col>
 
-								<Button className={`${styles.buttonSubmit}`} type="submit" onClick={handleSubmit}>
-									Confirmar
-								</Button>
-							</Row>
-						</Form>
-					</div>
-			}
-			<button onClick={logout}>Cerrar sesion</button>
+												<Button
+													className={`${stylesForm.buttonSubmit}`}
+													type="submit"
+													onClick={handleSubmit}
+												>
+													Enviar
+												</Button>
+											</Row>
+										</Form>
+									</div>
+								)}
+							</Accordion.Body>
+						</Accordion.Item>
+						<Accordion.Item eventKey="1">
+							<Accordion.Header>Información de salud basica</Accordion.Header>
+							<Accordion.Body>
+								<p>Grupo Sanguineo:</p>
+								{/* {patient.blood ? patient.blood : 'Sin información'} */}
+								<p>Obra Social:</p>
+								{/* {patient.oS} */}
+								<p>Vacunas que posee aplicadas:</p>
+								{/* {patient.vaccine ? patient.blood : 'Sin información'} */}
+								<p>Alergias: </p>
+								{/* {patient.allergies ? patient.allergies : 'Sin información'} */}
+								<p>Enfermedades Crónicas: </p>
+								{/* {patient.chronicles ? patient.chronicles : 'Sin información'} */}
+								<p>Es donante?</p>
+								{/* {patient.donation ? patient.donation : 'Sin información'} */}
+								<p>Es transfundible?</p>
+								{/* {patient.transfusion ? patient.transfusion : 'Sin información'} */}
+								<p>Obra Social:</p>
+								{/* {patient.oS ? patient.oS : 'Sin información'} */}
+								{editInfoSalud === false ? (
+									<Button onClick={handleInfoSalud}>
+										Editar información de salud
+									</Button>
+								) : (
+									<div className={stylesForm.container}>
+										<Form className={stylesForm.form} onSubmit={handleSubmit}>
+											<div className={stylesForm.titulo}>
+												<h3>Editar información de salud</h3>
+											</div>
+											<Row className={`${stylesForm.row}`} lg={1}>
+												<Col className={`${stylesForm.col}`}>
+													<Form.Label>Grupo Sanguineo</Form.Label>
+													<Form.Select
+														onChange={handleSelectBlood}
+														defaultValue="grupo sanguineo"
+													>
+														<option value="grupo sanguineo" hidden>
+															Selecione una opción
+														</option>
+														{blood_type.map((e, i) => (
+															<option key={i} value={e}>
+																{e}
+															</option>
+														))}
+													</Form.Select>
+												</Col>
+											</Row>
+											<Row className={`${stylesForm.row}`} lg={1}>
+												<Col className={`${stylesForm.col}`}>
+													<Form.Label>Vacunas</Form.Label>
+													<Form.Select
+														onChange={handleSelectVaccines}
+														defaultValue="vacunas que posee colocadas"
+													>
+														<option value="vacunas que posee colocadas" hidden>
+															Selecione las vacunas que posee
+														</option>
+														{vaccines_data.map((e) => {
+															return (
+																<option key={e} value={e}>
+																	{e}
+																</option>
+															);
+														})}
+													</Form.Select>
+												</Col>
+											</Row>
+											<Row>
+												<Col className={`${stylesForm.col}`}>
+													<ul className={stylesForm.lista}>
+														<span>Vacunas seleccionadas: </span>
+														{info.vaccines.map((e) => {
+															return (
+																<li key={e} value={e}>
+																	{e}
+																	<Button
+																		value={e}
+																		onClick={handleDeleteVaccines}
+																	>
+																		X
+																	</Button>
+																</li>
+															);
+														})}
+													</ul>
+												</Col>
+											</Row>
+											<Row className={`${stylesForm.row}`} lg={1}>
+												<Col className={`${stylesForm.col}`} lg={9}>
+													<Form.Control
+														type="text"
+														placeholder="Alergias que posee"
+														name="allergies"
+														value={allergies_}
+														onChange={handleInputAllergies}
+													/>
+												</Col>
+												<Col className={`${stylesForm.col}`} lg={3}>
+													<Button
+														className={`${stylesForm.buttonSubmit}`}
+														type="button"
+														onClick={handleSubmitAllergies}
+													>
+														Agregar
+													</Button>
+												</Col>
+											</Row>
+											<Row className={`${stylesForm.row}`}>
+												<Col className={`${stylesForm.col}`}>
+													<ul className={stylesForm.lista}>
+														<span>Usted ingreso las siguientes alergias: </span>
+														{info.allergies &&
+															info.allergies.map((al) => {
+																return (
+																	<li key={al} value={al}>
+																		{al}
+																		<Button
+																			value={al}
+																			onClick={handleDeleteAllergies}
+																		>
+																			X
+																		</Button>
+																	</li>
+																);
+															})}
+													</ul>
+												</Col>
+											</Row>
+											<Row className={`${stylesForm.row}`}>
+												<Col className={`${stylesForm.col}`}>
+													<Form.Label>Donante: </Form.Label>
+													<Form.Select
+														defaultValue="Seleccione una opción"
+														onChange={handleInputDonate}
+													>
+														<option value="Seleccione una opción" hidden>
+															Seleccione una opción
+														</option>
+														<option value="yes">Sí</option>
+														<option value="no">No</option>
+													</Form.Select>
+												</Col>
+											</Row>
+											<Row className={`${stylesForm.row}`}>
+												<Col className={`${stylesForm.col}`}>
+													<Form.Label>Transfundible: </Form.Label>
+													<Form.Select
+														defaultValue="Seleccione una opción"
+														onChange={handleInputTransfusion}
+													>
+														<option value="Seleccione una opción" hidden>
+															Seleccione una opción
+														</option>
+														<option value="yes">Sí</option>
+														<option value="no">No</option>
+													</Form.Select>
+												</Col>
+											</Row>
+											<Row className={`${stylesForm.row}`}>
+												<Col className={`${stylesForm.col}`} lg={9}>
+													<Form.Control
+														type="text"
+														onKeyDown={(e) => onKeyDown(e)}
+														placeholder="Enfermedades cronicas que posee"
+														name="chronicles"
+														value={chronicles_}
+														onChange={handleInputChronicles}
+													/>
+												</Col>
+												<Col className={`${stylesForm.col}`} lg={3}>
+													<Button
+														className={`${stylesForm.buttonSubmit}`}
+														type="button"
+														onClick={handleSubmitChronicles}
+													>
+														Agregar
+													</Button>
+												</Col>
+											</Row>
+											<Row className={`${stylesForm.row}`}>
+												<Col className={`${stylesForm.col}`}>
+													<ul className={stylesForm.lista}>
+														<span>
+															Usted ingreso las siguientes enfermedades
+															crónicas:{' '}
+														</span>
+														{info.chronicles &&
+															info.chronicles.map((ch) => {
+																return (
+																	<li key={ch} value={ch}>
+																		{ch}
+																		<Button
+																			value={ch}
+																			onClick={handleDeleteChronicles}
+																		>
+																			X
+																		</Button>
+																	</li>
+																);
+															})}
+													</ul>
+												</Col>
+											</Row>
+											<Row className={`${stylesForm.row}`}>
+												<Col className={`${stylesForm.col}`}>
+													<Form.Label>Obra Social</Form.Label>
+													<Form.Select
+														defaultValue="Seleccione una opción"
+														onChange={handleSelectOS}
+													>
+														<option value="Seleccione una opción">
+															Seleccione una opción
+														</option>
+														{obras.map((e, i) => {
+															return (
+																<option key={i} value={e}>
+																	{e}
+																</option>
+															);
+														})}
+													</Form.Select>
+												</Col>
+											</Row>
+											<Row
+												className={`${stylesForm.row}`}
+												lg={2}
+												md={2}
+												sm={2}
+												xs={2}
+											>
+												<Col className={`${stylesForm.col}`} md={6} lg={6}>
+													<Button
+														className={`${stylesForm.buttonSubmit}`}
+														onClick={handleCancelSalud}
+													>
+														Cancelar
+													</Button>
+												</Col>
+
+												<Button
+													className={`${stylesForm.buttonSubmit}`}
+													type="submit"
+													onClick={handleSubmit}
+												>
+													Confirmar
+												</Button>
+											</Row>
+										</Form>
+									</div>
+								)}
+							</Accordion.Body>
+						</Accordion.Item>
+					</Accordion>
+				</div>
+			<Button className={styles.button} onClick={logout}>Cerrar sesion</Button>
+			</div>
 		</div>
-	)
+	);
 }
