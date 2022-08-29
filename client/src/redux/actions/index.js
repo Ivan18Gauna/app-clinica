@@ -7,7 +7,8 @@ import {
 	GET_OS,
 	GET_PATIENTS,
 	GET_PATIENTS_NAME,
-	GET_PATIENTS_ID
+	GET_USER_MAIL,
+	GET_CLINIC_HISTORY,
 } from '../actions/actions';
 import axios from 'axios';
 
@@ -51,7 +52,7 @@ export function filterConvinado(payload) {
 	return async function (dispatch) {
 		try {
 			const doctors_detail = await axios(
-				`/professionals?lastname=${payload.lastname}&filterEsp=${payload.filterEsp}&filterProfProv=${payload.filterProfProv}`
+				`/professionals?lastname=${payload.lastname}&filterEsp=${payload.filterEsp}&filterProfProv=${payload.filterProfProv}&order=${payload.order}`
 			);
 			return dispatch({
 				type: FILTER_CONVINADO,
@@ -98,41 +99,37 @@ export function getObrasSociales() {
 
 export function getPatients() {
 	return async function (dispatch) {
-		const allPatients = await axios.get('/patients/allpatients')
-		// console.log("soy patients", allPatients)
+		const allPatients = await axios.get('/patients/allpatients');
 		return dispatch({
 			type: GET_PATIENTS,
-			payload: allPatients.data
-		})
-	}
+			payload: allPatients.data,
+		});
+	};
 }
 export function getPatientsByName(payload) {
-	console.log("soy payload", payload)
+
 	return async function (dispatch) {
 		try {
-			const patients = await axios.get("/patients/document/" + payload)
-			// console.log("soy patients",patients)
+			const patients = await axios.get('/patients/document/' + payload);
 			return dispatch({
 				type: GET_PATIENTS_NAME,
-				payload: patients.data
-			}
-			)
+				payload: patients.data,
+			});
 		} catch (error) {
-			console.log(error)
+			console.log(error);
 		}
-	}
+	};
 }
 
 export function postHistory(payload) {
 	return async function () {
 		try {
-			console.log("soy payload history", payload)
-			const res = await axios.post("/historiaclinica")
+			const res = await axios.post('/historiaclinica');
 			return res;
 		} catch (error) {
-			console.log(error)
+			console.log(error);
 		}
-	}
+	};
 }
 
 export function registerPatients(payload) {
@@ -142,20 +139,66 @@ export function registerPatients(payload) {
 	};
 }
 
-export function registerHealthData(payload) {
+export function modifyUsers(payload, id) {
 	return async function () {
-		const healthData = await axios.put(`/patients/edit`, payload);
+		const healthData = await axios.put(`/patients/edit/${id}`, payload);
+		console.log("aca toy pa")
 		return healthData;
 	};
 }
 
-export function getPatientsDetail(id){
-	return async function(dispatch){
-		const patients_id= await axios(`/patients/detail/5`)
-		console.log('action', patients_id)
+export function getUserDetail(mail) {
+	return async function (dispatch) {
+		const userMail = await axios(`/user/${mail}`);
+		
 		return dispatch({
-			type: GET_PATIENTS_ID,
-			payload: patients_id.data
-		})
-	}
+			type: GET_USER_MAIL,
+			payload: userMail.data,
+		});
+	};
+}
+
+export function getClinicHistory(id) {
+	return async function (dispatch) {
+		const clinicHistory = await axios('/historiaclinica/bypat/' + id);
+
+		return dispatch({
+			type: GET_CLINIC_HISTORY,
+			payload: clinicHistory.data,
+			// payload: [
+			// 	{
+			// 	  "id": 1,
+			// 	  "reason": "x",
+			// 	  "image": "x",
+			// 	  "description": "x",
+			// 	  "date": "x",
+			// 	  "diagnosis": "x",
+			// 	  "patientId": 3,
+			// 	  "professionalId": 1,
+			// 	  "professional": {
+			// 		"name": "Emilio"
+			// 	  },
+			// 	  "patient": {
+			// 		"name": "Emilio"
+			// 	  }
+			// 	},
+			// 	{
+			// 	  "id": 2,
+			// 	  "reason": "x",
+			// 	  "image": "x",
+			// 	  "description": "x",
+			// 	  "date": "x",
+			// 	  "diagnosis": "x",
+			// 	  "patientId": 3,
+			// 	  "professionalId": 2,
+			// 	  "professional": {
+			// 		"name": "Tania"
+			// 	  },
+			// 	  "patient": {
+			// 		"name": "Emilio"
+			// 	  }
+			// 	}
+			//   ]
+		});
+	};
 }

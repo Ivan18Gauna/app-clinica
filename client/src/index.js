@@ -7,6 +7,11 @@ import { Provider } from "react-redux";
 import store from "./redux/store/index";
 import "bootstrap/dist/css/bootstrap.css";
 import { Auth0Provider } from "@auth0/auth0-react";
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { alpha } from '@material-ui/core/styles'
+import DateFnsUtils from '@date-io/date-fns'
+import esLocale from 'date-fns/locale/es'
+
 
 import axios from "axios";
 import dotenv from "dotenv";
@@ -25,7 +30,9 @@ ReactDOM.render(
         clientId={clientId}
         redirectUri={window.location.origin}
       >
+        <MuiPickersUtilsProvider utils={DateFnsUtils} locale={esLocale}>
         <App />
+        </MuiPickersUtilsProvider>
       </Auth0Provider>
     </Provider>
   </React.StrictMode>,
