@@ -43,9 +43,7 @@ function App() {
         <Route path='/price' component={Price}/>
         <Route path="/form" component={FormUpProfessionals}/>
         {/* <Route path='/google' component={Google}/> */}
-        <div className='div-page'>
-          <Route path='/clinic_history' component={ClinicHistory}/>
-        </div>
+        <Route path='/clinic_history' component={ClinicHistory}/>
         <Route path='/homeUsuarioPrueba' component={HomeProfessional}/>
         <Route path='/userProfile' component={PatientProfile} />
         <Route path='/professionals' component={Professionals}/>
