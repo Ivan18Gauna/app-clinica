@@ -7,7 +7,7 @@ import {
 	GET_OS,
 	GET_PATIENTS,
 	GET_PATIENTS_NAME,
-	GET_PATIENTS_ID,
+	GET_USER_MAIL,
 	GET_CLINIC_HISTORY,
 	THE_USER,
 } from '../actions/actions';
@@ -148,26 +148,17 @@ export function modifyUsers(payload) {
 	};
 }
 
-export function theUSer(payload) {
-	return  function (dispatch) {
-		console.log(payload);
-		return dispatch({
-			type: THE_USER,
-			payload: payload,
-		});
-	};
-}
-
-export function getPatientsDetail(id) {
+export function getUserDetail(mail) {
 	return async function (dispatch) {
-		const patients_id = await axios(`/patients/detail/5`);
-
+		const userMail = await axios(`/user/${mail}`);
+		// console.log("soy user",userMail)
 		return dispatch({
-			type: GET_PATIENTS_ID,
-			payload: patients_id.data,
+			type: GET_USER_MAIL,
+			payload: userMail.data,
 		});
 	};
 }
+
 
 export function getClinicHistory(id) {
 	return async function (dispatch) {
