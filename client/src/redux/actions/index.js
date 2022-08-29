@@ -9,6 +9,7 @@ import {
 	GET_PATIENTS_NAME,
 	GET_USER_MAIL,
 	GET_CLINIC_HISTORY,
+	THE_USER,
 } from '../actions/actions';
 import axios from 'axios';
 
@@ -140,7 +141,7 @@ export function registerPatients(payload) {
 	};
 }
 
-export function registerHealthData(payload) {
+export function modifyUsers(payload) {
 	return async function () {
 		const healthData = await axios.put(`/patients/edit`, payload);
 		return healthData;

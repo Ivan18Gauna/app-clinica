@@ -1,5 +1,8 @@
 import Card from 'react-bootstrap/Card';
 import CardGroup from 'react-bootstrap/CardGroup';
+import data from '../../Icons/medicalHis.png'
+import medicos from '../../Icons/medicos.svg'
+import update from '../../Icons/update.svg'
 import './Info.css';
 
 function CardsTriple() {
@@ -9,7 +12,7 @@ function CardsTriple() {
 			<Card>
 				<Card.Img
 					variant="top"
-					src="https://img.freepik.com/vector-gratis/personal-medico-fue-vacunado-contra-covid19-al-paciente_40876-2494.jpg?w=2000"
+					src={update}
 				/>
 				<Card.Body>
 					<Card.Title>Siempre actualizados</Card.Title>
@@ -22,7 +25,7 @@ function CardsTriple() {
 			<Card>
 				<Card.Img
 					variant="top"
-					src="https://img.freepik.com/vector-premium/linda-ilustracion-medico-dibujos-animados-estilo-handrawn_53734-77.jpg?w=740"
+					src={medicos}
 				/>
 				<Card.Body>
 					<Card.Title>Medicos de calidad</Card.Title>
@@ -35,7 +38,7 @@ function CardsTriple() {
 			<Card>
 				<Card.Img
 					variant="top"
-					src="https://png.pngtree.com/png-vector/20200410/ourlarge/pngtree-design-of-doctor-holding-a-medical-record-png-image_2180476.jpg"
+					src={data}
 				/>
 				<Card.Body>
 					<Card.Title>Historia Clinica</Card.Title>

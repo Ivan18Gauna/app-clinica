@@ -21,7 +21,8 @@ const initialState = {
   os:[],
   patients: [],
   user:[],
-  clinicHistory: []
+  clinicHistory: [],
+  the_user:[],
 };
 
 function rootReducer(state = initialState, action) {
@@ -36,7 +37,8 @@ function rootReducer(state = initialState, action) {
 
     case GET_SPECIALTIES:
       return { ...state, specialties: action.payload  };
-
+      case THE_USER:
+        return { ...state, the_user: action.payload  };
     case GET_CITIES:
     return { ...state, cities: action.payload };
     

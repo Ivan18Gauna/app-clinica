@@ -12,6 +12,7 @@ import Cookie from 'universal-cookie'
 import { useEffect } from 'react';
 import { getUserDetail } from '../../redux/actions/index.js';
 
+
 export default function Home() {
 	const dispatch = useDispatch()
 	const cookie = new Cookie();
@@ -25,6 +26,7 @@ export default function Home() {
 		console.log('state', user)
 	/* } */
 
+
 	return (
 		<div>
 			{ user && user.document && <HomePatients/> }
@@ -36,7 +38,8 @@ export default function Home() {
 					<CardsTriple />
 					<CardHistory />
 				</div>
-			}
+			 }
+			
 		</div>
 	);
 }

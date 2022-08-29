@@ -10,4 +10,4 @@ export const GET_PATIENTS_NAME = 'GET_PATIENTS_NAME'
 export const GET_PATIENTS = 'GET_PATIENTS'
 export const GET_USER_MAIL='GET_USER_MAIL'
 export const GET_CLINIC_HISTORY = 'GET_CLINIC_HISTORY'
-
+export const THE_USER = 'THE_USER'

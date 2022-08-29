@@ -1,5 +1,6 @@
+
 import React from "react";
-import { Link, useParams } from "react-router-dom";
+// import { Link, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getPatients, getUserDetail } from "../../redux/actions";
@@ -14,9 +15,6 @@ export default function UserProfile() {
   useEffect(() => {
     dispatch(getUserDetail(cookie.get('userEmail')))
   }, [])
-  
-
-/*   console.log("user", user.picture); */
 
   return (
     <div>
@@ -67,3 +65,4 @@ export default function UserProfile() {
     </div>
   );
 }
+
