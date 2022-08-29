@@ -7,8 +7,8 @@ import styles from '../formPatients/FormPatients.module.css';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getObrasSociales } from '../../redux/actions';
-import { useHistory } from 'react-router-dom';
-import { registerHealthData } from '../../redux/actions';
+import { useHistory, useLocation } from 'react-router-dom';
+import { registerPatients } from '../../redux/actions';
 
 const blood_type = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB+', 'AB-', 'O+', 'O-'];
 const vaccines_data = [
@@ -31,15 +31,28 @@ const vaccines_data = [
 ];
 
 export default function HealthData() {
+	
 	const history = useHistory();
 	const dispatch = useDispatch();
+	const location = useLocation();
+	const info_patient = location.state;
 	const obras = useSelector((state) => state.os);
-
-	useEffect(() => {
-		dispatch(getObrasSociales());
-	}, [dispatch]);
-
+	const [allergies_, setAllergies] = useState('');
+	const [chronicles_, setChronicles] = useState('');
 	const [input, setInput] = useState({
+		name: info_patient.name,
+		lastname: info_patient.lastname,
+		document: info_patient.document,
+		birth: info_patient.birth,
+		phone: info_patient.phone,
+		mail: info_patient.mail,
+		province: info_patient.province,
+		city: info_patient.city,
+		number: info_patient.number,
+		street: info_patient.street,
+		username: info_patient.username,
+		password: info_patient.password,
+		new_password: info_patient.new_password,
 		blood: '',
 		vaccines: [],
 		allergies: [],
@@ -49,11 +62,16 @@ export default function HealthData() {
 		oS: '',
 	});
 
-	const [allergies_, setAllergies] = useState('');
-	const [chronicles_, setChronicles] = useState('');
+	useEffect(() => {
+		dispatch(getObrasSociales());
+	}, [dispatch]);
 
-	console.log('input', input);
-
+	function onKeyDown(e) {
+		if (e.code === 'Enter') {
+			e.preventDefault();
+			return false;
+		}
+	}
 	function handleSelectBlood(e) {
 		e.preventDefault();
 		setInput({
@@ -157,8 +175,21 @@ export default function HealthData() {
 
 	function handleSubmit(e) {
 		e.preventDefault();
-		dispatch(registerHealthData(input));
+		dispatch(registerPatients(input));
 		setInput({
+			name: '',
+			lastname: '',
+			document: '',
+			birth: '',
+			phone: '',
+			mail: '',
+			province: '',
+			city: '',
+			number: '',
+			street: '',
+			username: '',
+			password: '',
+			new_password: '',
 			blood: '',
 			vaccines: [],
 			allergies: [],
@@ -244,7 +275,7 @@ export default function HealthData() {
 					<Col className={`${styles.col}`} lg={3}>
 						<Button
 							className={`${styles.buttonSubmit}`}
-							type="submit"
+							type="button"
 							onClick={handleSubmitAllergies}
 						>
 							Agregar
@@ -303,6 +334,7 @@ export default function HealthData() {
 					<Col className={`${styles.col}`} lg={9}>
 						<Form.Control
 							type="text"
+							onKeyDown={(e) => onKeyDown(e)}
 							placeholder="Enfermedades cronicas que posee"
 							name="chronicles"
 							value={chronicles_}
@@ -312,7 +344,7 @@ export default function HealthData() {
 					<Col className={`${styles.col}`} lg={3}>
 						<Button
 							className={`${styles.buttonSubmit}`}
-							type="submit"
+							type="button"
 							onClick={handleSubmitChronicles}
 						>
 							Agregar

@@ -1,5 +1,5 @@
 import React from "react";
-import img from '../../Icons/Doctor_Monochromatic.svg'
+import img from '../../Icons/Doctors.svg'
 import "./Portada.css"
 
 export default function Portada() {
