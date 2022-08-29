@@ -6,12 +6,13 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserDetail } from "../../redux/actions";
 import "./Login.css";
+import Loading from "../loading/Loading";
+import "../formPatients/FormPatients.module.css";
 
 export default function Login() {
 
   const history = useHistory();
-	const globalUser = useSelector( state => state.user) || [];
-  // const eluser = useSelector((state) => state.the_user);
+	const globalUser = useSelector( state => state.user);
   const dispatch = useDispatch();
   const { loginWithPopup, isAuthenticated } = useAuth0();
   const [user, setUser] = useState({
@@ -28,7 +29,6 @@ export default function Login() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    // dispatch(theUSer(user));
     dispatch(getUserDetail(user.email))
     setUser({
       email: "",
@@ -37,12 +37,19 @@ export default function Login() {
     history.push("/home");
   }
   
-  if(isAuthenticated && globalUser.length < 1){
-    history.push('/signin')
-  }
-  if(isAuthenticated && globalUser.length > 0){
-    history.push('/home')
-  }
+  // if((isAuthenticated && !globalUser.document) || (isAuthenticated && !globalUser.license) ){
+  //   history.push('/signin')
+  // }
+  // if((isAuthenticated && globalUser.document) || (isAuthenticated && globalUser.license)){
+  //   history.push('/home')
+  // }
+  // if(isAuthenticated){
+    // setTimeout(()=>{
+    //   dispatch(getUserDetail(user.email));
+    // }, 2000)
+    // history.push('/signin')
+    // history.push('/home');
+  // }
 
   return (
     <div>
@@ -119,13 +126,13 @@ export default function Login() {
                   </Link>
                 </div>
               </form>
-              <div className="container w-100 my-5">
-                <div className="row text-center">
+              <div className="container w-100 my-5" id='div-otra-manera'>
+                <div className="row text-center" id='text-otra-manera'>
                   <div className="col-12">Otra manera de iniciar sesión</div>
                 </div>
                 <div className="row">
                   <div className="col">
-                    <br />
+                    {/* <br /> */}
                     <button onClick={() => loginWithPopup()}>Login</button>
                   </div>
                 </div>
@@ -135,11 +142,22 @@ export default function Login() {
         </div>
       ) : (
         <div>
-          <h1>Bienvenido a +Salud</h1>
-          <Link to="/signin">
-            <button>Continuar</button>
-          </Link>
-        </div>
+          <div className="loading-login">
+            <Loading />
+          </div>
+          <div id='loading-num'>
+              { setTimeout(()=>{
+                  dispatch(getUserDetail(user.email));
+                }, 1000),
+                setTimeout( ()=>{
+                if(globalUser){
+                  history.push('/home');
+                } else {
+                  history.push('/signin');
+                }
+              }, 5000)}
+            </div>
+          </div>
       )}
     </div>
   );
