@@ -3,9 +3,13 @@ const routesProfessionals = require('./routesProfessionals')
 const routesPatients = require('./routesPatients')
 const routesEspecialties = require('./routesEspecialties')
 const routersHistoriaClinica = require('./routersHistoriaClinica')
-const routesHealthData = require('./routesHealthData')
+const routerInvoice = require ('./routesInvoice')
+const routesTurnos = require('./routesTurnos')
+const routesNotes = require('./routesNotes')
 
-const {Professionals, Specialties} = require ('../db')
+
+const {Professionals, Specialties} = require ('../db');
+const { actualUser } = require('../Controllers/actualUser');
 
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -19,7 +23,10 @@ router.use('/professionals', routesProfessionals);
 router.use('/patients', routesPatients);
 router.use('/especialties', routesEspecialties);
 router.use('/historiaclinica', routersHistoriaClinica);
-router.use('/healthData', routesHealthData )
+router.use('/invoice', routerInvoice);
+router.use('/turnos', routesTurnos);
+router.use('/notes', routesNotes)
+router.get('/user/:mail', actualUser)
 
 
 module.exports = router;

@@ -4,31 +4,27 @@ const { Op, where } = require("sequelize");
 
 const {
   Professionals,
-  Specialties,
-  ObrasSociales,
   HistoriaClinica,
   Patients,
 } = require("../db");
 
 const postHistoriaClinica = async (req, res) => {
-  let { reason, image, description, date, diagnosis, professional, patient } =
-    req.body;
-
+  let { reason, image, description, date, diagnosis, professional, patient } = req.body;
   try {
     const historiaClinica = { reason, image, description, date, diagnosis, };
     if (!reason || !image || !description || !date || !diagnosis) {
       res.send("Falta infornacion");
     } else {
        let newHistoriaClinica = await HistoriaClinica.create(historiaClinica);
-       
       let professionaldb = await Professionals.findOne({
-         where: {name: professional}
+         where: {id: professional}
         })
        let patientdb = await Patients.findOne({
-        where:{name:patient}        
+        where: {document: patient}
        })
-      await newHistoriaClinica.addProfessionals(professionaldb);
-      await newHistoriaClinica.addPatients(patientdb);
+       console.log(professionaldb, patientdb)
+      await professionaldb.addHistoriaClinica(newHistoriaClinica);
+      await patientdb.addHistoriaClinica(newHistoriaClinica);
        res.status(200).send("Historia Credad con Exito");
      
     }
@@ -71,8 +67,34 @@ const getHistoriaClinica = async (req, res) => {
   //:res.status(404).send('Id de paciente no encontrado');
 };
 
+const getHistoriaClinicaByPat = async (req, res) => {
+  let { id } = req.params;
+  const pat = await Patients.findOne({
+    where: {
+      id: id
+    }
+  })
+  const hist = await pat.getHistoriaClinicas({
+    include: [
+      {
+        model: Patients,
+        attributes: ['id', 'name'],
+      },
+      {
+        model: Professionals,
+        attributes: ['id', 'name']
+      }
+    ],
+  })
+  //console.log(dbPatId)
+  //dbPatId.length?
+  res.status(200).send(hist);
+  //:res.status(404).send('Id de paciente no encontrado');
+};
+
 module.exports = {
   postHistoriaClinica,
   getHistoriaClinica,
-  getAllHistoriaClinica
+  getAllHistoriaClinica,
+  getHistoriaClinicaByPat
 };
