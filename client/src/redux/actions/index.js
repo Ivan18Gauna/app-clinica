@@ -9,6 +9,7 @@ import {
 	GET_PATIENTS_NAME,
 	GET_PATIENTS_ID,
 	GET_CLINIC_HISTORY,
+	THE_USER,
 } from '../actions/actions';
 import axios from 'axios';
 
@@ -140,17 +141,20 @@ export function registerPatients(payload) {
 	};
 }
 
-export function registerHealthData(payload) {
+export function modifyUsers(payload) {
 	return async function () {
 		const healthData = await axios.put(`/patients/edit`, payload);
 		return healthData;
 	};
 }
 
-export function newTurno(payload) {
-	return async function () {
-		const turnoData = await axios.post(`/turnos`, payload);
-		return turnoData;
+export function theUSer(payload) {
+	return  function (dispatch) {
+		console.log(payload);
+		return dispatch({
+			type: THE_USER,
+			payload: payload,
+		});
 	};
 }
 
