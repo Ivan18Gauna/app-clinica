@@ -5,7 +5,7 @@ import styles from './Cards.module.css';
 export default function Cards({ doctors }) {
 	return (
 		<div className={styles.container}>
-			{doctors.map((e) => {
+			{doctors && doctors.map((e) => {
 				return (
 					<CardEdit
 						key={e.id}
