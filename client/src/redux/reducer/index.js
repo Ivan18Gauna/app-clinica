@@ -8,9 +8,8 @@ import {
 	GET_OS,
   GET_PATIENTS,
   GET_PATIENTS_NAME,
-  GET_PATIENTS_ID,
+  GET_USER_MAIL,
   GET_CLINIC_HISTORY,
-  THE_USER
 } from '../actions/actions';
 
 const initialState = {
@@ -23,7 +22,6 @@ const initialState = {
   patients: [],
   user:[],
   clinicHistory: [],
-  the_user:[],
 };
 
 function rootReducer(state = initialState, action) {
@@ -38,8 +36,7 @@ function rootReducer(state = initialState, action) {
 
     case GET_SPECIALTIES:
       return { ...state, specialties: action.payload  };
-      case THE_USER:
-        return { ...state, the_user: action.payload  };
+
     case GET_CITIES:
     return { ...state, cities: action.payload };
     
@@ -77,11 +74,11 @@ function rootReducer(state = initialState, action) {
         patients: action.payload
       };
 
-    case GET_PATIENTS_ID:
+    case GET_USER_MAIL:
       return{
         ...state,
-        user:action.payload
-      };
+        user: action.payload
+      }; 
 
     case GET_CLINIC_HISTORY:
       return { ...state, clinicHistory: action.payload };

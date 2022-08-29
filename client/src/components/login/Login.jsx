@@ -1,38 +1,59 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import img from "./pngwing.com.png";
+import img from "../../Icons/logo.svg";
 import { useAuth0 } from "@auth0/auth0-react";
-import { theUSer } from "../../redux/actions";
+// import { theUSer } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
+import { getUserDetail } from "../../redux/actions";
+import "./Login.css";
+import Loading from "../loading/Loading";
+import "../formPatients/FormPatients.module.css";
 
 export default function Login() {
-  let history = useHistory();
-  const eluser = useSelector((state) => state.the_user);
+
+  const history = useHistory();
+	const globalUser = useSelector( state => state.user);
   const dispatch = useDispatch();
   const { loginWithPopup, isAuthenticated } = useAuth0();
   const [user, setUser] = useState({
     email: "",
     password: "",
   });
+
   function handleInput(e) {
     setUser({
       ...user,
       [e.target.name]: e.target.value,
     });
   }
+
   function handleSubmit(e) {
     e.preventDefault();
-    dispatch(theUSer(user));
+    dispatch(getUserDetail(user.email))
     setUser({
       email: "",
       password: "",
     });
     history.push("/home");
   }
+  
+  // if((isAuthenticated && !globalUser.document) || (isAuthenticated && !globalUser.license) ){
+  //   history.push('/signin')
+  // }
+  // if((isAuthenticated && globalUser.document) || (isAuthenticated && globalUser.license)){
+  //   history.push('/home')
+  // }
+  // if(isAuthenticated){
+    // setTimeout(()=>{
+    //   dispatch(getUserDetail(user.email));
+    // }, 2000)
+    // history.push('/signin')
+    // history.push('/home');
+  // }
 
   return (
     <div>
-      {!isAuthenticated && !eluser.email ? (
+      {!isAuthenticated /* && !eluser.email */ ? (
         <div className="container w-75 mt-5">
           <div className="row">
             <div className="col d-none d-lg-block">
@@ -45,11 +66,13 @@ export default function Login() {
               />
             </div>
 
-            <div className="col">
-              <div className="text-end">
-                <img src={img} alt="not img" width="100px" />
+            <div className="col" id='div-general-login'>
+              <div className="text-end" id="div-image-name">
+                <h2 className="fw-bold text-center py-5" id="name-login">Ingresa a +Salud</h2>
+                <div id="image-logIn">
+                  <img src={img} alt="not img" width="100px" />
+                </div>
               </div>
-              <h2 className="fw-bold text-center py-5">Ingresa a +Salud</h2>
               <form onSubmit={handleSubmit}>
                 <div className="mb-4">
                   <label htmlFor="email" className="form-label">
@@ -91,25 +114,25 @@ export default function Login() {
                   </button>
                 </div>
                 <div className="my-3">
-                  <span>¿nuevo en +Salud? </span>
+                  <span>¿Nuevo en +Salud? </span>
                   <Link to="/signin">
                     <span>Resgistrate</span>
                   </Link>
                 </div>
                 <div className="my-3">
-                  <span>¿olvidaste tu contraseña? </span>
+                  <span>¿Olvidaste tu contraseña? </span>
                   <Link to="/sincomponente">
                     <span>Recupera tu contraseña</span>
                   </Link>
                 </div>
               </form>
-              <div className="container w-100 my-5">
-                <div className="row text-center">
+              <div className="container w-100 my-5" id='div-otra-manera'>
+                <div className="row text-center" id='text-otra-manera'>
                   <div className="col-12">Otra manera de iniciar sesión</div>
                 </div>
                 <div className="row">
                   <div className="col">
-                    <br />
+                    {/* <br /> */}
                     <button onClick={() => loginWithPopup()}>Login</button>
                   </div>
                 </div>
@@ -119,11 +142,22 @@ export default function Login() {
         </div>
       ) : (
         <div>
-          <h1>Bienvenido a +Salud</h1>
-          <Link to="/signin">
-            <button>Continuar</button>
-          </Link>
-        </div>
+          <div className="loading-login">
+            <Loading />
+          </div>
+          <div id='loading-num'>
+              { setTimeout(()=>{
+                  dispatch(getUserDetail(user.email));
+                }, 1000)}{
+                setTimeout( ()=>{
+                if(globalUser){
+                  history.push('/home');
+                } else {
+                  history.push('/signin');
+                }
+              }, 5000)}
+            </div>
+          </div>
       )}
     </div>
   );

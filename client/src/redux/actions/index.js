@@ -7,9 +7,8 @@ import {
 	GET_OS,
 	GET_PATIENTS,
 	GET_PATIENTS_NAME,
-	GET_PATIENTS_ID,
+	GET_USER_MAIL,
 	GET_CLINIC_HISTORY,
-	THE_USER,
 } from '../actions/actions';
 import axios from 'axios';
 
@@ -108,7 +107,7 @@ export function getPatients() {
 	};
 }
 export function getPatientsByName(payload) {
-	console.log('soy payload', payload);
+
 	return async function (dispatch) {
 		try {
 			const patients = await axios.get('/patients/document/' + payload);
@@ -125,7 +124,6 @@ export function getPatientsByName(payload) {
 export function postHistory(payload) {
 	return async function () {
 		try {
-			console.log('soy payload history', payload);
 			const res = await axios.post('/historiaclinica');
 			return res;
 		} catch (error) {
@@ -141,30 +139,21 @@ export function registerPatients(payload) {
 	};
 }
 
-export function modifyUsers(payload) {
+export function modifyUsers(payload, id) {
 	return async function () {
-		const healthData = await axios.put(`/patients/edit`, payload);
+		const healthData = await axios.put(`/patients/edit/${id}`, payload);
+		console.log("aca toy pa")
 		return healthData;
 	};
 }
 
-export function theUSer(payload) {
-	return  function (dispatch) {
-		console.log(payload);
-		return dispatch({
-			type: THE_USER,
-			payload: payload,
-		});
-	};
-}
-
-export function getPatientsDetail(id) {
+export function getUserDetail(mail) {
 	return async function (dispatch) {
-		const patients_id = await axios(`/patients/detail/5`);
-
+		const userMail = await axios(`/user/${mail}`);
+		
 		return dispatch({
-			type: GET_PATIENTS_ID,
-			payload: patients_id.data,
+			type: GET_USER_MAIL,
+			payload: userMail.data,
 		});
 	};
 }
