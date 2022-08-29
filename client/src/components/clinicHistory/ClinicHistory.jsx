@@ -19,7 +19,7 @@ export default function ClinicHistory() {
 			<Link to="home">
 				<button>Volver</button>
 			</Link>
-			<h1>clinicHistory</h1>
+			<h1>Tu historial clinico</h1>
 			{clinicHistorys.length > 0 ? (
 				<div>
 					<h1>Paciente: {clinicHistorys[0].patient.name}</h1>
