@@ -67,12 +67,12 @@ export default function HealthData() {
 	const [allergies_, setAllergies] = useState('');
 	const [chronicles_, setChronicles] = useState('');
 
-  function onKeyDown(e) {
-    if(e.code === "Enter"){
-      e.preventDefault()
-      return false;
-    }
-  }
+	function onKeyDown(e) {
+		if (e.code === 'Enter') {
+			e.preventDefault();
+			return false;
+		}
+	}
 	function handleSelectBlood(e) {
 		e.preventDefault();
 		setInput({
@@ -173,12 +173,11 @@ export default function HealthData() {
 			oS: e.target.value,
 		});
 	}
-console.log('heal', input)
+	console.log('heal', input);
 	function handleSubmit(e) {
 		e.preventDefault();
 
-		console.log('ENTRE SUBMIT')
-
+		console.log('ENTRE SUBMIT');
 
 		dispatch(registerPatients(input));
 		setInput({
@@ -405,8 +404,8 @@ console.log('heal', input)
 					</Col>
 					<Col className={`${styles.col}`} md={6} lg={6}>
 						{input.blood === '' ||
-							input.donation === '' ||
-							input.transfusion === '' ? (
+						input.donation === '' ||
+						input.transfusion === '' ? (
 							<Button
 								className={`${styles.buttonSubmit}`}
 								variant="danger"
