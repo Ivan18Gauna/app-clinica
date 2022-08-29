@@ -156,7 +156,6 @@ export default function Login() {
                 }, 1000)}
               { setTimeout( ()=>{
                 if(globalUser && globalUser.mail){
-
                   history.push('/home');
                 } else {
                   history.push('/signin');
