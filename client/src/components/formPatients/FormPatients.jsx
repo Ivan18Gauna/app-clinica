@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -6,7 +6,6 @@ import Button from "react-bootstrap/Button";
 import { useHistory } from "react-router-dom";
 import styles from "./FormPatients.module.css";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
 
 
@@ -62,6 +61,7 @@ function validate(input) {
   }
   return error;
 }
+
 const provinces = [
   "Buenos Aires",
   "Ciudad Autónoma de Buenos Aires",
@@ -88,16 +88,13 @@ const provinces = [
   "Tierra del Fuego",
   "Tucumán",
 ];
+
+
 export default function RegisterPatient() {
 
-
   const { isAuthenticated, user } = useAuth0();
-  const dispatch = useDispatch();
   const history = useHistory();
-
-
   const [error, setError] = useState({});
-
   const [input, setInput] = useState({
     name: "",
     lastname: "",
@@ -132,7 +129,6 @@ export default function RegisterPatient() {
       province: e.target.value,
     });
   }
-  console.log("input pat", input);
 
   function handleSubmit(e) {
     e.preventDefault();
