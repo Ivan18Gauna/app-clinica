@@ -7,7 +7,7 @@ import SignIn from './components/signIn/SignIn';
 import NavBarEdit from './components/navBar/NavBar.jsx';
 import FormProfessionals from './components/formProfessionals/FormProfesionals';
 import FormPatients from './components/formPatients/FormPatients';
-import HealthData from './components/healthData/HealthData.jsx';
+import healthData from './components/healthData/healthData.jsx';
 import Login from './components/login/Login';
 import About from './components/about/About';
 import Price from './components/price/Price';
@@ -35,7 +35,7 @@ function App() {
           <Route path='/signin' component={SignIn}/>
           <Route path='/formprofessionals' component={FormProfessionals}/>
           <Route path='/formpatients' component={FormPatients}/>
-          <Route path='/healthData' component={HealthData}/>
+          <Route path='/healthData' component={healthData}/>
           <Route path='/professionals' component={Professionals}/>
           <Route path='/about' component={About}/>
           <Route path='/price' component={Price}/>

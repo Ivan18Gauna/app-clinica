@@ -8,6 +8,7 @@ import styles from "./FormPatients.module.css";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
+import Cookie from 'universal-cookie'
 
 
 function validate(input) {
@@ -136,6 +137,8 @@ export default function RegisterPatient() {
 
   function handleSubmit(e) {
     e.preventDefault();
+    const cookie = new Cookie()
+    cookie.set('userEmail', input.mail, {path: '/'})
     setInput({
       name: "",
       lastname: "",

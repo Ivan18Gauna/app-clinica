@@ -2,8 +2,12 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import img from './pngwing.com.png';
 import { useAuth0 } from '@auth0/auth0-react';
+import Cookie from 'universal-cookie'
+import { useDispatch } from 'react-redux';
+import { getUserDetail } from '../../redux/actions';
 
 export default function Login() {
+	const dispatch = useDispatch()
 	const { loginWithPopup, isAuthenticated } = useAuth0();
 	const [user, setUser] = useState({
 		email: '',
@@ -17,12 +21,17 @@ export default function Login() {
 	}
 	function handleSubmit(e) {
 		e.preventDefault();
+		dispatch(getUserDetail(cookie.get('userEmail')))
+		const cookie = new Cookie()
+		cookie.set('userEmail', user.email, {path: '/'})
+		cookie.set('userPassword', user.password, {path: '/'})
+		window.location.href = '../homePatients/HomePatients.jsx'
 		console.log(user);
 		// dispatch(funcion a definir(user));
-		setUser({
+/* 		setUser({
 			email: '',
 			password: '',
-		});
+		}); */
 	}
 	return (
 		<div>

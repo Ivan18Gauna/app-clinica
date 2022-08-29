@@ -1,14 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from 'react-redux';
+import Cookie from 'universal-cookie'
 
 export default function HomePatients() {
+    const cookie = new Cookie();
+    console.log(cookie.get('userEmail'))
 
     const userInfo = useSelector( state => state.user )
 
     return (
         <div>
             <div>
+                <h3>soy patient</h3>
                 <h3>Proximos turnos</h3>
                 <div> 
                 {/* van a ir en columna estilo grilla o google calendar */}
