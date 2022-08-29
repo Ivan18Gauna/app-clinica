@@ -6,6 +6,8 @@ import { get_DoctorsDetail } from '../../redux/actions';
 import Button from 'react-bootstrap/esm/Button';
 import styles from './Details.module.css';
 import img from '../../Icons/iconfinder-icon.svg';
+import Loading from '../loading/Loading';
+import '../login/Login.css';
 
 export default function Details() {
 	const { id } = useParams();
@@ -16,12 +18,14 @@ export default function Details() {
 		dispatch(get_DoctorsDetail(id));
 	}, [dispatch, id]);
 
-	if (Array.isArray(doctor.specialties)) {
+	if (doctor.length > 0 && Array.isArray(doctor.specialties)) {
 		var temp = doctor.specialties.map((e) => e.name);
 	}
 	console.log(doctor);
 
 	return (
+		<div>
+		{ doctor && doctor.name ?
 		<div className={styles.container}>
 			<div className={styles.info}>
 				<div className={styles.perfil}>
@@ -52,6 +56,9 @@ export default function Details() {
 					</Link>
 				</div>
 			</div>
+		</div>
+		: <div className='loading-login'><Loading/></div>
+		}
 		</div>
 	);
 }

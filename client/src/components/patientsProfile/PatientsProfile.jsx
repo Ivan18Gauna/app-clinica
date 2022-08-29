@@ -129,6 +129,8 @@ export default function UserProfile() {
 	const [chronicles_, setChronicles] = useState('');
 	const [error, setError] = useState({});
 	const globalUser = useSelector((state) => state.user);
+	let id;
+	if(globalUser && globalUser.id){ id = globalUser.id; }
 	
 	useEffect(() => {
 		dispatch(getPatients());
@@ -314,7 +316,11 @@ export default function UserProfile() {
 
 	function handleSubmit(e) {
 		e.preventDefault();
-		dispatch(modifyUsers(info));
+		console.log('entreeeee')
+		dispatch(modifyUsers(info, id));
+		setTimeout(()=>{
+			dispatch(getUserDetail(user.email))
+		}, 2000)
 	}
 
 	return (
