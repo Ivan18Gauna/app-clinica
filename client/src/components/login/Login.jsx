@@ -33,23 +33,23 @@ export default function Login() {
 			password: '',
 		}); */
 	}
-	return (
-		<div>
-			{!isAuthenticated ? (
-				<div className="container w-75 mt-5">
-					<div className="row">
-						<div className="col d-none d-lg-block">
-							<img
-								src="https://thumbs.dreamstime.com/z/retrato-dise-o-minimalista-exhausto-continuo-de-la-sola-mano-del-dibujo-lineal-doctor-un-forma-vida-linear-aislada-solo-s%C3%ADmbolo-146395118.jpg"
-								alt="not img"
-								width="700"
-								height="700"
-								className="col-12"
-							/>
-						</div>
+	// return (
+	// 	<div>
+	// 		{!isAuthenticated ? (
+	// 			<div className="container w-75 mt-5">
+	// 				<div className="row">
+	// 					<div className="col d-none d-lg-block">
+	// 						<img
+	// 							src="https://thumbs.dreamstime.com/z/retrato-dise-o-minimalista-exhausto-continuo-de-la-sola-mano-del-dibujo-lineal-doctor-un-forma-vida-linear-aislada-solo-s%C3%ADmbolo-146395118.jpg"
+	// 							alt="not img"
+	// 							width="700"
+	// 							height="700"
+	// 							className="col-12"
+	// 						/>
+	// 					</div>
   return (
     <div>
-      {!isAuthenticated && !eluser.email ? (
+      {!isAuthenticated && !user.email ? (
         <div className="container w-75 mt-5">
           <div className="row">
             <div className="col d-none d-lg-block">
