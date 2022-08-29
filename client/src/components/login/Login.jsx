@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import img from "./pngwing.com.png";
+import img from "../../Icons/logo.svg";
 import { useAuth0 } from "@auth0/auth0-react";
 // import { theUSer } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserDetail } from "../../redux/actions";
+import "./Login.css";
 
 export default function Login() {
 
@@ -58,11 +59,13 @@ export default function Login() {
               />
             </div>
 
-            <div className="col">
-              <div className="text-end">
-                <img src={img} alt="not img" width="100px" />
+            <div className="col" id='div-general-login'>
+              <div className="text-end" id="div-image-name">
+                <h2 className="fw-bold text-center py-5" id="name-login">Ingresa a +Salud</h2>
+                <div id="image-logIn">
+                  <img src={img} alt="not img" width="100px" />
+                </div>
               </div>
-              <h2 className="fw-bold text-center py-5">Ingresa a +Salud</h2>
               <form onSubmit={handleSubmit}>
                 <div className="mb-4">
                   <label htmlFor="email" className="form-label">
@@ -104,13 +107,13 @@ export default function Login() {
                   </button>
                 </div>
                 <div className="my-3">
-                  <span>¿nuevo en +Salud? </span>
+                  <span>¿Nuevo en +Salud? </span>
                   <Link to="/signin">
                     <span>Resgistrate</span>
                   </Link>
                 </div>
                 <div className="my-3">
-                  <span>¿olvidaste tu contraseña? </span>
+                  <span>¿Olvidaste tu contraseña? </span>
                   <Link to="/sincomponente">
                     <span>Recupera tu contraseña</span>
                   </Link>
