@@ -10,7 +10,6 @@ import { useSelector } from 'react-redux';
 function NavBarEdit() {
 	const { isAuthenticated } = useAuth0();
 	const globalUser = useSelector(state => state.user);
-	console.log(globalUser)
 
 	return (
 		<Navbar

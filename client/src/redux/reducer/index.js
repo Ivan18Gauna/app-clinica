@@ -58,7 +58,7 @@ function rootReducer(state = initialState, action) {
 
     case GET_OS:
       return{
-        state,
+        ...state,
         os: action.payload
       };
 
@@ -75,7 +75,9 @@ function rootReducer(state = initialState, action) {
       };
 
     case GET_USER_MAIL:
-      return{
+/*       console.log('case')
+ *//*       console.log(state.user)
+ */      return{
         ...state,
         user: action.payload
       }; 
