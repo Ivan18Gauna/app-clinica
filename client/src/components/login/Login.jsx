@@ -22,12 +22,16 @@ export default function Login() {
     password: "",
   });
 
-  function handleInput(e) {
-    setUser({
-      ...user,
-      [e.target.name]: e.target.value,
-    });
-  }
+	function handleSubmit(e) {
+		e.preventDefault();
+		dispatch(getUserDetail(user.email));
+		setUser({
+			email: '',
+			password: '',
+			showPassword: false,
+		});
+		history.push('/home');
+	}
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -152,11 +156,15 @@ export default function Login() {
           <div id='loading-num'>
               { setTimeout(()=>{
                   dispatch(getUserDetail(user.email));
-
+<<<<<<<<< Temporary merge branch 1
+                }, 1000)}{
+                setTimeout( ()=>{
+                if(globalUser){
+=========
                 }, 1000)}
               { setTimeout( ()=>{
                 if(globalUser && globalUser.mail){
-
+>>>>>>>>> Temporary merge branch 2
                   history.push('/home');
                 } else {
                   history.push('/signin');
