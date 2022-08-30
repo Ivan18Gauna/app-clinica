@@ -1,12 +1,8 @@
 import React, { useState } from 'react';
 import doctor from '../../Icons/iconfinder-icon.svg';
 // import { useHistory } from "react-router-dom";
-import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
 import {
-	getPatients,
 	modifyUsers,
-	getObrasSociales,
 	getUserDetail,
 } from '../../redux/actions';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -19,6 +15,7 @@ import stylesForm from '../formPatients/FormPatients.module.css';
 import styles from './PatientsProfile.module.css';
 import Loading from '../loading/Loading';
 import Cookies from 'universal-cookie';
+import { useDispatch } from 'react-redux';
 
 const blood_type = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB+', 'AB-', 'O+', 'O-'];
 const provinces = [
@@ -120,10 +117,9 @@ function validate(info) {
 	return error;
 }
 
-export default function UserProfile(globalUser) {
+export default function UserProfile({globalUser, obras}) {
+	const dispatch = useDispatch()
 	const { user, logout, isAuthenticated } = useAuth0();
-	const dispatch = useDispatch();
-	const obras = useSelector((state) => state.os);
 	const [editInfoPersonal, setEditInfoPersonal] = useState(false);
 	const [editInfoSalud, setEditInfoSalud] = useState(false);
 	const [allergies_, setAllergies] = useState('');
@@ -292,19 +288,10 @@ export default function UserProfile(globalUser) {
 		e.preventDefault();
 		dispatch(modifyUsers(info, id));
 		setTimeout(()=>{
-			dispatch(getUserDetail(user.email))
+			/* dispatch(getUserDetail(user.email)) */
 		}, 2000)
 	}
-
-	
-	useEffect(() => {
-		dispatch(getObrasSociales());
-	}, []);
-	
-/* 	const globalUser = useSelector((state) => state.user) */
 		
-	console.log('soy global',globalUser)
-
 	return (
 		<div>
 			<div className={styles.container}>

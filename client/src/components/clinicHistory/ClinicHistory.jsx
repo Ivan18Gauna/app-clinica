@@ -22,7 +22,7 @@ export default function ClinicHistory() {
 	}, [dispatch, globalUser]);
 
     if((isAuthenticated && !globalUser) || (isAuthenticated && globalUser && !globalUser.name)){
-		dispatch(getUserDetail(user.email))
+		/* dispatch(getUserDetail(user.email)) */
 	}
 
 	return (

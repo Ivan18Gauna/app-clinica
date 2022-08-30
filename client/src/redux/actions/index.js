@@ -149,6 +149,7 @@ export function modifyUsers(payload, id) {
 }
 
 export function getUserDetail(mail) {
+	console.log('ejecuciones')
 	return async function (dispatch) {
 		const userMail = await axios(`/user/${mail}`);
 		
