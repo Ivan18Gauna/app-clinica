@@ -21,12 +21,14 @@ export default function UserProfile() {
   }, []);
   
   const state = useSelector((state) => state.user)
+  const obras = useSelector((state) => state.os)
+
   console.log(state)
 
   return (
     <div>
       {state && state.document ? (
-        <PatientProfile globalUser={state}/>
+        <PatientProfile globalUser={state} obras={obras}/>
       ) : (
         <h1>loading</h1>
       )}
