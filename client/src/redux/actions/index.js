@@ -148,6 +148,10 @@ export function modifyUsers(payload, id) {
 	};
 }
 
+export function modifyProfessionals(payload, id){
+	
+}
+
 export function getUserDetail(mail) {
 	return async function (dispatch) {
 		const userMail = await axios(`/user/${mail}`);
