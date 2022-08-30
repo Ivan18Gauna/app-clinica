@@ -20,6 +20,8 @@ import HomeProfessional from './components/homeProfessionals/HomeProfessionals';
 import PatientProfile from '../src/components/patientsProfile/PatientsProfile.jsx'
 import Calendar from '../src/components/calendar/Calendar.jsx'
 import HomePatients from './components/homePatients/HomePatients';
+import UserProfile from './components/userProfile/UserProfile';
+import ProfessionalProfile from './components/professionalsProfile/ProfessionalsProfile';
 
 
 function App() {
@@ -45,7 +47,7 @@ function App() {
         {/* <Route path='/google' component={Google}/> */}
         <Route path='/clinic_history' component={ClinicHistory}/>
         <Route path='/homeUsuarioPrueba' component={HomeProfessional}/>
-        <Route path='/userProfile' component={PatientProfile} />
+        <Route path='/userProfile' component={ProfessionalProfile} />
         <Route path='/professionals' component={Professionals}/>
         <Route path='/auth0' component={Auth0}/>
         <Route path="/homepatients" component={HomePatients}/>
