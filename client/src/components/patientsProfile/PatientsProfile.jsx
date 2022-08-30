@@ -120,7 +120,7 @@ function validate(info) {
 	return error;
 }
 
-export default function UserProfile() {
+export default function UserProfile(globalUser) {
 	const { user, logout, isAuthenticated } = useAuth0();
 	const dispatch = useDispatch();
 	const obras = useSelector((state) => state.os);
@@ -163,7 +163,6 @@ export default function UserProfile() {
 			return false;
 		}
 	}
-
 	function handleSelectBlood(e) {
 		e.preventDefault();
 		setInfo({
@@ -171,7 +170,6 @@ export default function UserProfile() {
 			blood: e.target.value,
 		});
 	}
-
 	function handleSelectVaccines(e) {
 		e.preventDefault();
 		if (info.vaccines.includes(e.target.value)) {
@@ -183,7 +181,6 @@ export default function UserProfile() {
 			});
 		}
 	}
-
 	function handleDeleteVaccines(e) {
 		e.preventDefault();
 		setInfo({
@@ -191,11 +188,9 @@ export default function UserProfile() {
 			vaccines: info.vaccines.filter((el) => el !== e.target.value),
 		});
 	}
-
 	function handleInputAllergies(e) {
 		setAllergies(e.target.value);
 	}
-
 	function handleSubmitAllergies(e) {
 		e.preventDefault();
 		if (info.allergies.includes(allergies_)) {
@@ -208,7 +203,6 @@ export default function UserProfile() {
 		}
 		setAllergies('');
 	}
-
 	function handleDeleteAllergies(e) {
 		e.preventDefault();
 		setInfo({
@@ -216,7 +210,6 @@ export default function UserProfile() {
 			allergies: info.allergies.filter((el) => el !== e.target.value),
 		});
 	}
-
 	function handleInputDonate(e) {
 		e.preventDefault();
 		setInfo({
@@ -224,7 +217,6 @@ export default function UserProfile() {
 			donation: e.target.value,
 		});
 	}
-
 	function handleInputTransfusion(e) {
 		e.preventDefault();
 		setInfo({
@@ -232,12 +224,10 @@ export default function UserProfile() {
 			transfusion: e.target.value,
 		});
 	}
-
 	function handleInputChronicles(e) {
 		e.preventDefault();
 		setChronicles(e.target.value);
 	}
-
 	function handleSubmitChronicles(e) {
 		e.preventDefault();
 		if (info.chronicles.includes(chronicles_)) {
@@ -250,7 +240,6 @@ export default function UserProfile() {
 		}
 		setChronicles('');
 	}
-
 	function handleDeleteChronicles(e) {
 		e.preventDefault();
 		setInfo({
@@ -258,7 +247,6 @@ export default function UserProfile() {
 			chronicles: info.chronicles.filter((el) => el !== e.target.value),
 		});
 	}
-
 	function handleSelectOS(e) {
 		e.preventDefault(e);
 		setInfo({
@@ -266,12 +254,10 @@ export default function UserProfile() {
 			oS: e.target.value,
 		});
 	}
-
 	function handleInfoPersonal(e) {
 		e.preventDefault();
 		setEditInfoPersonal(true);
 	}
-
 	function handleInput(e) {
 		e.preventDefault();
 		setInfo({
@@ -284,29 +270,24 @@ export default function UserProfile() {
 		});
 		setError(objError);
 	}
-
 	function handleSelect(e) {
 		setInfo({
 			...info,
 			province: e.target.value,
 		});
 	}
-
 	function handleCancel(e) {
 		e.preventDefault();
 		setEditInfoPersonal(false);
 	}
-
 	function handleInfoSalud(e) {
 		e.preventDefault();
 		setEditInfoSalud(true);
 	}
-
 	function handleCancelSalud(e) {
 		e.preventDefault();
 		setEditInfoSalud(false);
 	}
-
 	function handleSubmit(e) {
 		e.preventDefault();
 		dispatch(modifyUsers(info, id));
@@ -317,18 +298,15 @@ export default function UserProfile() {
 
 	
 	useEffect(() => {
-		const cookie = new Cookies()
-		dispatch(getUserDetail(cookie.get('userEmail')));
 		dispatch(getObrasSociales());
 	}, []);
 	
-	const globalUser = useSelector((state) => state.user)
+/* 	const globalUser = useSelector((state) => state.user) */
 		
 	console.log('soy global',globalUser)
 
 	return (
 		<div>
-		{ globalUser && globalUser.name ?
 			<div className={styles.container}>
 				<div className={styles.perfil}>
 					<img src={doctor} alt="imagen no disponible" />
@@ -835,8 +813,6 @@ export default function UserProfile() {
 				</div>
 			<Button className={styles.button} onClick={logout}>Cerrar sesion</Button>
 			</div>
-			: <div className='loading-login'><Loading/></div>
-			}
 		</div>
 	);
 }
