@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import doctor from '../../Icons/iconfinder-icon.svg';
-import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
-import { modifyUsers, getObrasSociales, getUserDetail, } from '../../redux/actions';
+// import { useHistory } from "react-router-dom";
+import {
+	modifyUsers,
+	getUserDetail,
+} from '../../redux/actions';
 import { useAuth0 } from '@auth0/auth0-react';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
@@ -13,6 +15,7 @@ import stylesForm from '../formPatients/FormPatients.module.css';
 import styles from './PatientsProfile.module.css';
 import Loading from '../loading/Loading';
 import Cookies from 'universal-cookie';
+import { useDispatch } from 'react-redux';
 
 const blood_type = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB+', 'AB-', 'O+', 'O-'];
 const provinces = [
@@ -114,10 +117,9 @@ function validate(info) {
 	return error;
 }
 
-export default function UserProfile() {
+export default function UserProfile({globalUser, obras}) {
+	const dispatch = useDispatch()
 	const { user, logout, isAuthenticated } = useAuth0();
-	const dispatch = useDispatch();
-	const obras = useSelector((state) => state.os);
 	const [editInfoPersonal, setEditInfoPersonal] = useState(false);
 	const [editInfoSalud, setEditInfoSalud] = useState(false);
 	const [allergies_, setAllergies] = useState('');
@@ -157,7 +159,6 @@ export default function UserProfile() {
 			return false;
 		}
 	}
-
 	function handleSelectBlood(e) {
 		e.preventDefault();
 		setInfo({
@@ -165,7 +166,6 @@ export default function UserProfile() {
 			blood: e.target.value,
 		});
 	}
-
 	function handleSelectVaccines(e) {
 		e.preventDefault();
 		if (info.vaccines.includes(e.target.value)) {
@@ -177,7 +177,6 @@ export default function UserProfile() {
 			});
 		}
 	}
-
 	function handleDeleteVaccines(e) {
 		e.preventDefault();
 		setInfo({
@@ -185,11 +184,9 @@ export default function UserProfile() {
 			vaccines: info.vaccines.filter((el) => el !== e.target.value),
 		});
 	}
-
 	function handleInputAllergies(e) {
 		setAllergies(e.target.value);
 	}
-
 	function handleSubmitAllergies(e) {
 		e.preventDefault();
 		if (info.allergies.includes(allergies_)) {
@@ -202,7 +199,6 @@ export default function UserProfile() {
 		}
 		setAllergies('');
 	}
-
 	function handleDeleteAllergies(e) {
 		e.preventDefault();
 		setInfo({
@@ -210,7 +206,6 @@ export default function UserProfile() {
 			allergies: info.allergies.filter((el) => el !== e.target.value),
 		});
 	}
-
 	function handleInputDonate(e) {
 		e.preventDefault();
 		setInfo({
@@ -218,7 +213,6 @@ export default function UserProfile() {
 			donation: e.target.value,
 		});
 	}
-
 	function handleInputTransfusion(e) {
 		e.preventDefault();
 		setInfo({
@@ -226,12 +220,10 @@ export default function UserProfile() {
 			transfusion: e.target.value,
 		});
 	}
-
 	function handleInputChronicles(e) {
 		e.preventDefault();
 		setChronicles(e.target.value);
 	}
-
 	function handleSubmitChronicles(e) {
 		e.preventDefault();
 		if (info.chronicles.includes(chronicles_)) {
@@ -244,7 +236,6 @@ export default function UserProfile() {
 		}
 		setChronicles('');
 	}
-
 	function handleDeleteChronicles(e) {
 		e.preventDefault();
 		setInfo({
@@ -252,7 +243,6 @@ export default function UserProfile() {
 			chronicles: info.chronicles.filter((el) => el !== e.target.value),
 		});
 	}
-
 	function handleSelectOS(e) {
 		e.preventDefault(e);
 		setInfo({
@@ -260,12 +250,10 @@ export default function UserProfile() {
 			oS: e.target.value,
 		});
 	}
-
 	function handleInfoPersonal(e) {
 		e.preventDefault();
 		setEditInfoPersonal(true);
 	}
-
 	function handleInput(e) {
 		e.preventDefault();
 		setInfo({
@@ -278,80 +266,263 @@ export default function UserProfile() {
 		});
 		setError(objError);
 	}
-
 	function handleSelect(e) {
 		setInfo({
 			...info,
 			province: e.target.value,
 		});
 	}
-
 	function handleCancel(e) {
 		e.preventDefault();
 		setEditInfoPersonal(false);
 	}
-
 	function handleInfoSalud(e) {
 		e.preventDefault();
 		setEditInfoSalud(true);
 	}
-
 	function handleCancelSalud(e) {
 		e.preventDefault();
 		setEditInfoSalud(false);
 	}
-
 	function handleSubmit(e) {
 		e.preventDefault();
 		dispatch(modifyUsers(info, id));
-		setTimeout(() => {
-			dispatch(getUserDetail(user.email))
+
+		setTimeout(()=>{
+			/* dispatch(getUserDetail(user.email)) */
 		}, 2000)
 	}
-
-
-	useEffect(() => {
-		const cookie = new Cookies()
-		dispatch(getUserDetail(cookie.get('userEmail')));
-		dispatch(getObrasSociales());
-	}, []);
-
-	const globalUser = useSelector((state) => state.user)
-
-	console.log('soy global', globalUser)
-
+		
 	return (
 		<div>
-			{globalUser && globalUser.name ?
-				<div className={styles.container}>
-					<div className={styles.perfil}>
-						<img src={doctor} alt="imagen no disponible" />
-						<h4>
-							{globalUser.name} {globalUser.lastname}
-						</h4>
-					</div>
-					<div className={styles.acordion}>
-						<Accordion className={styles.acordionContenido}>
-							<Accordion.Item eventKey="0">
-								<Accordion.Header>Mis Datos</Accordion.Header>
-								<Accordion.Body>
-									<p>Fecha de nacimiento: {globalUser.birth}</p>
-									<p>Número de Documento {globalUser.document}</p>
-									<p>Número de telefono: {globalUser.phone}</p>
-									<p>Email: {globalUser.mail}</p>
-									<p>Provincia: {globalUser.province}</p>
-									<p>Ciudad: {globalUser.city}</p>
-									<p>Calle: {globalUser.street}</p>
-									<p>Número: {globalUser.number}</p>
-									{editInfoPersonal === false ? (
-										<Button onClick={handleInfoPersonal}>
-											Editar información personal
-										</Button>
-									) : (
-										<div className={stylesForm.container}>
-											<Form
-												className={`${stylesForm.form}`}
-												onSubmit={(e) => handleSubmit(e)}
+			<div className={styles.container}>
+				<div className={styles.perfil}>
+					<img src={doctor} alt="imagen no disponible" />
+					<h4>
+						{globalUser.name} {globalUser.lastname}
+					</h4>
+				</div>
+				<div className={styles.acordion}>
+					<Accordion className={styles.acordionContenido}>
+						<Accordion.Item eventKey="0">
+							<Accordion.Header>Mis Datos</Accordion.Header>
+							<Accordion.Body>
+								<p>Fecha de nacimiento: {globalUser.birth}</p>
+								<p>Número de Documento {globalUser.document}</p>
+								<p>Número de telefono: {globalUser.phone}</p>
+								<p>Email: {globalUser.mail}</p>
+								<p>Provincia: {globalUser.province}</p>
+								<p>Ciudad: {globalUser.city}</p>
+								<p>Calle: {globalUser.street}</p>
+								<p>Número: {globalUser.number}</p>
+								{editInfoPersonal === false ? (
+									<Button onClick={handleInfoPersonal}>
+										Editar información personal
+									</Button>
+								) : (
+									<div className={stylesForm.container}>
+										<Form
+											className={`${stylesForm.form}`}
+											onSubmit={(e) => handleSubmit(e)}
+										>
+											<div className={stylesForm.titulo}>
+												<h3>Editar información personal:</h3>
+											</div>
+											<Row className={`${stylesForm.row}`} lg={2}>
+												<Col className={`${stylesForm.col}`}>
+													<Form.Control
+														type="text"
+														name="name"
+														placeholder="Nombre"
+														value={info.name}
+														onChange={handleInput}
+														isInvalid={!!error.name}
+													/>
+													<Form.Control.Feedback type="invalid">
+														{error.name}
+													</Form.Control.Feedback>
+												</Col>
+												<Col className={`${stylesForm.col}`}>
+													<Form.Control
+														type="text"
+														name="lastname"
+														placeholder="Apellido"
+														value={info.lastname}
+														onChange={handleInput}
+														isInvalid={!!error.lastname}
+													/>
+													<Form.Control.Feedback type="invalid">
+														{error.lastname}
+													</Form.Control.Feedback>
+												</Col>
+											</Row>
+											<Row className={`${stylesForm.row}`} lg={1}>
+												<Col className={`${stylesForm.col}`}>
+													<Form.Control
+														type="text"
+														name="username"
+														placeholder="Nombre de usuario"
+														value={info.username}
+														onChange={handleInput}
+													/>
+												</Col>
+											</Row>
+											<Row className={`${stylesForm.row}`} lg={1}>
+												<Col className={`${stylesForm.col}`}>
+													<Form.Control
+														type="email"
+														name="mail"
+														placeholder="Correo electrónico"
+														value={info.mail}
+														onChange={handleInput}
+														isInvalid={!!error.mail}
+													/>
+													<Form.Control.Feedback type="invalid">
+														{error.mail}
+													</Form.Control.Feedback>
+												</Col>
+											</Row>
+											<Row className={`${stylesForm.row}`} lg={2}>
+												<Col className={`${stylesForm.col}`}>
+													<Form.Control
+														type="password"
+														name="password"
+														placeholder="Contraseña"
+														value={info.password}
+														onChange={handleInput}
+														isInvalid={!!error.password}
+													/>
+													<Form.Control.Feedback type="invalid">
+														{error.password}
+													</Form.Control.Feedback>
+												</Col>
+												<Col className={`${stylesForm.col}`}>
+													<Form.Control
+														type="password"
+														name="new_password"
+														placeholder="Repetir contraseña"
+														value={info.new_password}
+														onChange={handleInput}
+														isInvalid={!!error.new_password}
+													/>
+													<Form.Control.Feedback type="invalid">
+														{error.new_password}
+													</Form.Control.Feedback>
+												</Col>
+											</Row>
+											<Row className={`${stylesForm.row}`} lg={1}>
+												<Col className={`${stylesForm.col}`}>
+													<Form.Label>Fecha de Nacimiento</Form.Label>
+													<Form.Control
+														type="date"
+														name="birth"
+														value={info.birth}
+														onChange={handleInput}
+														isInvalid={!!error.birth}
+													/>
+													<Form.Control.Feedback type="invalid">
+														{error.birth}
+													</Form.Control.Feedback>
+												</Col>
+											</Row>
+											<Row className={`${stylesForm.row}`} lg={2}>
+												<Col className={`${stylesForm.col}`}>
+													<Form.Control
+														type="number"
+														name="document"
+														placeholder="Documento DNI"
+														value={info.document}
+														onChange={handleInput}
+														isInvalid={!!error.document}
+													/>
+													<Form.Control.Feedback type="invalid">
+														{error.document}
+													</Form.Control.Feedback>
+												</Col>
+												<Col className={`${stylesForm.col}`}>
+													<Form.Control
+														type="text"
+														name="phone"
+														placeholder="Número de celular"
+														value={info.phone}
+														onChange={handleInput}
+														isInvalid={!!error.phone}
+													/>
+													<Form.Control.Feedback type="invalid">
+														{error.phone}
+													</Form.Control.Feedback>
+												</Col>
+											</Row>
+											<Row className={`${stylesForm.row}`} lg={1}>
+												<Col className={`${stylesForm.col}`}>
+													<Form.Label>Domicilio</Form.Label>
+													<Form.Select
+														onChange={handleSelect}
+														defaultValue="Provincia"
+													>
+														<option value="Provincia" hidden>
+															Provincia
+														</option>
+														{provinces.map((e) => {
+															return (
+																<option key={e} value={e}>
+																	{e}
+																</option>
+															);
+														})}
+													</Form.Select>
+												</Col>
+											</Row>
+											<Row className={`${stylesForm.row}`} lg={1}>
+												<Col className={`${stylesForm.col}`}>
+													<Form.Control
+														type="text"
+														name="city"
+														placeholder="Ciudad"
+														value={info.city}
+														onChange={handleInput}
+														isInvalid={!!error.city}
+													/>
+													<Form.Control.Feedback type="invalid">
+														{error.phone}
+													</Form.Control.Feedback>
+												</Col>
+											</Row>
+											<Row className={`${stylesForm.row}`} lg={2}>
+												<Col className={`${stylesForm.col}`}>
+													<Form.Control
+														type="text"
+														name="street"
+														placeholder="Calle"
+														value={info.street}
+														onChange={handleInput}
+														isInvalid={!!error.street}
+													/>
+													<Form.Control.Feedback type="invalid">
+														{error.street}
+													</Form.Control.Feedback>
+												</Col>
+												<Col className={`${stylesForm.col}`}>
+													<Form.Control
+														type="number"
+														name="number"
+														placeholder="Número"
+														value={info.number}
+														onChange={handleInput}
+														isInvalid={!!error.number}
+													/>
+													<Form.Control.Feedback type="invalid">
+														{error.number}
+													</Form.Control.Feedback>
+												</Col>
+											</Row>
+											<Row
+												className={`${stylesForm.row}`}
+												lg={2}
+												md={2}
+												sm={2}
+												xs={2}
+
 											>
 												<div className={stylesForm.titulo}>
 													<h3>Editar información personal:</h3>
