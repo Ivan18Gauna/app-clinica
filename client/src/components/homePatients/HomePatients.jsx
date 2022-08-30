@@ -6,7 +6,7 @@ import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
 import Loading from "../loading/Loading";
-import '../login/Login.css'
+import styles from '../login/Login.module.css'
 
 export default function HomePatients() {
 
