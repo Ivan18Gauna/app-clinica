@@ -7,11 +7,11 @@ module.exports = (sequelize) => {
     "professionals",
     {
       id: {
-        type:DataTypes.INTEGER,
+        type: DataTypes.INTEGER,
         primaryKey: true,
         allowNull: false,
         autoIncrement: true,
-      },  
+      },
       name: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -27,6 +27,10 @@ module.exports = (sequelize) => {
       lastname: {
         type: DataTypes.STRING,
         allowNull: false,
+      },
+      avatar: {
+        type: DataTypes.STRING,
+        allowNull: true,
       },
       license: {
         type: DataTypes.INTEGER,
@@ -64,7 +68,7 @@ module.exports = (sequelize) => {
     {
       createdAt: false,
       updatedAt: false,
-      deletedAt: 'deletedAt',
+      deletedAt: "deletedAt",
       paranoid: true,
       timestamps: true,
     }
