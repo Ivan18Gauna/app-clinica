@@ -5,9 +5,9 @@ import { useEffect } from "react";
 import { getUserDetail } from "../../redux/actions";
 import { useAuth0 } from "@auth0/auth0-react";
 import Cookies from "universal-cookie";
+import PatientProfile from '../patientsProfile/PatientsProfile'
 
 export default function UserProfile() {
-  console.log('funciona')
   const cookie = new Cookies()
   const { user, logout, isAuthenticated} = useAuth0();
 
@@ -15,7 +15,8 @@ export default function UserProfile() {
   
   useEffect(() => {
     dispatch(getUserDetail(cookie.get('userEmail')));
-  }, [dispatch]);
+    console.log(cookie.get('userEmail'))
+  }, []);
 
   const state = useSelector((state) => state.user)
   console.log('x', state)
@@ -23,47 +24,8 @@ export default function UserProfile() {
 
   return (
     <div>
-      {state.document ? (
-        <div>
-          <aside>
-            <p>Aca iría la foto</p>
-            <img
-              src="https://www.webespacio.com/wp-content/uploads/2012/01/foto-perfil.jpg"
-              alt=""
-            />
-            <div>
-              <p>Nombre:{state .name}</p>
-              <p>Apellido: {state .lastname}</p>
-              <p>Nro de documento:{state .document}</p>
-              <p>Número de telefono: {state .phone}</p>
-              <p>Email: {state .mail}</p>
-              <p>Provincia: {state .province}</p>
-              <p>Ciudad: {state .city}</p>
-              <p>Calle: {state .street}</p>
-              <p>Número: {state .number}</p>
-            </div>
-          </aside>
-          <div>
-            <h5>Información de salud básica: </h5>
-            <p>Grupo Sanguineo:</p>
-            {state .blood ? state .blood : "Sin información"}
-            <p>Vacunas que posee aplicadas:</p>
-            {state .vaccine ? state .vaccine : "Sin información"}
-            <p>Alergias: </p>
-            {state .allergies ? state .allergies : "Sin información"}
-            <p>Enfermedades Crónicas: </p>
-            {state .chronicles ? state .chronicles : "Sin información"}
-            <p>Es donante?</p>
-            {state .donation ? state .donation : "Sin información"}
-            <p>Es transfundible?</p>
-            {state .transfusion
-              ? state .transfusion
-              : "Sin información"}
-            <p>Obra Social:</p>
-            {state .oS ? state .oS : "Sin información"}
-          </div>
-          <button onClick={logout}>Cerrar sesion</button>
-        </div>
+      {state && state.document ? (
+        <PatientProfile globalUser={state}/>
       ) : (
         <h1>loading</h1>
       )}
