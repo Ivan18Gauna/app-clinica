@@ -2,7 +2,7 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { getObrasSociales, getUserDetail } from "../../redux/actions";
+import { getObrasSociales, getUserDetail, get_specialties } from "../../redux/actions";
 // import { useAuth0 } from "@auth0/auth0-react";
 import Cookies from "universal-cookie";
 import PatientProfile from '../patientsProfile/PatientsProfile';
@@ -10,6 +10,7 @@ import Loading from "../loading/Loading";
 import '../login/Login.module.css';
 import Button from "react-bootstrap/esm/Button";
 import styles from '../patientsProfile/PatientsProfile.module.css';
+import ProfessionalProfile from "../professionalsProfile/ProfessionalsProfile";
 
 export default function UserProfile() {
 
@@ -18,9 +19,11 @@ export default function UserProfile() {
   const dispatch = useDispatch();
   const state = useSelector((state) => state.user)
   const obras = useSelector((state) => state.os)
+  const specialties=useSelector((state)=>state.specialties)
   
   useEffect(() => {
     dispatch(getObrasSociales());
+    dispatch(get_specialties());
     dispatch(getUserDetail(cookie.get('email')));
   }, []);
   
@@ -35,6 +38,7 @@ export default function UserProfile() {
       {state && state.document ? (
         <div>
           <PatientProfile globalUser={state} obras={obras}/>
+          <ProfessionalProfile globalUser={state} specialties={specialties}/>
           <Button className={styles.button} onClick={logoutCookies}>Cerrar sesion</Button>
         </div>
       ) : (

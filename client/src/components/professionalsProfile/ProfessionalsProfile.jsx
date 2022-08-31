@@ -3,7 +3,7 @@ import doctor from '../../Icons/iconfinder-icon.svg';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import { get_specialties } from '../../redux/actions';
+import { getUserDetail } from '../../redux/actions';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -101,19 +101,22 @@ const provinces = [
     'Tucumán',
 ];
 
-export default function ProfessionalProfile() {
+export default function ProfessionalProfile({ globalUser, specialties }) {
 
 
-    // const { user, logout, isAuthenticated } = useAuth0();
     const dispatch = useDispatch();
-    const especialities_data = useSelector((state) => state.specialties);
+    const { user, logout, isAuthenticated } = useAuth0();
     const [editInfoPersonal, setEditInfoPersonal] = useState(false);
     const [error, setError] = useState({});
+    let id;
+    if (globalUser && globalUser.id) { id = globalUser.id }
 
-
-    useEffect(() => {
-        dispatch(get_specialties());
-    }, [dispatch]);
+    if ((isAuthenticated && !globalUser) || (isAuthenticated && globalUser && !globalUser.name)) {
+        dispatch(getUserDetail(user.email));
+    }
+    if (globalUser && !globalUser.name) {
+        dispatch(getUserDetail(globalUser.mail));
+    }
 
     const [input, setInput] = useState({
         name: '',
@@ -144,7 +147,7 @@ export default function ProfessionalProfile() {
         });
         setError(objError);
     }
-    console.log('error', error);
+
 
     function handleSelectProvince(e) {
         setInput({
@@ -210,7 +213,7 @@ export default function ProfessionalProfile() {
                     <div className={styles.perfil}>
                         <img src={doctor} alt="imagen no disponible" />
                         <h4>
-                            {/* {globalUser.name} {globalUser.lastname} */}
+                            {globalUser.name} {globalUser.lastname}
                         </h4>
                     </div>
                     <div className={styles.acordion}>
@@ -218,18 +221,14 @@ export default function ProfessionalProfile() {
                             <Accordion.Item eventKey="0">
                                 <Accordion.Header>Mis Datos</Accordion.Header>
                                 <Accordion.Body>
-                                    <p>Nombre:</p>
-                                    <p>Apellido:</p>
-                                    <p>Especialidad:</p>
-                                    <p>Matricula: </p>
-                                    <p>Fecha de nacimiento: </p>
-                                    <p>Número de Telefono: </p>
-                                    <p>Email: </p>
-                                    <p>Provincia: </p>
-                                    <p>Ciudad</p>
-                                    <p>Calle:</p>
-                                    <p>Número: </p>
-                                    <p>Nombre de usuario: </p>
+                                <p>Fecha de nacimiento: {globalUser.birth}</p>
+								<p>Número de Documento {globalUser.document}</p>
+								<p>Número de telefono: {globalUser.phone}</p>
+								<p>Email: {globalUser.mail}</p>
+								<p>Provincia: {globalUser.province}</p>
+								<p>Ciudad: {globalUser.city}</p>
+								<p>Calle: {globalUser.street}</p>
+								<p>Número: {globalUser.number}</p>
                                     {editInfoPersonal === false ? (
                                         <Button onClick={handleInfoPersonal}>
                                             Editar información personal
@@ -435,7 +434,7 @@ export default function ProfessionalProfile() {
                                                             <option value="Seleccione una opción">
                                                                 Seleccione una opción
                                                             </option>
-                                                            {especialities_data.map((e) => (
+                                                            {specialties.map((e) => (
                                                                 <option key={e.id} value={e.name}>
                                                                     {e.name}
                                                                 </option>
@@ -457,11 +456,18 @@ export default function ProfessionalProfile() {
                                                 </div>
                                                 <Row className={`${stylesForm.row}`} lg={1}>
                                                     <Col className={`${stylesForm.col}`} lg={6}>
-
+                                                        <Button
+                                                            className={`${stylesForm.buttonSubmit}`}
+                                                            variant="success"
+                                                            onClick={handleCancel}
+                                                        >
+                                                            Cancelar
+                                                        </Button>
                                                         <Button
                                                             className={`${stylesForm.buttonSubmit}`}
                                                             type="submit"
                                                             variant="success"
+                                                            onClick={handleSubmit}
                                                         >
                                                             Enviar
                                                         </Button>
