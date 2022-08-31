@@ -8,7 +8,8 @@ import {
 	GET_PATIENTS,
 	GET_PATIENTS_NAME,
 	GET_USER_MAIL,
-	GET_CLINIC_HISTORY
+	GET_CLINIC_HISTORY,
+	GET_NOTES
 } from '../actions/actions';
 import axios from 'axios';
 
@@ -102,7 +103,7 @@ export function getObrasSociales() {
 export function getPatients() {
 	return async function (dispatch) {
 		const allPatients = await axios.get('/patients/allpatients');
-		
+
 		return dispatch({
 			type: GET_PATIENTS,
 			payload: allPatients.data,
@@ -176,4 +177,44 @@ export function getClinicHistory(id) {
 			payload: clinicHistory.data
 		});
 	};
+}
+
+export function getNotes(license){
+	return async function (dispatch) {
+		try {
+			const notes = await axios('/notes/' + license);
+
+			return dispatch({
+				type: GET_NOTES,
+				payload: notes
+			})
+		} catch(e) {
+			console.log(e.message)
+		}
+	}
+}
+
+export function postNotes(payload){
+	return async function () {
+		try {
+			const notes = await axios.post('/notes', payload);
+			
+			return notes;
+		} catch(e) {
+			console.log(e.message)
+		}
+	}
+}
+
+
+export function deleteNotes(payload){
+	return async function () {
+		try {
+			const notes = await axios.delete('/notes/' + payload);
+
+			return notes;
+		} catch(e) {
+			console.log(e.message)
+		}
+	}
 }
