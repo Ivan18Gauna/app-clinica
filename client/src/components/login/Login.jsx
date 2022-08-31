@@ -66,9 +66,6 @@ export default function Login() {
 		event.preventDefault();
 	};
 
-	
-	// console.log('soy user', user);
-
 
 
 	return (
