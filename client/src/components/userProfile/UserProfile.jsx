@@ -19,17 +19,17 @@ export default function UserProfile() {
   const dispatch = useDispatch();
   const state = useSelector((state) => state.user)
   const obras = useSelector((state) => state.os)
-  const specialties=useSelector((state)=>state.specialties)
-  
+  const specialties = useSelector((state) => state.specialties)
+
   useEffect(() => {
     dispatch(getObrasSociales());
     dispatch(get_specialties());
     dispatch(getUserDetail(cookie.get('email')));
   }, []);
-  
-  function logoutCookies (){
-    cookie.remove('email',{path:'/'})
-    cookie.remove('userEmail',{path:'/'})
+
+  function logoutCookies() {
+    cookie.remove('email', { path: '/' })
+    cookie.remove('userEmail', { path: '/' })
     history.push('/')
   }
 
@@ -37,8 +37,12 @@ export default function UserProfile() {
     <div>
       {state && state.document ? (
         <div>
-          <PatientProfile globalUser={state} obras={obras}/>
-          <ProfessionalProfile globalUser={state} specialties={specialties}/>
+          <PatientProfile globalUser={state} obras={obras} />
+          <Button className={styles.button} onClick={logoutCookies}>Cerrar sesion</Button>
+        </div>
+      ) : state && state.license ? (
+        <div>
+          <ProfessionalProfile globalUser={state} specialties={specialties} />
           <Button className={styles.button} onClick={logoutCookies}>Cerrar sesion</Button>
         </div>
       ) : (
@@ -46,8 +50,9 @@ export default function UserProfile() {
           <Loading />
           <button onClick={logoutCookies}>cerrar local</button>
         </div>
-      )}
-    </div>
+      )
+      }
+    </div >
   );
 }
 
