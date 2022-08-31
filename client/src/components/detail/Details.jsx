@@ -4,10 +4,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { get_DoctorsDetail } from '../../redux/actions';
 import Button from 'react-bootstrap/esm/Button';
+import Loading from '../loading/Loading';
 import styles from './Details.module.css';
 import img from '../../Icons/iconfinder-icon.svg';
-import Loading from '../loading/Loading';
-import '../login/Login.css';
+import login from '../login/Login.module.css'
+
 
 export default function Details() {
 	const { id } = useParams();
@@ -57,7 +58,7 @@ export default function Details() {
 				</div>
 			</div>
 		</div>
-		: <div className='loading-login'><Loading/></div>
+		: <div className={login.loading-login}><Loading/></div>
 		}
 		</div>
 	);

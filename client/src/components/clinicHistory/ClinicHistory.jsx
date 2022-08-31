@@ -9,7 +9,6 @@ import Button from 'react-bootstrap/esm/Button';
 import { useAuth0 } from '@auth0/auth0-react';
 import './ClinicHistory.css';
 import '../../App.css';
-import '../login/Login.css';
 
 export default function ClinicHistory() {
 
@@ -23,7 +22,7 @@ export default function ClinicHistory() {
 	}, [dispatch, globalUser]);
 
     if((isAuthenticated && !globalUser) || (isAuthenticated && globalUser && !globalUser.name)){
-		dispatch(getUserDetail(user.email))
+		/* dispatch(getUserDetail(user.email)) */
 	}
 
 	return (

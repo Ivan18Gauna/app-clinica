@@ -14,19 +14,17 @@ import Cookies from 'universal-cookie';
 
 export default function Home() {
 	const cookie = new Cookies()
-	console.log(cookie.get('userEmail'))
 	
-/* 	const { user, isAuthenticated } = useAuth0();
- */	const dispatch = useDispatch();
+	
+	const dispatch = useDispatch();
  
  useEffect(() => {
-	 dispatch(getUserDetail(cookie.get('userEmail')))
+	 dispatch(getUserDetail(cookie.get('email')))
 	}, [])
 	
 	const globalUser = useSelector( state => state.user)
-	console.log('felipe', globalUser)
-	/* 	if((isAuthenticated && !globalUser) || (isAuthenticated && globalUser && !globalUser.name)){
-	} */
+	console.log('globalUser', globalUser)
+	
 
 	return (
 		<div>
