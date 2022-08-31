@@ -18,6 +18,7 @@ export default function UserProfile() {
   const history = useHistory()
   const dispatch = useDispatch();
   const state = useSelector((state) => state.user)
+  console.log('user', state)
   const obras = useSelector((state) => state.os)
   const specialties = useSelector((state) => state.specialties)
 
