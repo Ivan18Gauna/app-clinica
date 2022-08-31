@@ -40,11 +40,6 @@ export default function UserProfile() {
     dispatch(getUserDetail(cookie.get('email')));
   }, []);
 
-  
-
-  const state = useSelector((state) => state.user)
-  const obras = useSelector((state) => state.os)
-
   function logoutCookies (){
     cookie.remove('email',{path:'/'})
     cookie.remove('userEmail',{path:'/'})
