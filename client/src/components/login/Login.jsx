@@ -26,23 +26,30 @@ import google from '../../Icons/google.svg';
 import styles from './Login.module.css';
 import stylesForm from '../formPatients/FormPatients.module.css';
 import Cookies from "universal-cookie";
-
+export let email;
 export default function Login() {
 	const cookies = new Cookies();
 	const history = useHistory();
 	const globalUser = useSelector((state) => state.user);
 	const dispatch = useDispatch();
-	const { loginWithPopup, isAuthenticated, logout } = useAuth0();
-	const [user, setUser] = useState({
+	const { loginWithPopup, isAuthenticated, logout ,user} = useAuth0();
+	const [userr, setUser] = useState({
 		email: '',
 		password: '',
 		showPassword: false,
 	});
+	
+	if(isAuthenticated){
+		email = user.email;
+	}
+	if(userr.email){
+		email = userr.email;
+	}
 
 	function handleSubmit(e) {
 		e.preventDefault();
-		cookies.set("email",`${user.email}`,{patch:'/'});
-		dispatch(getUserDetail(user.email));
+		cookies.set("email",`${email}`,{patch:'/'});
+		dispatch(getUserDetail(email));
 		setUser({
 			email: '',
 			password: '',
@@ -52,13 +59,13 @@ export default function Login() {
 	}
 
 	const handleChange = (prop) => (event) => {
-		setUser({ ...user, [prop]: event.target.value });
+		setUser({ ...userr, [prop]: event.target.value });
 	};
 
 	const handleClickShowPassword = () => {
 		setUser({
-			...user,
-			showPassword: !user.showPassword,
+			...userr,
+			showPassword: !userr.showPassword,
 		});
 	};
 
@@ -88,7 +95,7 @@ export default function Login() {
 									<OutlinedInput
 										id="outlined-adornment-password"
 										label="Correo electronico"
-										value={user.email}
+										value={userr.email}
 										onChange={handleChange('email')}
 										endAdornment={
 											<InputAdornment position="end">
@@ -106,8 +113,8 @@ export default function Login() {
 									<OutlinedInput
 										id="outlined-adornment-password"
 										label="Password"
-										type={user.showPassword ? 'text' : 'password'}
-										value={user.password}
+										type={userr.showPassword ? 'text' : 'password'}
+										value={userr.password}
 										onChange={handleChange('password')}
 										endAdornment={
 											<InputAdornment position="end">
@@ -117,7 +124,7 @@ export default function Login() {
 													onMouseDown={handleMouseDownPassword}
 													edge="end"
 												>
-													{user.showPassword ? (
+													{userr.showPassword ? (
 														<VisibilityOff />
 													) : (
 														<Visibility />

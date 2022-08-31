@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import doctor from '../../Icons/iconfinder-icon.svg';
-// import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import {
 	modifyUsers,
 	getUserDetail,
@@ -16,6 +16,7 @@ import styles from './PatientsProfile.module.css';
 import Loading from '../loading/Loading';
 import Cookies from 'universal-cookie';
 import { useDispatch } from 'react-redux';
+
 
 const blood_type = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB+', 'AB-', 'O+', 'O-'];
 const provinces = [
@@ -118,6 +119,8 @@ function validate(info) {
 }
 
 export default function UserProfile({globalUser, obras}) {
+	const history = useHistory()
+	const cookie = new Cookies()
 	const dispatch = useDispatch()
 	const { user, logout, isAuthenticated } = useAuth0();
 	const [editInfoPersonal, setEditInfoPersonal] = useState(false);
@@ -292,6 +295,11 @@ export default function UserProfile({globalUser, obras}) {
 			/* dispatch(getUserDetail(user.email)) */
 		}, 2000)
 	}
+	function logoutCookies (){
+		cookie.remove('email',{path:'/'})
+		cookie.remove('userEmail',{path:'/'})
+		history.push('/')
+	  }
 		
 	return (
 		<div>
@@ -800,9 +808,9 @@ export default function UserProfile({globalUser, obras}) {
 							</Accordion.Item>
 						</Accordion>
 					</div>
-					<Button className={styles.button} onClick={logout}>Cerrar sesion</Button>
+					<Button className={styles.button} onClick={isAuthenticated? logout : logoutCookies}>Cerrar sesion</Button>
 				</div>
-				: <div className='loading-login'><Loading /></div>
+				: <div className='loading-login'></div>
 		</div>
 	);
 }

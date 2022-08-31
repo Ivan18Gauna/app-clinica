@@ -6,23 +6,21 @@ import { getObrasSociales, getUserDetail } from "../../redux/actions";
 import { useAuth0 } from "@auth0/auth0-react";
 import Cookies from "universal-cookie";
 import PatientProfile from '../patientsProfile/PatientsProfile'
+import email from '../login/Login'
 
 export default function UserProfile() {
   const cookie = new Cookies()
   const history = useHistory()
   const dispatch = useDispatch();
-  
+  const {logout} = useAuth0()
+
   useEffect(() => {
-    
-    console.log('efect')
     dispatch(getObrasSociales());
     dispatch(getUserDetail(cookie.get('email')));
   }, [dispatch]);
   
   const state = useSelector((state) => state.user)
   const obras = useSelector((state) => state.os)
-
-  console.log("state",state)
 
   function logoutCookies (){
     cookie.remove('email',{path:'/'})
@@ -35,12 +33,12 @@ export default function UserProfile() {
       {state && state.document ? (
        <div>
          <PatientProfile globalUser={state} obras={obras}/>
-         <button onClick={logoutCookies}>cerrar local</button>
        </div>
       ) : (
         <div>
         <h1>loading</h1>
         <button onClick={logoutCookies}>cerrar local</button>
+        <button onClick={logout}>cerrar auth0</button>
         </div>
       )}
     </div>
