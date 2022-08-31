@@ -1,4 +1,4 @@
-import { React } from 'react';
+import { React, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Portada from '../portada/Portada.jsx';
 import Filters from '../filters/Filters.jsx';
@@ -8,30 +8,31 @@ import styles from './Home.module.css';
 // import { useAuth0 } from '@auth0/auth0-react';
 import HomePatients from '../homePatients/HomePatients.jsx';
 import HomeProfessional from '../homeProfessionals/HomeProfessionals.jsx';
-import Cookie from 'universal-cookie'
-import { useEffect } from 'react';
 import { getUserDetail } from '../../redux/actions/index.js';
+import Cookies from 'universal-cookie';
 
 
 export default function Home() {
-	const dispatch = useDispatch()
-	const cookie = new Cookie();
-	useEffect(() => {
-		dispatch(getUserDetail(cookie.get('userEmail')))
+	const cookie = new Cookies()
+	console.log(cookie.get('userEmail'))
+	
+/* 	const { user, isAuthenticated } = useAuth0();
+ */	const dispatch = useDispatch();
+ 
+ useEffect(() => {
+	 dispatch(getUserDetail(cookie.get('userEmail')))
 	}, [])
 	
-	// const {isAuthenticated} = useAuth0();
-	const user = useSelector( state => state.user)
-	/* if (user.length) {		 */
-		console.log('state', user)
-	/* } */
-
+	const globalUser = useSelector( state => state.user)
+	console.log('felipe', globalUser)
+	/* 	if((isAuthenticated && !globalUser) || (isAuthenticated && globalUser && !globalUser.name)){
+	} */
 
 	return (
 		<div>
-			{ user && user.document && <HomePatients/> }
-			{ user && user.license && <HomeProfessional/> }
-			{ user && user.length < 1 &&
+			{ globalUser && globalUser.document && <HomePatients/> }
+			{ globalUser && globalUser.license && <HomeProfessional/> }
+			{ !globalUser || (globalUser && !globalUser.name) ?
 				<div className={`${styles.container}`}>
 					<Portada />
 					<Filters />
