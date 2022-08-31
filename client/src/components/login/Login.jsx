@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
-
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-
 import FormControl from '@mui/material/FormControl';
 import FormHelperText from '@mui/material/FormHelperText';
 import Visibility from '@mui/icons-material/Visibility';
@@ -18,7 +15,6 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import InputLabel from '@mui/material/InputLabel';
-
 import Loading from '../loading/Loading';
 import Auth0 from '../auth0/Auth0';
 import { Link, useHistory } from 'react-router-dom';
@@ -41,6 +37,7 @@ const schema = yup
 	.required();
 
 export default function Login() {
+	
 	const cookies = new Cookies();
 	const history = useHistory();
 	const globalUser = useSelector((state) => state.user);
