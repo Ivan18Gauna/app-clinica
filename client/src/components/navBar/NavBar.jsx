@@ -12,7 +12,7 @@ function NavBarEdit() {
   const conf = cookies.get("email");
   const { isAuthenticated } = useAuth0();
   const globalUser = useSelector((state) => state.user);
-  console.log("cook",conf)
+  console.log("cook",isAuthenticated)
   return (
     <Navbar
       className={styles.navbar}
