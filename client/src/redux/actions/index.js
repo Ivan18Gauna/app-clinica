@@ -143,9 +143,10 @@ export function registerPatients(payload) {
 	};
 }
 
-export function modifyUsers(payload, id) {
-	return async function () {
+export function modifyUsers(payload, id, mail) {
+	return async function (dispatch) {
 		const healthData = await axios.put(`/patients/edit/${id}`, payload);
+		dispatch(getUserDetail(mail));
 
 		return healthData;
 	};
@@ -159,13 +160,14 @@ export function getUserDetail(mail) {
 	console.log('ejecuciones')
 	return async function (dispatch) {
 		const userMail = await axios(`/user/${mail}`);
-		
+		// console.log("soy user",userMail)
 		return dispatch({
 			type: GET_USER_MAIL,
 			payload: userMail.data,
 		});
 	};
 }
+
 
 
 export function getClinicHistory(id) {
