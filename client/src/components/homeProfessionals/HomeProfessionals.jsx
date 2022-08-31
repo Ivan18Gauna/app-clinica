@@ -104,7 +104,7 @@ export default function HomeProfessional() {
 
 // actions
 
-    // export function GET_NOTES = "GET_NOTES";
+    // export const GET_NOTES = "GET_NOTES";
 
     // export function getNotes(license){
     //     return async function (dispatch) {
