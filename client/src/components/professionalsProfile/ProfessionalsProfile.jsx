@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import { getUserDetail } from '../../redux/actions';
+import { getUserDetail, modifyProfessionals } from '../../redux/actions';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -142,11 +142,7 @@ export default function ProfessionalProfile({ globalUser, specialties }) {
             avatar: respuesta.data.secure_url
         })
     }
-
-
-    let id;
-    if (globalUser && globalUser.id) { id = globalUser.id }
-
+    console.log('user',globalUser)
     if ((isAuthenticated && !globalUser) || (isAuthenticated && globalUser && !globalUser.name)) {
         dispatch(getUserDetail(user.email));
     }
@@ -206,7 +202,7 @@ export default function ProfessionalProfile({ globalUser, specialties }) {
 
     function handleSubmit(e) {
         e.preventDefault();
-        // dispatch(registerDoctors(input));
+        dispatch(modifyProfessionals(input, globalUser.id, globalUser.mail));
         setInput({
             name: '',
             lastname: '',
@@ -223,7 +219,8 @@ export default function ProfessionalProfile({ globalUser, specialties }) {
             password: '',
             new_password: '',
         });
-
+        setEditInfoPersonal(false);
+        setInput({})
     }
 
     return (
@@ -241,6 +238,7 @@ export default function ProfessionalProfile({ globalUser, specialties }) {
                             <Accordion.Item eventKey="0">
                                 <Accordion.Header>Mis Datos</Accordion.Header>
                                 <Accordion.Body>
+                                    <p>Especialidad: {globalUser.specialty} </p>
                                     <p>Fecha de nacimiento: {globalUser.birth}</p>
                                     <p>Número de Documento {globalUser.document}</p>
                                     <p>Número de telefono: {globalUser.phone}</p>

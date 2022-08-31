@@ -152,8 +152,12 @@ export function modifyUsers(payload, id, mail) {
 	};
 }
 
-export function modifyProfessionals(payload, id){
-	
+export function modifyProfessionals(payload, id, mail){
+	return async function (dispatch){
+		const modifyProfessionals= await axios.put(`/professionals/edit/${id}`, payload);
+		dispatch(getUserDetail(mail))
+		return modifyProfessionals;
+	}
 }
 
 export function getUserDetail(mail) {
