@@ -25,8 +25,10 @@ import img from '../../Icons/logo.svg';
 import google from '../../Icons/google.svg';
 import styles from './Login.module.css';
 import stylesForm from '../formPatients/FormPatients.module.css';
+import Cookies from "universal-cookie";
 
 export default function Login() {
+	const cookies = new Cookies();
 	const history = useHistory();
 	const globalUser = useSelector((state) => state.user);
 	const dispatch = useDispatch();
@@ -39,6 +41,7 @@ export default function Login() {
 
 	function handleSubmit(e) {
 		e.preventDefault();
+		cookies.set("email",`${user.email}`,{patch:'/'});
 		dispatch(getUserDetail(user.email));
 		setUser({
 			email: '',
@@ -63,22 +66,10 @@ export default function Login() {
 		event.preventDefault();
 	};
 
-	console.log('soy auth0', Auth0);
-	console.log('soy user', user);
+	
+	// console.log('soy user', user);
 
-	// if((isAuthenticated && !globalUser.document) || (isAuthenticated && !globalUser.license) ){
-	//   history.push('/signin')
-	// }
-	// if((isAuthenticated && globalUser.document) || (isAuthenticated && globalUser.license)){
-	//   history.push('/home')
-	// }
-	// if(isAuthenticated){
-	// setTimeout(()=>{
-	//   dispatch(getUserDetail(user.email));
-	// }, 2000)
-	// history.push('/signin')
-	// history.push('/home');
-	// }
+
 
 	return (
 		<div>
@@ -187,4 +178,4 @@ export default function Login() {
 				</div>
 			)}
 		</div>
-	);
+	)}
