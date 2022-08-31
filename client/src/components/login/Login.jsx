@@ -5,8 +5,12 @@ import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-import TextField from '@mui/material/TextField';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+
 import FormControl from '@mui/material/FormControl';
+import FormHelperText from '@mui/material/FormHelperText';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import PersonIcon from '@mui/icons-material/Person';
@@ -21,112 +25,114 @@ import { Link, useHistory } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserDetail } from '../../redux/actions';
-import img from '../../Icons/logo.svg';
 import google from '../../Icons/google.svg';
 import styles from './Login.module.css';
 import stylesForm from '../formPatients/FormPatients.module.css';
+import Cookies from "universal-cookie";
+
+const schema = yup
+	.object({
+		email: yup
+			.string()
+			.email('Ingresa un correo valido')
+			.required('Este campo es requerido'),
+		password: yup.string().required('Este campo es requerido'),
+	})
+	.required();
 
 export default function Login() {
+	const cookies = new Cookies();
 	const history = useHistory();
 	const globalUser = useSelector((state) => state.user);
 	const dispatch = useDispatch();
 	const { loginWithPopup, isAuthenticated, logout } = useAuth0();
-	const [user, setUser] = useState({
-		email: '',
-		password: '',
-		showPassword: false,
-	});
-
-	function handleSubmit(e) {
-		e.preventDefault();
-		dispatch(getUserDetail(user.email));
-		setUser({
+	const {
+		setValue,
+		getValues,
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm({
+		mode: 'onBlur',
+		resolver: yupResolver(schema),
+		defaultValues: {
 			email: '',
 			password: '',
 			showPassword: false,
-		});
+		},
+	});
+
+	const values = getValues();
+	const submitForm = (data) => {
+		dispatch(getUserDetail(data.email));
+		cookies.set("email",`${data.email}`,{patch:'/'});
 		history.push('/home');
-	}
-
-	const handleChange = (prop) => (event) => {
-		setUser({ ...user, [prop]: event.target.value });
 	};
-
-	const handleClickShowPassword = () => {
-		setUser({
-			...user,
-			showPassword: !user.showPassword,
-		});
-	};
-
 	const handleMouseDownPassword = (event) => {
 		event.preventDefault();
 	};
-
-	console.log('soy auth0', Auth0);
-	console.log('soy user', user);
-
-	// if((isAuthenticated && !globalUser.document) || (isAuthenticated && !globalUser.license) ){
-	//   history.push('/signin')
-	// }
-	// if((isAuthenticated && globalUser.document) || (isAuthenticated && globalUser.license)){
-	//   history.push('/home')
-	// }
-	// if(isAuthenticated){
-	// setTimeout(()=>{
-	//   dispatch(getUserDetail(user.email));
-	// }, 2000)
-	// history.push('/signin')
-	// history.push('/home');
-	// }
 
 	return (
 		<div>
 			{!isAuthenticated ? (
 				<div className={styles.container}>
-					<Form className={styles.form} onSubmit={handleSubmit}>
+					<Form className={styles.form} onSubmit={handleSubmit(submitForm)}>
 						<div className={styles.titulo}>
 							<h2>Inicia sesión</h2>
 						</div>
 						<Row className={styles.formGroup} lg={1}>
 							<Col className={styles.col} lg={9}>
-								<FormControl className={styles.input} variant="outlined">
+								<FormControl
+									error={errors.email}
+									className={styles.input}
+									variant="outlined"
+								>
 									<InputLabel htmlFor="outlined-adornment-password">
 										Correo electronico
 									</InputLabel>
 									<OutlinedInput
 										id="outlined-adornment-password"
 										label="Correo electronico"
-										value={user.email}
-										onChange={handleChange('email')}
+										{...register('email')}
 										endAdornment={
 											<InputAdornment position="end">
 												<PersonIcon />
 											</InputAdornment>
 										}
 									/>
+									{errors.email && (
+										<FormHelperText>{errors.email.message}</FormHelperText>
+									)}
 								</FormControl>
 							</Col>
 							<Col className={styles.col} lg={9}>
-								<FormControl className={styles.input} variant="outlined">
+								<FormControl
+									error={errors.password}
+									className={styles.input}
+									variant="outlined"
+								>
 									<InputLabel htmlFor="outlined-adornment-password">
 										Contraseña
 									</InputLabel>
 									<OutlinedInput
 										id="outlined-adornment-password"
 										label="Password"
-										type={user.showPassword ? 'text' : 'password'}
-										value={user.password}
-										onChange={handleChange('password')}
+										type={values.showPassword ? 'text' : 'password'}
+										{...register('password')}
 										endAdornment={
 											<InputAdornment position="end">
 												<IconButton
 													aria-label="toggle password visibility"
-													onClick={handleClickShowPassword}
+													onClick={() => {
+														let values = getValues('showPassword');
+														setValue('showPassword', !values, {
+															shouldValidate: true,
+														});
+													}}
 													onMouseDown={handleMouseDownPassword}
 													edge="end"
 												>
-													{user.showPassword ? (
+													{values.showPassword ? (
 														<VisibilityOff />
 													) : (
 														<Visibility />
@@ -135,13 +141,13 @@ export default function Login() {
 											</InputAdornment>
 										}
 									/>
+									{errors.password && (
+										<FormHelperText>{errors.password.message}</FormHelperText>
+									)}
 								</FormControl>
 							</Col>
 							<Col className={styles.col} lg={9}>
 								<Link to="/sincomponente">¿Olvidaste tu contraseña?</Link>
-							</Col>
-							<Col className={styles.col} lg={9}>
-								<Form.Check name="connected" label="Mantenerme conectado" />
 							</Col>
 						</Row>
 						<div className={styles.btn}>
@@ -171,7 +177,7 @@ export default function Login() {
 					</div>
 					<div id="loading-num">
 						{setTimeout(() => {
-							dispatch(getUserDetail(user.email));
+							dispatch(getUserDetail(values.email));
 						}, 1000)}
 						{setTimeout(() => {
 							if (globalUser && globalUser.mail) {
@@ -187,5 +193,4 @@ export default function Login() {
 				</div>
 			)}
 		</div>
-	);
-}
+	)}
