@@ -30,7 +30,6 @@ import styles from './Login.module.css';
 import stylesForm from '../formPatients/FormPatients.module.css';
 import Cookies from "universal-cookie";
 
-
 const schema = yup
 	.object({
 		email: yup
@@ -41,50 +40,33 @@ const schema = yup
 	})
 	.required();
 
-export let email;
-
 export default function Login() {
 	const cookies = new Cookies();
 	const history = useHistory();
 	const globalUser = useSelector((state) => state.user);
 	const dispatch = useDispatch();
-
-	const { loginWithPopup, isAuthenticated, logout ,user} = useAuth0();
-	const [userr, setUser] = useState({
-		email: '',
-		password: '',
-		showPassword: false,
-	});
-	
-	if(isAuthenticated){
-		email = user.email;
-	}
-	if(userr.email){
-		email = userr.email;
-	}
-
-	function handleSubmit(e) {
-		e.preventDefault();
-		cookies.set("email",`${email}`,{patch:'/'});
-		dispatch(getUserDetail(email));
-		setUser({
+	const { loginWithPopup, isAuthenticated, logout } = useAuth0();
+	const {
+		setValue,
+		getValues,
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm({
+		mode: 'onBlur',
+		resolver: yupResolver(schema),
+		defaultValues: {
 			email: '',
 			password: '',
 			showPassword: false,
-		});
+		},
+	});
+
+	const values = getValues();
+	const submitForm = (data) => {
+		dispatch(getUserDetail(data.email));
+		cookies.set("email",`${data.email}`,{patch:'/'});
 		history.push('/home');
-	}
-
-	const handleChange = (prop) => (event) => {
-		setUser({ ...userr, [prop]: event.target.value });
-	};
-
-	const handleClickShowPassword = () => {
-		setUser({
-			...userr,
-			showPassword: !userr.showPassword,
-		});
-
 	};
 	const handleMouseDownPassword = (event) => {
 		event.preventDefault();
@@ -111,12 +93,7 @@ export default function Login() {
 									<OutlinedInput
 										id="outlined-adornment-password"
 										label="Correo electronico"
-
 										{...register('email')}
-
-										value={userr.email}
-										onChange={handleChange('email')}
-
 										endAdornment={
 											<InputAdornment position="end">
 												<PersonIcon />
@@ -140,13 +117,8 @@ export default function Login() {
 									<OutlinedInput
 										id="outlined-adornment-password"
 										label="Password"
-
-							
-
-										type={userr.showPassword ? 'text' : 'password'}
-										value={userr.password}
-										onChange={handleChange('password')}
-
+										type={values.showPassword ? 'text' : 'password'}
+										{...register('password')}
 										endAdornment={
 											<InputAdornment position="end">
 												<IconButton
@@ -160,9 +132,7 @@ export default function Login() {
 													onMouseDown={handleMouseDownPassword}
 													edge="end"
 												>
-
 													{values.showPassword ? (
-
 														<VisibilityOff />
 													) : (
 														<Visibility />

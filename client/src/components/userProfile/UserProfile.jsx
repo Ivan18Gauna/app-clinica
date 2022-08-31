@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getObrasSociales, getUserDetail, get_specialties } from "../../redux/actions";
-// import { useAuth0 } from "@auth0/auth0-react";
+import { useAuth0 } from "@auth0/auth0-react";
 import Cookies from "universal-cookie";
 
 import PatientProfile from '../patientsProfile/PatientsProfile';
@@ -14,7 +14,7 @@ import styles from '../patientsProfile/PatientsProfile.module.css';
 
 import ProfessionalProfile from "../professionalsProfile/ProfessionalsProfile";
 
-import PatientProfile from '../patientsProfile/PatientsProfile'
+
 import email from '../login/Login'
 
 
@@ -42,8 +42,8 @@ export default function UserProfile() {
 
   
 
-  const state = useSelector((state) => state.user)
-  const obras = useSelector((state) => state.os)
+ 
+  
 
   function logoutCookies (){
     cookie.remove('email',{path:'/'})
