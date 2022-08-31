@@ -171,10 +171,18 @@ export default function UserProfile({globalUser, obras}) {
 		if (info.vaccines && info.vaccines.includes(e.target.value)) {
 			alert('Ya se selecciono esa vacuna.');
 		} else {
-			setInfo({
-				...info,
-				vaccines: [...info.vaccines, e.target.value],
-			});
+			if(info.vaccines) {
+				setInfo({
+					...info,
+					vaccines: [...info.vaccines, e.target.value]
+				});
+			}
+			else {
+				setInfo({
+					...info,
+					vaccines: [e.target.value]
+				});
+			}
 		}
 	}
 	function handleDeleteVaccines(e) {
@@ -192,15 +200,24 @@ export default function UserProfile({globalUser, obras}) {
 		if (info.allergies && info.allergies.includes(allergies_)) {
 			alert('Alergia ya ingresada.');
 		} else {
-			setInfo({
-				...info,
-				allergies: [...info.allergies, allergies_],
-			});
+			if(info.allergies){
+				setInfo({
+					...info,
+					allergies: [...info.allergies, allergies_]
+				});
+			}
+			else {
+				setInfo({
+					...info,
+					allergies: [allergies_]
+				});
+			}
 		}
 		setAllergies('');
 	}
 	function handleDeleteAllergies(e) {
 		e.preventDefault();
+
 		setInfo({
 			...info,
 			allergies: info.allergies.filter((el) => el !== e.target.value),
@@ -226,13 +243,21 @@ export default function UserProfile({globalUser, obras}) {
 	}
 	function handleSubmitChronicles(e) {
 		e.preventDefault();
-		if (info.chronicles.includes(chronicles_)) {
+		if (info.chronicles && info.chronicles.includes(chronicles_)) {
 			alert('Enfermedad crónica ya ingresada.');
 		} else {
-			setInfo({
-				...info,
-				chronicles: [...info.chronicles, chronicles_],
-			});
+			if(info.chronicles){
+				setInfo({
+					...info,
+					chronicles: [...info.chronicles, chronicles_]
+				});
+			}
+			else {
+				setInfo({
+					...info,
+					chronicles: [chronicles_]
+				});
+			}
 		}
 		setChronicles('');
 	}
@@ -312,8 +337,9 @@ export default function UserProfile({globalUser, obras}) {
 		setEditInfoPersonal(false);
 		setEditInfoSalud(false);
 		setInfo({});
+		setChronicles('');
+		setAllergies('');
 	}
-	console.log(info)
 		
 	return (
 		<div>
