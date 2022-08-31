@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import doctor from '../../Icons/iconfinder-icon.svg';
 // import { useHistory } from "react-router-dom";
 import {
@@ -135,6 +136,7 @@ export default function UserProfile({globalUser, obras}) {
 	}
 
 	const [info, setInfo] = useState({
+		avatar: '',
 		name: '',
 		lastname: '',
 		document: '',
@@ -292,12 +294,28 @@ export default function UserProfile({globalUser, obras}) {
 		e.preventDefault();
 		dispatch(modifyUsers(info, id));
 	}
+	const uploadImage = async (e) => {
+        
+        const files = e.target.files;
+        const data = new FormData();
+        data.append("file", files[0]);
+        data.append("upload_preset", "appclinica");
+    
+        const respuesta = await axios.post(
+          "https://api.cloudinary.com/v1_1/appclinica/image/upload",data
+        );
+    
+        setInfo({
+        ...info,
+        avatar: respuesta.data.secure_url
+    })  
+}
 		
 	return (
 		<div>
 			<div className={styles.container}>
 				<div className={styles.perfil}>
-					<img src={doctor} alt="imagen no disponible" />
+					<img src={globalUser.avatar? globalUser.avatar : doctor} alt="imagen no disponible" />
 					<h4>
 						{globalUser.name} {globalUser.lastname}
 					</h4>
@@ -315,6 +333,7 @@ export default function UserProfile({globalUser, obras}) {
 								<p>Ciudad: {globalUser.city}</p>
 								<p>Calle: {globalUser.street}</p>
 								<p>Número: {globalUser.number}</p>
+								<p>Avatar: </p>
 								{editInfoPersonal === false ? (
 									<Button onClick={handleInfoPersonal}>
 										Editar información personal
@@ -323,7 +342,8 @@ export default function UserProfile({globalUser, obras}) {
 									<div className={stylesForm.container}>
 										<Form
 											className={`${stylesForm.form}`}
-											onSubmit={(e) => handleSubmit(e)}
+											onSubmit={handleSubmit}
+											//onSubmit={(e) => handleSubmit(e)}
 										>
 											<div className={stylesForm.titulo}>
 												<h3>Editar información personal:</h3>
@@ -354,6 +374,14 @@ export default function UserProfile({globalUser, obras}) {
 													<Form.Control.Feedback type="invalid">
 														{error.lastname}
 													</Form.Control.Feedback>
+												</Col>
+												<Col>
+												<Form.Control
+												type="file"
+												name="avatar"
+												placeholder='Cambie su imagen'
+												onChange={uploadImage}
+												/>
 												</Col>
 											</Row>
 											<Row className={`${stylesForm.row}`} lg={1}>
@@ -535,8 +563,8 @@ export default function UserProfile({globalUser, obras}) {
 
 													<Button
 														className={`${stylesForm.buttonSubmit}`}
-														type="submit"
-														onClick={handleSubmit}
+														type="subtmit"
+												
 													>
 														Confirmar
 													</Button>
