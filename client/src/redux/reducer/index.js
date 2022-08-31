@@ -1,49 +1,48 @@
 import {
-	GET_DOCTORS,
-	GET_DOCTORS_DETAIL,
-	FILTER_CONVINADO,
-	POST_REGISTER_DOCTOR,
-	GET_SPECIALTIES,
-	GET_CITIES,
-	GET_OS,
+  GET_DOCTORS,
+  GET_DOCTORS_DETAIL,
+  FILTER_CONVINADO,
+  POST_REGISTER_DOCTOR,
+  GET_SPECIALTIES,
+  GET_CITIES,
+  GET_OS,
   GET_PATIENTS,
   GET_PATIENTS_NAME,
   GET_USER_MAIL,
   GET_CLINIC_HISTORY,
-} from '../actions/actions';
+} from "../actions/actions";
 
 const initialState = {
   doctors: [],
-  allDoc:[],
+  allDoc: [],
   detail: [],
-  specialties:[],
-  cities:[],
-  os:[],
+  specialties: [],
+  cities: [],
+  os: [],
   patients: [],
-  user:[],
+  user: [],
   clinicHistory: [],
 };
 
 function rootReducer(state = initialState, action) {
   switch (action.type) {
-    
     case GET_DOCTORS:
-      return { 
+      return {
         ...state,
-        doctors: action.payload ,
-        alDoc: action.payload 
+        doctors: action.payload,
+        alDoc: action.payload,
       };
 
     case GET_SPECIALTIES:
-      return { ...state, specialties: action.payload  };
+      return { ...state, specialties: action.payload };
 
     case GET_CITIES:
-    return { ...state, cities: action.payload };
-    
+      return { ...state, cities: action.payload };
+
     case FILTER_CONVINADO:
-      var allDoctors = state.allDoc
-      allDoctors = action.payload
-    return { ...state, doctors: allDoctors };
+      var allDoctors = state.allDoc;
+      allDoctors = action.payload;
+      return { ...state, doctors: allDoctors };
 
     case GET_DOCTORS_DETAIL:
       return {
@@ -57,37 +56,35 @@ function rootReducer(state = initialState, action) {
       };
 
     case GET_OS:
-      return{
+      return {
         ...state,
-        os: action.payload
+        os: action.payload,
       };
 
     case GET_PATIENTS:
-      return{
+      return {
         ...state,
-        patients: action.payload
+        patients: action.payload,
       };
 
     case GET_PATIENTS_NAME:
-      return{
-        ...state, 
-        patients: action.payload
+      return {
+        ...state,
+        patients: action.payload,
       };
 
     case GET_USER_MAIL:
-/*       console.log('case')
- *//*       console.log(state.user)
- */      return{
+      return {
         ...state,
-        user: action.payload
-      }; 
+        user: action.payload,
+      };
 
     case GET_CLINIC_HISTORY:
       return { ...state, clinicHistory: action.payload };
 
-		default:
-			return state;
-	}
+    default:
+      return state;
+  }
 }
 
 export default rootReducer;

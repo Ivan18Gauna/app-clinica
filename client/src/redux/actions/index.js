@@ -156,7 +156,6 @@ export function getUserDetail(mail) {
 	console.log('ejecuciones')
 	return async function (dispatch) {
 		const userMail = await axios(`/user/${mail}`);
-		
 		return dispatch({
 			type: GET_USER_MAIL,
 			payload: userMail.data,
