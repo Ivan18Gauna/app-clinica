@@ -28,6 +28,7 @@ import { getUserDetail } from '../../redux/actions';
 import google from '../../Icons/google.svg';
 import styles from './Login.module.css';
 import stylesForm from '../formPatients/FormPatients.module.css';
+import Cookies from "universal-cookie";
 
 const schema = yup
 	.object({
@@ -40,6 +41,7 @@ const schema = yup
 	.required();
 
 export default function Login() {
+	const cookies = new Cookies();
 	const history = useHistory();
 	const globalUser = useSelector((state) => state.user);
 	const dispatch = useDispatch();
@@ -61,29 +63,14 @@ export default function Login() {
 	});
 
 	const values = getValues();
-
 	const submitForm = (data) => {
 		dispatch(getUserDetail(data.email));
+		cookies.set("email",`${data.email}`,{patch:'/'});
 		history.push('/home');
 	};
-
 	const handleMouseDownPassword = (event) => {
 		event.preventDefault();
 	};
-
-	// if((isAuthenticated && !globalUser.document) || (isAuthenticated && !globalUser.license) ){
-	//   history.push('/signin')
-	// }
-	// if((isAuthenticated && globalUser.document) || (isAuthenticated && globalUser.license)){
-	//   history.push('/home')
-	// }
-	// if(isAuthenticated){
-	// setTimeout(()=>{
-	//   dispatch(getUserDetail(user.email));
-	// }, 2000)
-	// history.push('/signin')
-	// history.push('/home');
-	// }
 
 	return (
 		<div>
@@ -209,5 +196,4 @@ export default function Login() {
 				</div>
 			)}
 		</div>
-	);
-}
+	)}

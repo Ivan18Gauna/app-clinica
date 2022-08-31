@@ -13,8 +13,7 @@ import Button from 'react-bootstrap/Button';
 import Accordion from 'react-bootstrap/Accordion';
 import stylesForm from '../formPatients/FormPatients.module.css';
 import styles from './PatientsProfile.module.css';
-import Loading from '../loading/Loading';
-import Cookies from 'universal-cookie';
+// import Cookies from 'universal-cookie';
 import { useDispatch } from 'react-redux';
 
 const blood_type = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB+', 'AB-', 'O+', 'O-'];
@@ -126,9 +125,14 @@ export default function UserProfile({globalUser, obras}) {
 	const [chronicles_, setChronicles] = useState('');
 	const [error, setError] = useState({});
 	let id;
-	/* 	if(globalUser && globalUser.id){ id = globalUser.id; }
-	 */
+	if(globalUser && globalUser.id){ id = globalUser.id}
 
+	if((isAuthenticated && !globalUser) || (isAuthenticated && globalUser && !globalUser.name)){
+		dispatch(getUserDetail(user.email));
+	}
+	if(globalUser && !globalUser.name){
+		dispatch(getUserDetail(globalUser.mail));
+	}
 
 	const [info, setInfo] = useState({
 		name: '',
@@ -287,10 +291,6 @@ export default function UserProfile({globalUser, obras}) {
 	function handleSubmit(e) {
 		e.preventDefault();
 		dispatch(modifyUsers(info, id));
-
-		setTimeout(()=>{
-			/* dispatch(getUserDetail(user.email)) */
-		}, 2000)
 	}
 		
 	return (
@@ -551,8 +551,6 @@ export default function UserProfile({globalUser, obras}) {
 								<Accordion.Body>
 									<p>Grupo Sanguineo:</p>
 									{globalUser.blood ? globalUser.blood : 'Sin información'}
-									{/* <p>Obra Social:</p>
-								{globalUser.oS} */}
 									<p>Vacunas que posee aplicadas:</p>
 									{globalUser.vaccine ? globalUser.blood : 'Sin información'}
 									<p>Alergias: </p>
@@ -800,9 +798,8 @@ export default function UserProfile({globalUser, obras}) {
 							</Accordion.Item>
 						</Accordion>
 					</div>
-					<Button className={styles.button} onClick={logout}>Cerrar sesion</Button>
+					{/* <Button className={styles.button} onClick={logout}>Cerrar sesion</Button> */}
 				</div>
-				: <div className='loading-login'><Loading /></div>
 		</div>
 	);
 }
