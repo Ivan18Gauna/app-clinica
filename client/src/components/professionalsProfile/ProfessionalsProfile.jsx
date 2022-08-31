@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import doctor from '../../Icons/iconfinder-icon.svg';
+import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -108,6 +109,41 @@ export default function ProfessionalProfile({ globalUser, specialties }) {
     const { user, logout, isAuthenticated } = useAuth0();
     const [editInfoPersonal, setEditInfoPersonal] = useState(false);
     const [error, setError] = useState({});
+    const [input, setInput] = useState({
+        // name: '',
+        // lastname: '',
+        // specialty: [],
+        // license: '',
+        // birth: '',
+        // phone: '',
+        // mail: '',
+        // province: '',
+        // city: '',
+        // number: '',
+        // street: '',
+        // username: '',
+        // password: '',
+        // new_password: '',
+    });
+
+    const uploadImage = async (e) => {
+
+        const files = e.target.files;
+        const data = new FormData();
+        data.append("file", files[0]);
+        data.append("upload_preset", "appclinica");
+
+        const respuesta = await axios.post(
+            "https://api.cloudinary.com/v1_1/appclinica/image/upload", data
+        );
+
+        setInput({
+            ...input,
+            avatar: respuesta.data.secure_url
+        })
+    }
+
+
     let id;
     if (globalUser && globalUser.id) { id = globalUser.id }
 
@@ -118,22 +154,6 @@ export default function ProfessionalProfile({ globalUser, specialties }) {
         dispatch(getUserDetail(globalUser.mail));
     }
 
-    const [input, setInput] = useState({
-        name: '',
-        lastname: '',
-        specialty: [],
-        license: '',
-        birth: '',
-        phone: '',
-        mail: '',
-        province: '',
-        city: '',
-        number: '',
-        street: '',
-        username: '',
-        password: '',
-        new_password: '',
-    });
 
     function handleInput(e) {
         setInput({
@@ -221,14 +241,14 @@ export default function ProfessionalProfile({ globalUser, specialties }) {
                             <Accordion.Item eventKey="0">
                                 <Accordion.Header>Mis Datos</Accordion.Header>
                                 <Accordion.Body>
-                                <p>Fecha de nacimiento: {globalUser.birth}</p>
-								<p>Número de Documento {globalUser.document}</p>
-								<p>Número de telefono: {globalUser.phone}</p>
-								<p>Email: {globalUser.mail}</p>
-								<p>Provincia: {globalUser.province}</p>
-								<p>Ciudad: {globalUser.city}</p>
-								<p>Calle: {globalUser.street}</p>
-								<p>Número: {globalUser.number}</p>
+                                    <p>Fecha de nacimiento: {globalUser.birth}</p>
+                                    <p>Número de Documento {globalUser.document}</p>
+                                    <p>Número de telefono: {globalUser.phone}</p>
+                                    <p>Email: {globalUser.mail}</p>
+                                    <p>Provincia: {globalUser.province}</p>
+                                    <p>Ciudad: {globalUser.city}</p>
+                                    <p>Calle: {globalUser.street}</p>
+                                    <p>Número: {globalUser.number}</p>
                                     {editInfoPersonal === false ? (
                                         <Button onClick={handleInfoPersonal}>
                                             Editar información personal
@@ -265,6 +285,14 @@ export default function ProfessionalProfile({ globalUser, specialties }) {
                                                         <Form.Control.Feedback type="invalid">
                                                             {error.lastname}
                                                         </Form.Control.Feedback>
+                                                    </Col>
+                                                    <Col>
+                                                        <Form.Control
+                                                            type="file"
+                                                            name="avatar"
+                                                            placeholder='Cambie su imagen'
+                                                            onChange={uploadImage}
+                                                        />
                                                     </Col>
                                                 </Row>
                                                 <Row className={`${stylesForm.row}`} lg={1}>
@@ -444,7 +472,7 @@ export default function ProfessionalProfile({ globalUser, specialties }) {
                                                 </Row>
                                                 <div>
                                                     <ul>
-                                                        {input.specialty.map((e) => (
+                                                        {input.specialty && input.specialty.map((e) => (
                                                             <li key={e} value={e}>
                                                                 {e}
                                                                 <Button variant="danger" value={e} onClick={handleDelete}>
