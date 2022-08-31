@@ -11,4 +11,5 @@ export const GET_PATIENTS = 'GET_PATIENTS';
 export const GET_USER_MAIL = 'GET_USER_MAIL';
 export const GET_CLINIC_HISTORY = 'GET_CLINIC_HISTORY';
 export const GET_NOTES = "GET_NOTES";
-
+export const GET_TURNO_PROF = "GET_TURNO_PROF";
+export const GET_TURNO_PAT = "GET_TURNO_PAT";
