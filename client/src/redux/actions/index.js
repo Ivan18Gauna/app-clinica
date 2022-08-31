@@ -206,6 +206,17 @@ export function postNotes(payload){
 	}
 }
 
+export function newTurno(payload){
+	return async function () {
+		try{
+			const turno = await axios.post('/turnos', payload);
+			return turno;
+		}catch(error){
+			console.log(error)
+		}
+	}
+}
+
 
 export function deleteNotes(payload){
 	return async function () {
