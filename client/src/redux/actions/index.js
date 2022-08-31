@@ -143,9 +143,10 @@ export function registerPatients(payload) {
 	};
 }
 
-export function modifyUsers(payload, id) {
-	return async function () {
+export function modifyUsers(payload, id, mail) {
+	return async function (dispatch) {
 		const healthData = await axios.put(`/patients/edit/${id}`, payload);
+		dispatch(getUserDetail(mail));
 
 		return healthData;
 	};

@@ -122,11 +122,28 @@ export default function UserProfile({globalUser, obras}) {
 	const { user, logout, isAuthenticated } = useAuth0();
 	const [editInfoPersonal, setEditInfoPersonal] = useState(false);
 	const [editInfoSalud, setEditInfoSalud] = useState(false);
-	const [allergies_, setAllergies] = useState('');
-	const [chronicles_, setChronicles] = useState('');
+	const [allergies_, setAllergies] = useState(globalUser.allergies);
+	const [chronicles_, setChronicles] = useState(globalUser.chronicles);
 	const [error, setError] = useState({});
-	let id;
-	if(globalUser && globalUser.id){ id = globalUser.id}
+	const [info, setInfo] = useState({});
+
+	const uploadImage = async (e) => {
+        
+        const files = e.target.files;
+        const data = new FormData();
+        data.append("file", files[0]);
+        data.append("upload_preset", "appclinica");
+    
+        const respuesta = await axios.post(
+          "https://api.cloudinary.com/v1_1/appclinica/image/upload",data
+        );
+    
+        setInfo({
+        ...info,
+        avatar: respuesta.data.secure_url
+		})  
+	}
+
 
 	if((isAuthenticated && !globalUser) || (isAuthenticated && globalUser && !globalUser.name)){
 		dispatch(getUserDetail(user.email));
@@ -135,29 +152,6 @@ export default function UserProfile({globalUser, obras}) {
 		dispatch(getUserDetail(globalUser.mail));
 	}
 
-	const [info, setInfo] = useState({
-		avatar: '',
-		name: '',
-		lastname: '',
-		document: '',
-		birth: '',
-		phone: '',
-		mail: '',
-		province: '',
-		city: '',
-		number: '',
-		street: '',
-		username: '',
-		password: '',
-		new_password: '',
-		blood: '',
-		vaccines: [],
-		allergies: [],
-		donation: '',
-		transfusion: '',
-		chronicles: [],
-		oS: '',
-	});
 
 	function onKeyDown(e) {
 		if (e.code === 'Enter') {
@@ -174,7 +168,7 @@ export default function UserProfile({globalUser, obras}) {
 	}
 	function handleSelectVaccines(e) {
 		e.preventDefault();
-		if (info.vaccines.includes(e.target.value)) {
+		if (info.vaccines && info.vaccines.includes(e.target.value)) {
 			alert('Ya se selecciono esa vacuna.');
 		} else {
 			setInfo({
@@ -195,7 +189,7 @@ export default function UserProfile({globalUser, obras}) {
 	}
 	function handleSubmitAllergies(e) {
 		e.preventDefault();
-		if (info.allergies.includes(allergies_)) {
+		if (info.allergies && info.allergies.includes(allergies_)) {
 			alert('Alergia ya ingresada.');
 		} else {
 			setInfo({
@@ -292,24 +286,34 @@ export default function UserProfile({globalUser, obras}) {
 	}
 	function handleSubmit(e) {
 		e.preventDefault();
-		dispatch(modifyUsers(info, id));
+		dispatch(modifyUsers(info, globalUser.id, globalUser.mail));
+		setInfo({
+			name: '',
+			lastname: '',
+			document: '',
+			birth: '',
+			phone: '',
+			mail: '',
+			province: '',
+			city: '',
+			number: '',
+			street: '',
+			username: '',
+			password: '',
+			new_password: '',
+			blood: '',
+			vaccines: [],
+			allergies: [],
+			donation: '',
+			transfusion: '',
+			chronicles: [],
+			oS: ''
+		});
+		setEditInfoPersonal(false);
+		setEditInfoSalud(false);
+		setInfo({});
 	}
-	const uploadImage = async (e) => {
-        
-        const files = e.target.files;
-        const data = new FormData();
-        data.append("file", files[0]);
-        data.append("upload_preset", "appclinica");
-    
-        const respuesta = await axios.post(
-          "https://api.cloudinary.com/v1_1/appclinica/image/upload",data
-        );
-    
-        setInfo({
-        ...info,
-        avatar: respuesta.data.secure_url
-    })  
-}
+	console.log(info)
 		
 	return (
 		<div>
@@ -643,7 +647,7 @@ export default function UserProfile({globalUser, obras}) {
 													<Col className={`${stylesForm.col}`}>
 														<ul className={stylesForm.lista}>
 															<span>Vacunas seleccionadas: </span>
-															{info.vaccines.map((e) => {
+															{info.vaccines && info.vaccines.length > 0 && info.vaccines.map((e) => {
 																return (
 																	<li key={e} value={e}>
 																		{e}
@@ -683,7 +687,7 @@ export default function UserProfile({globalUser, obras}) {
 													<Col className={`${stylesForm.col}`}>
 														<ul className={stylesForm.lista}>
 															<span>Usted ingreso las siguientes alergias: </span>
-															{info.allergies &&
+															{info.allergies && info.allergies.length > 0 &&
 																info.allergies.map((al) => {
 																	return (
 																		<li key={al} value={al}>
@@ -758,7 +762,7 @@ export default function UserProfile({globalUser, obras}) {
 																Usted ingreso las siguientes enfermedades
 																crónicas:{' '}
 															</span>
-															{info.chronicles &&
+															{info.chronicles && info.chronicles.length > 0 &&
 																info.chronicles.map((ch) => {
 																	return (
 																		<li key={ch} value={ch}>
