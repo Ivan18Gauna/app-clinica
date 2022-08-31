@@ -34,7 +34,7 @@ class PaymentService {
   }
 
   async createSubscription() {
-    const url = "https://api.mercadopago.com/preapproval";
+    const url = "https://api.mercadopago.com/preapproval_plan";
 
     const body = {
       reason: "Suscripción de ejemplo",

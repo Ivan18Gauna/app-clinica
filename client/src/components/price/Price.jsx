@@ -1,6 +1,18 @@
 import React from "react";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import Cookies from 'universal-cookie'
+import { getUserDetail } from "../../redux/actions";
+
 
 export default function Price() {
+  const dispatch = useDispatch()
+  const cookies = new Cookies()
+  useEffect(() => {
+    dispatch(getUserDetail(cookies.get('userEmail')))
+  }, [])
+  const user = useSelector((state) => state.user)
+
   const checkRed =
     "https://previews.123rf.com/images/igoun/igoun1805/igoun180500088/101280971-icono-de-cruz-en-c%C3%ADrculo-se-puede-utilizar-como-bot%C3%B3n-de-eliminar-bloquear-cerrar-etc-eliminar-x-el-.jpg?fj=1";
   const checkGreen =
@@ -191,16 +203,21 @@ export default function Price() {
       </div>
 
       <div class="row">
-        <button type="button" class="btn btn-warning col-3"></button>
-        <button type="button" class="btn btn-outline-primary col-3">
-          Comprar
-        </button>
-        <button type="button" class="btn btn-outline-success col-3">
+        <button
+         type="button" class="btn btn-warning col-3"></button>
+        <a href ="https://www.mercadopago.com.ar/subscriptions/checkout?preapproval_plan_id=2c93808482f3adeb0182f5836c0700e6">
+        <button 
+        type="button" class="btn btn-outline-primary col-3">
+        Comprar
+       </button>
+       </a>
+       {/* <a>p</a> */}
+        {/* <button type="button" class="btn btn-outline-success col-3">
           Comprar
         </button>
         <button type="button" class="btn btn-outline-danger col-3">
           Comprar
-        </button>
+        </button> */}
       </div>
     </div>
   );
