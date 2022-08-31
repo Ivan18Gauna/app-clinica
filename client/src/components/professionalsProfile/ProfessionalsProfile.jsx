@@ -17,19 +17,19 @@ import Cookies from 'universal-cookie';
 
 function validate(input) {
     let error = {};
-    if (!/([A-z])/.test(input.name)) {
+    if (input.name && !/([A-z])/.test(input.name)) {
         error.name = 'Ingrese un nombre valido.';
         return error;
     }
-    if (!/([A-z])/.test(input.lastname)) {
+    if (input.lastname && !/([A-z])/.test(input.lastname)) {
         error.lastname = 'Ingrese un apellido valido.';
         return error;
     }
-    if (!/\S+@\S+\.\S+/.test(input.mail)) {
+    if (input.mail && !/\S+@\S+\.\S+/.test(input.mail)) {
         error.mail = 'Dirección de correo no valida.';
         return error;
     }
-    if (
+    if (input.password &&
         !/(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/.test(
             input.password
         )
@@ -46,28 +46,28 @@ function validate(input) {
     let Date1 = new Date(newDate);
     let Date2 = new Date();
     let Date3 = (Date2 - Date1) / (1000 * 60 * 60 * 24 * 365);
-    if (Date1 >= Date2) {
+    if (input.birth && (Date1 >= Date2)) {
         error.birth = 'La fecha de nacimiento no puede ser posterior a la actual.';
         return error;
-    } else if (Date3 < 18.011) {
+    } else if (input.birth && (Date3 < 18.011)) {
         error.birth = 'Debes ser mayor de 18 años para registrarte.';
         return error;
     }
-    if (!/[0-9]/.test(input.license)) {
+    if (input.license && !/[0-9]/.test(input.license)) {
         error.license = 'Matrícula no valida.';
         return error;
-    } else if (input.license <= 0) {
+    } else if (input.license && input.license <= 0) {
         error.license = 'Matrícula no valida.';
         return error;
     }
-    if (!/^\d{10}$$/.test(input.phone)) {
+    if (input.phone && !/^\d{10}$$/.test(input.phone)) {
         error.phone = 'Número de telefono no valido.';
         return error;
     }
-    if (!/[0-9]/.test(input.number)) {
+    if (input.number && !/[0-9]/.test(input.number)) {
         error.number = 'Número no valido.';
         return error;
-    } else if (input.number <= 0) {
+    } else if (input.number && (input.number <= 0)) {
         error.number = 'Número no valida.';
         return error;
     }

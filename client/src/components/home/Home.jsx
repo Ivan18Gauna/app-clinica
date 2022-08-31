@@ -5,7 +5,7 @@ import Filters from '../filters/Filters.jsx';
 import CardsTriple from '../infoCards/InfoCards';
 import CardHistory from '../cardHistory/CardHistory';
 import styles from './Home.module.css';
-import { useAuth0 } from '@auth0/auth0-react';
+// import { useAuth0 } from '@auth0/auth0-react';
 import HomePatients from '../homePatients/HomePatients.jsx';
 import HomeProfessional from '../homeProfessionals/HomeProfessionals.jsx';
 import { getUserDetail } from '../../redux/actions/index.js';

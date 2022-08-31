@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import doctor from '../../Icons/iconfinder-icon.svg';
 import { useHistory } from "react-router-dom";
 import {
@@ -13,8 +14,7 @@ import Button from 'react-bootstrap/Button';
 import Accordion from 'react-bootstrap/Accordion';
 import stylesForm from '../formPatients/FormPatients.module.css';
 import styles from './PatientsProfile.module.css';
-import Loading from '../loading/Loading';
-import Cookies from 'universal-cookie';
+// import Cookies from 'universal-cookie';
 import { useDispatch } from 'react-redux';
 
 
@@ -125,36 +125,36 @@ export default function UserProfile({globalUser, obras}) {
 	const { user, logout, isAuthenticated } = useAuth0();
 	const [editInfoPersonal, setEditInfoPersonal] = useState(false);
 	const [editInfoSalud, setEditInfoSalud] = useState(false);
-	const [allergies_, setAllergies] = useState('');
-	const [chronicles_, setChronicles] = useState('');
+	const [allergies_, setAllergies] = useState(globalUser.allergies);
+	const [chronicles_, setChronicles] = useState(globalUser.chronicles);
 	const [error, setError] = useState({});
-	let id;
-	/* 	if(globalUser && globalUser.id){ id = globalUser.id; }
-	 */
+	const [info, setInfo] = useState({});
+
+	const uploadImage = async (e) => {
+        
+        const files = e.target.files;
+        const data = new FormData();
+        data.append("file", files[0]);
+        data.append("upload_preset", "appclinica");
+    
+        const respuesta = await axios.post(
+          "https://api.cloudinary.com/v1_1/appclinica/image/upload",data
+        );
+    
+        setInfo({
+        ...info,
+        avatar: respuesta.data.secure_url
+		})  
+	}
 
 
-	const [info, setInfo] = useState({
-		name: '',
-		lastname: '',
-		document: '',
-		birth: '',
-		phone: '',
-		mail: '',
-		province: '',
-		city: '',
-		number: '',
-		street: '',
-		username: '',
-		password: '',
-		new_password: '',
-		blood: '',
-		vaccines: [],
-		allergies: [],
-		donation: '',
-		transfusion: '',
-		chronicles: [],
-		oS: '',
-	});
+	if((isAuthenticated && !globalUser) || (isAuthenticated && globalUser && !globalUser.name)){
+		dispatch(getUserDetail(user.email));
+	}
+	if(globalUser && !globalUser.name){
+		dispatch(getUserDetail(globalUser.mail));
+	}
+
 
 	function onKeyDown(e) {
 		if (e.code === 'Enter') {
@@ -171,13 +171,21 @@ export default function UserProfile({globalUser, obras}) {
 	}
 	function handleSelectVaccines(e) {
 		e.preventDefault();
-		if (info.vaccines.includes(e.target.value)) {
+		if (info.vaccines && info.vaccines.includes(e.target.value)) {
 			alert('Ya se selecciono esa vacuna.');
 		} else {
-			setInfo({
-				...info,
-				vaccines: [...info.vaccines, e.target.value],
-			});
+			if(info.vaccines) {
+				setInfo({
+					...info,
+					vaccines: [...info.vaccines, e.target.value]
+				});
+			}
+			else {
+				setInfo({
+					...info,
+					vaccines: [e.target.value]
+				});
+			}
 		}
 	}
 	function handleDeleteVaccines(e) {
@@ -192,18 +200,27 @@ export default function UserProfile({globalUser, obras}) {
 	}
 	function handleSubmitAllergies(e) {
 		e.preventDefault();
-		if (info.allergies.includes(allergies_)) {
+		if (info.allergies && info.allergies.includes(allergies_)) {
 			alert('Alergia ya ingresada.');
 		} else {
-			setInfo({
-				...info,
-				allergies: [...info.allergies, allergies_],
-			});
+			if(info.allergies){
+				setInfo({
+					...info,
+					allergies: [...info.allergies, allergies_]
+				});
+			}
+			else {
+				setInfo({
+					...info,
+					allergies: [allergies_]
+				});
+			}
 		}
 		setAllergies('');
 	}
 	function handleDeleteAllergies(e) {
 		e.preventDefault();
+
 		setInfo({
 			...info,
 			allergies: info.allergies.filter((el) => el !== e.target.value),
@@ -229,13 +246,21 @@ export default function UserProfile({globalUser, obras}) {
 	}
 	function handleSubmitChronicles(e) {
 		e.preventDefault();
-		if (info.chronicles.includes(chronicles_)) {
+		if (info.chronicles && info.chronicles.includes(chronicles_)) {
 			alert('Enfermedad crónica ya ingresada.');
 		} else {
-			setInfo({
-				...info,
-				chronicles: [...info.chronicles, chronicles_],
-			});
+			if(info.chronicles){
+				setInfo({
+					...info,
+					chronicles: [...info.chronicles, chronicles_]
+				});
+			}
+			else {
+				setInfo({
+					...info,
+					chronicles: [chronicles_]
+				});
+			}
 		}
 		setChronicles('');
 	}
@@ -289,11 +314,34 @@ export default function UserProfile({globalUser, obras}) {
 	}
 	function handleSubmit(e) {
 		e.preventDefault();
-		dispatch(modifyUsers(info, id));
-
-		setTimeout(()=>{
-			/* dispatch(getUserDetail(user.email)) */
-		}, 2000)
+		dispatch(modifyUsers(info, globalUser.id, globalUser.mail));
+		setInfo({
+			name: '',
+			lastname: '',
+			document: '',
+			birth: '',
+			phone: '',
+			mail: '',
+			province: '',
+			city: '',
+			number: '',
+			street: '',
+			username: '',
+			password: '',
+			new_password: '',
+			blood: '',
+			vaccines: [],
+			allergies: [],
+			donation: '',
+			transfusion: '',
+			chronicles: [],
+			oS: ''
+		});
+		setEditInfoPersonal(false);
+		setEditInfoSalud(false);
+		setInfo({});
+		setChronicles('');
+		setAllergies('');
 	}
 	function logoutCookies (){
 		cookie.remove('email',{path:'/'})
@@ -305,7 +353,7 @@ export default function UserProfile({globalUser, obras}) {
 		<div>
 			<div className={styles.container}>
 				<div className={styles.perfil}>
-					<img src={doctor} alt="imagen no disponible" />
+					<img src={globalUser.avatar? globalUser.avatar : doctor} alt="imagen no disponible" />
 					<h4>
 						{globalUser.name} {globalUser.lastname}
 					</h4>
@@ -323,6 +371,7 @@ export default function UserProfile({globalUser, obras}) {
 								<p>Ciudad: {globalUser.city}</p>
 								<p>Calle: {globalUser.street}</p>
 								<p>Número: {globalUser.number}</p>
+								<p>Avatar: </p>
 								{editInfoPersonal === false ? (
 									<Button onClick={handleInfoPersonal}>
 										Editar información personal
@@ -331,7 +380,8 @@ export default function UserProfile({globalUser, obras}) {
 									<div className={stylesForm.container}>
 										<Form
 											className={`${stylesForm.form}`}
-											onSubmit={(e) => handleSubmit(e)}
+											onSubmit={handleSubmit}
+											//onSubmit={(e) => handleSubmit(e)}
 										>
 											<div className={stylesForm.titulo}>
 												<h3>Editar información personal:</h3>
@@ -362,6 +412,14 @@ export default function UserProfile({globalUser, obras}) {
 													<Form.Control.Feedback type="invalid">
 														{error.lastname}
 													</Form.Control.Feedback>
+												</Col>
+												<Col>
+												<Form.Control
+												type="file"
+												name="avatar"
+												placeholder='Cambie su imagen'
+												onChange={uploadImage}
+												/>
 												</Col>
 											</Row>
 											<Row className={`${stylesForm.row}`} lg={1}>
@@ -543,8 +601,8 @@ export default function UserProfile({globalUser, obras}) {
 
 													<Button
 														className={`${stylesForm.buttonSubmit}`}
-														type="submit"
-														onClick={handleSubmit}
+														type="subtmit"
+												
 													>
 														Confirmar
 													</Button>
@@ -559,8 +617,6 @@ export default function UserProfile({globalUser, obras}) {
 								<Accordion.Body>
 									<p>Grupo Sanguineo:</p>
 									{globalUser.blood ? globalUser.blood : 'Sin información'}
-									{/* <p>Obra Social:</p>
-								{globalUser.oS} */}
 									<p>Vacunas que posee aplicadas:</p>
 									{globalUser.vaccine ? globalUser.blood : 'Sin información'}
 									<p>Alergias: </p>
@@ -572,7 +628,7 @@ export default function UserProfile({globalUser, obras}) {
 									<p>Es transfundible?</p>
 									{globalUser.transfusion ? globalUser.transfusion : 'Sin información'}
 									<p>Obra Social:</p>
-									{globalUser.oS ? globalUser.oS : 'Sin información'}
+									{globalUser.oS ? globalUser.oS : 'Sin información'}<br/>
 									{editInfoSalud === false ? (
 										<Button onClick={handleInfoSalud}>
 											Editar información de salud
@@ -625,7 +681,7 @@ export default function UserProfile({globalUser, obras}) {
 													<Col className={`${stylesForm.col}`}>
 														<ul className={stylesForm.lista}>
 															<span>Vacunas seleccionadas: </span>
-															{info.vaccines.map((e) => {
+															{info.vaccines && info.vaccines.length > 0 && info.vaccines.map((e) => {
 																return (
 																	<li key={e} value={e}>
 																		{e}
@@ -665,7 +721,7 @@ export default function UserProfile({globalUser, obras}) {
 													<Col className={`${stylesForm.col}`}>
 														<ul className={stylesForm.lista}>
 															<span>Usted ingreso las siguientes alergias: </span>
-															{info.allergies &&
+															{info.allergies && info.allergies.length > 0 &&
 																info.allergies.map((al) => {
 																	return (
 																		<li key={al} value={al}>
@@ -740,7 +796,7 @@ export default function UserProfile({globalUser, obras}) {
 																Usted ingreso las siguientes enfermedades
 																crónicas:{' '}
 															</span>
-															{info.chronicles &&
+															{info.chronicles && info.chronicles.length > 0 &&
 																info.chronicles.map((ch) => {
 																	return (
 																		<li key={ch} value={ch}>
@@ -808,9 +864,11 @@ export default function UserProfile({globalUser, obras}) {
 							</Accordion.Item>
 						</Accordion>
 					</div>
+
 					<Button className={styles.button} onClick={isAuthenticated? logout : logoutCookies}>Cerrar sesion</Button>
 				</div>
 				: <div className='loading-login'></div>
+
 		</div>
 	);
 }
