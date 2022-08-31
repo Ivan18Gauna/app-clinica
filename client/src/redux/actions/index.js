@@ -9,7 +9,9 @@ import {
 	GET_PATIENTS_NAME,
 	GET_USER_MAIL,
 	GET_CLINIC_HISTORY,
-	GET_NOTES
+	GET_NOTES,
+	GET_TURNO_PROF,
+	GET_TURNO_PAT
 } from '../actions/actions';
 import axios from 'axios';
 
@@ -202,6 +204,47 @@ export function postNotes(payload){
 			return notes;
 		} catch(e) {
 			console.log(e.message)
+		}
+	}
+}
+
+export function getTurnoProf (id){
+	return async function (dispatch) {
+		try{
+			const turno = await axios(`/profturnos/${id}`);
+
+			return dispatch({
+				type: GET_TURNO_PROF,
+				payload: turno
+		})
+	}catch(error){
+			console.log(error)
+		}
+	}
+}
+
+export function getTurnoPat (id){
+	return async function (dispatch) {
+		try{
+			const turno = await axios(`/patturnos/${id}`);
+
+			return dispatch({
+				type: GET_TURNO_PAT,
+				payload: turno
+		})
+	}catch(error){
+			console.log(error)
+		}
+	}
+}
+
+export function newTurno(payload){
+	return async function () {
+		try{
+			const turno = await axios.post('/turnos', payload);
+			return turno;
+		}catch(error){
+			console.log(error)
 		}
 	}
 }
