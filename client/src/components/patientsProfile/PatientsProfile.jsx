@@ -562,7 +562,7 @@ export default function UserProfile({globalUser, obras}) {
 									<p>Es transfundible?</p>
 									{globalUser.transfusion ? globalUser.transfusion : 'Sin información'}
 									<p>Obra Social:</p>
-									{globalUser.oS ? globalUser.oS : 'Sin información'}
+									{globalUser.oS ? globalUser.oS : 'Sin información'}<br/>
 									{editInfoSalud === false ? (
 										<Button onClick={handleInfoSalud}>
 											Editar información de salud

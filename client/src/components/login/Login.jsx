@@ -149,9 +149,6 @@ export default function Login() {
 							<Col className={styles.col} lg={9}>
 								<Link to="/sincomponente">¿Olvidaste tu contraseña?</Link>
 							</Col>
-							<Col className={styles.col} lg={9}>
-								<Form.Check name="connected" label="Mantenerme conectado" />
-							</Col>
 						</Row>
 						<div className={styles.btn}>
 							<Button type="submit">Iniciar Sesion</Button>
