@@ -53,7 +53,34 @@ const getTurnoByProf = async(req, res) => {
     }
 }
 
+const getTurnosByPat = async(req, res) => {
+    let { id } = req.params
+    try {
+        let pat = await Patients.findOne({
+            where: {
+                id: id
+            }
+        })
+        const patTurnos = await pat.getTurnos({
+            include: [
+                {
+                  model: Patients,
+                  attributes: ['id', 'name'],
+                },
+                {
+                  model: Professionals,
+                  attributes: ['id', 'name']
+                }
+              ],
+        })
+        res.status(200).send(patTurnos)
+    } catch (error) {
+        res.status(400).send('hubo un problema cargando los turnos')
+    }
+}
+
   module.exports = {
     postTurno,
-    getTurnoByProf
+    getTurnoByProf,
+    getTurnosByPat
   }
