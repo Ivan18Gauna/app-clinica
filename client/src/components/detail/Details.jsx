@@ -9,6 +9,7 @@ import styles from './Details.module.css';
 import img from '../../Icons/iconfinder-icon.svg';
 import login from '../login/Login.module.css'
 
+
 export default function Details() {
 	const { id } = useParams();
 	const dispatch = useDispatch();
