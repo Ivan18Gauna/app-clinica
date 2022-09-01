@@ -318,7 +318,8 @@ export default function HealthData() {
 							<option value="Seleccione una opción" hidden>
 								Seleccione una opción
 							</option>
-							<option value="Sí">Sí</option>
+							<option value="Si">Si</option>
+
 							<option value="No">No</option>
 						</Form.Select>
 					</Col>
@@ -333,7 +334,7 @@ export default function HealthData() {
 							<option value="Seleccione una opción" hidden>
 								Seleccione una opción
 							</option>
-							<option value="Sí">Sí</option>
+							<option value="Si">Si</option>
 							<option value="No">No</option>
 						</Form.Select>
 					</Col>
