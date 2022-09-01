@@ -125,8 +125,8 @@ export default function UserProfile({globalUser, obras}) {
 	const { user, logout, isAuthenticated } = useAuth0();
 	const [editInfoPersonal, setEditInfoPersonal] = useState(false);
 	const [editInfoSalud, setEditInfoSalud] = useState(false);
-	const [allergies_, setAllergies] = useState(globalUser.allergies);
-	const [chronicles_, setChronicles] = useState(globalUser.chronicles);
+	const [allergies_, setAllergies] = useState();
+	const [chronicles_, setChronicles] = useState();
 	const [error, setError] = useState({});
 	const [info, setInfo] = useState({});
 
@@ -212,7 +212,7 @@ export default function UserProfile({globalUser, obras}) {
 			else {
 				setInfo({
 					...info,
-					allergies: [allergies_]
+					allergies: allergies_
 				});
 			}
 		}
@@ -258,7 +258,7 @@ export default function UserProfile({globalUser, obras}) {
 			else {
 				setInfo({
 					...info,
-					chronicles: [chronicles_]
+					chronicles: chronicles_
 				});
 			}
 		}
@@ -306,8 +306,16 @@ export default function UserProfile({globalUser, obras}) {
 	}
 	function handleInfoSalud(e) {
 		e.preventDefault();
+		if(globalUser){ setInfo({
+			...info, 
+			chronicles: globalUser.chronicles,
+			vaccines: globalUser.vaccines,
+			allergies: globalUser.allergies
+		})}
 		setEditInfoSalud(true);
 	}
+	console.log("globalUser", globalUser)
+	console.log(info)
 	function handleCancelSalud(e) {
 		e.preventDefault();
 		setEditInfoSalud(false);
@@ -315,28 +323,6 @@ export default function UserProfile({globalUser, obras}) {
 	function handleSubmit(e) {
 		e.preventDefault();
 		dispatch(modifyUsers(info, globalUser.id, globalUser.mail));
-		setInfo({
-			name: '',
-			lastname: '',
-			document: '',
-			birth: '',
-			phone: '',
-			mail: '',
-			province: '',
-			city: '',
-			number: '',
-			street: '',
-			username: '',
-			password: '',
-			new_password: '',
-			blood: '',
-			vaccines: [],
-			allergies: [],
-			donation: '',
-			transfusion: '',
-			chronicles: [],
-			oS: ''
-		});
 		setEditInfoPersonal(false);
 		setEditInfoSalud(false);
 		setInfo({});
@@ -618,11 +604,11 @@ export default function UserProfile({globalUser, obras}) {
 									<p>Grupo Sanguineo:</p>
 									{globalUser.blood ? globalUser.blood : 'Sin información'}
 									<p>Vacunas que posee aplicadas:</p>
-									{globalUser.vaccine ? globalUser.blood : 'Sin información'}
+									{globalUser.vaccines && globalUser.vaccines.length > 0 ? globalUser.vaccines.map(el => <p>{el}</p>) : 'Sin información'}
 									<p>Alergias: </p>
-									{globalUser.allergies ? globalUser.allergies : 'Sin información'}
+									{globalUser.allergies && globalUser.allergies.length > 0 ? globalUser.allergies.map(el => <p>{el}</p>) : 'Sin información'}
 									<p>Enfermedades Crónicas: </p>
-									{globalUser.chronicles ? globalUser.chronicles : 'Sin información'}
+									{globalUser.chronicles && globalUser.allergies.length > 0 ? globalUser.chronicles.map(el => <p>{el}</p>) : 'Sin información'}
 									<p>Es donante?</p>
 									{globalUser.donation ? globalUser.donation : 'Sin información'}
 									<p>Es transfundible?</p>
@@ -748,7 +734,7 @@ export default function UserProfile({globalUser, obras}) {
 															<option value="Seleccione una opción" hidden>
 																Seleccione una opción
 															</option>
-															<option value="Sí">Sí</option>
+															<option value="Si">Si</option>
 															<option value="No">No</option>
 														</Form.Select>
 													</Col>
@@ -763,7 +749,7 @@ export default function UserProfile({globalUser, obras}) {
 															<option value="Seleccione una opción" hidden>
 																Seleccione una opción
 															</option>
-															<option value="Sí">Sí</option>
+															<option value="Si">Si</option>
 															<option value="No">No</option>
 														</Form.Select>
 													</Col>
@@ -783,6 +769,13 @@ export default function UserProfile({globalUser, obras}) {
 														<Button
 															className={`${stylesForm.buttonSubmit}`}
 															type="button"
+
+
+
+
+
+
+
 															onClick={handleSubmitChronicles}
 														>
 															Agregar
