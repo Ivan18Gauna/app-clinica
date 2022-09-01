@@ -14,7 +14,7 @@ import Button from 'react-bootstrap/Button';
 import Accordion from 'react-bootstrap/Accordion';
 import stylesForm from '../formPatients/FormPatients.module.css';
 import styles from './PatientsProfile.module.css';
-// import Cookies from 'universal-cookie';
+import Cookies from 'universal-cookie';
 import { useDispatch } from 'react-redux';
 
 

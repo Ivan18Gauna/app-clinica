@@ -142,7 +142,7 @@ export default function ProfessionalProfile({ globalUser, specialties }) {
             avatar: respuesta.data.secure_url
         })
     }
-    console.log('user',globalUser)
+    console.log('user', globalUser)
     if ((isAuthenticated && !globalUser) || (isAuthenticated && globalUser && !globalUser.name)) {
         dispatch(getUserDetail(user.email));
     }
@@ -470,13 +470,13 @@ export default function ProfessionalProfile({ globalUser, specialties }) {
                                                 </Row>
                                                 <div>
                                                     <ul>
-                                                        {input.specialty && input.specialty.map((e) => (
-                                                            <li key={e} value={e}>
-                                                                {e}
-                                                                <Button variant="danger" value={e} onClick={handleDelete}>
-                                                                    X
-                                                                </Button>
-                                                            </li>
+                                                        {input.specialty && input.specialty.length > 0 && input.specialty.map((e) => (
+                                                        <li key={e} value={e}>
+                                                            {e}
+                                                            <Button variant="danger" value={e} onClick={handleDelete}>
+                                                                X
+                                                            </Button>
+                                                        </li>
                                                         ))}
                                                     </ul>
                                                 </div>
