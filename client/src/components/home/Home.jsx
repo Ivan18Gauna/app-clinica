@@ -15,10 +15,10 @@ import Cookies from 'universal-cookie';
 
 export default function Home() {
 	const cookie = new Cookies()
-	
-	
 	const dispatch = useDispatch();
 	const globalUser = useSelector( state => state.user)
+	
+	
  
  useEffect(() => {
 	 dispatch(getUserDetail(cookie.get('email')))
