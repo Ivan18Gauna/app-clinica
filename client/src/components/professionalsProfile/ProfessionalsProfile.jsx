@@ -114,6 +114,7 @@ export default function ProfessionalProfile({ globalUser, specialties }) {
     const [editInfoPersonal, setEditInfoPersonal] = useState(false);
     const [error, setError] = useState({});
     const [input, setInput] = useState({});
+    const infoModify = {};
 
     const uploadImage = async (e) => {
 
@@ -138,7 +139,9 @@ export default function ProfessionalProfile({ globalUser, specialties }) {
     if (globalUser && !globalUser.name) {
         dispatch(getUserDetail(globalUser.mail));
     }
-
+    if (globalUser.mail != cookie.get('email')) {
+        dispatch(getUserDetail(cookie.get('email')))
+    }
 
     function handleInput(e) {
         setInput({
@@ -163,7 +166,7 @@ export default function ProfessionalProfile({ globalUser, specialties }) {
 
     function handleSelectSpecialities(e) {
         if (input.specialty && input.specialty.length > 0 &&
-             input.specialty.includes(e.target.value)) {
+            input.specialty.includes(e.target.value)) {
             alert('Ya se selecciono la especialidad.');
         } else {
             setInput({
@@ -192,28 +195,31 @@ export default function ProfessionalProfile({ globalUser, specialties }) {
 
     function handleSubmit(e) {
         e.preventDefault();
+        if (input.name && input.name !== '') { infoModify.name = input.name };
+        if (input.lastname && input.lastname !== '') { infoModify.lastname = input.lastname };
+        if (input.avatar && input.avatar !== '') { infoModify.avatar = input.avatar };
+        if (input.password && input.password !== '') { infoModify.password = input.password };
+        if (input.new_password && input.new_password !== '') { infoModify.new_password = input.new_password };
+        if (input.mail && input.mail !== '') {
+            infoModify.mail = input.mail;
+            cookie.set("email", `${infoModify.mail}`, { patch: '/' });
+        };
+        if (input.birth && input.birth !== '') { infoModify.birth = input.birth };
+        if (input.document && input.document !== '') { infoModify.document = input.document };
+        if (input.phone && input.phone !== '') { infoModify.phone = input.phone };
+        if (input.province && input.province !== '') { infoModify.province = input.province };
+        if (input.city && input.city !== '') { infoModify.city = input.city };
+        if (input.street && input.street !== '') { infoModify.street = input.street };
+        if (input.number && input.number !== '') { infoModify.number = input.number };
         dispatch(modifyProfessionals(input, globalUser.id, globalUser.mail));
-        // setInput({
-        //     name: '',
-        //     lastname: '',
-        //     specialty: [],
-        //     license: '',
-        //     birth: '',
-        //     phone: '',
-        //     mail: '',
-        //     province: '',
-        //     city: '',
-        //     number: '',
-        //     street: '',
-        //     username: '',
-        //     password: '',
-        //     new_password: '',
-        // });
         setEditInfoPersonal(false);
         setInput({})
-        history.push('/userProfile')
     }
-
+    function logoutCookies() {
+        cookie.remove('email', { path: '/' });
+        cookie.remove('userEmail', { path: '/' });
+        history.push('/');
+    }
 
     return (
 
@@ -477,21 +483,29 @@ export default function ProfessionalProfile({ globalUser, specialties }) {
                                             <Col className={`${stylesForm.col}`} lg={6}>
                                                 <Button
                                                     className={`${stylesForm.buttonSubmit}`}
-                                                    variant="success"
                                                     onClick={handleCancel}
                                                 >
                                                     Cancelar
                                                 </Button>
-                                                <Button
-                                                    className={`${stylesForm.buttonSubmit}`}
-                                                    type="submit"
-                                                    variant="success"
-                                                    onClick={handleSubmit}
-                                                >
-                                                    Enviar
-                                                </Button>
-
                                             </Col>
+                                            {
+                                                (input.password && input.new_password && input.password !== input.new_password) ||
+                                                    error.password || error.new_password ?
+                                                    <Button
+                                                        disabled
+                                                        variant="danger"
+                                                        className={`${styles.buttonSubmit}`}
+                                                    >
+                                                        Faltan datos de la contraseña
+                                                    </Button>
+                                                    : <Button
+                                                        className={`${stylesForm.buttonSubmit}`}
+                                                        type="subtmit"
+                                                    >
+                                                        Confirmar
+                                                    </Button>
+                                            }
+
                                         </Row>
                                     </Form>
                                 </div>
@@ -502,7 +516,12 @@ export default function ProfessionalProfile({ globalUser, specialties }) {
                     </Accordion.Item>
                 </Accordion>
             </div>
-
+            <Button
+                className={styles.button}
+                onClick={isAuthenticated ? logout : logoutCookies}
+            >
+                Cerrar sesion
+            </Button>
         </div>
 
 
