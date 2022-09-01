@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Cookie from 'universal-cookie'
 import  "./HomePatients.css";
 import Card from 'react-bootstrap/Card';
@@ -8,12 +8,20 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
 import Loading from "../loading/Loading";
 import styles from '../login/Login.module.css'
+import { useEffect } from "react";
+import { getTurnoPat, getUserDetail } from "../../redux/actions";
 
 export default function HomePatients() {
-    const cookie = new Cookie();
-    console.log(cookie.get('userEmail'))
-
+  const dispatch = useDispatch()
   const userInfo = useSelector( state => state.user )
+  
+  useEffect(() => {
+    const cookies = new Cookie();
+    dispatch(getUserDetail(cookies.get('userEmail')))
+/*     dispatch(getTurnoPat(userInfo.id))
+ */  }, [])
+  const turnos = useSelector((state) => state.turnos)
+
   // let userInfo = ["a+", "Covid",  "al Polen", "si, donante", "si, transfundible", "Hipertension", "Accord Salud 3.2"]
 
   return (
@@ -25,18 +33,25 @@ export default function HomePatients() {
         <div className="info1">
           <Card style={{ width: '22rem' }}>
             <Card.Body>
-              <Card.Title>Proximos Turno</Card.Title>
-          
+              <Card.Title>Proximos Turnos</Card.Title>
               <Card.Text>
                 Recorda pedirle a tu medico que actualice tu historia clinica!
               </Card.Text>
-              <ListGroup variant="flush">
-              <ListGroup.Item>Dia: 24/08/2022</ListGroup.Item>
-              <ListGroup.Item>Hora: 10:45</ListGroup.Item>
-              <ListGroup.Item>Profesional: Dr Curreta</ListGroup.Item>
-              <ListGroup.Item>Domicilio: Av Libertador 1521</ListGroup.Item>
-            </ListGroup>
-            
+                    ------------------------------------
+              {turnos.map((e, i) => {
+                if (i <= 1) {
+                  return (
+                    <ListGroup variant="flush">
+                    <ListGroup.Item>Fecha: {e?e.date:''}</ListGroup.Item>
+                    <ListGroup.Item>Hora: {e?e.time:''}</ListGroup.Item>
+                    <ListGroup.Item>Profesional: {e?e.professional.name:''}</ListGroup.Item>
+                    <ListGroup.Item>Domicilio: Av Libertador 1521</ListGroup.Item>
+                    ------------------------------------
+                    <br />
+                    </ListGroup>
+                  )
+                }
+              })}
 
             <br />
           

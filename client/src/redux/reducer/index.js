@@ -11,6 +11,8 @@ import {
   GET_USER_MAIL,
   GET_CLINIC_HISTORY,
   GET_NOTES,
+  GET_TURNO_PROF,
+  GET_TURNO_PAT,
 } from "../actions/actions";
 
 const initialState = {
@@ -23,11 +25,24 @@ const initialState = {
   patients: [],
   user: [],
   clinicHistory: [],
-  notes: []
+  notes: [],
+  turnos: [],
 };
 
 function rootReducer(state = initialState, action) {
   switch (action.type) {
+    case GET_TURNO_PROF:
+      return {
+        ...state,
+        turnos: action.payload
+      };
+      
+      case GET_TURNO_PAT:
+      return {
+        ...state,
+        turnos: action.payload.data
+      };
+
     case GET_DOCTORS:
       return {
         ...state,
