@@ -99,8 +99,7 @@ export default function RegisterDoctor() {
 	const dispatch = useDispatch();
 	const especialities_data = useSelector((state) => state.specialties);
 	const history = useHistory();
-	console.log('history', history)
-
+	
 	useEffect(() => {
 		dispatch(get_specialties());
 	}, [dispatch]);
@@ -161,7 +160,7 @@ export default function RegisterDoctor() {
 		e.preventDefault();
 		setInput({
 			...input,
-			specialities: input.specialty.filter((el) => el !== e.target.value),
+			specialty: input.specialty.filter((el) => el !== e.target.value),
 		});
 	}
 
