@@ -165,6 +165,7 @@ export function modifyProfessionals(payload, id, mail){
 export function getUserDetail(mail) {
 	return async function (dispatch) {
 		const userMail = await axios(`/user/${mail}`);
+		console.log(userMail.data)
 		console.log("soy user",userMail)
 		return dispatch({
 			type: GET_USER_MAIL,
