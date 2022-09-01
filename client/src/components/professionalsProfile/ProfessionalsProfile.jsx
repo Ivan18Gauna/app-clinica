@@ -286,7 +286,7 @@ export default function ProfessionalProfile({ globalUser, specialties }) {
                                                 />
                                             </Col>
                                         </Row>
-                                        <Row className={`${stylesForm.row}`} lg={1}>
+                                        {/* <Row className={`${stylesForm.row}`} lg={1}>
                                             <Col className={`${stylesForm.col}`}>
                                                 <Form.Control
                                                     type="text"
@@ -300,7 +300,7 @@ export default function ProfessionalProfile({ globalUser, specialties }) {
                                                     {error.username}
                                                 </Form.Control.Feedback>
                                             </Col>
-                                        </Row>
+                                        </Row> */}
                                         <Row className={`${stylesForm.row}`} lg={1}>
                                             <Col className={`${stylesForm.col}`}>
                                                 <Form.Control

@@ -135,7 +135,6 @@ export default function RegisterDoctor() {
 		});
 		setError(objError);
 	}
-	console.log('error', error);
 
 	function handleSelectProvince(e) {
 		setInput({
