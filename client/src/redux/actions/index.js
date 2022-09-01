@@ -158,7 +158,6 @@ export function modifyProfessionals(payload, id){
 }
 
 export function getUserDetail(mail) {
-	console.log('ejecuciones')
 	return async function (dispatch) {
 		const userMail = await axios(`/user/${mail}`);
 		
@@ -211,11 +210,11 @@ export function postNotes(payload){
 export function getTurnoProf (id){
 	return async function (dispatch) {
 		try{
-			const turno = await axios(`/profturnos/${id}`);
+			const turno = await axios.get(`/turnos/profturnos/${id}`);
 
 			return dispatch({
 				type: GET_TURNO_PROF,
-				payload: turno
+				payload: turno.data
 		})
 	}catch(error){
 			console.log(error)
@@ -226,7 +225,7 @@ export function getTurnoProf (id){
 export function getTurnoPat (id){
 	return async function (dispatch) {
 		try{
-			const turno = await axios(`/patturnos/${id}`);
+			const turno = await axios.get(`/turnos/patturnos/` + id);
 
 			return dispatch({
 				type: GET_TURNO_PAT,

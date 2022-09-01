@@ -40,7 +40,7 @@ function rootReducer(state = initialState, action) {
       case GET_TURNO_PAT:
       return {
         ...state,
-        turnos: action.payload
+        turnos: action.payload.data
       };
 
     case GET_DOCTORS:
