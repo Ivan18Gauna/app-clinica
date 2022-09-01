@@ -11,7 +11,6 @@ import '../login/Login.module.css';
 import Button from "react-bootstrap/esm/Button";
 import styles from '../patientsProfile/PatientsProfile.module.css';
 import ProfessionalProfile from "../professionalsProfile/ProfessionalsProfile";
-
 import email from '../login/Login'
 
 

@@ -17,13 +17,12 @@ export default function Home() {
 	const cookie = new Cookies();
 
 	const dispatch = useDispatch();
+	const globalUser = useSelector((state) => state.user);
 
 	useEffect(() => {
 		dispatch(getUserDetail(cookie.get('email')));
 	}, []);
-
-	const globalUser = useSelector((state) => state.user);
-	console.log('globalUser', globalUser);
+	console.log('globalUser', globalUser, cookie.get('email'));
 
 	return (
 		<>
