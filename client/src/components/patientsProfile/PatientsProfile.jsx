@@ -116,6 +116,7 @@ function validate(info) {
 }
 
 export default function UserProfile({ globalUser, obras }) {
+
 	const history = useHistory();
 	const cookie = new Cookies();
 	const dispatch = useDispatch();
@@ -126,7 +127,10 @@ export default function UserProfile({ globalUser, obras }) {
 	const [chronicles_, setChronicles] = useState();
 	const [error, setError] = useState({});
 	const [info, setInfo] = useState({});
+	const infoModify = {};
 
+	console.log('Soy global',globalUser)
+	console.log('Soy info',info)
 	const uploadImage = async (e) => {
 		const files = e.target.files;
 		const data = new FormData();
@@ -144,15 +148,15 @@ export default function UserProfile({ globalUser, obras }) {
 		});
 	};
 
-	if (
-		(isAuthenticated && !globalUser) ||
-		(isAuthenticated && globalUser && !globalUser.name)
-	) {
+	
+	if ((isAuthenticated && !globalUser) || (isAuthenticated && globalUser && !globalUser.name)) {
 		dispatch(getUserDetail(user.email));
 	}
 	if (globalUser && !globalUser.name) {
 		dispatch(getUserDetail(globalUser.mail));
 	}
+	if(globalUser.mail !== cookie.get('email')) { dispatch(getUserDetail(cookie.get('email'))); }
+
 
 	function onKeyDown(e) {
 		if (e.code === 'Enter') {
@@ -311,15 +315,36 @@ export default function UserProfile({ globalUser, obras }) {
 		}
 		setEditInfoSalud(true);
 	}
-	console.log('globalUser', globalUser);
-	console.log(info);
 	function handleCancelSalud(e) {
 		e.preventDefault();
 		setEditInfoSalud(false);
 	}
 	function handleSubmit(e) {
 		e.preventDefault();
-		dispatch(modifyUsers(info, globalUser.id, globalUser.mail));
+		if(info.name && info.name !== ''){ infoModify.name = info.name };
+		if(info.lastname && info.lastname !== ''){ infoModify.lastname = info.lastname };
+		if(info.avatar && info.avatar !== ''){ infoModify.avatar = info.avatar };
+		if(info.password && info.password !== ''){ infoModify.password = info.password };
+		if(info.new_password && info.new_password !== ''){ infoModify.new_password = info.new_password };
+		if(info.mail && info.mail !== ''){ 
+			infoModify.mail = info.mail;
+			cookie.set("email",`${infoModify.mail}`,{patch:'/'});
+		 };
+		if(info.birth && info.birth !== ''){ infoModify.birth = info.birth };
+		if(info.document && info.document !== ''){ infoModify.document = info.document };
+		if(info.phone && info.phone !== ''){ infoModify.phone = info.phone };
+		if(info.province && info.province !== ''){ infoModify.province = info.province };
+		if(info.city && info.city !== ''){ infoModify.city = info.city };
+		if(info.street && info.street !== ''){ infoModify.street = info.street };
+		if(info.number && info.number !== ''){ infoModify.number = info.number };
+		if(info.blood && info.blood !== ''){ infoModify.blood = info.blood };
+		if(info.vaccines && info.vaccines.length > 0){ infoModify.vaccines = info.vaccines };
+		if(info.allergies && info.allergies.length > 0){ infoModify.allergies = info.allergies };
+		if(info.donation && info.donation !== ''){ infoModify.donation = info.donation };
+		if(info.transfusion && info.transfusion !== ''){ infoModify.transfusion = info.transfusion };
+		if(info.chronicles && info.chronicles.length > 0){ infoModify.chronicles = info.chronicles };
+		if(info.oS && info.oS !== ''){ infoModify.oS = info.oS };
+		dispatch(modifyUsers(infoModify, globalUser.id, globalUser.mail));
 		setEditInfoPersonal(false);
 		setEditInfoSalud(false);
 		setInfo({});
@@ -358,7 +383,6 @@ export default function UserProfile({ globalUser, obras }) {
 								<p>Ciudad: {globalUser.city}</p>
 								<p>Calle: {globalUser.street}</p>
 								<p>Número: {globalUser.number}</p>
-								<p>Avatar: </p>
 								{editInfoPersonal === false ? (
 									<Button onClick={handleInfoPersonal}>
 										Editar información personal
@@ -409,7 +433,7 @@ export default function UserProfile({ globalUser, obras }) {
 													/>
 												</Col>
 											</Row>
-											<Row className={`${stylesForm.row}`} lg={1}>
+											{/* <Row className={`${stylesForm.row}`} lg={1}>
 												<Col className={`${stylesForm.col}`}>
 													<Form.Control
 														type="text"
@@ -419,7 +443,7 @@ export default function UserProfile({ globalUser, obras }) {
 														onChange={handleInput}
 													/>
 												</Col>
-											</Row>
+											</Row> */}
 											<Row className={`${stylesForm.row}`} lg={1}>
 												<Col className={`${stylesForm.col}`}>
 													<Form.Control
@@ -584,13 +608,23 @@ export default function UserProfile({ globalUser, obras }) {
 														Cancelar
 													</Button>
 												</Col>
-
-												<Button
-													className={`${stylesForm.buttonSubmit}`}
-													type="subtmit"
-												>
-													Confirmar
-												</Button>
+												{
+													(info.password && info.new_password && info.password !== info.new_password) ||
+													error.password || error.new_password ?
+													<Button
+														disabled
+														variant="danger"
+														className={`${styles.buttonSubmit}`}
+													>
+														Faltan datos de la contraseña
+													</Button>
+													: <Button
+														className={`${stylesForm.buttonSubmit}`}
+														type="subtmit"
+													>
+														Confirmar
+													</Button>
+												}
 											</Row>
 										</Form>
 									</div>
