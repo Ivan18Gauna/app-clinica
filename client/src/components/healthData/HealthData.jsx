@@ -319,6 +319,7 @@ export default function HealthData() {
 								Seleccione una opción
 							</option>
 							<option value="Si">Si</option>
+
 							<option value="No">No</option>
 						</Form.Select>
 					</Col>
