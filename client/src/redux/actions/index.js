@@ -145,28 +145,34 @@ export function registerPatients(payload) {
 	};
 }
 
-export function modifyUsers(payload, id) {
-	return async function () {
+export function modifyUsers(payload, id, mail) {
+	return async function (dispatch) {
 		const healthData = await axios.put(`/patients/edit/${id}`, payload);
+		dispatch(getUserDetail(mail));
 
 		return healthData;
 	};
 }
 
-export function modifyProfessionals(payload, id){
-	
+export function modifyProfessionals(payload, id, mail){
+	return async function (dispatch){
+		const modifyProfessionals= await axios.put(`/professionals/edit/${id}`, payload);
+		dispatch(getUserDetail(mail))
+		return modifyProfessionals;
+	}
 }
 
 export function getUserDetail(mail) {
 	return async function (dispatch) {
 		const userMail = await axios(`/user/${mail}`);
-		
+		console.log("soy user",userMail)
 		return dispatch({
 			type: GET_USER_MAIL,
 			payload: userMail.data,
 		});
 	};
 }
+
 
 
 export function getClinicHistory(id) {

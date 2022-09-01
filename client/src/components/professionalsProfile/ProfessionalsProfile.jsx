@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import doctor from '../../Icons/iconfinder-icon.svg';
+import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import { get_specialties } from '../../redux/actions';
+import { getUserDetail, modifyProfessionals } from '../../redux/actions';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -101,36 +102,54 @@ const provinces = [
     'Tucumán',
 ];
 
-export default function ProfessionalProfile() {
+export default function ProfessionalProfile({ globalUser, specialties }) {
 
 
-    // const { user, logout, isAuthenticated } = useAuth0();
     const dispatch = useDispatch();
-    const especialities_data = useSelector((state) => state.specialties);
+    const { user, logout, isAuthenticated } = useAuth0();
     const [editInfoPersonal, setEditInfoPersonal] = useState(false);
     const [error, setError] = useState({});
-
-
-    useEffect(() => {
-        dispatch(get_specialties());
-    }, [dispatch]);
-
     const [input, setInput] = useState({
-        name: '',
-        lastname: '',
-        specialty: [],
-        license: '',
-        birth: '',
-        phone: '',
-        mail: '',
-        province: '',
-        city: '',
-        number: '',
-        street: '',
-        username: '',
-        password: '',
-        new_password: '',
+        // name: '',
+        // lastname: '',
+        // specialty: [],
+        // license: '',
+        // birth: '',
+        // phone: '',
+        // mail: '',
+        // province: '',
+        // city: '',
+        // number: '',
+        // street: '',
+        // username: '',
+        // password: '',
+        // new_password: '',
     });
+
+    const uploadImage = async (e) => {
+
+        const files = e.target.files;
+        const data = new FormData();
+        data.append("file", files[0]);
+        data.append("upload_preset", "appclinica");
+
+        const respuesta = await axios.post(
+            "https://api.cloudinary.com/v1_1/appclinica/image/upload", data
+        );
+
+        setInput({
+            ...input,
+            avatar: respuesta.data.secure_url
+        })
+    }
+    console.log('user', globalUser)
+    if ((isAuthenticated && !globalUser) || (isAuthenticated && globalUser && !globalUser.name)) {
+        dispatch(getUserDetail(user.email));
+    }
+    if (globalUser && !globalUser.name) {
+        dispatch(getUserDetail(globalUser.mail));
+    }
+
 
     function handleInput(e) {
         setInput({
@@ -144,7 +163,7 @@ export default function ProfessionalProfile() {
         });
         setError(objError);
     }
-    console.log('error', error);
+
 
     function handleSelectProvince(e) {
         setInput({
@@ -183,7 +202,7 @@ export default function ProfessionalProfile() {
 
     function handleSubmit(e) {
         e.preventDefault();
-        // dispatch(registerDoctors(input));
+        dispatch(modifyProfessionals(input, globalUser.id, globalUser.mail));
         setInput({
             name: '',
             lastname: '',
@@ -200,7 +219,8 @@ export default function ProfessionalProfile() {
             password: '',
             new_password: '',
         });
-
+        setEditInfoPersonal(false);
+        setInput({})
     }
 
     return (
@@ -210,7 +230,7 @@ export default function ProfessionalProfile() {
                     <div className={styles.perfil}>
                         <img src={doctor} alt="imagen no disponible" />
                         <h4>
-                            {/* {globalUser.name} {globalUser.lastname} */}
+                            {globalUser.name} {globalUser.lastname}
                         </h4>
                     </div>
                     <div className={styles.acordion}>
@@ -218,18 +238,15 @@ export default function ProfessionalProfile() {
                             <Accordion.Item eventKey="0">
                                 <Accordion.Header>Mis Datos</Accordion.Header>
                                 <Accordion.Body>
-                                    <p>Nombre:</p>
-                                    <p>Apellido:</p>
-                                    <p>Especialidad:</p>
-                                    <p>Matricula: </p>
-                                    <p>Fecha de nacimiento: </p>
-                                    <p>Número de Telefono: </p>
-                                    <p>Email: </p>
-                                    <p>Provincia: </p>
-                                    <p>Ciudad</p>
-                                    <p>Calle:</p>
-                                    <p>Número: </p>
-                                    <p>Nombre de usuario: </p>
+                                    <p>Especialidad: {globalUser.specialty} </p>
+                                    <p>Fecha de nacimiento: {globalUser.birth}</p>
+                                    <p>Número de Documento {globalUser.document}</p>
+                                    <p>Número de telefono: {globalUser.phone}</p>
+                                    <p>Email: {globalUser.mail}</p>
+                                    <p>Provincia: {globalUser.province}</p>
+                                    <p>Ciudad: {globalUser.city}</p>
+                                    <p>Calle: {globalUser.street}</p>
+                                    <p>Número: {globalUser.number}</p>
                                     {editInfoPersonal === false ? (
                                         <Button onClick={handleInfoPersonal}>
                                             Editar información personal
@@ -266,6 +283,14 @@ export default function ProfessionalProfile() {
                                                         <Form.Control.Feedback type="invalid">
                                                             {error.lastname}
                                                         </Form.Control.Feedback>
+                                                    </Col>
+                                                    <Col>
+                                                        <Form.Control
+                                                            type="file"
+                                                            name="avatar"
+                                                            placeholder='Cambie su imagen'
+                                                            onChange={uploadImage}
+                                                        />
                                                     </Col>
                                                 </Row>
                                                 <Row className={`${stylesForm.row}`} lg={1}>
@@ -435,7 +460,7 @@ export default function ProfessionalProfile() {
                                                             <option value="Seleccione una opción">
                                                                 Seleccione una opción
                                                             </option>
-                                                            {especialities_data.map((e) => (
+                                                            {specialties.map((e) => (
                                                                 <option key={e.id} value={e.name}>
                                                                     {e.name}
                                                                 </option>
@@ -445,23 +470,30 @@ export default function ProfessionalProfile() {
                                                 </Row>
                                                 <div>
                                                     <ul>
-                                                        {input.specialty.map((e) => (
-                                                            <li key={e} value={e}>
-                                                                {e}
-                                                                <Button variant="danger" value={e} onClick={handleDelete}>
-                                                                    X
-                                                                </Button>
-                                                            </li>
+                                                        {input.specialty && input.specialty.length > 0 && input.specialty.map((e) => (
+                                                        <li key={e} value={e}>
+                                                            {e}
+                                                            <Button variant="danger" value={e} onClick={handleDelete}>
+                                                                X
+                                                            </Button>
+                                                        </li>
                                                         ))}
                                                     </ul>
                                                 </div>
                                                 <Row className={`${stylesForm.row}`} lg={1}>
                                                     <Col className={`${stylesForm.col}`} lg={6}>
-
+                                                        <Button
+                                                            className={`${stylesForm.buttonSubmit}`}
+                                                            variant="success"
+                                                            onClick={handleCancel}
+                                                        >
+                                                            Cancelar
+                                                        </Button>
                                                         <Button
                                                             className={`${stylesForm.buttonSubmit}`}
                                                             type="submit"
                                                             variant="success"
+                                                            onClick={handleSubmit}
                                                         >
                                                             Enviar
                                                         </Button>

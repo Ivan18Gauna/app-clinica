@@ -4,8 +4,9 @@ import Portada from '../portada/Portada.jsx';
 import Filters from '../filters/Filters.jsx';
 import CardsTriple from '../infoCards/InfoCards';
 import CardHistory from '../cardHistory/CardHistory';
+import OurPlans from '../ourPlans/OurPlans.jsx'
 import styles from './Home.module.css';
-import { useAuth0 } from '@auth0/auth0-react';
+// import { useAuth0 } from '@auth0/auth0-react';
 import HomePatients from '../homePatients/HomePatients.jsx';
 import HomeProfessional from '../homeProfessionals/HomeProfessionals.jsx';
 import { getUserDetail } from '../../redux/actions/index.js';
@@ -32,10 +33,11 @@ export default function Home() {
 			{ globalUser && globalUser.license && <HomeProfessional/> }
 			{ !globalUser || (globalUser && !globalUser.name) ?
 				<div className={`${styles.container}`}>
-					<Portada />
+					{/* <Portada /> */}
 					<Filters />
 					<CardsTriple />
 					<CardHistory />
+          <OurPlans />
 				</div> 
 				: null
 			}
