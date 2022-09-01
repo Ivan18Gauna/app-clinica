@@ -9,7 +9,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 38rem;
+  width: 50%;
 }
 
 .acordionContenido {
@@ -33,12 +33,6 @@
 	justify-self: start;
 	margin: 0 0 0 1rem;
   font-family: 'Poppins', sans-serif;
-}
-
-.perfil img {
-  border-radius: 50%;
-  border: 2px solid #0d6dfc;
-  padding: 3px;
 }
 
 .button {
