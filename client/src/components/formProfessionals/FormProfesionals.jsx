@@ -135,7 +135,6 @@ export default function RegisterDoctor() {
 		});
 		setError(objError);
 	}
-	console.log('error', error);
 
 	function handleSelectProvince(e) {
 		setInput({
@@ -220,7 +219,7 @@ export default function RegisterDoctor() {
 						</Form.Control.Feedback>
 					</Col>
 				</Row>
-				<Row className={`${styles.row}`} lg={1}>
+				{/* <Row className={`${styles.row}`} lg={1}>
 					<Col className={`${styles.col}`}>
 						<Form.Control
 							type="text"
@@ -234,7 +233,7 @@ export default function RegisterDoctor() {
 							{error.username}
 						</Form.Control.Feedback>
 					</Col>
-				</Row>
+				</Row> */}
 				<Row className={`${styles.row}`} lg={1}>
 					<Col className={`${styles.col}`}>
 						<Form.Control
@@ -418,7 +417,7 @@ export default function RegisterDoctor() {
 						input.city === '' ||
 						input.street === '' ||
 						input.number === '' ||
-						input.username === '' ||
+						// input.username === '' ||
 						input.password === '' ||
 						input.new_password === '' ||
 						input.specialty.length < 1 ||
