@@ -1,0 +1,51 @@
+.contenedor {
+	background-color: #ffffff;
+	padding: 4rem;
+}
+
+.card {
+	display: flex;
+	justify-content: center;
+	margin-top: 1rem;
+}
+
+.texto {
+	width: 50%;
+  padding: 0 4rem 0 4rem;
+	display: flex;
+  flex-direction: column;
+	justify-content: center;
+}
+
+.texto img {
+  width: 4rem;
+  margin-bottom: 1rem;
+}
+
+.texto h2 {
+ font-weight: bold;
+}
+
+.texto p {
+  margin: 1rem 0 0 0;
+ font-size: 1.5rem;
+}
+
+.divide {
+ background-color: #0d6dfc;
+ width: 100%;
+ height: .5rem;
+ margin-top: 3rem;
+}
+
+.imagen {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	overflow: hidden;
+	width: 50%;
+}
+
+.imagen img {
+  width: 80%;
+}
