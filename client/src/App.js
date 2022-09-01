@@ -21,6 +21,7 @@ import Calendar from '../src/components/calendar/Calendar.jsx'
 import HomePatients from './components/homePatients/HomePatients';
 import UserProfile from './components/userProfile/UserProfile';
 import ProfessionalProfile from './components/professionalsProfile/ProfessionalsProfile';
+import Sidebar from './components/admin/Admin'
 
 
 
@@ -32,6 +33,7 @@ function App() {
         <Route path="/" component={NavBarEdit}/>
       </Switch>
       <Switch>
+      <Route path="/admin" component={Sidebar} />
         <Route path="/home" component={Home} />
         <Route path="/calendar" component={Calendar} />
         <Route path='/details/:id' component={Details}/>
