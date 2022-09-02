@@ -8,10 +8,14 @@ import { getUserDetail } from "../../redux/actions";
 export default function Price() {
   const dispatch = useDispatch()
   const cookies = new Cookies()
+  
   useEffect(() => {
     dispatch(getUserDetail(cookies.get('userEmail')))
+    
   }, [])
   const user = useSelector((state) => state.user)
+  console.log(user)
+
 
   const checkRed =
     "https://previews.123rf.com/images/igoun/igoun1805/igoun180500088/101280971-icono-de-cruz-en-c%C3%ADrculo-se-puede-utilizar-como-bot%C3%B3n-de-eliminar-bloquear-cerrar-etc-eliminar-x-el-.jpg?fj=1";
@@ -205,7 +209,8 @@ export default function Price() {
       <div class="row">
         <button
          type="button" class="btn btn-warning col-3"></button>
-        <a href ="https://www.mercadopago.com.ar/subscriptions/checkout?preapproval_plan_id=2c93808482f3adeb0182f5836c0700e6">
+        {/* <a href ="https://www.mercadopago.com.ar/subscriptions/checkout?preapproval_plan_id=2c93808482f3adeb0182f5836c0700e6"> */}
+        <a href ="https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=152294652-6e7dbdba-6d26-409d-a965-a1e077cbd85c">
         <button 
         type="button" class="btn btn-outline-primary col-3">
         Comprar
