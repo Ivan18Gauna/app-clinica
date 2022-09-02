@@ -7,7 +7,7 @@ const routerInvoice = require ('./routesInvoice')
 const routesTurnos = require('./routesTurnos')
 const routesNotes = require('./routesNotes')
 const routesMercadoPago = require('./mercadoPagoRoutes')
-
+const routersMailer = require('./routersMailer')
 
 const {Professionals, Specialties} = require ('../db');
 const { actualUser } = require('../Controllers/actualUser');
@@ -29,6 +29,6 @@ router.use('/turnos', routesTurnos);
 router.use('/notes', routesNotes)
 router.get('/user/:mail', actualUser)
 router.use("/mercadopago",routesMercadoPago )
-
+router.use("/mailer",routersMailer)
 
 module.exports = router;
