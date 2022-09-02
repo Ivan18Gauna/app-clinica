@@ -16,7 +16,6 @@ import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import InputLabel from '@mui/material/InputLabel';
 import Loading from '../loading/Loading';
-import Auth0 from '../auth0/Auth0';
 import { Link, useHistory } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -26,6 +25,7 @@ import styles from './Login.module.css';
 import stylesForm from '../formPatients/FormPatients.module.css';
 import Cookies from 'universal-cookie';
 import { Alert } from '@mui/material';
+import '../auth0/Auth0';
 
 const schema = yup
 	.object({
@@ -38,11 +38,12 @@ const schema = yup
 	.required();
 
 export default function Login() {
+	
 	const cookies = new Cookies();
 	const history = useHistory();
-	const globalUser = useSelector(state => state.user);
 	const dispatch = useDispatch();
-	const { loginWithPopup, isAuthenticated, logout } = useAuth0();
+	const globalUser = useSelector(state => state.user);
+	const { loginWithPopup, isAuthenticated, user } = useAuth0();
 	const {
 		setValue,
 		getValues,
@@ -59,24 +60,11 @@ export default function Login() {
 		}
 	});
 	const values = getValues();
-	const patients = useSelector(state => state.patients);
-	console.log('patients', patients);
-	let filter;
-	if (patients) {
-		filter = patients.filter(el => el.mail === values.email);
-	}
 
 	const submitForm = data => {
-		console.log('filter', filter);
-		//if (filter.length > 0) {
-		// if (data.password === filter.password) {
 		dispatch(getUserDetail(data.email));
-		cookies.set('email', `${data.email}`, { patch: '/' });
+		cookies.set('userEmail', `${data.email}`, { patch: '/' });
 		history.push('/home');
-		//   }
-		//   }else{
-		// 	alert('el email no fue encontrado')
-		// }
 	};
 	const handleMouseDownPassword = event => {
 		event.preventDefault();
@@ -85,6 +73,10 @@ export default function Login() {
 	useEffect(() => {
 		dispatch(getPatients());
 	}, [dispatch]);
+
+	if(isAuthenticated){
+		cookies.set('userEmail', user.email, {path: '/'})
+	}
 
 	return (
 		<div>
@@ -186,23 +178,21 @@ export default function Login() {
 				</div>
 			) : (
 				<div>
-					<div className="loading-login">
+					<div id={styles.loadingLogin}>
 						<Loading />
 					</div>
-					<div id="loading-num">
+					<div id={styles.loadingNum}>
 						{setTimeout(() => {
-							dispatch(getUserDetail(values.email));
+							dispatch(getUserDetail(cookies.get('userEmail')));
 						}, 1000)}
 						{setTimeout(() => {
 							if (globalUser && globalUser.mail) {
-								history.push('/home');
-							} else {
-								history.push('/signin');
+								return history.push('/home');
+							} 
+							if (globalUser && !globalUser.mail) {
+								return history.push('/signin');
 							}
-						}, 5000)}
-						<Button className={stylesForm.button} onClick={logout}>
-							Cerrar sesion
-						</Button>
+						}, 2000)}
 					</div>
 				</div>
 			)}

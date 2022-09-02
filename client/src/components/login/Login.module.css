@@ -127,3 +127,14 @@
 		width: 85%;
 	}
 }
+
+#loadingLogin {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 15em;
+}
+
+#loadingNum {
+	color: rgba(255, 255, 255, 1);
+}
