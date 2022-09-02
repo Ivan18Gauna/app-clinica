@@ -19,7 +19,7 @@ import Loading from '../loading/Loading';
 import { Link, useHistory } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPatients, getUserDetail } from '../../redux/actions';
+import { getPatients, getUserDetail, get_Doctors } from '../../redux/actions';
 import google from '../../Icons/google.svg';
 import styles from './Login.module.css';
 import stylesForm from '../formPatients/FormPatients.module.css';
@@ -78,14 +78,13 @@ export default function Login() {
   var filter;
   if (email.email) {
     filter = allUSer.filter((el) => el.mail === email.email);
-    console.log("state",email.email)
   }
   
   const submitForm = (data) => {
     if (filter.length > 0) {
       if (data.password === filter[0].password) {
         dispatch(getUserDetail(data.email));
-        cookies.set("email", `${data.email}`, { patch: "/" });
+        cookies.set("userEmail", `${data.email}`, { patch: "/" });
         history.push("/home");
       } else {
         alert("la contraseña es incorrecta");
