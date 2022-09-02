@@ -147,15 +147,16 @@ export function registerPatients(payload) {
 
 export function modifyUsers(payload, id, mail) {
 	return async function (dispatch) {
+		
 		const healthData = await axios.put(`/patients/edit/${id}`, payload);
 		dispatch(getUserDetail(mail));
-
 		return healthData;
 	};
 }
 
 export function modifyProfessionals(payload, id, mail){
 	return async function (dispatch){
+		console.log("payload",payload)
 		const modifyProfessionals= await axios.put(`/professionals/edit/${id}`, payload);
 		dispatch(getUserDetail(mail))
 		return modifyProfessionals;
