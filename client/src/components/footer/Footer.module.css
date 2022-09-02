@@ -2,12 +2,12 @@
 	background-color: #001bac;
 	color: white;
 	width: 100%;
-  position: relative;
+	position: relative;
 }
 
 .container {
 	display: flex;
-  flex-wrap: wrap;
+	flex-wrap: wrap;
 	justify-content: space-around;
 	height: 20rem;
 }
@@ -19,7 +19,7 @@
 	height: 6rem;
 	width: 45%;
 	margin-top: 5rem;
-  padding-left: 5rem;
+	padding-left: 5rem;
 }
 
 .left img {
@@ -28,7 +28,7 @@
 
 .left p {
 	text-align: center;
-  margin: 0 0 0 1rem;
+	margin: 0 0 0 1rem;
 }
 
 .right {
@@ -50,7 +50,7 @@
 .salud h5,
 .unete h5 {
 	font-weight: bold;
-  margin-bottom: 1rem;
+	margin-bottom: 1rem;
 }
 
 .links {
@@ -72,26 +72,57 @@
 }
 
 .icons {
-  display: flex;
-  justify-content: center;
-  margin-top: 5rem;
-  width: 90%;
-  height: 2rem;
+	display: flex;
+	justify-content: center;
+	margin-top: 5rem;
+	width: 90%;
+	height: 2rem;
 }
 
 .arrow {
-  background-color: #00149D;
-  border-radius: 50%;
-  cursor: pointer;
-  position: absolute;
-  padding: 1rem;
-  top: -35px;
-  right: 50px;
-  transition: background-color 0.5s;
-  box-shadow: 1px 1px 4px #030058;
+	background-color: #00149d;
+	border-radius: 50%;
+	cursor: pointer;
+	position: absolute;
+	padding: 1rem;
+	top: -35px;
+	right: 50px;
+	transition: background-color 0.5s;
+	box-shadow: 1px 1px 4px #030058;
 }
 
 .arrow:hover {
-  background-color: #0018BF;
+	background-color: #0018bf;
 }
 
+@media screen and (max-width: 575px) {
+	.container {
+		justify-content: space-between;
+		flex-direction: column;
+		height: 25rem;
+    padding: .5rem;
+	}
+	.left {
+		flex-direction: column;
+		height: 10rem;
+		width: 100%;
+		margin: 0;
+		padding: 0.5rem;
+	}
+	.left img {
+		width: 4rem;
+	}
+	.right {
+		width: 100%;
+		margin: 0;
+		column-gap: 8rem;
+	}
+	.icons {
+		margin: 0;
+		width: 100%;
+		height: 2rem;
+	}
+	.arrow {
+		display: none;
+	}
+}
