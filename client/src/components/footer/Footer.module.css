@@ -84,7 +84,7 @@
   border-radius: 50%;
   cursor: pointer;
   position: absolute;
-  padding: .8rem;
+  padding: 1.2rem;
   top: -30px;
   right: 50px;
   transition: background-color 0.5s;
@@ -94,5 +94,4 @@
 .arrow:hover {
   background-color: #0018BF;
 }
-
 
