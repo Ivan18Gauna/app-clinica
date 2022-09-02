@@ -359,7 +359,6 @@ export default function RegisterPatient() {
             input.city === "" ||
             input.street === "" ||
             input.number === "" ||
-            input.username === "" ||
             // input.password === "" ||
             // input.new_password === "" ||
             error.name ||
