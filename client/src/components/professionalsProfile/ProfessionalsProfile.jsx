@@ -140,8 +140,8 @@ export default function ProfessionalProfile({ globalUser, specialties }) {
     if (globalUser && !globalUser.name) {
         dispatch(getUserDetail(globalUser.mail));
     }
-    if (globalUser.mail !== cookie.get('email')) {
-        dispatch(getUserDetail(cookie.get('email')))
+    if (globalUser.mail !== cookie.get('userEmail')) {
+        dispatch(getUserDetail(cookie.get('userEmail')))
     }
 
     function handleInput(e) {
@@ -204,7 +204,7 @@ export default function ProfessionalProfile({ globalUser, specialties }) {
         if (input.new_password && input.new_password !== '') { infoModify.new_password = input.new_password };
         if (input.mail && input.mail !== '') {
             infoModify.mail = input.mail;
-            cookie.set("email", `${infoModify.mail}`, { patch: '/' });
+            cookie.set("userEmail", infoModify.mail, { patch: '/' });
         };
         if (input.birth && input.birth !== '') { infoModify.birth = input.birth };
         if (input.document && input.document !== '') { infoModify.document = input.document };
