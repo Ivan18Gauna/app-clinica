@@ -13,9 +13,10 @@ require("dotenv").config();
 mercadopago.configure({
     access_token: ACCESS_TOKEN
 })
-// const nodemailer = require('nodemailer');
+//descomentar para probar el nodemailer
+//const nodemailer = require('nodemailer');
 
-
+//descomentar para probar el nodemailer
 //Creamos el tranportador
 // const transporter = nodemailer.createTransport({
 //     service: 'gmail',
@@ -28,7 +29,7 @@ mercadopago.configure({
 // });
 
 
-//ruta que genera la URL a mercado pago
+//genera la URL a mercado pago
 const postMP = async (req, res) => {
     const data = req.body;
     const id = data.id;
@@ -36,19 +37,14 @@ const postMP = async (req, res) => {
         { price: data.price, quantity: 1 },
     ]
     const external_reference = id + "*" + data.mail + "*" + data.price + "*" + data.date;
-    const items_md = items.map(item => ({
+    const itemsMp = items.map(item => ({
         title: "Susbcripcion App Salud",
         quantity: 1,
         unit_price: item.price,
     }))
     let preference = {
-        items: items_md,
+        items: itemsMp,
         back_urls: {
-          // failure: "/failure",
-          // pending: "/pending",
-          // success: "/success"
-          
-
             success: `http://localhost:3001/mercadopago/factura`,
             failure: `http://localhost:3001/mercadopago/factura`,
             pending: `http://localhost:3001/mercadopago/factura`
@@ -84,7 +80,6 @@ const postMP = async (req, res) => {
 
 const getPayments = async (req, res) => {
     try {
-        // console.log("EN LA RUTA PAGOS", req)
         let { payment_id } = req.query;
         //const payment_id = req.query.payment_id;
         console.log("soy payment_id", payment_id)
@@ -97,7 +92,7 @@ const getPayments = async (req, res) => {
         const external_reference = req.query.external_reference;
         console.log("soy external_reference", external_reference)
         
-        const [id, mail, price,date] = external_reference.split("*");
+        const [id, mail, price, date] = external_reference.split("*");
 
         const invoice = await Invoice.create({
             payment_id: payment_id,
@@ -106,68 +101,31 @@ const getPayments = async (req, res) => {
             status: "paid",
             date: date,
             price: parseInt(price),
-            saldado: false,
+            saldado: true,
         })
   
         const professionals = await Professionals.findByPk(Number(id))
         console.log("PROFESIONAL", professionals);
         await professionals.addInvoices(invoice)
+        //descomentar para probar el nodemailer     
         // let info = await transporter.sendMail({
         //     from: `${process.env.EMAIL}`, // sender address
-        //     to: email, // list of receivers
-        //     subject: "Pago de cuota en PsicoApp ✔", // Subject line
-        //     text: `Usted ha pagado el día de la fecha: ${fecha} un total de ${precio}`, // plain text body
-        //     html: `Usted ha pagado el día de la fecha: ${fecha} un total de ${precio}`, // html body
+        //     to: mail, // list of receivers
+        //     subject: "Pago de subscripcion App-Salud ✔", // Subject line
+        //     text: `Usted ha pagado el día de la fecha: ${date} un total de ${price}`, // plain text body
+        //     html: `Usted ha pagado el día de la fecha: ${date} un total de ${price}`, // html body
         // });
-        // console.log(info);
+        //console.log(info);
         console.info("redirect success");
         res.redirect(`http://localhost:3000/home`);
     } catch (error) {
-        console.error("error al actualizar la factura", error);
+        console.error("error al crear la factura", error);
         return res.redirect(`http://localhost:3000/home`);
     }
   }
   
 
 
-
-
-// const getPayments = async (req, res) => {
-//   try {
-//       // console.log("EN LA RUTA PAGOS", req)
-//       let { payment_id } = req.query;
-//       //const payment_id = req.query.payment_id;
-//       console.log("soy payment_id", payment_id)
-//       const payment_status = req.query.status;
-//       console.log("soy payment_status", payment_status)
-
-//       const merchant_order_id = req.query.merchant_order_id;
-//       console.log("soy merchant_order_id", merchant_order_id)
-
-//       const external_reference = req.query.external_reference;
-//       console.log("soy external_reference", external_reference)
-      
-//       const [id, mail, price] = external_reference.split("*");
-
-
-//       const professionals = await Professionals.findByPk(id, {include:{model:Invoice}})
-//       console.log("PROFESIONAL", professionals);
-//       professionals.invoices.map(async(f) => await f.update({saldado:true}))
-//       // let info = await transporter.sendMail({
-//       //     from: `${process.env.EMAIL}`, // sender address
-//       //     to: email, // list of receivers
-//       //     subject: "Pago de cuota en PsicoApp ✔", // Subject line
-//       //     text: `Usted ha pagado el día de la fecha: ${fecha} un total de ${precio}`, // plain text body
-//       //     html: `Usted ha pagado el día de la fecha: ${fecha} un total de ${precio}`, // html body
-//       // });
-//       // console.log(info);
-//       console.info("redirect success");
-//       res.redirect(`http://localhost:3000/home`);
-//   } catch (error) {
-//       console.error("error al actualizar la factura", error);
-//       return res.redirect(`http://localhost:3000/home`);
-//   }
-// }
 
 module.exports = {
   postMP,
