@@ -20,7 +20,7 @@ import Auth0 from "../auth0/Auth0";
 import { Link, useHistory } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useDispatch, useSelector } from "react-redux";
-import { getPatients, getUserDetail } from "../../redux/actions";
+import { getPatients, getUserDetail, get_Doctors } from "../../redux/actions";
 import google from "../../Icons/google.svg";
 import styles from "./Login.module.css";
 import stylesForm from "../formPatients/FormPatients.module.css";
@@ -59,24 +59,40 @@ export default function Login() {
     },
   });
   const values = getValues();
+
   const patients = useSelector((state) => state.patients);
-  console.log("patients",patients)
-  let filter;
-  if (patients) {
-    filter = patients.filter((el) => el.mail === values.email);
+  const doctor = useSelector((state) => state.doctors);
+  const [email, setEmail] = useState({
+    email:'',
+    password:''
+  });
+  function handleInput(e) {
+    setEmail({
+      ...email,
+      [e.target.name]: e.target.value,
+    });
+  }
+  console.log("email",email.email)
+  const allUSer = patients.concat(doctor);
+
+  var filter;
+  if (email.email) {
+    filter = allUSer.filter((el) => el.mail === email.email);
+    console.log("state",email.email)
   }
   
   const submitForm = (data) => {
-    console.log("filter",filter)
     if (filter.length > 0) {
-        // if (data.password === filter.password) {
-      dispatch(getUserDetail(data.email));
-      cookies.set("email", `${data.email}`, { patch: "/" });
-      history.push("/home");
-      //   }
-    }else{
-		alert('el email no fue encontrado')
-	}
+      if (data.password === filter[0].password) {
+        dispatch(getUserDetail(data.email));
+        cookies.set("email", `${data.email}`, { patch: "/" });
+        history.push("/home");
+      } else {
+        alert("la contraseña es incorrecta");
+      }
+    } else {
+      alert("El correo ingresado es incorrecto");
+    }
   };
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
@@ -84,6 +100,7 @@ export default function Login() {
 
   useEffect(() => {
     dispatch(getPatients());
+    dispatch(get_Doctors());
   }, [dispatch]);
 
   return (
@@ -97,11 +114,13 @@ export default function Login() {
             <Row className={styles.formGroup} lg={1}>
               <Col className={styles.col} lg={9}>
                 <FormControl
+                onChange={(e)=>handleInput(e)}
+                name='email'
                   error={errors.email}
                   className={styles.input}
                   variant="outlined"
                 >
-                  <InputLabel htmlFor="outlined-adornment-password">
+                  <InputLabel htmlFor="outlined-adornment-password" >
                     Correo electronico
                   </InputLabel>
                   <OutlinedInput
@@ -109,6 +128,7 @@ export default function Login() {
                     label="Correo electronico"
                     {...register("email")}
                     endAdornment={
+                        
                       <InputAdornment position="end">
                         <PersonIcon />
                       </InputAdornment>
@@ -121,6 +141,8 @@ export default function Login() {
               </Col>
               <Col className={styles.col} lg={9}>
                 <FormControl
+                onChange={(e)=>handleInput(e)}
+                name='password'
                   error={errors.password}
                   className={styles.input}
                   variant="outlined"

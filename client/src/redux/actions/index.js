@@ -44,7 +44,6 @@ export function get_cities() {
 		const data = await axios(`/professionals/allProfessional`);
 		const cities = await data.data.map((e) => e.province);
 		const citiesUnique = new Set(cities);
-
 		return dispatch({
 			type: GET_CITIES,
 			payload: Array.from(citiesUnique),
