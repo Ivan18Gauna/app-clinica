@@ -68,15 +68,15 @@ export default function Login() {
   
   const submitForm = (data) => {
     console.log("filter",filter)
-    if (filter.length > 0) {
+    //if (filter.length > 0) {
         // if (data.password === filter.password) {
       dispatch(getUserDetail(data.email));
       cookies.set("email", `${data.email}`, { patch: "/" });
       history.push("/home");
       //   }
-    }else{
-		alert('el email no fue encontrado')
-	}
+  //   }else{
+	// 	alert('el email no fue encontrado')
+	// }
   };
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
