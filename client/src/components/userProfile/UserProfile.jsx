@@ -15,19 +15,14 @@ import ProfessionalProfile from "../professionalsProfile/ProfessionalsProfile";
 
 export default function UserProfile() {
 
-  const cookie = new Cookies()
-  const history = useHistory()
+  const cookie = new Cookies();
+  const history = useHistory();
   const dispatch = useDispatch();
-
-  const state = useSelector((state) => state.user)
-  const obras = useSelector((state) => state.os)
-
-  const specialties = useSelector((state) => state.specialties)
-
-
-  const {logout} = useAuth0()
-
-
+  const state = useSelector((state) => state.user);
+  const obras = useSelector((state) => state.os);
+  const specialties = useSelector((state) => state.specialties);
+  const {logout} = useAuth0();
+  console.log('state',state)
 
   useEffect(() => {
     dispatch(getObrasSociales());

@@ -71,7 +71,7 @@ export default function Login() {
 		//if (filter.length > 0) {
 		// if (data.password === filter.password) {
 		dispatch(getUserDetail(data.email));
-		cookies.set('email', `${data.email}`, { patch: '/' });
+		cookies.set('userEmail', `${data.email}`, { patch: '/' });
 		history.push('/home');
 		//   }
 		//   }else{

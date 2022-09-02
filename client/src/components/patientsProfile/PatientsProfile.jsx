@@ -155,7 +155,7 @@ export default function UserProfile({ globalUser, obras }) {
 	if (globalUser && !globalUser.name) {
 		dispatch(getUserDetail(globalUser.mail));
 	}
-	if(globalUser.mail !== cookie.get('email')) { dispatch(getUserDetail(cookie.get('email'))); }
+	if(globalUser.mail !== cookie.get('userEmail')) { dispatch(getUserDetail(cookie.get('userEmail'))); }
 
 
 	function onKeyDown(e) {
@@ -328,7 +328,7 @@ export default function UserProfile({ globalUser, obras }) {
 		if(info.new_password && info.new_password !== ''){ infoModify.new_password = info.new_password };
 		if(info.mail && info.mail !== ''){ 
 			infoModify.mail = info.mail;
-			cookie.set("email",`${infoModify.mail}`,{patch:'/'});
+			cookie.set("userEmail", infoModify.mail,{patch:'/'});
 		 };
 		if(info.birth && info.birth !== ''){ infoModify.birth = info.birth };
 		if(info.document && info.document !== ''){ infoModify.document = info.document };
@@ -352,7 +352,6 @@ export default function UserProfile({ globalUser, obras }) {
 		setAllergies('');
 	}
 	function logoutCookies() {
-		cookie.remove('email', { path: '/' });
 		cookie.remove('userEmail', { path: '/' });
 		history.push('/');
 	}
@@ -610,7 +609,7 @@ export default function UserProfile({ globalUser, obras }) {
 												</Col>
 												{
 													(info.password && info.new_password && info.password !== info.new_password) ||
-													error.password || error.new_password ?
+													error.password || error.new_password || (info.password && !info.new_password) ?
 													<Button
 														disabled
 														variant="danger"

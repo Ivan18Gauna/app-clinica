@@ -159,18 +159,18 @@ export function registerPatients(payload) {
 
 export function modifyUsers(payload, id, mail) {
 	return async function (dispatch) {
-		
 		const healthData = await axios.put(`/patients/edit/${id}`, payload);
 		dispatch(getUserDetail(mail));
+
 		return healthData;
 	};
 }
 
 export function modifyProfessionals(payload, id, mail){
 	return async function (dispatch){
-		console.log("payload",payload)
 		const modifyProfessionals= await axios.put(`/professionals/edit/${id}`, payload);
 		dispatch(getUserDetail(mail))
+
 		return modifyProfessionals;
 	}
 }
@@ -178,14 +178,13 @@ export function modifyProfessionals(payload, id, mail){
 export function getUserDetail(mail) {
 	return async function (dispatch) {
 		const userMail = await axios(`/user/${mail}`);
+
 		return dispatch({
 			type: GET_USER_MAIL,
 			payload: userMail.data,
 		});
 	};
 }
-
-
 
 export function getClinicHistory(id) {
 	return async function (dispatch) {
