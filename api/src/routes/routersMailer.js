@@ -15,7 +15,7 @@ router.post("/send-email",(req, res)  =>{
     })
 var mailOptions = {
     from: "bella.hartmann@ethereal.email",
-    to: "martinfigueroa2103@hotmail.com",
+    to: "marianettimatiass@hotmail.com",
     subjet: "Biemvenido a la app mas salud",
     text: "Usted logró registrarse correctamente"
 };
