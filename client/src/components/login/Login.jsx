@@ -82,9 +82,20 @@ export default function Login() {
     event.preventDefault();
   };
 
+
   useEffect(() => {
     dispatch(getPatients());
   }, [dispatch]);
+
+	const values = getValues();
+	const submitForm = (data) => {
+		dispatch(getUserDetail(data.email));
+		cookies.set("userEmail",data.email ,{path:'/'});
+		history.push('/home');
+	};
+	const handleMouseDownPassword = (event) => {
+		event.preventDefault();
+	};
 
   return (
     <div>

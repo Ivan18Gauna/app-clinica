@@ -9,10 +9,9 @@ import Cookies from "universal-cookie";
 
 function NavBarEdit() {
   const cookies = new Cookies();
-  const conf = cookies.get("email");
+  const conf = cookies.get("userEmail");
   const { isAuthenticated } = useAuth0();
   const globalUser = useSelector((state) => state.user);
-  console.log("cook",isAuthenticated)
   return (
     <Navbar
       className={styles.navbar}
