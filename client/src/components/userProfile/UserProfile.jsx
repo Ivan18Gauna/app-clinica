@@ -21,7 +21,7 @@ export default function UserProfile() {
   const state = useSelector((state) => state.user);
   const obras = useSelector((state) => state.os);
   const specialties = useSelector((state) => state.specialties);
-  const {logout} = useAuth0();
+  const { isAuthenticated, logout } = useAuth0();
   console.log('state',state)
 
   useEffect(() => {
@@ -30,9 +30,14 @@ export default function UserProfile() {
     dispatch(getUserDetail(cookie.get('userEmail')));
   }, []);
 
-  function logoutCookies (){
-    cookie.remove('userEmail',{path:'/'})
-    history.push('/')
+  function logoutCookies() {
+    if(isAuthenticated) { logout() }
+    cookie.remove('userEmail',{path:'/'});
+    history.push('/');
+  }
+
+  function register() {
+    history.push('/signin')
   }
 
   return (
@@ -41,20 +46,19 @@ export default function UserProfile() {
 
         <div>
           <PatientProfile globalUser={state} obras={obras} />
-          <Button className={styles.button} onClick={logoutCookies}>Cerrar sesion</Button>
+          {/* <Button className={styles.button} onClick={logoutCookies}>Cerrar sesion</Button> */}
         </div>
       ) : state && state.license ? (
         <div>
           <ProfessionalProfile globalUser={state} specialties={specialties} />
-          <Button className={styles.button} onClick={logoutCookies}>Cerrar sesion</Button>
+          {/* <Button className={styles.button} onClick={logoutCookies}>Cerrar sesion</Button> */}
         </div>
 
       ) : (
         <div>
-        <h1>loading</h1>
-        <button onClick={logoutCookies}>cerrar local</button>
-        <button onClick={logout}>cerrar auth0</button>
-
+        <Loading />
+        <button onClick={logoutCookies}>Cerrar sesion</button>
+        <button onClick={register}>Continuar con el registro</button>
         </div>
       )
       }

@@ -218,6 +218,7 @@ export default function ProfessionalProfile({ globalUser, specialties }) {
         setInput({})
     }
     function logoutCookies() {
+        if(isAuthenticated) { logout() }
         cookie.remove('userEmail', { path: '/' });
         history.push('/');
     }
@@ -523,7 +524,7 @@ export default function ProfessionalProfile({ globalUser, specialties }) {
             </div>
             <Button
                 className={styles.button}
-                onClick={isAuthenticated ? logout : logoutCookies}
+                onClick={logoutCookies}
             >
                 Cerrar sesion
             </Button>
