@@ -14,15 +14,18 @@ import { getUserDetail } from '../../redux/actions/index.js';
 import Cookies from 'universal-cookie';
 
 export default function Home() {
-	const cookie = new Cookies();
-
+	const cookie = new Cookies()
 	const dispatch = useDispatch();
-	const globalUser = useSelector((state) => state.user);
-
-	useEffect(() => {
-		dispatch(getUserDetail(cookie.get('email')));
-	}, []);
-	console.log('globalUser', globalUser, cookie.get('email'));
+	const globalUser = useSelector( state => state.user)
+ 
+	
+ 
+ useEffect(() => {
+	 dispatch(getUserDetail(cookie.get('userEmail')))
+	}, [])
+	
+	console.log('globalUser', globalUser, cookie.get('userEmail'))
+	
 
 	return (
 		<>

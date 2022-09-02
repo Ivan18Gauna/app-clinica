@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
 const { default: axios } = require("axios");
 const { Op } = require("sequelize");
-const { Professionals, Patients } = require("../db");
+const { Professionals, Patients, ObrasSociales, Specialties } = require("../db");
 
 const actualUser = async(req, res) => {
     const { mail } = req.params
@@ -10,7 +10,19 @@ const actualUser = async(req, res) => {
         const prof = await Professionals.findOne({
             where: {
                 mail: mail
-            }
+            },
+            include: [
+                {
+                    model: ObrasSociales,
+                    attributes: ['name'],
+                    through: { attributes: [] },
+                },
+                {
+                    model: Specialties,
+                    attributes: ['name'],
+                    through: { attributes: [] },
+                },
+            ]
         })
         const pat = await Patients.findOne({
             where: {

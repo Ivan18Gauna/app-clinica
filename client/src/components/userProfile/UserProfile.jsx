@@ -11,7 +11,6 @@ import '../login/Login.module.css';
 import Button from "react-bootstrap/esm/Button";
 import styles from '../patientsProfile/PatientsProfile.module.css';
 import ProfessionalProfile from "../professionalsProfile/ProfessionalsProfile";
-import email from '../login/Login'
 
 
 export default function UserProfile() {
@@ -33,13 +32,11 @@ export default function UserProfile() {
   useEffect(() => {
     dispatch(getObrasSociales());
     dispatch(get_specialties());
-    dispatch(getUserDetail(cookie.get('email')));
+    dispatch(getUserDetail(cookie.get('userEmail')));
   }, []);
 
   function logoutCookies (){
-    cookie.remove('email',{path:'/'})
     cookie.remove('userEmail',{path:'/'})
-
     history.push('/')
   }
 
