@@ -84,8 +84,8 @@
   border-radius: 50%;
   cursor: pointer;
   position: absolute;
-  padding: 1.2rem;
-  top: -30px;
+  padding: 1rem;
+  top: -35px;
   right: 50px;
   transition: background-color 0.5s;
   box-shadow: 1px 1px 4px #030058;
