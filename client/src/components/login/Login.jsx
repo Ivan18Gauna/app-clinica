@@ -60,16 +60,16 @@ export default function Login() {
   });
   const values = getValues();
   const patients = useSelector((state) => state.patients);
-  console.log("values",values)
+  console.log("patients",patients)
   let filter;
   if (patients) {
     filter = patients.filter((el) => el.mail === values.email);
   }
-
+  
   const submitForm = (data) => {
-	
+    console.log("filter",filter)
     if (filter.length > 0) {
-      //   if (data.password === filter.password) {
+        // if (data.password === filter.password) {
       dispatch(getUserDetail(data.email));
       cookies.set("email", `${data.email}`, { patch: "/" });
       history.push("/home");

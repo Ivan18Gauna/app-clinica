@@ -140,7 +140,7 @@ export default function ProfessionalProfile({ globalUser, specialties }) {
     if (globalUser && !globalUser.name) {
         dispatch(getUserDetail(globalUser.mail));
     }
-    if (globalUser.mail != cookie.get('email')) {
+    if (globalUser.mail !== cookie.get('email')) {
         dispatch(getUserDetail(cookie.get('email')))
     }
 
@@ -196,6 +196,7 @@ export default function ProfessionalProfile({ globalUser, specialties }) {
 
     function handleSubmit(e) {
         e.preventDefault();
+        console.log('contraseña', input.password)
         if (input.name && input.name !== '') { infoModify.name = input.name };
         if (input.lastname && input.lastname !== '') { infoModify.lastname = input.lastname };
         if (input.avatar && input.avatar !== '') { infoModify.avatar = input.avatar };
