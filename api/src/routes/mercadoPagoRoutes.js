@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const PaymentController = require("../Controllers/mercadoPago");
+const PaymentController = require("../Controllers/mercadopago");
 const PaymentService = require("../Controllers/mercadoPagoServices");
 
 const PaymentInstance = new PaymentController(new PaymentService());

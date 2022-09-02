@@ -23,8 +23,10 @@ function CardsTriple() {
 				<div className={styles.imagen}>
 					<img src={update} alt="update" />
 				</div>
+				<div className={styles.divideResponsive}></div>
 			</div>
-			<div className={styles.card}>
+			<div className={`${styles.card} ${styles.cardReverse}`}>
+				<div className={styles.divideResponsive}></div>
 				<div className={styles.imagen}>
 					<img src={medicos} alt="update" />
 				</div>
@@ -35,8 +37,8 @@ function CardsTriple() {
 						Eleji tu medico preferido de la plataforma y consegui un turno con
 						el. Toda la informacion del mismo en +Salud.
 					</p>
-					<div className={styles.divide}></div>
 				</div>
+				<div className={styles.divide}></div>
 			</div>
 			<div className={styles.card}>
 				<div className={styles.texto}>
@@ -48,7 +50,6 @@ function CardsTriple() {
 						salud obtenga las herramientas necesarias para darte el mejor
 						tratamiento.
 					</p>
-					<div className={styles.divide}></div>
 				</div>
 				<div className={styles.imagen}>
 					<img src={data} alt="update" />

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import doctor from '../../Icons/iconfinder-icon.svg';
+import Avatar from '@mui/material/Avatar';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
@@ -211,7 +212,7 @@ export default function ProfessionalProfile({ globalUser, specialties }) {
         if (input.city && input.city !== '') { infoModify.city = input.city };
         if (input.street && input.street !== '') { infoModify.street = input.street };
         if (input.number && input.number !== '') { infoModify.number = input.number };
-        dispatch(modifyProfessionals(input, globalUser.id, globalUser.mail));
+        dispatch(modifyProfessionals(infoModify, globalUser.id, globalUser.mail));
         setEditInfoPersonal(false);
         setInput({})
     }
@@ -225,7 +226,11 @@ export default function ProfessionalProfile({ globalUser, specialties }) {
 
         <div className={styles.container}>
             <div className={styles.perfil}>
-                <img src={doctor} alt="imagen no disponible" />
+                <Avatar
+                    sx={{ width: 66, height: 66 }}
+                    alt="Remy Sharp"
+                    src={globalUser.avatar ? globalUser.avatar : doctor}
+                />
                 <h4>
                     {globalUser.name} {globalUser.lastname}
                 </h4>
