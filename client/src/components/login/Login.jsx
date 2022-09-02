@@ -1,41 +1,41 @@
-import React, { useEffect, useState } from "react";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import FormControl from "@mui/material/FormControl";
-import FormHelperText from "@mui/material/FormHelperText";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import PersonIcon from "@mui/icons-material/Person";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputAdornment from "@mui/material/InputAdornment";
-import IconButton from "@mui/material/IconButton";
-import InputLabel from "@mui/material/InputLabel";
-import Loading from "../loading/Loading";
-import Auth0 from "../auth0/Auth0";
-import { Link, useHistory } from "react-router-dom";
-import { useAuth0 } from "@auth0/auth0-react";
-import { useDispatch, useSelector } from "react-redux";
-import { getPatients, getUserDetail, get_Doctors } from "../../redux/actions";
-import google from "../../Icons/google.svg";
-import styles from "./Login.module.css";
-import stylesForm from "../formPatients/FormPatients.module.css";
-import Cookies from "universal-cookie";
-import { Alert } from "@mui/material";
+import React, { useEffect, useState } from 'react';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import FormControl from '@mui/material/FormControl';
+import FormHelperText from '@mui/material/FormHelperText';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import PersonIcon from '@mui/icons-material/Person';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputAdornment from '@mui/material/InputAdornment';
+import IconButton from '@mui/material/IconButton';
+import InputLabel from '@mui/material/InputLabel';
+import Loading from '../loading/Loading';
+import { Link, useHistory } from 'react-router-dom';
+import { useAuth0 } from '@auth0/auth0-react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getPatients, getUserDetail } from '../../redux/actions';
+import google from '../../Icons/google.svg';
+import styles from './Login.module.css';
+import stylesForm from '../formPatients/FormPatients.module.css';
+import Cookies from 'universal-cookie';
+import { Alert } from '@mui/material';
+import '../auth0/Auth0';
 
 const schema = yup
-  .object({
-    email: yup
-      .string()
-      .email("Ingresa un correo valido")
-      .required("Este campo es requerido"),
-    password: yup.string().required("Este campo es requerido"),
-  })
-  .required();
+	.object({
+		email: yup
+			.string()
+			.email('Ingresa un correo valido')
+			.required('Este campo es requerido'),
+		password: yup.string().required('Este campo es requerido')
+	})
+	.required();
 
 export default function Login() {
   const cookies = new Cookies();

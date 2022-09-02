@@ -13,6 +13,7 @@ import {
   GET_NOTES,
   GET_TURNO_PROF,
   GET_TURNO_PAT,
+  GET_PATIENTS_DETAIL
 } from "../actions/actions";
 
 const initialState = {
@@ -27,6 +28,7 @@ const initialState = {
   clinicHistory: [],
   notes: [],
   turnos: [],
+  patientsDetail: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -66,6 +68,12 @@ function rootReducer(state = initialState, action) {
         ...state,
         detail: action.payload,
       };
+
+      case GET_PATIENTS_DETAIL:
+        return{
+          ...state,
+          patientsDetail: action.payload,
+        }
 
     case POST_REGISTER_DOCTOR:
       return {

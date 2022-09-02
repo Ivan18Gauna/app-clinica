@@ -24,6 +24,8 @@ import UserProfile from './components/userProfile/UserProfile';
 import ProfessionalProfile from './components/professionalsProfile/ProfessionalsProfile';
 import Sidebar from './components/admin/Admin'
 import Bot from "./components/bot/Bot";
+import DetailsPatients from "./components/detailPatAdmin/DetailPatAdmin";
+import DetailsDrAdmin from "./components/detailProfAdmin/DetailProfAdmin";
 
 
 
@@ -37,6 +39,8 @@ function App() {
       <Switch>
 
       <Route path="/admin" component={Sidebar} />
+      <Route path="/detailpatadmin/:id" component={DetailsPatients}/>
+      <Route path="/detaildradmin/:id" component={DetailsDrAdmin}/>
 
       <Route path="/bot" component={Bot} />
 
