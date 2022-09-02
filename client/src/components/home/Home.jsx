@@ -21,10 +21,10 @@ export default function Home() {
 	
  
  useEffect(() => {
-	 dispatch(getUserDetail(cookie.get('email')))
+	 dispatch(getUserDetail(cookie.get('userEmail')))
 	}, [])
 	
-	console.log('globalUser', globalUser, cookie.get('email'))
+	console.log('globalUser', globalUser, cookie.get('userEmail'))
 	
 
 	return (

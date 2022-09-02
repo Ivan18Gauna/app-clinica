@@ -216,7 +216,6 @@ export default function ProfessionalProfile({ globalUser, specialties }) {
         setInput({})
     }
     function logoutCookies() {
-        cookie.remove('email', { path: '/' });
         cookie.remove('userEmail', { path: '/' });
         history.push('/');
     }

@@ -62,7 +62,7 @@ export default function Login() {
 	const values = getValues();
 	const submitForm = (data) => {
 		dispatch(getUserDetail(data.email));
-		cookies.set("userEmail",`${data.email}`,{path:'/'});
+		cookies.set("userEmail",data.email ,{path:'/'});
 		history.push('/home');
 	};
 	const handleMouseDownPassword = (event) => {
