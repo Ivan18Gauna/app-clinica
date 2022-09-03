@@ -9,6 +9,9 @@ import {
 	GET_PATIENTS_NAME,
 	GET_USER_MAIL,
 	GET_CLINIC_HISTORY,
+	GET_NOTES,
+	GET_TURNO_PROF,
+	GET_TURNO_PAT
 } from '../actions/actions';
 import axios from 'axios';
 
@@ -17,7 +20,7 @@ import axios from 'axios';
 export function get_Doctors() {
 	return async function (dispatch) {
 		const doctors = await axios(`/professionals/allProfessional`);
-		console.log('action prof', doctors);
+		
 		return dispatch({
 			type: GET_DOCTORS,
 			payload: doctors.data,
@@ -41,6 +44,7 @@ export function get_cities() {
 		const data = await axios(`/professionals/allProfessional`);
 		const cities = await data.data.map((e) => e.province);
 		const citiesUnique = new Set(cities);
+
 		return dispatch({
 			type: GET_CITIES,
 			payload: Array.from(citiesUnique),
@@ -54,6 +58,7 @@ export function filterConvinado(payload) {
 			const doctors_detail = await axios(
 				`/professionals?lastname=${payload.lastname}&filterEsp=${payload.filterEsp}&filterProfProv=${payload.filterProfProv}&order=${payload.order}`
 			);
+
 			return dispatch({
 				type: FILTER_CONVINADO,
 				payload: doctors_detail.data,
@@ -81,15 +86,15 @@ export function get_DoctorsDetail(id) {
 export function registerDoctors(payload) {
 	return async function () {
 		const registerDoctors = await axios.post(`/professionals`, payload);
+
 		return registerDoctors;
 	};
 }
 
 export function getObrasSociales() {
 	return async function (dispatch) {
-		const apiObras = await axios.get(
-			'https://obras-sociales-be310-default-rtdb.firebaseio.com/results.json'
-		);
+		const apiObras = await axios.get('https://obras-sociales-be310-default-rtdb.firebaseio.com/results.json');
+
 		return dispatch({
 			type: GET_OS,
 			payload: apiObras.data,
@@ -100,6 +105,7 @@ export function getObrasSociales() {
 export function getPatients() {
 	return async function (dispatch) {
 		const allPatients = await axios.get('/patients/allpatients');
+
 		return dispatch({
 			type: GET_PATIENTS,
 			payload: allPatients.data,
@@ -142,9 +148,13 @@ export function registerPatients(payload) {
 export function modifyUsers(payload, id) {
 	return async function () {
 		const healthData = await axios.put(`/patients/edit/${id}`, payload);
-		console.log("aca toy pa")
+
 		return healthData;
 	};
+}
+
+export function modifyProfessionals(payload, id){
+	
 }
 
 export function getUserDetail(mail) {
@@ -158,47 +168,95 @@ export function getUserDetail(mail) {
 	};
 }
 
+
 export function getClinicHistory(id) {
 	return async function (dispatch) {
 		const clinicHistory = await axios('/historiaclinica/bypat/' + id);
 
 		return dispatch({
 			type: GET_CLINIC_HISTORY,
-			payload: clinicHistory.data,
-			// payload: [
-			// 	{
-			// 	  "id": 1,
-			// 	  "reason": "x",
-			// 	  "image": "x",
-			// 	  "description": "x",
-			// 	  "date": "x",
-			// 	  "diagnosis": "x",
-			// 	  "patientId": 3,
-			// 	  "professionalId": 1,
-			// 	  "professional": {
-			// 		"name": "Emilio"
-			// 	  },
-			// 	  "patient": {
-			// 		"name": "Emilio"
-			// 	  }
-			// 	},
-			// 	{
-			// 	  "id": 2,
-			// 	  "reason": "x",
-			// 	  "image": "x",
-			// 	  "description": "x",
-			// 	  "date": "x",
-			// 	  "diagnosis": "x",
-			// 	  "patientId": 3,
-			// 	  "professionalId": 2,
-			// 	  "professional": {
-			// 		"name": "Tania"
-			// 	  },
-			// 	  "patient": {
-			// 		"name": "Emilio"
-			// 	  }
-			// 	}
-			//   ]
+			payload: clinicHistory.data
 		});
 	};
+}
+
+export function getNotes(license){
+	return async function (dispatch) {
+		try {
+			const notes = await axios('/notes/' + license);
+
+			return dispatch({
+				type: GET_NOTES,
+				payload: notes
+			})
+		} catch(e) {
+			console.log(e.message)
+		}
+	}
+}
+
+export function postNotes(payload){
+	return async function () {
+		try {
+			const notes = await axios.post('/notes', payload);
+			
+			return notes;
+		} catch(e) {
+			console.log(e.message)
+		}
+	}
+}
+
+export function getTurnoProf (id){
+	return async function (dispatch) {
+		try{
+			const turno = await axios.get(`/turnos/profturnos/${id}`);
+
+			return dispatch({
+				type: GET_TURNO_PROF,
+				payload: turno.data
+		})
+	}catch(error){
+			console.log(error)
+		}
+	}
+}
+
+export function getTurnoPat (id){
+	return async function (dispatch) {
+		try{
+			const turno = await axios.get(`/turnos/patturnos/` + id);
+
+			return dispatch({
+				type: GET_TURNO_PAT,
+				payload: turno
+		})
+	}catch(error){
+			console.log(error)
+		}
+	}
+}
+
+export function newTurno(payload){
+	return async function () {
+		try{
+			const turno = await axios.post('/turnos', payload);
+			return turno;
+		}catch(error){
+			console.log(error)
+		}
+	}
+}
+
+
+export function deleteNotes(payload){
+	return async function () {
+		try {
+			const notes = await axios.delete('/notes/' + payload);
+
+			return notes;
+		} catch(e) {
+			console.log(e.message)
+		}
+	}
 }
