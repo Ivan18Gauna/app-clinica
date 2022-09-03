@@ -1,62 +1,134 @@
-const axios = require("axios");
+const { Invoice, Professionals } = require("../db")
 
-class PaymentService {
-  async createPayment() {
-    const url = "https://api.mercadopago.com/checkout/preferences";
+//const {URL_BACK, URL_FRONT} = process.env;
 
-    const body = {
-      payer_email: "test_user_46945293@testuser.com",
-      items: [
-        {
-          title: "App-Salud",
-          description: "Dummy description",
-          picture_url: "http://www.myapp.com/myimage.jpg",
-          category_id: "category123",
-          quantity: 1,
-          unit_price: 10
+const server = require('express').Router();
+
+//SDK de MercadoPago,
+const mercadopago = require('mercadopago');
+const e = require("express");
+const { ACCESS_TOKEN } = process.env;
+require("dotenv").config();
+
+mercadopago.configure({
+    access_token: ACCESS_TOKEN
+})
+//descomentar para probar el nodemailer
+const nodemailer = require('nodemailer');
+
+//descomentar para probar el nodemailer
+//Creamos el tranportador
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: "appclinicahenry@gmail.com",
+        pass: "Clinica123456"
+    },
+    port: 465,
+    host: 'smpt.gmail.com'
+});
+
+
+//genera la URL a mercado pago
+const postMP = async (req, res) => {
+    const data = req.body;
+    const id = data.id;
+    const items = [
+        { price: data.price, quantity: 1 },
+    ]
+    const external_reference = id + "*" + data.mail + "*" + data.price + "*" + data.date;
+    const itemsMp = items.map(item => ({
+        title: "Susbcripcion App Salud",
+        quantity: 1,
+        unit_price: item.price,
+    }))
+    let preference = {
+        items: itemsMp,
+        back_urls: {
+            success: `http://localhost:3001/mercadopago/factura`,
+            failure: `http://localhost:3001/mercadopago/factura`,
+            pending: `http://localhost:3001/mercadopago/factura`
+        },
+        auto_return: "approved",
+        payment_methods: {
+            excluded_payment_methods: [
+                {
+                    id: "atm"
+                }
+            ],
+        },
+        external_reference: external_reference,
+        installments: 3,
+        statement_descriptor: "Test",
+        shipments: {
+            mode: "not_specified",
+            cost: 0
         }
-      ],
-      back_urls: {
-        failure: "/failure",
-        pending: "/pending",
-        success: "/success"
-      }
     };
 
-    const payment = await axios.post(url, body, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.ACCESS_TOKEN}`
-      }
-    });
-
-    return payment.data;
-  }
-
-  async createSubscription() {
-    const url = "https://api.mercadopago.com/preapproval_plan";
-
-    const body = {
-      reason: "Suscripción de ejemplo",
-      auto_recurring: {
-        frequency: 1,
-        frequency_type: "months",
-        transaction_amount: 10,
-        currency_id: "ARS"
-      },
-      back_url: "https://google.com.ar",
-      payer_email: "test_user_46945293@testuser.com"
-    };
-
-    const subscription = await axios.post(url, body, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.ACCESS_TOKEN}`
-      }
-    });
-
-    return subscription.data;
-  }
+    mercadopago.preferences.create(preference)
+        .then(function (response) {
+            //console.log("respondio");
+            global.id = response.body.init_point;
+            //console.log(response.body);
+            res.json({ id: global.id });
+        }).catch(error => {
+            //console.log(error);
+            res.status(400).send({ error: error });
+        })
 }
 
-module.exports = PaymentService;
+const getPayments = async (req, res) => {
+    try {
+        let { payment_id } = req.query;
+        //const payment_id = req.query.payment_id;
+        console.log("soy payment_id", payment_id)
+        const payment_status = req.query.status;
+        console.log("soy payment_status", payment_status)
+  
+        const merchant_order_id = req.query.merchant_order_id;
+        console.log("soy merchant_order_id", merchant_order_id)
+  
+        const external_reference = req.query.external_reference;
+        console.log("soy external_reference", external_reference)
+        
+        const [id, mail, price, date] = external_reference.split("*");
+
+        const invoice = await Invoice.create({
+            payment_id: payment_id,
+            payment_status: payment_status,
+            merchant_order_id: merchant_order_id,
+            status: "paid",
+            date: date,
+            price: parseInt(price),
+            saldado: true,
+        })
+  
+        const professionals = await Professionals.findByPk(Number(id))
+        console.log("PROFESIONAL", professionals);
+        await professionals.addInvoices(invoice)
+        //descomentar para probar el nodemailer     
+        let info = await transporter.sendMail({
+            from: "appclinicahenry@gmail.com", // sender address
+            to: mail, // list of receivers
+            subject: "Pago de subscripcion App-Salud ✔", // Subject line
+            text: `Usted ha pagado el día de la fecha: ${date} un total de ${price}`, // plain text body
+            html: `Usted ha pagado el día de la fecha: ${date} un total de ${price}`, // html body
+        });
+        console.log(info);
+        console.info("redirect success");
+        res.redirect(`http://localhost:3000/home`);
+    } catch (error) {
+        console.error("error al crear la factura", error);
+        return res.redirect(`http://localhost:3000/home`);
+    }
+  }
+  
+
+
+
+module.exports = {
+  postMP,
+  getPayments
+}
+
