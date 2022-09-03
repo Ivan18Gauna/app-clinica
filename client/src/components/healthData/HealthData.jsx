@@ -37,8 +37,11 @@ export default function HealthData() {
 	const location = useLocation();
 	const info_patient = location.state;
 	const obras = useSelector((state) => state.os);
-	const [allergies_, setAllergies] = useState('');
-	const [chronicles_, setChronicles] = useState('');
+
+	useEffect(() => {
+		dispatch(getObrasSociales());
+	}, [dispatch]);
+
 	const [input, setInput] = useState({
 		name: info_patient.name,
 		lastname: info_patient.lastname,
@@ -62,9 +65,8 @@ export default function HealthData() {
 		oS: '',
 	});
 
-	useEffect(() => {
-		dispatch(getObrasSociales());
-	}, [dispatch]);
+	const [allergies_, setAllergies] = useState('');
+	const [chronicles_, setChronicles] = useState('');
 
 	function onKeyDown(e) {
 		if (e.code === 'Enter') {
