@@ -3,7 +3,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Cookies from 'universal-cookie'
-import { getUserDetail, postMercadoPago } from "../../redux/actions";
+import { getUserDetail,postMercadoPago } from "../../redux/actions";
 
 
 export default function Price() {
@@ -44,6 +44,7 @@ export default function Price() {
 
   const handleActivarPago = (e) => {
     e.preventDefault();
+    console.log("handleactivarPago")
     dispatch(postMercadoPago({id,mail,price, quantity, date}))
   }
 

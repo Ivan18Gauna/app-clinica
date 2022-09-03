@@ -264,7 +264,6 @@ export function newTurno(payload){
 	}
 }
 
-
 export function deleteNotes(payload){
 	return async function () {
 		try {
@@ -290,9 +289,10 @@ export function deletePatients(id){
 }
 
 export function postMercadoPago(payload){
-	return async () =>{
+	return async function() {
 		try{
 			const res = await axios.post("/mercadopago",payload);
+			console.log("hola soy action", res)
 			return res;
 		} catch (error){
 			console.log(error)
