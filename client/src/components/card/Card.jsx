@@ -1,11 +1,15 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import doctor from '../../Icons/iconfinder-icon.svg';
 import doctorIcon from '../../Icons/user-doctor-solid.svg';
 import styles from './Card.module.css';
 
 function CardEdit({ id, name, lastname, specialties }) {
+
+	const globalUser = useSelector(state => state.user);
+
 	return (
 		<div className={`${styles.container}`}>
 			<div className={styles.ImgUser}>
@@ -27,9 +31,16 @@ function CardEdit({ id, name, lastname, specialties }) {
 					Soy un profesional especializado con años de experiencia y con muchas
 					referencias
 				</h6>
-				<Link to={`/details/${id}`}>
-					<Button type="button">Ver detalle</Button>
-				</Link>
+				{ globalUser && globalUser.rolUser === 'admin' ?
+					<Link  to={`/detailProfAdmin/${id}`}> 
+						<Button type="button">Ver detalle</Button>
+					</Link>
+					:
+					<Link to={`/detail/${id}`}>
+						<Button type="button">Ver detalle</Button>
+					</Link>
+				}
+				
 			</div>
 		</div>
 	);

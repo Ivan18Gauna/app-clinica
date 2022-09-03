@@ -1,56 +1,52 @@
-// const { Invoice, Usuario, Professional} = require("../db")
 
-// const getFacturaByPacienteID = async (req, res) => {
-//     const { id } = req.params;
-//     try {
-              
-//         const professionals = await Professionals.findOne({
-//             include: [{ model: Specialties,
-//               attributes:['name'] }],  
-//             where: {
-//               id: id,
-//             },
-//           });
-        
-//         const invoice = await Invoice.findAll({
-//         where: {
-//             pacienteId: usuario.paciente.id
-//         },
-//         include: [{model: Paciente, include: [{model: Usuario, attributes: ["name", "lastname", "email", "telephone"]}]}, {model: Psicologo, include: [{model: Usuario, attributes: ["name", "lastname", "email", "telephone"]}]}]
-//         });
-//         if (!factura) {
-//         return res.status(404).send({ error: "Factura no encontrada" });
-//         }
-//         return res.send(factura);
-//     } catch (error) {
-//         res.status(404).send({ error: error.message })
-//     }
-// }
+const { Invoice, Professionals} = require("../db")
 
-//Revisar la funcion hasta cuando se implemente
-// const getFacturaByProfessionalID = async (req, res) => {
-//     const { id } = req.params;
-//     try {
-//         const usuario = await User.findByPk(id, {include: {model: Professional, attributes: ["id"]}});
-//         const factura = await Invoice.findAll({
-//         where: {
-//             professionalsId: usuario.professionals.id
-//         },
-//         include: [{model: Professionals, include: [{model: User, attributes: ["name", "lastname", "email", "telephone"]}]}, 
-//         {model: Paciente, include: [{model: Usuario, attributes: ["name", "lastname", "email", "telephone"]}]}]
-//         });
-//         if (!factura) {
-//         return res.status(404).send({ error: "Factura no encontrada" });
-//         }
-//         return res.send(factura);
-//     } catch (error) {
-//         res.status(404).send({ error: error.message })
-//     }
-// }
+
+const getFacturaByProfessionalID = async (req, res) => {
+    let { id } = req.params;
+    let dbProfId = await Professionals.findOne({
+      where: { id },
+      include: [
+        {
+          model: Invoice,
+          //attributes: ["name"],
+          //through: { attributes: [] },
+        }
+      ],
+    });
+    res.status(200).send(dbProfId);
+  };
+  
+
+const getFacturaByProfessionalID = async (req, res) => {
+    let { id } = req.params;
+    let dbProfId = await Professionals.findOne({
+      where: { id },
+      include: [
+        {
+          model: Invoice,
+          //attributes: ["name"],
+          //through: { attributes: [] },
+        }
+      ],
+    });
+    res.status(200).send(dbProfId);
+  };
+  
+
+
+
 
 const getAllInvoices = async (req, res) => {
     try {
-        const factura = await Invoice.findAll({ attributes: ["price", "date"]});
+        const factura = await Invoice.findAll({
+            include: [
+                {
+                    model: Professionals,
+                    attributes: ['name','license'],
+                    
+                }]
+        });
         if (!factura) {
         return res.status(404).send({ error: "Factura no encontrada" });
         }
@@ -62,4 +58,4 @@ const getAllInvoices = async (req, res) => {
     }
 }
 
-module.exports = { getAllInvoices }
+module.exports = { getAllInvoices, getFacturaByProfessionalID }

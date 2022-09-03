@@ -140,8 +140,8 @@ export default function ProfessionalProfile({ globalUser, specialties }) {
     if (globalUser && !globalUser.name) {
         dispatch(getUserDetail(globalUser.mail));
     }
-    if (globalUser.mail != cookie.get('email')) {
-        dispatch(getUserDetail(cookie.get('email')))
+    if (globalUser.mail !== cookie.get('userEmail')) {
+        dispatch(getUserDetail(cookie.get('userEmail')))
     }
 
     function handleInput(e) {
@@ -196,6 +196,7 @@ export default function ProfessionalProfile({ globalUser, specialties }) {
 
     function handleSubmit(e) {
         e.preventDefault();
+        console.log('contraseña', input.password)
         if (input.name && input.name !== '') { infoModify.name = input.name };
         if (input.lastname && input.lastname !== '') { infoModify.lastname = input.lastname };
         if (input.avatar && input.avatar !== '') { infoModify.avatar = input.avatar };
@@ -203,7 +204,7 @@ export default function ProfessionalProfile({ globalUser, specialties }) {
         if (input.new_password && input.new_password !== '') { infoModify.new_password = input.new_password };
         if (input.mail && input.mail !== '') {
             infoModify.mail = input.mail;
-            cookie.set("email", `${infoModify.mail}`, { patch: '/' });
+            cookie.set("userEmail", infoModify.mail, { patch: '/' });
         };
         if (input.birth && input.birth !== '') { infoModify.birth = input.birth };
         if (input.document && input.document !== '') { infoModify.document = input.document };
@@ -217,6 +218,7 @@ export default function ProfessionalProfile({ globalUser, specialties }) {
         setInput({})
     }
     function logoutCookies() {
+        if(isAuthenticated) { logout() }
         cookie.remove('userEmail', { path: '/' });
         history.push('/');
     }
@@ -522,7 +524,7 @@ export default function ProfessionalProfile({ globalUser, specialties }) {
             </div>
             <Button
                 className={styles.button}
-                onClick={isAuthenticated ? logout : logoutCookies}
+                onClick={logoutCookies}
             >
                 Cerrar sesion
             </Button>

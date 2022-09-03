@@ -13,6 +13,7 @@ export default function CardsPatients({ patients }) {
 						lastname={e.lastname}
 						city={e.city}
 						mail={e.mail}
+						id={e.id}
 					/>
 				);
 			})}
