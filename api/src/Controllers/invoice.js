@@ -16,8 +16,7 @@ const getFacturaByProfessionalID = async (req, res) => {
     });
     res.status(200).send(dbProfId);
   };
-  
-  
+
 const getAllInvoices = async (req, res) => {
     try {
         const factura = await Invoice.findAll({
