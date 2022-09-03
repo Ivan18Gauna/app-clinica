@@ -264,7 +264,6 @@ export function newTurno(payload){
 	}
 }
 
-
 export function deleteNotes(payload){
 	return async function () {
 		try {
