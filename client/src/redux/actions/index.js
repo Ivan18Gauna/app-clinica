@@ -288,3 +288,14 @@ export function deletePatients(id){
 		}
 	}
 }
+
+export function postMercadoPago(payload){
+	return async () =>{
+		try{
+			const res = await axios.post("/mercadopago",payload);
+			return res;
+		} catch (error){
+			console.log(error)
+		}
+	}
+}
