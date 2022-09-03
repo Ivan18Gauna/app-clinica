@@ -4,7 +4,7 @@ const { Invoice, Professionals } = require("../db")
 
 const server = require('express').Router();
 
-//SDK de MercadoPago
+//SDK de MercadoPago,
 const mercadopago = require('mercadopago');
 const e = require("express");
 const { ACCESS_TOKEN } = process.env;
@@ -14,19 +14,19 @@ mercadopago.configure({
     access_token: ACCESS_TOKEN
 })
 //descomentar para probar el nodemailer
-//const nodemailer = require('nodemailer');
+const nodemailer = require('nodemailer');
 
 //descomentar para probar el nodemailer
 //Creamos el tranportador
-// const transporter = nodemailer.createTransport({
-//     service: 'gmail',
-//     auth: {
-//         user: process.env.EMAIL,
-//         pass: process.env.EMAIL_PASSWORD_ENV
-//     },
-//     port: 465,
-//     host: 'smpt.gmail.com'
-// });
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: "appclinicahenry@gmail.com",
+        pass: "Clinica123456"
+    },
+    port: 465,
+    host: 'smpt.gmail.com'
+});
 
 
 //genera la URL a mercado pago
@@ -108,14 +108,14 @@ const getPayments = async (req, res) => {
         console.log("PROFESIONAL", professionals);
         await professionals.addInvoices(invoice)
         //descomentar para probar el nodemailer     
-        // let info = await transporter.sendMail({
-        //     from: `${process.env.EMAIL}`, // sender address
-        //     to: mail, // list of receivers
-        //     subject: "Pago de subscripcion App-Salud ✔", // Subject line
-        //     text: `Usted ha pagado el día de la fecha: ${date} un total de ${price}`, // plain text body
-        //     html: `Usted ha pagado el día de la fecha: ${date} un total de ${price}`, // html body
-        // });
-        //console.log(info);
+        let info = await transporter.sendMail({
+            from: "appclinicahenry@gmail.com", // sender address
+            to: mail, // list of receivers
+            subject: "Pago de subscripcion App-Salud ✔", // Subject line
+            text: `Usted ha pagado el día de la fecha: ${date} un total de ${price}`, // plain text body
+            html: `Usted ha pagado el día de la fecha: ${date} un total de ${price}`, // html body
+        });
+        console.log(info);
         console.info("redirect success");
         res.redirect(`http://localhost:3000/home`);
     } catch (error) {
