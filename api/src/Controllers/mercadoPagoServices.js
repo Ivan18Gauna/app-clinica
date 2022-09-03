@@ -71,7 +71,7 @@ const postMP = async (req, res) => {
             //console.log("respondio");
             global.id = response.body.init_point;
             console.log(global.id);
-            res.json({ id: global.id });
+            res.status(200).json({ id: global.id });
         }).catch(error => {
             //console.log(error);
             res.status(400).send({ error: error });
