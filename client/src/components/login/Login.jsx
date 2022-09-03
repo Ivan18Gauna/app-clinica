@@ -19,7 +19,7 @@ import Loading from '../loading/Loading';
 import { Link, useHistory } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPatients, getUserDetail, get_Doctors } from '../../redux/actions';
+import{getUserDetail} from '../../redux/actions';
 import google from '../../Icons/google.svg';
 import styles from './Login.module.css';
 import stylesForm from '../formPatients/FormPatients.module.css';
@@ -65,8 +65,8 @@ export default function Login() {
   });
 
   const values = getValues();
-  const patients = useSelector(state => state.patients);
-  const doctor = useSelector(state => state.doctors);
+  const userForEmail = useSelector(state => state.user);
+  console.log("userForEmail",userForEmail)
   const [email, setEmail] = useState({
     email: "",
     password: ""
@@ -77,17 +77,12 @@ export default function Login() {
       [e.target.name]: e.target.value
     });
   }
-  console.log("email", email.email);
-  const allUSer = patients.concat(doctor);
-
-  var filter;
-  if (email.email) {
-    filter = allUSer.filter((el) => el.mail === email.email);
-  }
+  
 
   const submitForm = data => {
-    if (filter.length > 0) {
-      if (data.password === filter[0].password) {
+    console.log('x',userForEmail.length)
+    if (userForEmail?true:false) {
+      if (data.password === userForEmail.password) {
         dispatch(getUserDetail(data.email));
         cookies.set("userEmail", `${data.email}`, { patch: "/" });
         history.push("/home");
@@ -100,7 +95,7 @@ export default function Login() {
     } else {
       setErrorsExiste({
         ...errorsExiste,
-        email: "El correo ingresado no existe"
+        email: "El correo ingresado no existex"
       });
     }
   };
@@ -110,9 +105,10 @@ export default function Login() {
   };
 
   useEffect(() => {
-    dispatch(getPatients());
-    dispatch(get_Doctors());
-  }, [dispatch]);
+    // dispatch(getPatients());
+    // dispatch(get_Doctors());
+    dispatch(getUserDetail(email.email))
+  }, [email.email]);
   
   if(isAuthenticated){
 		cookies.set('userEmail', user.email, {path: '/'})
