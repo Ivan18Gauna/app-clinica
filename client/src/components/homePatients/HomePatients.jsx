@@ -18,8 +18,8 @@ export default function HomePatients() {
   useEffect(() => {
     const cookies = new Cookie();
     dispatch(getUserDetail(cookies.get('userEmail')))
-    dispatch(getTurnoPat(userInfo.id))
-  }, [])
+/*     dispatch(getTurnoPat(userInfo.id))
+ */  }, [])
   const turnos = useSelector((state) => state.turnos)
 
   // let userInfo = ["a+", "Covid",  "al Polen", "si, donante", "si, transfundible", "Hipertension", "Accord Salud 3.2"]

@@ -11,9 +11,11 @@ import {
 	GET_CLINIC_HISTORY,
 	GET_NOTES,
 	GET_TURNO_PROF,
-	GET_TURNO_PAT
+	GET_TURNO_PAT,
+	GET_PATIENTS_DETAIL
 } from '../actions/actions';
 import axios from 'axios';
+import { bindActionCreators } from 'redux';
 
 //const URL = 'http://localhost:3001';
 
@@ -44,7 +46,6 @@ export function get_cities() {
 		const data = await axios(`/professionals/allProfessional`);
 		const cities = await data.data.map((e) => e.province);
 		const citiesUnique = new Set(cities);
-
 		return dispatch({
 			type: GET_CITIES,
 			payload: Array.from(citiesUnique),
@@ -82,6 +83,16 @@ export function get_DoctorsDetail(id) {
 		});
 	};
 }
+
+export function get_PatientesDetail(id){
+	return async function (dispatch){
+		const patients_detail = await axios(`/patients/detail/${id}`);
+		return dispatch({
+			type: GET_PATIENTS_DETAIL,
+			payload: patients_detail.data,
+		})
+	}
+} 
 
 export function registerDoctors(payload) {
 	return async function () {
@@ -145,29 +156,34 @@ export function registerPatients(payload) {
 	};
 }
 
-export function modifyUsers(payload, id) {
-	return async function () {
+export function modifyUsers(payload, id, mail) {
+	return async function (dispatch) {
 		const healthData = await axios.put(`/patients/edit/${id}`, payload);
+		dispatch(getUserDetail(mail));
 
 		return healthData;
 	};
 }
 
-export function modifyProfessionals(payload, id){
-	
+export function modifyProfessionals(payload, id, mail){
+	return async function (dispatch){
+		const modifyProfessionals= await axios.put(`/professionals/edit/${id}`, payload);
+		dispatch(getUserDetail(mail))
+
+		return modifyProfessionals;
+	}
 }
 
 export function getUserDetail(mail) {
 	return async function (dispatch) {
 		const userMail = await axios(`/user/${mail}`);
-		
+
 		return dispatch({
 			type: GET_USER_MAIL,
 			payload: userMail.data,
 		});
 	};
 }
-
 
 export function getClinicHistory(id) {
 	return async function (dispatch) {
@@ -255,6 +271,18 @@ export function deleteNotes(payload){
 			const notes = await axios.delete('/notes/' + payload);
 
 			return notes;
+		} catch(e) {
+			console.log(e.message)
+		}
+	}
+}
+
+export function deletePatients(id){
+	return async function () {
+		try {
+			const patient = await axios.delete('/patients/delete/' + id);
+
+			return patient;
 		} catch(e) {
 			console.log(e.message)
 		}

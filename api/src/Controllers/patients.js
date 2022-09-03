@@ -114,10 +114,10 @@ const getPatByOnsearchName = async(req, res) => {
 
 
 const postPatients = async (req, res) => {
-  let { name, lastname, avatar, document, birth, phone, mail, province, city, number, street, blood, vaccines, allergies, transfusion, donation, chronicles, oS
+  let { name, lastname, avatar, document, password, birth, phone, mail, province, city, number, street, blood, vaccines, allergies, transfusion, donation, chronicles, oS
   } = req.body;
   try {
-    const patients = { name, lastname, avatar, document, birth, phone, mail, province, city, number, street, blood, vaccines, allergies, transfusion, donation, chronicles, oS };
+    const patients = { name, lastname, avatar, document, password, birth, phone, mail, province, city, number, street, blood, vaccines, allergies, transfusion, donation, chronicles, oS };
     if (isNaN(name) === false)
       return res.send("El valor ingresado no debe ser numerico.");
     if ( !name || !lastname || !document || !birth || !phone || !mail || !province || !city || !number || !street || !blood || !vaccines || !allergies || !transfusion || !donation || !chronicles || !oS ) {
@@ -145,6 +145,7 @@ const putPatients = async (req, res) => {
       lastname,
       avatar,
       document,
+      password,
       birth,
       phone,
       mail,
@@ -165,6 +166,7 @@ const putPatients = async (req, res) => {
         name,
         lastname,
         document,
+        password,
         avatar,
         birth,
         phone,

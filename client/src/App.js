@@ -1,4 +1,4 @@
-import './App.css';
+import "./App.css";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Home from './components/home/Home'
 import LandingPage from './components/landingPage/LandingPage'
@@ -16,40 +16,46 @@ import FormUpProfessionals from './components/formUpProfessionals/FormUpProfessi
 import ClinicHistory from './components/clinicHistory/ClinicHistory';
 import Auth0 from './components/auth0/Auth0';
 import HomeProfessional from './components/homeProfessionals/HomeProfessionals';
-import PatientProfile from '../src/components/patientsProfile/PatientsProfile.jsx'
 import Calendar from '../src/components/calendar/Calendar.jsx'
 import HomePatients from './components/homePatients/HomePatients';
 import UserProfile from './components/userProfile/UserProfile';
-import ProfessionalProfile from './components/professionalsProfile/ProfessionalsProfile';
+import Sidebar from './components/admin/Admin'
+import Bot from "./components/bot/Bot";
+import DetailsPatients from "./components/detailPatAdmin/DetailPatAdmin";
+import DetailsDrAdmin from "./components/detailProfAdmin/DetailProfAdmin";
 
 
 function App() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact  path="/" component={LandingPage} />
-        <Route path="/" component={NavBarEdit}/>
+        <Route exact path="/" component={LandingPage} />
+        <Route path="/" component={NavBarEdit} />
       </Switch>
       <Switch>
+        <Route path="/admin" component={Sidebar} />
+        <Route path="/detailPatAdmin/:id" component={DetailsPatients}/>
+        <Route path="/detailProfAdmin/:id" component={DetailsDrAdmin}/>
+        <Route path="/bot" component={Bot} />
         <Route path="/home" component={Home} />
         <Route path="/calendar" component={Calendar} />
-        <Route path='/details/:id' component={Details}/>
-        <Route path='/login' component={Login}/>
-        <Route path='/signin' component={SignIn}/>
-        <Route path='/formprofessionals' component={FormProfessionals}/>
-        <Route path='/formpatients' component={FormPatients}/>
-        <Route path='/healthData' component={HealthData}/>
-        <Route path='/professionals' component={Professionals}/>
-        <Route path='/about' component={About}/>
-        <Route path='/price' component={Price}/>
-        <Route path="/form" component={FormUpProfessionals}/>
+        <Route path="/details/:id" component={Details} />
+        <Route path="/login" component={Login} />
+        <Route path="/signin" component={SignIn} />
+        <Route path="/formprofessionals" component={FormProfessionals} />
+        <Route path="/formpatients" component={FormPatients} />
+        <Route path="/healthData" component={HealthData} />
+        <Route path="/professionals" component={Professionals} />
+        <Route path="/about" component={About} />
+        <Route path="/price" component={Price} />
+        <Route path="/form" component={FormUpProfessionals} />
         {/* <Route path='/google' component={Google}/> */}
-        <Route path='/clinic_history' component={ClinicHistory}/>
-        <Route path='/homeUsuarioPrueba' component={HomeProfessional}/>
-        <Route path='/userProfile' component={UserProfile} />
-        <Route path='/professionals' component={Professionals}/>
-        <Route path='/auth0' component={Auth0}/>
-        <Route path="/homepatients" component={HomePatients}/>
+        <Route path="/clinic_history" component={ClinicHistory} />
+        <Route path="/homeUsuarioPrueba" component={HomeProfessional} />
+        <Route path="/userProfile" component={UserProfile} />
+        <Route path="/professionals" component={Professionals} />
+        <Route path="/auth0" component={Auth0} />
+        <Route path="/homepatients" component={HomePatients} />
       </Switch>
     </BrowserRouter>
   );
