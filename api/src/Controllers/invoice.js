@@ -1,25 +1,5 @@
- const { Invoice, Usuario, Professionals} = require("../db")
+ const { Invoice, Professionals} = require("../db")
 
-
-
-//Revisar la funcion hasta cuando se implemente
-// const getFacturaByProfessionalID = async (req, res) => {
-//     const { id } = req.params;
-//     try {
-//         const professionalId = await Professionals.findByPk(id);
-//         const factura = await Invoice.findAll({
-//         where: {
-//             professionalsId: professionalId.id
-//         },
-//         include: [{model: Professionals } ]})
-//         if (!factura) {
-//         return res.status(404).send({ error: "Factura no encontrada" });
-//         }
-//         return res.send(factura);
-//     } catch (error) {
-//         res.status(404).send({ error: error.message })
-//     }
-// }
 
 const getFacturaByProfessionalID = async (req, res) => {
     let { id } = req.params;
@@ -36,9 +16,6 @@ const getFacturaByProfessionalID = async (req, res) => {
     res.status(200).send(dbProfId);
   };
   
-
-
-
 
 const getAllInvoices = async (req, res) => {
     try {
