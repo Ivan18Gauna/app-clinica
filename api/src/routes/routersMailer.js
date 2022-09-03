@@ -1,32 +1,30 @@
-var  nodemailer = require ('nodemailer')
-var express = require ('express')
+var nodemailer = require('nodemailer')
+var express = require('express')
 const router = express.Router()
 
 
-router.post("/send-email",(req, res)  =>{
+router.post("/send-email", (req, res) => {
     var transporter = nodemailer.createTransport({
-        host:'smtp.ethereal.email',
-        port: 587,
-        secure: false,
-        auth:{
-            user:"bella.hartmann@ethereal.email",
-            pass:"A5KUBgceJKCjy5pwKk"
+        service: 'hotmail',
+        auth: {
+            user: "marianettimatiass@hotmail.com",
+            pass: "Larreta_22"
         }
     })
-var mailOptions = {
-    from: "bella.hartmann@ethereal.email",
-    to: "marianettimatiass@hotmail.com",
-    subjet: "Biemvenido a la app mas salud",
-    text: "Usted logró registrarse correctamente"
-};
-let inform = transporter.sendMail(mailOptions, (error, info)=>{
-    if (error){
-        res.status(500).send(error.message);
-    }else{
-        console.log("Email enviado")
-        res.status(200).send(inform)
-    }
-});
+    var mailOptions = {
+        from: "marianettimatiass@hotmail.com",
+        to: "cariajanojulio79@gmail.com",
+        subjet: "Biemvenido a la app mas salud",
+        text: "Hola Julio como estas? no solo hago malos formularios"
+    };
+    let inform = transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            res.status(500).send(error.message);
+        } else {
+            console.log("Email enviado")
+            res.status(200).send(inform)
+        }
+    });
 });
 
-module.exports=router;
+module.exports = router;
