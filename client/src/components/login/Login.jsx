@@ -131,7 +131,7 @@ export default function Login() {
                 <FormControl
                   onChange={e => handleInput(e)}
                   name="email"
-                  error={errors.email || errorsExiste.email}
+                  error={!!errors.email || !!errorsExiste.email}
                   className={styles.input}
                   variant="outlined"
                 >
@@ -159,7 +159,7 @@ export default function Login() {
                 <FormControl
                   onChange={e => handleInput(e)}
                   name="password"
-                  error={errors.password || errorsExiste.password}
+                  error={!!errors.password || !!errorsExiste.password}
                   className={styles.input}
                   variant="outlined"
                 >
