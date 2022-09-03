@@ -15,7 +15,7 @@ import ProfessionalProfile from "../professionalsProfile/ProfessionalsProfile";
 
 export default function UserProfile() {
 
-  const cookie = new Cookies();
+  const cookies = new Cookies();
   const history = useHistory();
   const dispatch = useDispatch();
   const state = useSelector((state) => state.user);
@@ -27,12 +27,12 @@ export default function UserProfile() {
   useEffect(() => {
     dispatch(getObrasSociales());
     dispatch(get_specialties());
-    dispatch(getUserDetail(cookie.get('userEmail')));
+    dispatch(getUserDetail(cookies.get('userEmail')));
   }, []);
 
   function logoutCookies() {
     if(isAuthenticated) { logout() }
-    cookie.remove('userEmail',{path:'/'});
+    cookies.remove('userEmail',{path:'/'});
     history.push('/');
   }
 
