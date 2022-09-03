@@ -27,9 +27,7 @@ const actualUser = async(req, res) => {
         const pat = await Patients.findOne({
             where: {
                 mail: mail
-            },
-             attributes: ["name"],
-
+            }
         })
         if (prof) {
             res.status(200).send(prof)
