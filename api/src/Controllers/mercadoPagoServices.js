@@ -15,7 +15,7 @@ mercadopago.configure({
 })
 //descomentar para probar el nodemailer
 const nodemailer = require('nodemailer');
-
+//Cambio para mergear
 //descomentar para probar el nodemailer
 //Creamos el tranportador
 const transporter = nodemailer.createTransport({
