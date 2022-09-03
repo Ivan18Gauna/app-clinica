@@ -12,23 +12,22 @@ import HomePatients from '../homePatients/HomePatients.jsx';
 import HomeProfessional from '../homeProfessionals/HomeProfessionals.jsx';
 import { getUserDetail } from '../../redux/actions/index.js';
 import Cookies from 'universal-cookie';
+import Sidebar from '../admin/Admin.jsx';
 
 export default function Home() {
-	const cookie = new Cookies()
+
+	const cookie = new Cookies();
 	const dispatch = useDispatch();
-	const globalUser = useSelector( state => state.user)
+	const globalUser = useSelector( state => state.user);
  
-	
- 
- useEffect(() => {
-	 dispatch(getUserDetail(cookie.get('userEmail')))
+	useEffect(() => {
+		dispatch(getUserDetail(cookie.get('userEmail')))
 	}, [])
-	
-	console.log('globalUser', globalUser, cookie.get('userEmail'))
 	
 
 	return (
 		<>
+			{globalUser && globalUser.rolUser && <Sidebar />}
 			{globalUser && globalUser.document && <HomePatients />}
 			{globalUser && globalUser.license && <HomeProfessional />}
 			{!globalUser || (globalUser && !globalUser.name) ? (

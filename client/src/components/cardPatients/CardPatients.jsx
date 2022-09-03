@@ -7,6 +7,7 @@ import styles from '../card/Card.module.css'
 
 
 function CardEditPatients({ id, name, lastname, city, mail}) {
+
 	return (
 		<div className={`${styles.container}`}>
 			<div className={styles.ImgUser}>
@@ -15,17 +16,11 @@ function CardEditPatients({ id, name, lastname, city, mail}) {
 			<div className={styles.info}>
 				<div>
 					<img src={doctorIcon} alt="iconDoctor" />
-					<h5>
-						{name} {lastname}
-					</h5>
+					<h5>{name} {lastname}</h5>
 				</div>
-
-						 <p>{city}</p>
-					 
-				<h6>
-				Soy un profesional especializado con años de experiencia y con muchas referencias
-				</h6>
-					<Link  to={`/detailpatadmin/${id}`}> 
+				<p>{city}</p>
+				<h6> Soy un profesional especializado con años de experiencia y con muchas referencias </h6>
+				<Link  to={`/detailPatAdmin/${id}`}> 
 					<Button type="button">Ver detalle</Button>
 				</Link>
 			</div>
