@@ -264,7 +264,6 @@ export function newTurno(payload){
 	}
 }
 
-
 export function deleteNotes(payload){
 	return async function () {
 		try {
@@ -285,6 +284,17 @@ export function deletePatients(id){
 			return patient;
 		} catch(e) {
 			console.log(e.message)
+		}
+	}
+}
+
+export function postMercadoPago(payload){
+	return async function() {
+		try{
+			const res = await axios.post("/mercadopago",payload);
+			return res;
+		} catch (error){
+			console.log(error)
 		}
 	}
 }
