@@ -1,31 +1,31 @@
-import React, { useEffect, useState } from "react";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import FormControl from "@mui/material/FormControl";
-import FormHelperText from "@mui/material/FormHelperText";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import PersonIcon from "@mui/icons-material/Person";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputAdornment from "@mui/material/InputAdornment";
-import IconButton from "@mui/material/IconButton";
-import InputLabel from "@mui/material/InputLabel";
-import Loading from "../loading/Loading";
-import { Link, useHistory } from "react-router-dom";
-import { useAuth0 } from "@auth0/auth0-react";
-import { useDispatch, useSelector } from "react-redux";
-import { getPatients, getUserDetail, get_Doctors } from "../../redux/actions";
-import google from "../../Icons/google.svg";
-import styles from "./Login.module.css";
-import stylesForm from "../formPatients/FormPatients.module.css";
-import Cookies from "universal-cookie";
-import { Alert } from "@mui/material";
-import "../auth0/Auth0";
+import React, { useEffect, useState } from 'react';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import FormControl from '@mui/material/FormControl';
+import FormHelperText from '@mui/material/FormHelperText';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import PersonIcon from '@mui/icons-material/Person';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputAdornment from '@mui/material/InputAdornment';
+import IconButton from '@mui/material/IconButton';
+import InputLabel from '@mui/material/InputLabel';
+import Loading from '../loading/Loading';
+import { Link, useHistory } from 'react-router-dom';
+import { useAuth0 } from '@auth0/auth0-react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getPatients, getUserDetail, get_Doctors } from '../../redux/actions';
+import google from '../../Icons/google.svg';
+import styles from './Login.module.css';
+import stylesForm from '../formPatients/FormPatients.module.css';
+import Cookies from 'universal-cookie';
+import { Alert } from '@mui/material';
+import '../auth0/Auth0';
 
 const schema = yup
   .object({
@@ -38,11 +38,12 @@ const schema = yup
   .required();
 
 export default function Login() {
+
   const cookies = new Cookies();
   const history = useHistory();
-  const globalUser = useSelector(state => state.user);
   const dispatch = useDispatch();
-  const { loginWithPopup, isAuthenticated, logout } = useAuth0();
+  const globalUser = useSelector(state => state.user);
+  const { loginWithPopup, isAuthenticated, user } = useAuth0();
   const {
     setValue,
     getValues,
@@ -81,15 +82,14 @@ export default function Login() {
 
   var filter;
   if (email.email) {
-    filter = allUSer.filter(el => el.mail === email.email);
-    console.log("state", email.email);
+    filter = allUSer.filter((el) => el.mail === email.email);
   }
 
   const submitForm = data => {
     if (filter.length > 0) {
       if (data.password === filter[0].password) {
         dispatch(getUserDetail(data.email));
-        cookies.set("email", `${data.email}`, { patch: "/" });
+        cookies.set("userEmail", `${data.email}`, { patch: "/" });
         history.push("/home");
       } else {
         setErrorsExiste({
@@ -104,7 +104,7 @@ export default function Login() {
       });
     }
   };
-  console.log(errors);
+ 
   const handleMouseDownPassword = event => {
     event.preventDefault();
   };
@@ -113,6 +113,10 @@ export default function Login() {
     dispatch(getPatients());
     dispatch(get_Doctors());
   }, [dispatch]);
+  
+  if(isAuthenticated){
+		cookies.set('userEmail', user.email, {path: '/'})
+	}
 
   return (
     <div>
@@ -222,23 +226,21 @@ export default function Login() {
         </div>
       ) : (
         <div>
-          <div className="loading-login">
+          <div id={styles.loadingLogin}>
             <Loading />
           </div>
-          <div id="loading-num">
+          <div id={styles.loadingNum}>
             {setTimeout(() => {
-              dispatch(getUserDetail(values.email));
-            }, 1000)}
-            {setTimeout(() => {
-              if (globalUser && globalUser.mail) {
-                history.push("/home");
-              } else {
-                history.push("/signin");
-              }
-            }, 5000)}
-            <Button className={stylesForm.button} onClick={logout}>
-              Cerrar sesion
-            </Button>
+							dispatch(getUserDetail(cookies.get('userEmail')));
+						}, 1000)}
+						{setTimeout(() => {
+							if (globalUser && globalUser.mail) {
+								return history.push('/home');
+							} 
+							if (globalUser && !globalUser.mail) {
+								return history.push('/signin');
+							}
+						}, 2000)}
           </div>
         </div>
       )}
