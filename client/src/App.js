@@ -1,6 +1,5 @@
 import "./App.css";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-
 import Home from './components/home/Home'
 import LandingPage from './components/landingPage/LandingPage'
 import Details from './components/detail/Details'
@@ -17,16 +16,13 @@ import FormUpProfessionals from './components/formUpProfessionals/FormUpProfessi
 import ClinicHistory from './components/clinicHistory/ClinicHistory';
 import Auth0 from './components/auth0/Auth0';
 import HomeProfessional from './components/homeProfessionals/HomeProfessionals';
-import PatientProfile from '../src/components/patientsProfile/PatientsProfile.jsx'
 import Calendar from '../src/components/calendar/Calendar.jsx'
 import HomePatients from './components/homePatients/HomePatients';
 import UserProfile from './components/userProfile/UserProfile';
-import ProfessionalProfile from './components/professionalsProfile/ProfessionalsProfile';
 import Sidebar from './components/admin/Admin'
 import Bot from "./components/bot/Bot";
 import DetailsPatients from "./components/detailPatAdmin/DetailPatAdmin";
 import DetailsDrAdmin from "./components/detailProfAdmin/DetailProfAdmin";
-
 
 
 function App() {
@@ -37,13 +33,10 @@ function App() {
         <Route path="/" component={NavBarEdit} />
       </Switch>
       <Switch>
-
-      <Route path="/admin" component={Sidebar} />
-      <Route path="/detailpatadmin/:id" component={DetailsPatients}/>
-      <Route path="/detaildradmin/:id" component={DetailsDrAdmin}/>
-
-      <Route path="/bot" component={Bot} />
-
+        <Route path="/admin" component={Sidebar} />
+        <Route path="/detailPatAdmin/:id" component={DetailsPatients}/>
+        <Route path="/detailProfAdmin/:id" component={DetailsDrAdmin}/>
+        <Route path="/bot" component={Bot} />
         <Route path="/home" component={Home} />
         <Route path="/calendar" component={Calendar} />
         <Route path="/details/:id" component={Details} />
