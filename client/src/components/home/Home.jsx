@@ -29,7 +29,7 @@ export default function Home() {
 		<>
 			{globalUser && globalUser.rolUser && <Sidebar />}
 			{globalUser && globalUser.document && <HomePatients />}
-			{globalUser && globalUser.license && <HomeProfessional />}
+			{globalUser && globalUser.license && <HomeProfessional globalUser={globalUser} />}
 			{!globalUser || (globalUser && !globalUser.name) ? (
 				<div className={`${styles.container}`}>
 					{/* <Portada /> */}

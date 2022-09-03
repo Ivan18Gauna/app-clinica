@@ -227,7 +227,7 @@ export function getTurnoProf (id){
 	return async function (dispatch) {
 		try{
 			const turno = await axios.get(`/turnos/profturnos/${id}`);
-
+			console.log(turno.data)
 			return dispatch({
 				type: GET_TURNO_PROF,
 				payload: turno.data
