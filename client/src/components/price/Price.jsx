@@ -44,7 +44,8 @@ export default function Price() {
 
   const handleActivarPago = (e) => {
     e.preventDefault();
-    dispatch(postMercadoPago(id,mail,price, quantity, date))
+    console.log("handleactivarPago")
+    dispatch(postMercadoPago({id,mail,price, quantity, date}))
   }
 
 
@@ -158,7 +159,7 @@ export default function Price() {
          type="button" class="btn btn-warning col-3"></button>
         <a href >
         <button  
-        onClicj={(e)=>handleActivarPago}
+        onClick={(e)=>handleActivarPago(e)}
         type="button" class="btn btn-outline-primary col-3">
         Solicitar pago
        </button>

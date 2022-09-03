@@ -292,6 +292,7 @@ export function postMercadoPago(payload){
 	return async function() {
 		try{
 			const res = await axios.post("/mercadopago",payload);
+			console.log("hola soy action", res)
 			return res;
 		} catch (error){
 			console.log(error)
