@@ -27,7 +27,9 @@ const actualUser = async(req, res) => {
         const pat = await Patients.findOne({
             where: {
                 mail: mail
-            }
+            },
+             attributes: ["name"],
+
         })
         if (prof) {
             res.status(200).send(prof)
@@ -38,6 +40,29 @@ const actualUser = async(req, res) => {
         res.status(400).send('usuarion no encontrado')
     }
 }
+
+// const getProfById = async (req, res) => {
+//     let { id } = req.params;
+//     let dbProfId = await Professionals.findOne({
+//       where: { id },
+//       include: [
+//         {
+//           model: ObrasSociales,
+//           attributes: ["name"],
+//           through: { attributes: [] },
+//         },
+//         {
+//           model: Specialties,
+//           attributes: ["name"],
+//           through: { attributes: [] },
+//         },
+//       ],
+//     });
+//     res.status(200).send(dbProfId);
+//   };
+  
+
+
 
 module.exports = {
     actualUser

@@ -6,8 +6,7 @@ const routersHistoriaClinica = require('./routersHistoriaClinica')
 const routerInvoice = require ('./routesInvoice')
 const routesTurnos = require('./routesTurnos')
 const routesNotes = require('./routesNotes')
-const routesMercadoPago = require('./mercadoPagoRoutes')
-
+const routesMercadoPago = require('./routesMercadoPago')
 
 const {Professionals, Specialties} = require ('../db');
 const { actualUser } = require('../Controllers/actualUser');
