@@ -5,15 +5,15 @@ const router = express.Router()
 
 router.post("/send-email", (req, res) => {
     var transporter = nodemailer.createTransport({
-        service: 'hotmail',
+        host: 'gmail.com',
         auth: {
-            user: "marianettimatiass@hotmail.com",
-            pass: "Larreta_22"
+            user: "appclinicahenry@gmail.com",
+            pass: "Clinica123456"
         }
     })
     var mailOptions = {
-        from: "marianettimatiass@hotmail.com",
-        to: "cariajanojulio79@gmail.com",
+        from: "appclinicahenry@gmail.com",
+        to: "marianettimatiass@gmail.com",
         subjet: "Biemvenido a la app mas salud",
         text: "Hola Julio como estas? no solo hago malos formularios"
     };
