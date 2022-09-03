@@ -1,7 +1,7 @@
 .container {
 	display: flex;
 	justify-content: center;
-  background-color: #E7E7E7;
+	background-color: #E7E7E7;
 }
 
 .titulo {
@@ -12,9 +12,9 @@
 }
 
 .titulo h3 {
-  font-family: 'Poppins', sans-serif;
-  width: 90%;
-  text-align: center;
+	font-family: 'Poppins', sans-serif;
+	width: 90%;
+	text-align: center;
 	margin-bottom: 1rem;
 	border-bottom: 1px solid #CFCFCF;
 }
@@ -25,14 +25,14 @@
 	margin: 1rem;
 	padding: 2rem;
 	width: 40rem;
-  border: 1px solid #CFCFCF;
+	border: 1px solid #CFCFCF;
 }
 
 .row {
 	display: flex;
 	justify-content: center;
 	flex-direction: row;
-  margin-top: 1rem !important;
+	margin-top: 1rem !important;
 }
 
 .col {
@@ -41,7 +41,7 @@
 }
 
 .col label {
-  font-family: 'Poppins', sans-serif;
+	font-family: 'Poppins', sans-serif;
 }
 
 .buttonSubmit {
@@ -49,6 +49,12 @@
 }
 
 .lista {
-  padding: 0;
-  list-style: none;
+	padding: 0;
+	list-style: none;
+}
+
+.loading {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }

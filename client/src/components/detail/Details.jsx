@@ -1,50 +1,69 @@
-import React from "react";
-import { Link, useParams } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
-import { get_DoctorsDetail } from "../../redux/actions";
-import "./Details.css"
-import Button from "react-bootstrap/esm/Button";
+import React from 'react';
+import { Link, useHistory, useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { get_DoctorsDetail } from '../../redux/actions';
+import Button from 'react-bootstrap/esm/Button';
+import Loading from '../loading/Loading';
+import styles from './Details.module.css';
+import img from '../../Icons/iconfinder-icon.svg';
+import login from '../login/Login.module.css'
+
 
 export default function Details() {
+	const { id } = useParams();
+	const history = useHistory();
+	const dispatch = useDispatch();
+	const doctor = useSelector((state) => state.detail);
 
-    const { id } = useParams();
+	useEffect(() => {
+		dispatch(get_DoctorsDetail(id));
+	}, [dispatch, id]);
 
-    const dispatch = useDispatch();
+	if (doctor.length > 0 && Array.isArray(doctor.specialties)) {
+		var temp = doctor.specialties.map((e) => e.name);
+	}
+	console.log(doctor);
 
-    const doctor = useSelector((state) => state.detail)
-     
+	function handleTurnoSubmit(e) {
+		e.preventDefault();
+		history.push(`/calendar`, id)
+	}
 
-    useEffect(() => {
-        dispatch(get_DoctorsDetail(id))
-    }, [dispatch, id])
-
-    if (Array.isArray(doctor.specialties)) {
-        var temp = doctor.specialties.map(e => e.name)
-        
-    } 
-
-    return (
-          <> 
-        <div className="container">
-            <div>
-             <img src="https://cdn2.iconfinder.com/data/icons/coronavirus-8/512/stethoscope-doctor-health-medical-healthcare-512.png" alt="img not found" width="auto" height="auto" />   
-            </div>
-            <div className="text">
-           
-            <h3>Nombre: {doctor.name } </h3>
-            <h3>Especialidad: {temp} </h3>
-            <h3>Matricula: {doctor.license} </h3>
-            <h3>Ciudad: {doctor.city} </h3>
-            </div>
-           </div>
-            <div className="btnHome">
-           <Link to={'/professionals'}>
-           <Button variant="outline-primary">Volver</Button>{' '}
-            </Link>
-            </div>    
-        </>
-       
-
-    )
+	return (
+		<div>
+		{ doctor && doctor.name ?
+		<div className={styles.container}>
+			<div className={styles.info}>
+				<div className={styles.perfil}>
+					<img src={img} />
+					<h4>
+						Dr. {doctor.name} {doctor.lastname}
+					</h4>
+					<h6>
+						{doctor.city} - {doctor.province}
+					</h6>
+					<h5>{doctor.phone}</h5>
+					<h5>{temp}</h5>
+					<h5>{doctor.mail}</h5>
+					<h5>Matricula: {doctor.license}</h5>
+						<Button onClick={handleTurnoSubmit} variant="outline-success">Tomar turno</Button>
+				</div>
+				<div className={styles.text}>
+					<p>
+						Soy un profesional especializado <br /> con años de experiencia y
+						con muchas referencias.
+					</p>
+				</div>
+				<div className={styles.btnHome}>
+					<Link to={'/professionals'}>
+						<Button variant="outline-primary">Volver</Button>
+					</Link>
+				</div>
+			</div>
+		</div>
+		: <div className={login.loading-login}><Loading/></div>
+		}
+		</div>
+	);
 }

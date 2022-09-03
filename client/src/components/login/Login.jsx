@@ -1,141 +1,247 @@
-import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
-import img from "./pngwing.com.png";
-import { useAuth0 } from "@auth0/auth0-react";
-// import { theUSer } from "../../redux/actions";
-import { useDispatch, useSelector } from "react-redux";
-import { getUserDetail } from "../../redux/actions";
+import React, { useEffect, useState } from 'react';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import FormControl from '@mui/material/FormControl';
+import FormHelperText from '@mui/material/FormHelperText';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import PersonIcon from '@mui/icons-material/Person';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputAdornment from '@mui/material/InputAdornment';
+import IconButton from '@mui/material/IconButton';
+import InputLabel from '@mui/material/InputLabel';
+import Loading from '../loading/Loading';
+import { Link, useHistory } from 'react-router-dom';
+import { useAuth0 } from '@auth0/auth0-react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getPatients, getUserDetail, get_Doctors } from '../../redux/actions';
+import google from '../../Icons/google.svg';
+import styles from './Login.module.css';
+import stylesForm from '../formPatients/FormPatients.module.css';
+import Cookies from 'universal-cookie';
+import { Alert } from '@mui/material';
+import '../auth0/Auth0';
+
+const schema = yup
+  .object({
+    email: yup
+      .string()
+      .email("Ingresa un correo valido")
+      .required("Este campo es requerido"),
+    password: yup.string().required("Este campo es requerido")
+  })
+  .required();
 
 export default function Login() {
 
+  const cookies = new Cookies();
   const history = useHistory();
-	const globalUser = useSelector( state => state.user) || [];
-  // const eluser = useSelector((state) => state.the_user);
   const dispatch = useDispatch();
-  const { loginWithPopup, isAuthenticated } = useAuth0();
-  const [user, setUser] = useState({
-    email: "",
-    password: "",
-  });
-
-  function handleInput(e) {
-    setUser({
-      ...user,
-      [e.target.name]: e.target.value,
-    });
-  }
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    // dispatch(theUSer(user));
-    dispatch(getUserDetail(user.email))
-    setUser({
+  const globalUser = useSelector(state => state.user);
+  const { loginWithPopup, isAuthenticated, user } = useAuth0();
+  const {
+    setValue,
+    getValues,
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    mode: "onBlur",
+    resolver: yupResolver(schema),
+    defaultValues: {
       email: "",
       password: "",
+      showPassword: false
+    }
+  });
+  const [errorsExiste, setErrorsExiste] = useState({
+    email: "",
+    password: ""
+  });
+
+  const values = getValues();
+  const patients = useSelector(state => state.patients);
+  const doctor = useSelector(state => state.doctors);
+  const [email, setEmail] = useState({
+    email: "",
+    password: ""
+  });
+  function handleInput(e) {
+    setEmail({
+      ...email,
+      [e.target.name]: e.target.value
     });
-    history.push("/home");
   }
+  console.log("email", email.email);
+  const allUSer = patients.concat(doctor);
+
+  var filter;
+  if (email.email) {
+    filter = allUSer.filter((el) => el.mail === email.email);
+  }
+
+  const submitForm = data => {
+    if (filter.length > 0) {
+      if (data.password === filter[0].password) {
+        dispatch(getUserDetail(data.email));
+        cookies.set("userEmail", `${data.email}`, { patch: "/" });
+        history.push("/home");
+      } else {
+        setErrorsExiste({
+          ...errorsExiste,
+          password: "La contraseña es incorrecta"
+        });
+      }
+    } else {
+      setErrorsExiste({
+        ...errorsExiste,
+        email: "El correo ingresado no existe"
+      });
+    }
+  };
+ 
+  const handleMouseDownPassword = event => {
+    event.preventDefault();
+  };
+
+  useEffect(() => {
+    dispatch(getPatients());
+    dispatch(get_Doctors());
+  }, [dispatch]);
   
-  if(isAuthenticated && globalUser.length < 1){
-    history.push('/signin')
-  }
-  if(isAuthenticated && globalUser.length > 0){
-    history.push('/home')
-  }
+  if(isAuthenticated){
+		cookies.set('userEmail', user.email, {path: '/'})
+	}
 
   return (
     <div>
-      {!isAuthenticated /* && !eluser.email */ ? (
-        <div className="container w-75 mt-5">
-          <div className="row">
-            <div className="col d-none d-lg-block">
-              <img
-                src="https://thumbs.dreamstime.com/z/retrato-dise-o-minimalista-exhausto-continuo-de-la-sola-mano-del-dibujo-lineal-doctor-un-forma-vida-linear-aislada-solo-s%C3%ADmbolo-146395118.jpg"
-                alt="not img"
-                width="700"
-                height="700"
-                className="col-12"
-              />
+      {!isAuthenticated ? (
+        <div className={styles.container}>
+          <Form className={styles.form} onSubmit={handleSubmit(submitForm)}>
+            <div className={styles.titulo}>
+              <h2>Inicia sesión</h2>
             </div>
-
-            <div className="col">
-              <div className="text-end">
-                <img src={img} alt="not img" width="100px" />
-              </div>
-              <h2 className="fw-bold text-center py-5">Ingresa a +Salud</h2>
-              <form onSubmit={handleSubmit}>
-                <div className="mb-4">
-                  <label htmlFor="email" className="form-label">
+            <Row className={styles.formGroup} lg={1}>
+              <Col className={styles.col} lg={9}>
+                <FormControl
+                  onChange={e => handleInput(e)}
+                  name="email"
+                  error={errors.email || errorsExiste.email}
+                  className={styles.input}
+                  variant="outlined"
+                >
+                  <InputLabel htmlFor="outlined-adornment-password">
                     Correo electronico
-                  </label>
-                  <input
-                    value={user.name}
-                    onChange={handleInput}
-                    type="email"
-                    className="form-control"
-                    name="email"
+                  </InputLabel>
+                  <OutlinedInput
+                    id="outlined-adornment-password"
+                    label="Correo electronico"
+                    {...register("email")}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <PersonIcon />
+                      </InputAdornment>
+                    }
                   />
-                </div>
-                <div className="mb-4">
-                  <label htmlFor="password" className="form-label">
-                    Password
-                  </label>
-                  <input
-                    value={user.name}
-                    onChange={handleInput}
-                    type="password"
-                    className="form-control"
-                    name="password"
+                  {errors.email ? (
+                    <FormHelperText>{errors.email.message}</FormHelperText>
+                  ) : errorsExiste.email ? (
+                    <FormHelperText>{errorsExiste.email}</FormHelperText>
+                  ) : null}
+                </FormControl>
+              </Col>
+              <Col className={styles.col} lg={9}>
+                <FormControl
+                  onChange={e => handleInput(e)}
+                  name="password"
+                  error={errors.password || errorsExiste.password}
+                  className={styles.input}
+                  variant="outlined"
+                >
+                  <InputLabel htmlFor="outlined-adornment-password">
+                    Contraseña
+                  </InputLabel>
+                  <OutlinedInput
+                    id="outlined-adornment-password"
+                    label="Password"
+                    type={values.showPassword ? "text" : "password"}
+                    {...register("password")}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={() => {
+                            let values = getValues("showPassword");
+                            setValue("showPassword", !values, {
+                              shouldValidate: true
+                            });
+                          }}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {values.showPassword ? (
+                            <VisibilityOff />
+                          ) : (
+                            <Visibility />
+                          )}
+                        </IconButton>
+                      </InputAdornment>
+                    }
                   />
-                </div>
-                <div className="mb-4 form-check">
-                  <input
-                    type="checkbox"
-                    name="connected"
-                    className="form-check-input"
-                  />
-                  <label htmlFor="connected" className="form-check-label">
-                    Mantenerme conectado
-                  </label>
-                </div>
-                <div className="d-grid">
-                  <button type="submit" className="btn btn-primary">
-                    Iniciar Sesion
-                  </button>
-                </div>
-                <div className="my-3">
-                  <span>¿nuevo en +Salud? </span>
-                  <Link to="/signin">
-                    <span>Resgistrate</span>
-                  </Link>
-                </div>
-                <div className="my-3">
-                  <span>¿olvidaste tu contraseña? </span>
-                  <Link to="/sincomponente">
-                    <span>Recupera tu contraseña</span>
-                  </Link>
-                </div>
-              </form>
-              <div className="container w-100 my-5">
-                <div className="row text-center">
-                  <div className="col-12">Otra manera de iniciar sesión</div>
-                </div>
-                <div className="row">
-                  <div className="col">
-                    <br />
-                    <button onClick={() => loginWithPopup()}>Login</button>
-                  </div>
-                </div>
-              </div>
+                  {errors.password ? (
+                    <FormHelperText>{errors.password.message}</FormHelperText>
+                  ) : errorsExiste.password ? (
+                    <FormHelperText>{errorsExiste.password}</FormHelperText>
+                  ) : null}
+                </FormControl>
+              </Col>
+              <Col className={styles.col} lg={9}>
+                <Link to="/sincomponente">¿Olvidaste tu contraseña?</Link>
+              </Col>
+            </Row>
+            <div className={styles.btn}>
+              <Button type="submit">Iniciar Sesion</Button>
+            </div>
+            <div className={styles.alternatives}>
+              <p>También puedes ingresar con otras cuentas</p>
+            </div>
+            <div onClick={() => loginWithPopup()} className={styles.google}>
+              <img src={google} alt="google" />
+              <button>CONTINUAR CON GOOGLE</button>
+            </div>
+          </Form>
+          <div className={styles.questions}>
+            <div>
+              <span>¿Eres nuevo? </span>
+              <Link to="/signin">
+                <span>Crear cuenta</span>
+              </Link>
             </div>
           </div>
         </div>
       ) : (
         <div>
-          <h1>Bienvenido a +Salud</h1>
-          <Link to="/signin">
-            <button>Continuar</button>
-          </Link>
+          <div id={styles.loadingLogin}>
+            <Loading />
+          </div>
+          <div id={styles.loadingNum}>
+            {setTimeout(() => {
+							dispatch(getUserDetail(cookies.get('userEmail')));
+						}, 1000)}
+						{setTimeout(() => {
+							if (globalUser && globalUser.mail) {
+								return history.push('/home');
+							} 
+							if (globalUser && !globalUser.mail) {
+								return history.push('/signin');
+							}
+						}, 2000)}
+          </div>
         </div>
       )}
     </div>
