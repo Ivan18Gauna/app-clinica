@@ -4,44 +4,42 @@ import Portada from '../portada/Portada.jsx';
 import Filters from '../filters/Filters.jsx';
 import CardsTriple from '../infoCards/InfoCards';
 import CardHistory from '../cardHistory/CardHistory';
+import OurPlans from '../ourPlans/OurPlans.jsx';
+import Footer from '../footer/Footer.jsx';
 import styles from './Home.module.css';
-import { useAuth0 } from '@auth0/auth0-react';
+// import { useAuth0 } from '@auth0/auth0-react';
 import HomePatients from '../homePatients/HomePatients.jsx';
 import HomeProfessional from '../homeProfessionals/HomeProfessionals.jsx';
 import { getUserDetail } from '../../redux/actions/index.js';
 import Cookies from 'universal-cookie';
-
+import Sidebar from '../admin/Admin.jsx';
 
 export default function Home() {
-	const cookie = new Cookies()
-	console.log(cookie.get('userEmail'))
-	
-/* 	const { user, isAuthenticated } = useAuth0();
- */	const dispatch = useDispatch();
+
+	const cookie = new Cookies();
+	const dispatch = useDispatch();
+	const globalUser = useSelector( state => state.user);
  
- useEffect(() => {
-	 dispatch(getUserDetail(cookie.get('userEmail')))
+	useEffect(() => {
+		dispatch(getUserDetail(cookie.get('userEmail')))
 	}, [])
 	
-	const globalUser = useSelector( state => state.user)
-	console.log('felipe', globalUser)
-	/* 	if((isAuthenticated && !globalUser) || (isAuthenticated && globalUser && !globalUser.name)){
-	} */
 
 	return (
-		<div>
-			{ globalUser && globalUser.document && <HomePatients/> }
-			{ globalUser && globalUser.license && <HomeProfessional/> }
-			{ !globalUser || (globalUser && !globalUser.name) ?
+		<>
+			{globalUser && globalUser.rolUser && <Sidebar />}
+			{globalUser && globalUser.document && <HomePatients />}
+			{globalUser && globalUser.license && <HomeProfessional globalUser={globalUser} />}
+			{!globalUser || (globalUser && !globalUser.name) ? (
 				<div className={`${styles.container}`}>
-					<Portada />
+					{/* <Portada /> */}
 					<Filters />
 					<CardsTriple />
+					<OurPlans />
 					<CardHistory />
-				</div> 
-				: null
-			}
-			
-		</div>
+					<Footer />
+				</div>
+			) : null}
+		</>
 	);
 }

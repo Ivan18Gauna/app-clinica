@@ -3,7 +3,8 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
-import styles from '../formPatients/FormPatients.module.css';
+import ListGroup from 'react-bootstrap/ListGroup';
+import styles from './HealthData.module.css';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getObrasSociales } from '../../redux/actions';
@@ -31,14 +32,16 @@ const vaccines_data = [
 ];
 
 export default function HealthData() {
-	
 	const history = useHistory();
 	const dispatch = useDispatch();
 	const location = useLocation();
 	const info_patient = location.state;
 	const obras = useSelector((state) => state.os);
-	const [allergies_, setAllergies] = useState('');
-	const [chronicles_, setChronicles] = useState('');
+
+	useEffect(() => {
+		dispatch(getObrasSociales());
+	}, [dispatch]);
+
 	const [input, setInput] = useState({
 		name: info_patient.name,
 		lastname: info_patient.lastname,
@@ -62,9 +65,8 @@ export default function HealthData() {
 		oS: '',
 	});
 
-	useEffect(() => {
-		dispatch(getObrasSociales());
-	}, [dispatch]);
+	const [allergies_, setAllergies] = useState('');
+	const [chronicles_, setChronicles] = useState('');
 
 	function onKeyDown(e) {
 		if (e.code === 'Enter') {
@@ -225,81 +227,89 @@ export default function HealthData() {
 						</Form.Select>
 					</Col>
 				</Row>
-				<Row className={`${styles.row}`} lg={1}>
-					<Col className={`${styles.col}`}>
-						<Form.Label>Vacunas</Form.Label>
-						<Form.Select
-							onChange={handleSelectVaccines}
-							defaultValue="vacunas que posee colocadas"
-						>
-							<option value="vacunas que posee colocadas" hidden>
-								Selecione las vacunas que posee
-							</option>
-							{vaccines_data.map((e) => {
-								return (
-									<option key={e} value={e}>
-										{e}
-									</option>
-								);
-							})}
-						</Form.Select>
-					</Col>
-				</Row>
-				<Row>
-					<Col className={`${styles.col}`}>
-						<ul className={styles.lista}>
-							<span>Vacunas seleccionadas: </span>
+				<div className={styles.vacunas}>
+					<Row lg={1}>
+						<Col className={`${styles.col}`}>
+							<Form.Label>Vacunas</Form.Label>
+							<Form.Select
+								onChange={handleSelectVaccines}
+								defaultValue="vacunas que posee colocadas"
+							>
+								<option value="vacunas que posee colocadas" hidden>
+									Selecione las vacunas que posee
+								</option>
+								{vaccines_data.map((e) => {
+									return (
+										<option key={e} value={e}>
+											{e}
+										</option>
+									);
+								})}
+							</Form.Select>
+						</Col>
+					</Row>
+					<Col className={`${styles.tabla}`}>
+						<ListGroup className={styles.lista}>
 							{input.vaccines.map((e) => {
 								return (
-									<li key={e} value={e}>
+									<ListGroup.Item className={styles.fila}>
 										{e}
-										<Button value={e} onClick={handleDeleteVaccines}>
+										<Button
+											variant="danger"
+											size={'sm'}
+											value={e}
+											onClick={handleDeleteVaccines}
+										>
 											X
 										</Button>
-									</li>
+									</ListGroup.Item>
 								);
 							})}
-						</ul>
+						</ListGroup>
 					</Col>
-				</Row>
-				<Row className={`${styles.row}`} lg={1}>
-					<Col className={`${styles.col}`} lg={9}>
-						<Form.Control
-							type="text"
-							placeholder="Alergias que posee"
-							name="allergies"
-							value={allergies_}
-							onChange={handleInput}
-						/>
-					</Col>
-					<Col className={`${styles.col}`} lg={3}>
-						<Button
-							className={`${styles.buttonSubmit}`}
-							type="button"
-							onClick={handleSubmitAllergies}
-						>
-							Agregar
-						</Button>
-					</Col>
-				</Row>
-				<Row className={`${styles.row}`}>
-					<Col className={`${styles.col}`}>
-						<ul className={styles.lista}>
-							<span>Usted ingreso las siguientes alergias: </span>
+				</div>
+				<div className={styles.vacunas}>
+					<Row className={`${styles.alergias}`} lg={1}>
+						<Col className={`${styles.col}`} lg={9}>
+							<Form.Control
+								type="text"
+								placeholder="Alergias que posee"
+								name="allergies"
+								value={allergies_}
+								onChange={handleInput}
+							/>
+						</Col>
+						<Col className={`${styles.col}`} lg={3}>
+							<Button
+								className={`${styles.buttonSubmit}`}
+								type="button"
+								onClick={handleSubmitAllergies}
+							>
+								Agregar
+							</Button>
+						</Col>
+					</Row>
+					<Col className={`${styles.tabla}`}>
+						<ListGroup>
 							{input.allergies &&
 								input.allergies.map((al) => {
 									return (
-										<li key={al} value={al}>
+										<ListGroup.Item className={styles.fila}>
 											{al}
-											<Button value={al} onClick={handleDeleteAllergies}>
+											<Button
+												variant="danger"
+												size="sm"
+												value={al}
+												onClick={handleDeleteAllergies}
+											>
 												X
 											</Button>
-										</li>
+										</ListGroup.Item>
 									);
 								})}
-						</ul>
+						</ListGroup>
 					</Col>
-				</Row>
+				</div>
 				<Row className={`${styles.row}`}>
 					<Col className={`${styles.col}`}>
 						<Form.Label>Donante: </Form.Label>
@@ -310,8 +320,9 @@ export default function HealthData() {
 							<option value="Seleccione una opción" hidden>
 								Seleccione una opción
 							</option>
-							<option value="yes">Sí</option>
-							<option value="no">No</option>
+							<option value="Si">Si</option>
+
+							<option value="No">No</option>
 						</Form.Select>
 					</Col>
 				</Row>
@@ -325,50 +336,54 @@ export default function HealthData() {
 							<option value="Seleccione una opción" hidden>
 								Seleccione una opción
 							</option>
-							<option value="yes">Sí</option>
-							<option value="no">No</option>
+							<option value="Si">Si</option>
+							<option value="No">No</option>
 						</Form.Select>
 					</Col>
 				</Row>
-				<Row className={`${styles.row}`}>
-					<Col className={`${styles.col}`} lg={9}>
-						<Form.Control
-							type="text"
-							onKeyDown={(e) => onKeyDown(e)}
-							placeholder="Enfermedades cronicas que posee"
-							name="chronicles"
-							value={chronicles_}
-							onChange={handleInputChronicles}
-						/>
-					</Col>
-					<Col className={`${styles.col}`} lg={3}>
-						<Button
-							className={`${styles.buttonSubmit}`}
-							type="button"
-							onClick={handleSubmitChronicles}
-						>
-							Agregar
-						</Button>
-					</Col>
-				</Row>
-				<Row className={`${styles.row}`}>
-					<Col className={`${styles.col}`}>
-						<ul className={styles.lista}>
-							<span>Usted ingreso las siguientes enfermedades crónicas: </span>
+				<div className={styles.vacunas}>
+					<Row className={`${styles.row}`}>
+						<Col className={`${styles.col}`} lg={9}>
+							<Form.Control
+								type="text"
+								onKeyDown={(e) => onKeyDown(e)}
+								placeholder="Enfermedades cronicas que posee"
+								name="chronicles"
+								value={chronicles_}
+								onChange={handleInputChronicles}
+							/>
+						</Col>
+						<Col className={`${styles.col}`} lg={3}>
+							<Button
+								className={`${styles.buttonSubmit}`}
+								type="button"
+								onClick={handleSubmitChronicles}
+							>
+								Agregar
+							</Button>
+						</Col>
+					</Row>
+					<Col className={`${styles.tabla}`}>
+						<ListGroup className={styles.lista}>
 							{input.chronicles &&
 								input.chronicles.map((ch) => {
 									return (
-										<li key={ch} value={ch}>
+										<ListGroup.Item className={styles.fila}>
 											{ch}
-											<Button value={ch} onClick={handleDeleteChronicles}>
+											<Button
+												variant="danger"
+												size="sm"
+												value={ch}
+												onClick={handleDeleteChronicles}
+											>
 												X
 											</Button>
-										</li>
+										</ListGroup.Item>
 									);
 								})}
-						</ul>
+						</ListGroup>
 					</Col>
-				</Row>
+				</div>
 				<Row className={`${styles.row}`}>
 					<Col className={`${styles.col}`}>
 						<Form.Label>Obra Social</Form.Label>

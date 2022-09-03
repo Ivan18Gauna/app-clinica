@@ -1,0 +1,97 @@
+.contenedor {
+	background-color: #ffffff;
+	padding: 4rem;
+}
+
+.card {
+	display: flex;
+	justify-content: center;
+	margin-top: 1rem;
+}
+
+.texto {
+	width: 50%;
+	padding: 0 4rem 0 4rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.texto img {
+	width: 4rem;
+	margin-bottom: 1rem;
+}
+
+.texto h2 {
+	font-weight: bold;
+}
+
+.texto p {
+	margin: 1rem 0 0 0;
+	font-size: 1.5rem;
+}
+
+.divide {
+	background-color: #0d6dfc;
+	width: 100%;
+	height: 0.5rem;
+	margin-top: 3rem;
+}
+
+.imagen {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	overflow: hidden;
+	width: 50%;
+}
+
+.imagen img {
+	width: 80%;
+}
+
+@media screen and (max-width: 575px) {
+	.contenedor {
+		padding: 0;
+	}
+	.divide {
+		display: none;
+	}
+	.divideResponsive {
+    align-self: center;
+		background-color: #0d6dfc;
+		width: 90%;
+		height: 0.5rem;
+		margin-top: 1rem;
+	}
+	.card {
+		display: flex;
+		flex-direction: column;
+		margin: 0 0 2rem 0;
+	}
+	.cardReverse {
+		display: flex;
+		flex-direction: column-reverse;
+	}
+	.texto {
+		width: 100%;
+		padding: 0 1rem 0 1rem;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+	}
+	.texto img {
+		margin-bottom: 0.5rem;
+	}
+	.texto p {
+		margin: 0.5rem 0 0 0;
+		font-size: 1.2rem;
+	}
+	.imagen {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		overflow: hidden;
+		width: 100%;
+	}
+}

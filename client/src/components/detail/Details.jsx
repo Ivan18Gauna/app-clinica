@@ -1,16 +1,18 @@
 import React from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { get_DoctorsDetail } from '../../redux/actions';
 import Button from 'react-bootstrap/esm/Button';
+import Loading from '../loading/Loading';
 import styles from './Details.module.css';
 import img from '../../Icons/iconfinder-icon.svg';
-import Loading from '../loading/Loading';
-import '../login/Login.css';
+import login from '../login/Login.module.css'
+
 
 export default function Details() {
 	const { id } = useParams();
+	const history = useHistory();
 	const dispatch = useDispatch();
 	const doctor = useSelector((state) => state.detail);
 
@@ -22,6 +24,11 @@ export default function Details() {
 		var temp = doctor.specialties.map((e) => e.name);
 	}
 	console.log(doctor);
+
+	function handleTurnoSubmit(e) {
+		e.preventDefault();
+		history.push(`/calendar`, id)
+	}
 
 	return (
 		<div>
@@ -40,9 +47,7 @@ export default function Details() {
 					<h5>{temp}</h5>
 					<h5>{doctor.mail}</h5>
 					<h5>Matricula: {doctor.license}</h5>
-					<Link to={'#'}>
-						<Button variant="outline-success">Tomar turno</Button>
-					</Link>
+						<Button onClick={handleTurnoSubmit} variant="outline-success">Tomar turno</Button>
 				</div>
 				<div className={styles.text}>
 					<p>
@@ -57,7 +62,7 @@ export default function Details() {
 				</div>
 			</div>
 		</div>
-		: <div className='loading-login'><Loading/></div>
+		: <div className={login.loading-login}><Loading/></div>
 		}
 		</div>
 	);

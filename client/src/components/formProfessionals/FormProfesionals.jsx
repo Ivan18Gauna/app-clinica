@@ -99,8 +99,7 @@ export default function RegisterDoctor() {
 	const dispatch = useDispatch();
 	const especialities_data = useSelector((state) => state.specialties);
 	const history = useHistory();
-	console.log('history', history)
-
+	
 	useEffect(() => {
 		dispatch(get_specialties());
 	}, [dispatch]);
@@ -136,7 +135,6 @@ export default function RegisterDoctor() {
 		});
 		setError(objError);
 	}
-	console.log('error', error);
 
 	function handleSelectProvince(e) {
 		setInput({
@@ -161,7 +159,7 @@ export default function RegisterDoctor() {
 		e.preventDefault();
 		setInput({
 			...input,
-			specialities: input.specialty.filter((el) => el !== e.target.value),
+			specialty: input.specialty.filter((el) => el !== e.target.value),
 		});
 	}
 
@@ -221,7 +219,7 @@ export default function RegisterDoctor() {
 						</Form.Control.Feedback>
 					</Col>
 				</Row>
-				<Row className={`${styles.row}`} lg={1}>
+				{/* <Row className={`${styles.row}`} lg={1}>
 					<Col className={`${styles.col}`}>
 						<Form.Control
 							type="text"
@@ -235,7 +233,7 @@ export default function RegisterDoctor() {
 							{error.username}
 						</Form.Control.Feedback>
 					</Col>
-				</Row>
+				</Row> */}
 				<Row className={`${styles.row}`} lg={1}>
 					<Col className={`${styles.col}`}>
 						<Form.Control
@@ -419,7 +417,7 @@ export default function RegisterDoctor() {
 						input.city === '' ||
 						input.street === '' ||
 						input.number === '' ||
-						input.username === '' ||
+						// input.username === '' ||
 						input.password === '' ||
 						input.new_password === '' ||
 						input.specialty.length < 1 ||

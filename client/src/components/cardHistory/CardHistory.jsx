@@ -17,7 +17,7 @@ function CardHistory() {
 				</Col>
 				<Col className={styles.colInfo} lg={8}>
 					<h3>¿Cómo funciona +Salud?</h3>
-					<Row className={styles.rowInfo} lg={3}>
+					<Row className={styles.rowInfo} lg={3} xs={1}>
 						<Col className={styles.info}>
 							<div className={styles.pasos}>
 								<img src={login} alt="question" />
