@@ -28,72 +28,84 @@ import { Alert } from '@mui/material';
 import '../auth0/Auth0';
 
 const schema = yup
-	.object({
-		email: yup
-			.string()
-			.email('Ingresa un correo valido')
-			.required('Este campo es requerido'),
-		password: yup.string().required('Este campo es requerido')
-	})
-	.required();
+  .object({
+    email: yup
+      .string()
+      .email("Ingresa un correo valido")
+      .required("Este campo es requerido"),
+    password: yup.string().required("Este campo es requerido")
+  })
+  .required();
 
 export default function Login() {
+
   const cookies = new Cookies();
   const history = useHistory();
-  const globalUser = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  const { loginWithPopup, isAuthenticated, logout } = useAuth0();
+  const globalUser = useSelector(state => state.user);
+  const { loginWithPopup, isAuthenticated, user } = useAuth0();
   const {
     setValue,
     getValues,
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors }
   } = useForm({
     mode: "onBlur",
     resolver: yupResolver(schema),
     defaultValues: {
       email: "",
       password: "",
-      showPassword: false,
-    },
+      showPassword: false
+    }
   });
-  const values = getValues();
+  const [errorsExiste, setErrorsExiste] = useState({
+    email: "",
+    password: ""
+  });
 
-  const patients = useSelector((state) => state.patients);
-  const doctor = useSelector((state) => state.doctors);
+  const values = getValues();
+  const patients = useSelector(state => state.patients);
+  const doctor = useSelector(state => state.doctors);
   const [email, setEmail] = useState({
-    email:'',
-    password:''
+    email: "",
+    password: ""
   });
   function handleInput(e) {
     setEmail({
       ...email,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     });
   }
-  console.log("email",email.email)
+  console.log("email", email.email);
   const allUSer = patients.concat(doctor);
 
   var filter;
   if (email.email) {
     filter = allUSer.filter((el) => el.mail === email.email);
   }
-  
-  const submitForm = (data) => {
+
+  const submitForm = data => {
     if (filter.length > 0) {
       if (data.password === filter[0].password) {
         dispatch(getUserDetail(data.email));
         cookies.set("userEmail", `${data.email}`, { patch: "/" });
         history.push("/home");
       } else {
-        alert("la contraseña es incorrecta");
+        setErrorsExiste({
+          ...errorsExiste,
+          password: "La contraseña es incorrecta"
+        });
       }
     } else {
-      alert("El correo ingresado es incorrecto");
+      setErrorsExiste({
+        ...errorsExiste,
+        email: "El correo ingresado no existe"
+      });
     }
   };
-  const handleMouseDownPassword = (event) => {
+ 
+  const handleMouseDownPassword = event => {
     event.preventDefault();
   };
 
@@ -101,6 +113,10 @@ export default function Login() {
     dispatch(getPatients());
     dispatch(get_Doctors());
   }, [dispatch]);
+  
+  if(isAuthenticated){
+		cookies.set('userEmail', user.email, {path: '/'})
+	}
 
   return (
     <div>
@@ -113,13 +129,13 @@ export default function Login() {
             <Row className={styles.formGroup} lg={1}>
               <Col className={styles.col} lg={9}>
                 <FormControl
-                onChange={(e)=>handleInput(e)}
-                name='email'
-                  error={errors.email}
+                  onChange={e => handleInput(e)}
+                  name="email"
+                  error={errors.email || errorsExiste.email}
                   className={styles.input}
                   variant="outlined"
                 >
-                  <InputLabel htmlFor="outlined-adornment-password" >
+                  <InputLabel htmlFor="outlined-adornment-password">
                     Correo electronico
                   </InputLabel>
                   <OutlinedInput
@@ -127,22 +143,23 @@ export default function Login() {
                     label="Correo electronico"
                     {...register("email")}
                     endAdornment={
-                        
                       <InputAdornment position="end">
                         <PersonIcon />
                       </InputAdornment>
                     }
                   />
-                  {errors.email && (
+                  {errors.email ? (
                     <FormHelperText>{errors.email.message}</FormHelperText>
-                  )}
+                  ) : errorsExiste.email ? (
+                    <FormHelperText>{errorsExiste.email}</FormHelperText>
+                  ) : null}
                 </FormControl>
               </Col>
               <Col className={styles.col} lg={9}>
                 <FormControl
-                onChange={(e)=>handleInput(e)}
-                name='password'
-                  error={errors.password}
+                  onChange={e => handleInput(e)}
+                  name="password"
+                  error={errors.password || errorsExiste.password}
                   className={styles.input}
                   variant="outlined"
                 >
@@ -161,7 +178,7 @@ export default function Login() {
                           onClick={() => {
                             let values = getValues("showPassword");
                             setValue("showPassword", !values, {
-                              shouldValidate: true,
+                              shouldValidate: true
                             });
                           }}
                           onMouseDown={handleMouseDownPassword}
@@ -176,9 +193,11 @@ export default function Login() {
                       </InputAdornment>
                     }
                   />
-                  {errors.password && (
+                  {errors.password ? (
                     <FormHelperText>{errors.password.message}</FormHelperText>
-                  )}
+                  ) : errorsExiste.password ? (
+                    <FormHelperText>{errorsExiste.password}</FormHelperText>
+                  ) : null}
                 </FormControl>
               </Col>
               <Col className={styles.col} lg={9}>
@@ -207,23 +226,21 @@ export default function Login() {
         </div>
       ) : (
         <div>
-          <div className="loading-login">
+          <div id={styles.loadingLogin}>
             <Loading />
           </div>
-          <div id="loading-num">
+          <div id={styles.loadingNum}>
             {setTimeout(() => {
-              dispatch(getUserDetail(values.email));
-            }, 1000)}
-            {setTimeout(() => {
-              if (globalUser && globalUser.mail) {
-                history.push("/home");
-              } else {
-                history.push("/signin");
-              }
-            }, 5000)}
-            <Button className={stylesForm.button} onClick={logout}>
-              Cerrar sesion
-            </Button>
+							dispatch(getUserDetail(cookies.get('userEmail')));
+						}, 1000)}
+						{setTimeout(() => {
+							if (globalUser && globalUser.mail) {
+								return history.push('/home');
+							} 
+							if (globalUser && !globalUser.mail) {
+								return history.push('/signin');
+							}
+						}, 2000)}
           </div>
         </div>
       )}

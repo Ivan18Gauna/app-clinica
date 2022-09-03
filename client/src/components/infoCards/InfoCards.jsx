@@ -37,8 +37,8 @@ function CardsTriple() {
 						Eleji tu medico preferido de la plataforma y consegui un turno con
 						el. Toda la informacion del mismo en +Salud.
 					</p>
+					<div className={styles.divide}></div>
 				</div>
-				<div className={styles.divide}></div>
 			</div>
 			<div className={styles.card}>
 				<div className={styles.texto}>
