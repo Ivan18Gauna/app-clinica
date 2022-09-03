@@ -28,13 +28,18 @@ const actualUser = async(req, res) => {
             where: {
                 mail: mail
             },
-             attributes: ["name"],
-
+        })
+        const admin = await User.findOne({
+            where: {
+                mail: mail
+            },
         })
         if (prof) {
             res.status(200).send(prof)
-        }else {
+        }else if (pat) {
             res.status(200).send(pat)
+        }else {
+            res.status(200).send(admin)
         }
     } catch (error) {
         res.status(400).send('usuarion no encontrado')
