@@ -17,26 +17,7 @@ const getFacturaByProfessionalID = async (req, res) => {
     res.status(200).send(dbProfId);
   };
   
-
-const getFacturaByProfessionalID = async (req, res) => {
-    let { id } = req.params;
-    let dbProfId = await Professionals.findOne({
-      where: { id },
-      include: [
-        {
-          model: Invoice,
-          //attributes: ["name"],
-          //through: { attributes: [] },
-        }
-      ],
-    });
-    res.status(200).send(dbProfId);
-  };
   
-
-
-
-
 const getAllInvoices = async (req, res) => {
     try {
         const factura = await Invoice.findAll({
