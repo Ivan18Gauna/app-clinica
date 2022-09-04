@@ -14,10 +14,10 @@ var transporter = nodemailer.createTransport({
 router.post("/send-email", (req, res) => {
     var mailOptions = {
         from: "massaludapp@hotmail.com",
-        to: "appclinicahenry@gmail.com",
-        subjet: "Hola",
+        to: "cristianmmst@gmail.com, marianettimatiass@gmail.com",
+        subject: 'Hola que tal',
         text: "Hola text",
-        html:'Hola html'
+        html: 'Hola html'
     };
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
