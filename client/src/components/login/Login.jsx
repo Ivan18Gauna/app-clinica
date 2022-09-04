@@ -77,7 +77,6 @@ export default function Login() {
       [e.target.name]: e.target.value
     });
   }
-  console.log("email", email.email);
   const allUSer = patients.concat(doctor);
 
   var filter;

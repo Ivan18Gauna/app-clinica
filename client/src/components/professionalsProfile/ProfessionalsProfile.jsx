@@ -133,7 +133,6 @@ export default function ProfessionalProfile({ globalUser, specialties }) {
             avatar: respuesta.data.secure_url
         })
     }
-    console.log('user', globalUser)
     if ((isAuthenticated && !globalUser) || (isAuthenticated && globalUser && !globalUser.name)) {
         dispatch(getUserDetail(user.email));
     }
@@ -176,7 +175,6 @@ export default function ProfessionalProfile({ globalUser, specialties }) {
             });
         }
     }
-    console.log('input', input);
 
     function handleDelete(e) {
         e.preventDefault();
@@ -196,7 +194,6 @@ export default function ProfessionalProfile({ globalUser, specialties }) {
 
     function handleSubmit(e) {
         e.preventDefault();
-        console.log('contraseña', input.password)
         if (input.name && input.name !== '') { infoModify.name = input.name };
         if (input.lastname && input.lastname !== '') { infoModify.lastname = input.lastname };
         if (input.avatar && input.avatar !== '') { infoModify.avatar = input.avatar };

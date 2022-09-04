@@ -27,8 +27,6 @@ export default function Price() {
   const date = arr[2] + '/' + arr[1] + '/' + arr[3];
 
 
-  console.log("Data",id,mail,price, quantity, date)
-
   // const postMercadoPago = () =>{
   //   return async (dispatch)=>{
   //     try {
@@ -39,7 +37,6 @@ export default function Price() {
   //        })
   //        dispatch(postMercadopago(res.data));
   //     } catch (error) {
-  //       console.log(error)
   //     }
   //   }
   // }
@@ -47,7 +44,6 @@ export default function Price() {
   useEffect(async() => {
     const res = await axios.post("/mercadopago",{id, mail, price, quantity, date});
     setUrl(res.data.id)
-    console.log(res)
   }, [])
   
   

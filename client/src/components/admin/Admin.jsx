@@ -31,14 +31,10 @@ export default function Sidebar(){
         setCurrentPage(pageNumber);
     };
 
-
-    //console.log("soy pat", patients)
     useEffect(() => {
 		dispatch(get_Doctors());
         dispatch(getPatients());
 	},[dispatch]);
-    //console.log("soy drs",doctors)
-
 
     return(
         <div class="row" id='row'>

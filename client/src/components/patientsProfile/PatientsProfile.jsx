@@ -130,8 +130,6 @@ export default function UserProfile({ globalUser, obras }) {
   const [info, setInfo] = useState({});
   const infoModify = {};
 
-  console.log("Soy global", globalUser);
-  console.log("Soy info", info);
   const uploadImage = async e => {
     const files = e.target.files;
     const data = new FormData();

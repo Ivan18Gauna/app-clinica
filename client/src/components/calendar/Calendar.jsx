@@ -16,11 +16,9 @@ import { useEffect } from "react";
 
     useEffect(() => {
         dispatch(getUserDetail(cookies.get('userEmail')))
-        console.log(cookies.get('userEmail'))
     }, [])
 
     const user = useSelector((state) => state.user)
-    console.log(user)
 
    const [fecha, setFecha] = useState(new Date());
    const onChangeSetFecha = (e) => {
@@ -35,10 +33,8 @@ import { useEffect } from "react";
  	   patient: user.id
    }
 
-   console.log(payload)
    const handleSubmit = (e) => {
  	e.preventDefault(e)
- 	console.log('funciona')
  	dispatch(newTurno(payload))
    }
 

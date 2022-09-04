@@ -153,7 +153,6 @@ export default function RegisterDoctor() {
 			});
 		}
 	}
-	console.log('input', input);
 
 	function handleDelete(e) {
 		e.preventDefault();

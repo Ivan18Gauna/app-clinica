@@ -148,7 +148,6 @@ export default function HomeProfessional(globalUser) {
 //                 payload: notes
 //             })
 //         } catch(e) {
-//             console.log(e.message)
 //         }
 //     }
 // }
@@ -160,7 +159,6 @@ export default function HomeProfessional(globalUser) {
 //             // getNotes(); que onda se puede hacer?
 //             return notes;
 //         } catch(e) {
-//             console.log(e.message)
 //         }
 //     }
 // }
@@ -178,7 +176,6 @@ export default function HomeProfessional(globalUser) {
 //             });
 
 //         } catch(e) {
-//             console.log(e.message)
 //         }
 //     }
 // }
