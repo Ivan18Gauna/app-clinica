@@ -36,7 +36,7 @@ function CardEdit({ id, name, lastname, specialties }) {
 						<Button type="button">Ver detalle</Button>
 					</Link>
 					:
-					<Link to={`/detail/${id}`}>
+					<Link to={`/details/${id}`}>
 						<Button type="button">Ver detalle</Button>
 					</Link>
 				}
