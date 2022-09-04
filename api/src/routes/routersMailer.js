@@ -4,22 +4,20 @@ const router = express.Router()
 
 
 var transporter = nodemailer.createTransport({
-    service: 'gmail',
+    service: 'hotmail',
     auth: {
-        user: "appclinicahenry@gmail.com",
+        user: "massaludapp@hotmail.com",
         pass: "Clinica123456"
     },
-    port: 465,
-    host: 'smtp.gmail.com',
-    secure: true,
 });
 
 router.post("/send-email", (req, res) => {
     var mailOptions = {
-        from: "appclinicahenry@gmail.com",
-        to: "marianettimatiass@gmail.com",
-        subjet: "Bienvenido a la app mas salud",
-        text: "Hola Julio como estas? no solo hago malos formularios"
+        from: "massaludapp@hotmail.com",
+        to: "appclinicahenry@gmail.com",
+        subjet: "Hola",
+        text: "Hola text",
+        html:'Hola html'
     };
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
