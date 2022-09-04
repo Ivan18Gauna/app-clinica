@@ -11,17 +11,16 @@ import styles from '../login/Login.module.css'
 import { useEffect } from "react";
 import { getTurnoPat, getUserDetail } from "../../redux/actions";
 
-export default function HomePatients() {
+export default function HomePatients({userInfo}) {
   const dispatch = useDispatch()
-  const userInfo = useSelector( state => state.user )
   
   useEffect(() => {
     const cookies = new Cookie();
     dispatch(getUserDetail(cookies.get('userEmail')))
-/*     dispatch(getTurnoPat(userInfo.id))
- */  }, [])
+    dispatch(getTurnoPat(userInfo.id))
+  }, [])
   const turnos = useSelector((state) => state.turnos)
-  turnos && console.log(turnos)
+  turnos && console.log('turno:', turnos)
 
   // let userInfo = ["a+", "Covid",  "al Polen", "si, donante", "si, transfundible", "Hipertension", "Accord Salud 3.2"]
 
@@ -43,10 +42,10 @@ export default function HomePatients() {
                 if (i <= 1) {
                   return (
                     <ListGroup variant="flush">
-                    <ListGroup.Item>Fecha: {e?e.date:''}</ListGroup.Item>
-                    <ListGroup.Item>Hora: {e?e.time:''}</ListGroup.Item>
-                    <ListGroup.Item>Profesional: {e?e.professional.name:''}</ListGroup.Item>
-                    <ListGroup.Item>Domicilio: Av Libertador 1521</ListGroup.Item>
+                    <ListGroup.Item key={i}>Fecha: {e?e.date:''}</ListGroup.Item>
+                    <ListGroup.Item key={i + 1}>Hora: {e?e.time:''}</ListGroup.Item>
+                    <ListGroup.Item key={i + 2}>Profesional: {e?e.professional.name:''}</ListGroup.Item>
+                    <ListGroup.Item key={i + 3}>Domicilio: Av Libertador 1521</ListGroup.Item>
                     ------------------------------------
                     <br />
                     </ListGroup>

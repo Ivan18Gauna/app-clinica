@@ -13,7 +13,6 @@ function NavBarEdit() {
   const conf = cookies.get("userEmail");
   const { isAuthenticated, logout } = useAuth0();
   const globalUser = useSelector((state) => state.user);
-  console.log("xyx", globalUser);
   function handleClick() {
     if (isAuthenticated) {
       logout();

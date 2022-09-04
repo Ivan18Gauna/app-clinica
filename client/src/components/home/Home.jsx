@@ -27,10 +27,8 @@ export default function Home() {
   return (
     <>
       {globalUser && globalUser.rolUser && <Sidebar />}
-      {globalUser && globalUser.document && <HomePatients />}
-      {globalUser && globalUser.license && (
-        <HomeProfessional globalUser={globalUser} />
-      )}
+      {globalUser && globalUser.document && <HomePatients userInfo={globalUser} />}
+      {globalUser && globalUser.license && ( <HomeProfessional globalUser={globalUser} /> )}
       {!globalUser || (globalUser && !globalUser.name) ? (
         <div className={`${styles.container}`}>
           <Bot />

@@ -7,7 +7,7 @@ import { getTurnoProf } from "../../redux/actions";
 // import Loading from "../loading/Loading";
 // import { postNotes, getNotes } from "../../redux/actions";
 
-export default function HomeProfessional(globalUser) {
+export default function HomeProfessional({globalUser}) {
    const dispatch = useDispatch();
   // const userInfo = useSelector( state => state.user )
   // const notesProfessionals = useSelector( state => state.user )
@@ -70,7 +70,6 @@ export default function HomeProfessional(globalUser) {
             </Card.Text>
             ------------------------------------
             {turnos.map((e, i) => {
-              if (i <= 1) {
                 return (
                   <ListGroup variant="flush">
                     <ListGroup.Item>Fecha: {e ? e.date : ""}</ListGroup.Item>
@@ -85,7 +84,6 @@ export default function HomeProfessional(globalUser) {
                     <br />
                   </ListGroup>
                 );
-              }
             })}
             <br />
             <Card.Link href="#">Cancelar turno</Card.Link>

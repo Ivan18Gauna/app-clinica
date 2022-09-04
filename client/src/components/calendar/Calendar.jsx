@@ -28,7 +28,7 @@ import { useEffect } from "react";
    const arr = fecha.toString().split(' ')
    const payload = {
  	   date: arr[0] + ' ' + arr[2] + ' ' + arr[1] + ' ' + arr[3] + ' ',
- 	   time: arr[4],
+ 	   time: arr[4].split(':')[0] + ':00',
  	   professional: professional,
  	   patient: user.id
    }
