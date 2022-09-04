@@ -95,7 +95,7 @@ export default function Login() {
     } else {
       setErrorsExiste({
         ...errorsExiste,
-        email: "El correo ingresado no existex"
+        email: "El correo ingresado no existe"
       });
     }
   };
