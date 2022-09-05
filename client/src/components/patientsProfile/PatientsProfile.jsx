@@ -85,7 +85,7 @@ function validate(info) {
     )
   ) {
     error.password =
-      "La contraseña debe contener al menos 8 digitos, una mayúscula, un número y un caracter especial.";
+      "La contraseña debe contener al menos 8 digitos, una mayúscula y un número.";
     return error;
   }
   if (info.new_password && info.password !== info.new_password) {
