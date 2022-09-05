@@ -12,10 +12,11 @@ const getInfoApiPatients = async (req, res) => {
     Patients.findOrCreate({
       where: {
         name: e.name.split(" ")[0],
-        lastname: e.name.split(" ")[0],
+        lastname: e.name.split(" ")[1],
         birth: e.birth,
         phone: e.phone,
         mail: e.mail,
+        password: e.password,
         province: e.province,
         city: e.city,
         number: e.number,
