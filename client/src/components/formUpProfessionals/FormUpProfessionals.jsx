@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import styles from '../formPatients/FormPatients.module.css';
 import { useState, useEffect } from 'react';
+import swal from 'sweetalert';
 import { useDispatch, useSelector } from 'react-redux';
 import {
 	getPatients,
@@ -35,9 +36,7 @@ function validate(input) {
 export default function FormUpProfessionals() {
 	
     const dispatch = useDispatch();
-	const allPatients = useSelector((state) => state.patients);
-	console.log('soy -Paciente', allPatients);
-   
+	const allPatients = useSelector((state) => state.patients);   
     const [imagen, setImagen] = useState("")
 	const [error, setError] = useState({});
 
@@ -53,11 +52,6 @@ export default function FormUpProfessionals() {
 		date: '',
 		diagnosis: '',
 	});
-
-    //console.log("soy img ",imagen)
-	//console.log('soy search', input.search);
-
-
 
 	function handleMotivo(e) {
 		setInput({
@@ -101,7 +95,10 @@ export default function FormUpProfessionals() {
       function handleSubmit(e) {
 		e.preventDefault(e);
 		dispatch(postHistory(input));
-		alert('Registraste correctamente tu atencion a  ' + input.patient);
+		swal({
+			icon:'success',
+			title:'Registraste correctamente tu atención a  ' + input.patient
+		});
 		setInput({
 			patient: [],
 			reason: '',

@@ -16,12 +16,10 @@ import FormUpProfessionals from './components/formUpProfessionals/FormUpProfessi
 import ClinicHistory from './components/clinicHistory/ClinicHistory';
 import Auth0 from './components/auth0/Auth0';
 import HomeProfessional from './components/homeProfessionals/HomeProfessionals';
-import PatientProfile from './components/patientsProfile/PatientsProfile';
 import Calendar from '../src/components/calendar/Calendar.jsx'
 import HomePatients from './components/homePatients/HomePatients';
 import UserProfile from './components/userProfile/UserProfile';
 import Sidebar from './components/admin/Admin'
-import Bot from "./components/bot/Bot";
 import DetailsPatients from "./components/detailPatAdmin/DetailPatAdmin";
 import DetailsDrAdmin from "./components/detailProfAdmin/DetailProfAdmin";
 
@@ -36,7 +34,6 @@ function App() {
         <Route path="/admin" component={Sidebar} />
         <Route path="/detailPatAdmin/:id" component={DetailsPatients}/>
         <Route path="/detailProfAdmin/:id" component={DetailsDrAdmin}/>
-        <Route path="/bot" component={Bot} />
         <Route path="/home" component={Home} />
         <Route path="/calendar" component={Calendar} />
         <Route path="/details/:id" component={Details} />

@@ -22,7 +22,6 @@ export default function UserProfile() {
   const obras = useSelector((state) => state.os);
   const specialties = useSelector((state) => state.specialties);
   const { isAuthenticated, logout } = useAuth0();
-  console.log('state',state)
 
   useEffect(() => {
     dispatch(getObrasSociales());

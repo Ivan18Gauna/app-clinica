@@ -23,7 +23,6 @@ export default function DetailsDrAdmin() {
 	if (doctor.length > 0 && Array.isArray(doctor.specialties)) {
 		var temp = doctor.specialties.map((e) => e.name);
 	}
-	console.log(doctor);
 
 	return (
 		<div>

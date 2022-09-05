@@ -32,7 +32,7 @@
 	display: flex;
 	justify-content: center;
 	flex-direction: row;
-	margin-top: 1rem !important;
+	margin-top: 0 !important;
 }
 
 .col {

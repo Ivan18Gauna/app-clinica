@@ -17,6 +17,7 @@ import styles from './ProfessionalsProfile.module.css';
 import Loading from '../loading/Loading';
 import Cookies from 'universal-cookie';
 import { inputAdornmentClasses } from '@mui/material';
+import swal from 'sweetalert';
 
 
 function validate(input) {
@@ -39,7 +40,7 @@ function validate(input) {
         )
     ) {
         error.password =
-            'La contraseña debe contener al menos 8 digitos, una mayúscula, un número y un caracter especial.';
+            'La contraseña debe contener al menos 8 digitos, una mayúscula y un número.';
         return error;
     }
     if (input.password !== input.new_password) {
@@ -133,7 +134,6 @@ export default function ProfessionalProfile({ globalUser, specialties }) {
             avatar: respuesta.data.secure_url
         })
     }
-    console.log('user', globalUser)
     if ((isAuthenticated && !globalUser) || (isAuthenticated && globalUser && !globalUser.name)) {
         dispatch(getUserDetail(user.email));
     }
@@ -168,7 +168,10 @@ export default function ProfessionalProfile({ globalUser, specialties }) {
     function handleSelectSpecialities(e) {
         if (input.specialty && input.specialty.length > 0 &&
             input.specialty.includes(e.target.value)) {
-            alert('Ya se selecciono la especialidad.');
+            swal({
+                icon: 'warning',
+                title: "Ya se seleccionó la especialidad."
+            });
         } else {
             setInput({
                 ...input,
@@ -176,7 +179,6 @@ export default function ProfessionalProfile({ globalUser, specialties }) {
             });
         }
     }
-    console.log('input', input);
 
     function handleDelete(e) {
         e.preventDefault();
@@ -196,7 +198,6 @@ export default function ProfessionalProfile({ globalUser, specialties }) {
 
     function handleSubmit(e) {
         e.preventDefault();
-        console.log('contraseña', input.password)
         if (input.name && input.name !== '') { infoModify.name = input.name };
         if (input.lastname && input.lastname !== '') { infoModify.lastname = input.lastname };
         if (input.avatar && input.avatar !== '') { infoModify.avatar = input.avatar };
@@ -214,11 +215,16 @@ export default function ProfessionalProfile({ globalUser, specialties }) {
         if (input.street && input.street !== '') { infoModify.street = input.street };
         if (input.number && input.number !== '') { infoModify.number = input.number };
         dispatch(modifyProfessionals(infoModify, globalUser.id, globalUser.mail));
+        swal({
+            icon:'success',
+            title:'Los datos se han modificado correctamente.',
+            timer:1500
+          })
         setEditInfoPersonal(false);
         setInput({})
     }
     function logoutCookies() {
-        if(isAuthenticated) { logout() }
+        if (isAuthenticated) { logout() }
         cookie.remove('userEmail', { path: '/' });
         history.push('/');
     }

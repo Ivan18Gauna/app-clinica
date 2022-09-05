@@ -14,3 +14,4 @@ export const GET_NOTES = "GET_NOTES";
 export const GET_TURNO_PROF = "GET_TURNO_PROF";
 export const GET_TURNO_PAT = "GET_TURNO_PAT";
 export const GET_PATIENTS_DETAIL = "GET_PATIENTS_DETAIL"
+export const POST_TURNO_MAIL= "POST_TURNO_MAIL"

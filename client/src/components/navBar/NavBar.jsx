@@ -8,17 +8,17 @@ import { useSelector } from "react-redux";
 import Cookies from "universal-cookie";
 
 function NavBarEdit() {
-
   const history = useHistory();
   const cookies = new Cookies();
   const conf = cookies.get("userEmail");
   const { isAuthenticated, logout } = useAuth0();
   const globalUser = useSelector((state) => state.user);
-
   function handleClick() {
-    if(isAuthenticated){ logout() }
-    cookies.remove('userEmail',{path:'/'});
-    history.push('/');
+    if (isAuthenticated) {
+      logout();
+    }
+    cookies.remove("userEmail", { path: "/" });
+    history.push("/");
   }
 
   return (
@@ -33,18 +33,21 @@ function NavBarEdit() {
         <img src={logo} alt="logo" />
         <h4>SALUD</h4>
       </Navbar.Brand>
-      {globalUser && globalUser.rolUser ? 
+      {globalUser && globalUser.rolUser ? (
         <button onClick={handleClick}>Cerrar sesión</button>
-        : <>
+      ) : (
+        <>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
               <Nav.Link as={Link} to="/about">
                 Nosotros
               </Nav.Link>
-              <Nav.Link as={Link} to="/price">
-                Precios
-              </Nav.Link>
+              {globalUser && globalUser.license ? (
+                <Nav.Link as={Link} to="/price">
+                  Precios
+                </Nav.Link>
+              ) : null}
             </Nav>
             <Nav>
               {isAuthenticated || (globalUser && globalUser.mail) || conf ? (
@@ -59,7 +62,7 @@ function NavBarEdit() {
             </Nav>
           </Navbar.Collapse>
         </>
-      }
+      )}
     </Navbar>
   );
 }

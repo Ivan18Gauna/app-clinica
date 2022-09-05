@@ -8,6 +8,7 @@ import Loading from '../loading/Loading';
 import styles from '../detail/Details.module.css';
 import img from '../../Icons/iconfinder-icon.svg';
 import login from '../login/Login.module.css'
+import swal from 'sweetalert';
 
 
 export default function DetailsPatients() {
@@ -23,7 +24,11 @@ export default function DetailsPatients() {
 	function handleSubmit(e){
 		dispatch(deletePatients(id))
 		history.push("/admin")
-		alert("Paciente suspendido con exito")
+		swal({
+			icon: 'success',
+			title:"Paciente suspendido con éxito",
+			timer:1500
+		})
 	} 
 
 	

@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getObrasSociales } from '../../redux/actions';
 import { useHistory, useLocation } from 'react-router-dom';
 import { registerPatients } from '../../redux/actions';
+import swal from 'sweetalert';
 
 const blood_type = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB+', 'AB-', 'O+', 'O-'];
 const vaccines_data = [
@@ -85,7 +86,10 @@ export default function HealthData() {
 	function handleSelectVaccines(e) {
 		e.preventDefault();
 		if (input.vaccines.includes(e.target.value)) {
-			alert('Ya se selecciono esa vacuna.');
+			swal({
+				icon: 'warning',
+				title: "Vacuna ya ingresada."
+			});
 		} else {
 			setInput({
 				...input,
@@ -110,7 +114,10 @@ export default function HealthData() {
 	function handleSubmitAllergies(e) {
 		e.preventDefault();
 		if (input.allergies.includes(allergies_)) {
-			alert('Alergia ya ingresada.');
+			swal({
+				icon: 'warning',
+				title: 'Alergia ya ingresada.'
+			});
 		} else {
 			setInput({
 				...input,
@@ -151,7 +158,10 @@ export default function HealthData() {
 	function handleSubmitChronicles(e) {
 		e.preventDefault();
 		if (input.chronicles.includes(chronicles_)) {
-			alert('Enfermedad crónica ya ingresada.');
+			swal({
+				icon: 'warning',
+				title: 'Enfermedad crónica ya ingresada.'
+			});
 		} else {
 			setInput({
 				...input,
@@ -178,6 +188,11 @@ export default function HealthData() {
 	function handleSubmit(e) {
 		e.preventDefault();
 		dispatch(registerPatients(input));
+		swal({
+			icon: 'success',
+			title: 'Usuario registrado.',
+			timer: 1500
+		})
 		setInput({
 			name: '',
 			lastname: '',
@@ -415,8 +430,8 @@ export default function HealthData() {
 					</Col>
 					<Col className={`${styles.col}`} md={6} lg={6}>
 						{input.blood === '' ||
-						input.donation === '' ||
-						input.transfusion === '' ? (
+							input.donation === '' ||
+							input.transfusion === '' ? (
 							<Button
 								className={`${styles.buttonSubmit}`}
 								variant="danger"

@@ -1,5 +1,6 @@
 import axios from "axios";
 import React from "react";
+import { useState } from "react";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Cookies from 'universal-cookie'
@@ -9,6 +10,7 @@ import { getUserDetail,postMercadoPago } from "../../redux/actions";
 export default function Price() {
   const dispatch = useDispatch()
   const cookies = new Cookies()
+  const [url, setUrl] = useState('')
   
   useEffect(() => {
     dispatch(getUserDetail(cookies.get('userEmail')))
@@ -25,8 +27,6 @@ export default function Price() {
   const date = arr[2] + '/' + arr[1] + '/' + arr[3];
 
 
-  console.log("Data",id,mail,price, quantity, date)
-
   // const postMercadoPago = () =>{
   //   return async (dispatch)=>{
   //     try {
@@ -37,16 +37,20 @@ export default function Price() {
   //        })
   //        dispatch(postMercadopago(res.data));
   //     } catch (error) {
-  //       console.log(error)
   //     }
   //   }
   // }
 
-  const handleActivarPago = (e) => {
+  useEffect(async() => {
+    const res = await axios.post("/mercadopago",{id, mail, price, quantity, date});
+    setUrl(res.data.id)
+  }, [])
+  
+  
+  
+/*   const handleActivarPago = async(e) => {
     e.preventDefault();
-    console.log("handleactivarPago")
-    dispatch(postMercadoPago({id,mail,price, quantity, date}))
-  }
+  } */
 
 
   const checkRed =
@@ -157,9 +161,8 @@ export default function Price() {
       <div class="row">
         <button
          type="button" class="btn btn-warning col-3"></button>
-        <a href >
+        <a href={url} >
         <button  
-        onClick={(e)=>handleActivarPago(e)}
         type="button" class="btn btn-outline-primary col-3">
         Solicitar pago
        </button>

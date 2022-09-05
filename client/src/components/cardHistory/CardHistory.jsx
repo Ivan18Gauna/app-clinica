@@ -35,7 +35,7 @@ function CardHistory() {
 							</div>
 							<p>
 								Al ingresar veras casilleros vacios en donde completaras tu
-								informacion basica de salud y enfermedades preexistentes.
+								informacion básica de salud y enfermedades preexistentes.
 							</p>
 						</Col>
 						<Col className={styles.info}>
