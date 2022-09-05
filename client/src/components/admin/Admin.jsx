@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import Cards from "../cards/Cards";
 import CardsPatients from '../cardsPatients/CardsPatients';
 import { useSelector, useDispatch } from "react-redux";
-import { getPatients, get_Doctors } from '../../redux/actions';
+import { getPatients, get_Doctors, get_factura } from '../../redux/actions';
 //import Pagination from '@mui/material/Pagination'
 import Pagination from '../paginate/Pagination';
 
@@ -15,6 +15,9 @@ export default function Sidebar(){
     const dispatch = useDispatch();
     const doctors = useSelector((state) => state.doctors);
     const patients = useSelector((state) => state.patients);
+    const facturas = useSelector((state) => state.facturas)
+
+
     const [currentPage, setCurrentPage] = useState(1);
     const [doctorsPage, setDoctorsPage] = useState(10);
     const indexOfLastDoctor = currentPage * doctorsPage; //10
@@ -34,8 +37,9 @@ export default function Sidebar(){
     useEffect(() => {
 		dispatch(get_Doctors());
         dispatch(getPatients());
+        dispatch(get_factura());
 	},[dispatch]);
-
+console.log("soy facturas",facturas)
     return(
         <div class="row" id='row'>
             <div class="col-4" id='NavBar-About'>
@@ -89,7 +93,9 @@ export default function Sidebar(){
                     </div>
                     <div id="item-3">
                         <h4>Dinero Ingresado a la fecha:</h4>
+                        {facturas.length>=1 ?<div><p>{facturas[0].sumaFacturas}</p></div> : <p>$0</p>}
                         <p>
+
                         Aca irian unos graficos mostrando los millones que tenemos acumulados. 
                         </p>
                     </div>
