@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import styles from '../formPatients/FormPatients.module.css';
 import { useState, useEffect } from 'react';
+import swal from 'sweetalert';
 import { useDispatch, useSelector } from 'react-redux';
 import {
 	getPatients,
@@ -94,7 +95,10 @@ export default function FormUpProfessionals() {
       function handleSubmit(e) {
 		e.preventDefault(e);
 		dispatch(postHistory(input));
-		alert('Registraste correctamente tu atencion a  ' + input.patient);
+		swal({
+			icon:'success',
+			text:'Registraste correctamente tu atención a  ' + input.patient
+		});
 		setInput({
 			patient: [],
 			reason: '',

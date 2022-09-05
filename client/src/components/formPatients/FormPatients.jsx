@@ -8,7 +8,7 @@ import styles from "./FormPatients.module.css";
 import { useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import Cookie from 'universal-cookie'
-
+import swal from "sweetalert";
 
 function validate(input) {
   let error = {};
@@ -31,7 +31,7 @@ function validate(input) {
     )
   ) {
     error.password =
-      "La contraseña debe contener al menos 8 digitos, una mayúscula, un número y un caracter especial.";
+      "La contraseña debe contener al menos 8 digitos, una mayúscula y un número.";
     return error;
   }
   if (input.password !== input.new_password) {
