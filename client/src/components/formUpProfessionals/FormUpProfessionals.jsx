@@ -97,7 +97,7 @@ export default function FormUpProfessionals() {
 		dispatch(postHistory(input));
 		swal({
 			icon:'success',
-			text:'Registraste correctamente tu atención a  ' + input.patient
+			title:'Registraste correctamente tu atención a  ' + input.patient
 		});
 		setInput({
 			patient: [],

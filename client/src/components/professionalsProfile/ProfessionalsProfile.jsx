@@ -170,7 +170,7 @@ export default function ProfessionalProfile({ globalUser, specialties }) {
             input.specialty.includes(e.target.value)) {
             swal({
                 icon: 'warning',
-                text: "Ya se seleccionó la especialidad."
+                title: "Ya se seleccionó la especialidad."
             });
         } else {
             setInput({
@@ -217,7 +217,7 @@ export default function ProfessionalProfile({ globalUser, specialties }) {
         dispatch(modifyProfessionals(infoModify, globalUser.id, globalUser.mail));
         swal({
             icon:'success',
-            text:'Los datos se han modificado correctamente.',
+            title:'Los datos se han modificado correctamente.',
             timer:1500
           })
         setEditInfoPersonal(false);

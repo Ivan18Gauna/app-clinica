@@ -150,7 +150,7 @@ export default function RegisterDoctor() {
     if (input.specialty.includes(e.target.value)) {
       swal({
         icon: 'warning',
-        text: "Ya se seleccionó la especialidad."
+        title: "Ya se seleccionó la especialidad."
       });
     } else {
       setInput({
@@ -173,7 +173,7 @@ export default function RegisterDoctor() {
     dispatch(registerDoctors(input));
     swal({
       icon: 'success',
-      text: 'Usuario creado con éxito.',
+      title: 'Usuario registrado.',
       timer: 1500
     })
     setInput({

@@ -179,7 +179,7 @@ export default function UserProfile({ globalUser, obras }) {
     if (info.vaccines && info.vaccines.includes(e.target.value)) {
       swal({
         icon: 'warning',
-        text: "Vacuna ya ingresada."
+        title: "Vacuna ya ingresada."
       });
     } else {
       if (info.vaccines) {
@@ -210,7 +210,7 @@ export default function UserProfile({ globalUser, obras }) {
     if (info.allergies && info.allergies.includes(allergies_)) {
       swal({
         icon: 'warning',
-        text: 'Alergia ya ingresada.'
+        title: 'Alergia ya ingresada.'
       });
     } else {
       if (info.allergies) {
@@ -259,7 +259,7 @@ export default function UserProfile({ globalUser, obras }) {
     if (info.chronicles && info.chronicles.includes(chronicles_)) {
       swal({
         icon: 'warning',
-        text: 'Enfermedad crónica ya ingresada.'
+        title: 'Enfermedad crónica ya ingresada.'
       });
     } else {
       if (info.chronicles) {
@@ -398,7 +398,7 @@ export default function UserProfile({ globalUser, obras }) {
     dispatch(modifyUsers(infoModify, globalUser.id, globalUser.mail));
     swal({
       icon:'success',
-      text:'Los datos se han modificado correctamente.',
+      title:'Los datos se han modificado correctamente.',
       timer:1500
     })
     setEditInfoPersonal(false);
@@ -683,7 +683,7 @@ export default function UserProfile({ globalUser, obras }) {
               </Accordion.Body>
             </Accordion.Item>
             <Accordion.Item eventKey="1">
-              <Accordion.Header>Información de salud basica</Accordion.Header>
+              <Accordion.Header>Información de salud básica</Accordion.Header>
               <Accordion.Body>
                 <p>
                   Grupo Sanguineo:{" "}
