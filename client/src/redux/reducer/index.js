@@ -13,7 +13,8 @@ import {
   GET_NOTES,
   GET_TURNO_PROF,
   GET_TURNO_PAT,
-  GET_PATIENTS_DETAIL
+  GET_PATIENTS_DETAIL,
+  GET_FACTURA
 } from "../actions/actions";
 
 const initialState = {
@@ -29,6 +30,7 @@ const initialState = {
   notes: [],
   turnos: [],
   patientsDetail: [],
+  facturas: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -109,6 +111,12 @@ function rootReducer(state = initialState, action) {
 
     case GET_NOTES: 
       return { ...state, notes: action.payload };
+
+      case GET_FACTURA:
+        return{
+          ...state,
+          facturas: action.payload,
+        }
 
     default:
       return state;

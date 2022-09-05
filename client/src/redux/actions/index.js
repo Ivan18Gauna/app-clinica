@@ -13,7 +13,8 @@ import {
   GET_TURNO_PROF,
   GET_TURNO_PAT,
   GET_PATIENTS_DETAIL,
-  POST_TURNO_MAIL
+  POST_TURNO_MAIL,
+  GET_FACTURA
 } from "../actions/actions";
 import axios from "axios";
 import { bindActionCreators } from "redux";
@@ -29,6 +30,17 @@ export function get_Doctors() {
       payload: doctors.data
     });
   };
+}
+
+export function get_factura(){
+  return async function(dispatch){
+    const facturacion = await axios.get(`/invoice`);
+
+    return dispatch({
+      type: GET_FACTURA,
+      payload: facturacion.data
+    });
+  }
 }
 
 export function get_specialties() {
@@ -126,6 +138,8 @@ export function getPatients() {
     });
   };
 }
+
+
 export function getPatientsByName(payload) {
   return async function(dispatch) {
     try {
