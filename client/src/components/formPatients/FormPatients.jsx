@@ -7,6 +7,7 @@ import { useHistory } from "react-router-dom";
 import styles from "./FormPatients.module.css";
 import { useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
+import Cookie from 'universal-cookie'
 
 
 function validate(input) {
@@ -48,7 +49,7 @@ function validate(input) {
     error.document = "Número de documento no valido.";
     return error;
   }
-  if (!/^\d{8,15}$$/.test(input.phone)) {
+  if (!/^\d{10}$$/.test(input.phone)) {
     error.phone = "Número de telefono no valido.";
     return error;
   }
@@ -61,6 +62,7 @@ function validate(input) {
   }
   return error;
 }
+
 const provinces = [
   "Buenos Aires",
   "Ciudad Autónoma de Buenos Aires",
@@ -87,13 +89,13 @@ const provinces = [
   "Tierra del Fuego",
   "Tucumán",
 ];
+
+
 export default function RegisterPatient() {
+
   const { isAuthenticated, user } = useAuth0();
   const history = useHistory();
-
-
   const [error, setError] = useState({});
-
   const [input, setInput] = useState({
     name: "",
     lastname: "",
@@ -128,10 +130,11 @@ export default function RegisterPatient() {
       province: e.target.value,
     });
   }
-  console.log("input pat", input);
 
   function handleSubmit(e) {
     e.preventDefault();
+    const cookie = new Cookie()
+    cookie.set('userEmail', input.mail, {path: '/'})
     setInput({
       name: "",
       lastname: "",
@@ -184,7 +187,7 @@ export default function RegisterPatient() {
             </Form.Control.Feedback>
           </Col>
         </Row>
-        <Row className={`${styles.row}`} lg={1}>
+        {/* <Row className={`${styles.row}`} lg={1}>
           <Col className={`${styles.col}`}>
             <Form.Control
               type="text"
@@ -194,7 +197,7 @@ export default function RegisterPatient() {
               onChange={handleInput}
             />
           </Col>
-        </Row>
+        </Row> */}
         {!isAuthenticated && (
           <Row className={`${styles.row}`} lg={1}>
             <Col className={`${styles.col}`}>
@@ -356,7 +359,6 @@ export default function RegisterPatient() {
             input.city === "" ||
             input.street === "" ||
             input.number === "" ||
-            input.username === "" ||
             // input.password === "" ||
             // input.new_password === "" ||
             error.name ||

@@ -35,9 +35,7 @@ function validate(input) {
 export default function FormUpProfessionals() {
 	
     const dispatch = useDispatch();
-	const allPatients = useSelector((state) => state.patients);
-	console.log('soy -Paciente', allPatients);
-   
+	const allPatients = useSelector((state) => state.patients);   
     const [imagen, setImagen] = useState("")
 	const [error, setError] = useState({});
 
@@ -53,11 +51,6 @@ export default function FormUpProfessionals() {
 		date: '',
 		diagnosis: '',
 	});
-
-    //console.log("soy img ",imagen)
-	//console.log('soy search', input.search);
-
-
 
 	function handleMotivo(e) {
 		setInput({

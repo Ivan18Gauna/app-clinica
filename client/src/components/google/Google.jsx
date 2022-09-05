@@ -6,7 +6,6 @@ import { GoogleLogin } from "react-google-login";
 export default function Google() {
   // const history = useHistory()
   const responseGoogle = (response) => {
-    console.log(response);
     // history.push('/home')
   }
   return (

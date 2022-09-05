@@ -246,6 +246,7 @@ const postProfessionals = async (req, res) => {
   let {
     name,
     lastname,
+	avatar,
     license,
     birth,
     phone,
@@ -260,6 +261,7 @@ const postProfessionals = async (req, res) => {
     const professional = {
       name: name,
       lastname: lastname,
+	  avatar: avatar,
       license: license,
       birth: birth,
       phone: phone,
@@ -316,10 +318,12 @@ const putProfessionals = async (req, res) => {
     const {
       name,
       lastname,
+	  avatar,
       license,
       birth,
       phone,
       mail,
+	  password,
       province,
       city,
       number,
@@ -329,10 +333,12 @@ const putProfessionals = async (req, res) => {
       {
         name,
         lastname,
+		avatar,
         license,
         birth,
         phone,
         mail,
+		password,
         province,
         city,
         number,

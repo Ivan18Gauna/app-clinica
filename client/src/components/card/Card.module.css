@@ -4,15 +4,15 @@
   padding: 1rem;
 	flex-direction: row;
 	background-color: #eeeeee;
-  border-radius: 2rem;
+  border-radius: .5rem;
 	justify-content: center;
 	align-items: center;
   border: 1px solid #D0D0D0;
+  transition: box-shadow 0.5s;
 }
 
 .container:hover {
   box-shadow: .2rem .2rem 1rem grey;
-  transition: box-shadow 0.5s;
 }
 
 .info {
