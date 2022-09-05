@@ -39,12 +39,12 @@ export default function ClinicHistory() {
                                 <h1>{clinicHistorys[0].patient.name}</h1>
                                 {clinicHistorys.map((oneClinicHistory) => (
                                     <div className='clinic-history'>
-                                        <h3 className='doctor-clinic'>Medico: {oneClinicHistory.professional.name}</h3>
-                                        <p>Fecha atencion: {oneClinicHistory.date}</p>
+                                        <h3 className='doctor-clinic'>Médico: {oneClinicHistory.professional.name}</h3>
+                                        <p>Fecha atención: {oneClinicHistory.date}</p>
                                         <p>Motivo: {oneClinicHistory.reason}</p>
                                         <p>Detalle consulta: {oneClinicHistory.description}</p>
                                         <label>Estudio digital: {oneClinicHistory.image}</label>
-                                        <h5>Diagnostico final: {oneClinicHistory.diagnosis}</h5>
+                                        <h5>Diagnóstico final: {oneClinicHistory.diagnosis}</h5>
                                     </div>
                                 ))}
                             </div>
