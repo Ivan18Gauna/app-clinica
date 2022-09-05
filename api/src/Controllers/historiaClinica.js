@@ -12,7 +12,7 @@ const postHistoriaClinica = async (req, res) => {
   let { reason, image, description, date, diagnosis, professional, patient } = req.body;
   try {
     const historiaClinica = { reason, image, description, date, diagnosis, };
-    if (!reason || !image || !description || !date || !diagnosis) {
+    if (!reason || !description || !date || !diagnosis) {
       res.send("Falta infornacion");
     } else {
        let newHistoriaClinica = await HistoriaClinica.create(historiaClinica);

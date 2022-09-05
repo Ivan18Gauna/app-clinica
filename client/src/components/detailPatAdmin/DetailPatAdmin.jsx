@@ -34,7 +34,7 @@ export default function DetailsPatients() {
 		<div className={styles.container}>
 			<div className={styles.info}>
 				<div className={styles.perfil}>
-					<img src={img} />
+					<img src={patient.avatar} />
 					<h4>
 						Sr {patient.name} {patient.lastname}
 					</h4>
