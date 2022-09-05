@@ -10,6 +10,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { get_specialties, registerDoctors } from "../../redux/actions";
+import swal from 'sweetalert';
 
 function validate(input) {
   let error = {};
@@ -147,7 +148,10 @@ export default function RegisterDoctor() {
 
   function handleSelectSpecialities(e) {
     if (input.specialty.includes(e.target.value)) {
-      alert("Ya se selecciono la especialidad.");
+      swal({
+        icon: 'warning',
+        text: "Ya se seleccionó la especialidad."
+      });
     } else {
       setInput({
         ...input,
@@ -167,6 +171,11 @@ export default function RegisterDoctor() {
   function handleSubmit(e) {
     e.preventDefault();
     dispatch(registerDoctors(input));
+    swal({
+      icon: 'success',
+      text: 'Usuario creado con éxito.',
+      timer: 1500
+    })
     setInput({
       name: "",
       lastname: "",
@@ -412,26 +421,26 @@ export default function RegisterDoctor() {
         <Row className={`${styles.row}`} lg={1}>
           <Col className={`${styles.col}`} lg={6}>
             {input.name === "" ||
-            input.lastname === "" ||
-            input.license === "" ||
-            input.phone === "" ||
-            input.mail === "" ||
-            input.province === "" ||
-            input.city === "" ||
-            input.street === "" ||
-            input.number === "" ||
-            // input.username === '' ||
-            input.password === "" ||
-            input.new_password === "" ||
-            input.specialty.length < 1 ||
-            error.name ||
-            error.lastname ||
-            error.license ||
-            error.phone ||
-            error.mail ||
-            error.number ||
-            error.password ||
-            error.new_password ? (
+              input.lastname === "" ||
+              input.license === "" ||
+              input.phone === "" ||
+              input.mail === "" ||
+              input.province === "" ||
+              input.city === "" ||
+              input.street === "" ||
+              input.number === "" ||
+              // input.username === '' ||
+              input.password === "" ||
+              input.new_password === "" ||
+              input.specialty.length < 1 ||
+              error.name ||
+              error.lastname ||
+              error.license ||
+              error.phone ||
+              error.mail ||
+              error.number ||
+              error.password ||
+              error.new_password ? (
               <Button
                 className={`${styles.buttonSubmit}`}
                 variant="danger"
