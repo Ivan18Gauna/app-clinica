@@ -262,7 +262,7 @@ export default function UserProfile({ globalUser, obras }) {
         text: 'Enfermedad crónica ya ingresada.'
       });
     } else {
-      if (info.chronicles) {
+      if (info.chronicles ) {
         setInfo({
           ...info,
           chronicles: [...info.chronicles, chronicles_]
