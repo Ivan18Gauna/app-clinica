@@ -8,7 +8,27 @@ import { useSelector, useDispatch } from "react-redux";
 import { getPatients, get_Doctors, get_factura } from '../../redux/actions';
 //import Pagination from '@mui/material/Pagination'
 import Pagination from '../paginate/Pagination';
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend,
+  } from 'chart.js';
+  import { Line } from 'react-chartjs-2';
 
+  ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend
+  );
 
 export default function Sidebar(){
 
@@ -17,7 +37,39 @@ export default function Sidebar(){
     const patients = useSelector((state) => state.patients);
     const facturas = useSelector((state) => state.facturas)
 
+    useEffect(() => {
+		dispatch(get_Doctors());
+        dispatch(getPatients());
+        dispatch(get_factura());
+	},[dispatch]);
 
+     let mesActual = facturas[0]? facturas[0].sumaFacturas : 0;
+   console.log("lleno",facturas);
+     const data = {
+        labels: [ "Enero", "Febrero", "Marzo", "Actual"],
+        datasets: [
+          {
+            label:"Ingresos por Mes",
+            fill: false,
+            backgroundColor: 'rgba(73,155,234,1)',
+            borderColor:'rgba(73,155,234,1)',
+            pointBorderColor:'rgba(73,155,234,1)',
+            pointBorderWidth:1,
+            pointHoverRadius:5,
+            pointHoverBackgroundColor:'rgba(73,155,234,1)',
+            pointHoverBorderColor:'rgba(73,155,234,1)',
+            pointRadius: 1,
+            pointHitRadius: 10,
+            data: [15, 19, 156, mesActual]
+            }
+        ]
+     };
+
+    /* const opciones={
+        maintainAspectRatio: false,
+        responsive: true
+     }
+ */
     const [currentPage, setCurrentPage] = useState(1);
     const [doctorsPage, setDoctorsPage] = useState(10);
     const indexOfLastDoctor = currentPage * doctorsPage; //10
@@ -34,11 +86,6 @@ export default function Sidebar(){
         setCurrentPage(pageNumber);
     };
 
-    useEffect(() => {
-		dispatch(get_Doctors());
-        dispatch(getPatients());
-        dispatch(get_factura());
-	},[dispatch]);
 console.log("soy facturas",facturas)
     return(
         <div class="row" id='row'>
@@ -93,10 +140,11 @@ console.log("soy facturas",facturas)
                     </div>
                     <div id="item-3">
                         <h4>Dinero Ingresado a la fecha:</h4>
-                        {facturas.length>=1 ?<div><p>{facturas[0].sumaFacturas}</p></div> : <p>$0</p>}
+                        {facturas.length>=1 ?<div><p>${facturas[0].sumaFacturas}</p></div> : <p>$0</p>}
                         <p>
-
-                        Aca irian unos graficos mostrando los millones que tenemos acumulados. 
+                        
+                        <Line data={data}/>
+                        
                         </p>
                     </div>
                     </div>
