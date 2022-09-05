@@ -19,6 +19,7 @@ const Calendar = () => {
   }, []);
 
   const user = useSelector(state => state.user);
+  console.log("user", user);
 
   const [fecha, setFecha] = useState(new Date());
   const onChangeSetFecha = e => {
@@ -26,8 +27,16 @@ const Calendar = () => {
   };
 
   const arr = fecha.toString().split(" ");
+  const date = new Date(arr).toLocaleDateString("es-ES", {
+    weekday: "long",
+    year: "numeric",
+    month: "short",
+    day: "numeric"
+  });
+  console.log(arr)
+  console.log(date)
   const payload = {
-    date: arr[0] + " " + arr[2] + " " + arr[1] + " " + arr[3] + " ",
+    date: date,
     time: arr[4].split(":")[0] + ":00",
     professional: professional,
     patient: user.id
@@ -36,7 +45,7 @@ const Calendar = () => {
   const handleSubmit = e => {
     e.preventDefault(e);
     dispatch(newTurno(payload));
-    dispatch(postTurnoMail(payload))
+    dispatch(postTurnoMail(payload, user.mail));
   };
 
   return (

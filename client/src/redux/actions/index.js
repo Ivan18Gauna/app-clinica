@@ -291,11 +291,13 @@ export function deletePatients(id) {
     }
   };
 }
-export function postTurnoMail(payload) {
+export function postTurnoMail(payload, mail) {
   return async function() {
     try {
-      const patient = await axios.delete("/patients/delete/" + id);
-
+      const patient = await axios.post(
+        `/mailer/send-email/${mail}`,
+        payload
+      );
       return patient;
     } catch (e) {
       console.log(e.message);
