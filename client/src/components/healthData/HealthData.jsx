@@ -88,7 +88,7 @@ export default function HealthData() {
 		if (input.vaccines.includes(e.target.value)) {
 			swal({
 				icon: 'warning',
-				text: "Vacuna ya ingresada."
+				title: "Vacuna ya ingresada."
 			});
 		} else {
 			setInput({
@@ -116,7 +116,7 @@ export default function HealthData() {
 		if (input.allergies.includes(allergies_)) {
 			swal({
 				icon: 'warning',
-				text: 'Alergia ya ingresada.'
+				title: 'Alergia ya ingresada.'
 			});
 		} else {
 			setInput({
@@ -160,7 +160,7 @@ export default function HealthData() {
 		if (input.chronicles.includes(chronicles_)) {
 			swal({
 				icon: 'warning',
-				text: 'Enfermedad crónica ya ingresada.'
+				title: 'Enfermedad crónica ya ingresada.'
 			});
 		} else {
 			setInput({
@@ -190,7 +190,7 @@ export default function HealthData() {
 		dispatch(registerPatients(input));
 		swal({
 			icon: 'success',
-			text: 'Usuario registrado.',
+			title: 'Usuario registrado.',
 			timer: 1500
 		})
 		setInput({

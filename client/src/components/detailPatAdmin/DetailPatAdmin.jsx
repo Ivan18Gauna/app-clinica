@@ -26,7 +26,7 @@ export default function DetailsPatients() {
 		history.push("/admin")
 		swal({
 			icon: 'success',
-			text:"Paciente suspendido con exito",
+			title:"Paciente suspendido con éxito",
 			timer:1500
 		})
 	} 
