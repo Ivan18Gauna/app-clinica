@@ -18,6 +18,16 @@ export default function ClinicHistory() {
   const globalUser = useSelector(state => state.user);
   const clinicHistorys = useSelector(state => state.clinicHistory);
   console.log(clinicHistorys[0]);
+	const dispatch = useDispatch();
+    const { user, isAuthenticated } = useAuth0();
+	const globalUser = useSelector((state) => state.user);
+	const clinicHistorys = useSelector((state) => state.clinicHistory);
+    console.log(clinicHistorys[0])
+    
+	useEffect(() => {
+        dispatch(getUserDetail(cookies.get('userEmail')))
+        dispatch(getClinicHistory(globalUser.id));
+	}, [globalUser.id]);
 
   useEffect(() => {
     dispatch(getUserDetail(cookies.get("userEmail")));

@@ -7,11 +7,22 @@ import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
 import Button from "react-bootstrap/Button";
 import Loading from "../loading/Loading";
+
+
+import styles from "../login/Login.module.css";
+
 import { useEffect } from "react";
 import { getTurnoPat, getUserDetail } from "../../redux/actions";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 export default function HomePatients({ userInfo }) {
   const dispatch = useDispatch();
+
+
+export default function HomePatients({ userInfo }) {
+  const dispatch = useDispatch();
+
 
   useEffect(() => {
     const cookies = new Cookie();
@@ -19,6 +30,7 @@ export default function HomePatients({ userInfo }) {
     dispatch(getTurnoPat(userInfo.id));
   }, []);
   const turnos = useSelector(state => state.turnos);
+
   turnos && console.log("turno:", turnos);
 
   // let userInfo = ["a+", "Covid",  "al Polen", "si, donante", "si, transfundible", "Hipertension", "Accord Salud 3.2"]
@@ -67,6 +79,7 @@ export default function HomePatients({ userInfo }) {
               </Card>
             </div>
 
+
             <div>
               <Card style={{ width: "22rem" }}>
                 <Card.Body>
@@ -102,6 +115,7 @@ export default function HomePatients({ userInfo }) {
                   </ListGroup>
 
                   <br />
+
 
                   <Card.Link href="#">Actualizar Informacion</Card.Link>
                 </Card.Body>

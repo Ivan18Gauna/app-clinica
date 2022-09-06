@@ -199,13 +199,13 @@ export default function Sidebar(){
                         {facturas.length>=1 ?<div><p>${facturas[0].sumaFacturas}</p></div> : <p>$0</p>}
                         <p>
 
-                        
                         <Line data={data}/>
                         <br />
                         <hr />
                         <br />
                         <h4>Cantidad de pacientes y profesionales:</h4>
                         <Doughnut data={data2} />
+
 
                         </p>
                     </div>
