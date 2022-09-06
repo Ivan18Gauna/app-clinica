@@ -18,7 +18,8 @@ import {
   GET_TOTAL_PROFESSIONALS,
   GET_TOTAL_PATIENTS,
   GET_TOTAL_TURNOS,
-  GET_TOTAL_HISTORYS
+  GET_TOTAL_HISTORYS,
+  TURNO
 } from "../actions/actions";
 
 const initialState = {
