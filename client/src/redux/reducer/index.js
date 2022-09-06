@@ -18,10 +18,13 @@ import {
   GET_TOTAL_PROFESSIONALS,
   GET_TOTAL_PATIENTS,
   GET_TOTAL_TURNOS,
-  GET_TOTAL_HISTORYS
+  GET_TOTAL_HISTORYS,
+  GET_INVOICE,
+  SET
 } from "../actions/actions";
 
 const initialState = {
+  suscribed: [],
   doctors: [],
   allDoc: [],
   detail: [],
@@ -43,6 +46,18 @@ const initialState = {
 
 function rootReducer(state = initialState, action) {
   switch (action.type) {
+    case SET:
+      return {
+        ...state,
+        suscribed: action.payload,
+      }
+
+    case GET_INVOICE:
+      return {
+        ...state,
+        suscribed: action.payload
+      }
+
     case GET_TURNO_PROF:
       return {
         ...state,
