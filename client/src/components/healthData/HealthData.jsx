@@ -113,6 +113,7 @@ export default function HealthData() {
 
 	function handleSubmitAllergies(e) {
 		e.preventDefault();
+		
 		if (input.allergies.includes(allergies_)) {
 			swal({
 				icon: 'warning',
@@ -295,13 +296,24 @@ export default function HealthData() {
 							/>
 						</Col>
 						<Col className={`${styles.col}`} lg={3}>
-							<Button
-								className={`${styles.buttonSubmit}`}
-								type="button"
-								onClick={handleSubmitAllergies}
-							>
-								Agregar
-							</Button>
+            {allergies_ ? (
+                <Button
+                  className={`${styles.buttonSubmit}`}
+                  type="button"
+                  onClick={handleSubmitAllergies}
+                >
+                  Agregar
+                </Button>
+              ) : (
+                <Button
+                disabled
+                  className={`${styles.buttonSubmit}`}
+                  type="button"
+                  onClick={handleSubmitAllergies}
+                >
+                  Agregar
+                </Button>
+              )}
 						</Col>
 					</Row>
 					<Col className={`${styles.tabla}`}>
@@ -369,13 +381,24 @@ export default function HealthData() {
 							/>
 						</Col>
 						<Col className={`${styles.col}`} lg={3}>
-							<Button
-								className={`${styles.buttonSubmit}`}
+              {chronicles_ ? (
+                <Button
+                className={`${styles.buttonSubmit}`}
 								type="button"
 								onClick={handleSubmitChronicles}
-							>
-								Agregar
-							</Button>
+                >
+                  Agregar
+                </Button>
+              ) : (
+                <Button
+                disabled
+                className={`${styles.buttonSubmit}`}
+								type="button"
+								onClick={handleSubmitChronicles}
+                >
+                  Agregar
+                </Button>
+              )}
 						</Col>
 					</Row>
 					<Col className={`${styles.tabla}`}>
