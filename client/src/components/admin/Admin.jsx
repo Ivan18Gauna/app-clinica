@@ -43,6 +43,8 @@ export default function Sidebar(){
         dispatch(get_factura());
 	},[dispatch]);
 
+
+     
      let mesActual = facturas[0]? facturas[0].sumaFacturas : 0;
    console.log("lleno",facturas);
      const data = {
