@@ -1,7 +1,6 @@
 import React from 'react';
 import Button from 'react-bootstrap/esm/Button';
 import { Link } from 'react-router-dom';
-import doctor from '../../Icons/iconfinder-icon.svg';
 import doctorIcon from '../../Icons/user-doctor-solid.svg';
 import styles from '../card/Card.module.css'
 
