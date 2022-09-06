@@ -1,38 +1,27 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import Cookie from "universal-cookie";
-import "./HomePatients.css";
 import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
 import Button from "react-bootstrap/Button";
 import Loading from "../loading/Loading";
-
-
-import styles from "../login/Login.module.css";
-
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getTurnoPat, getUserDetail } from "../../redux/actions";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-
-
+import "./HomePatients.css";
 
 export default function HomePatients({ userInfo }) {
   const dispatch = useDispatch();
-
+  const turnos = useSelector(state => state.turnos);
 
   useEffect(() => {
     const cookies = new Cookie();
     dispatch(getUserDetail(cookies.get("userEmail")));
     dispatch(getTurnoPat(userInfo.id));
-  }, []);
-  const turnos = useSelector(state => state.turnos);
+  }, [dispatch, userInfo.id]);
 
   turnos && console.log("turno:", turnos);
-
   // let userInfo = ["a+", "Covid",  "al Polen", "si, donante", "si, transfundible", "Hipertension", "Accord Salud 3.2"]
-
   return (
     <div>
       {userInfo && userInfo.document ? (
@@ -48,27 +37,25 @@ export default function HomePatients({ userInfo }) {
                     clinica!
                   </Card.Text>
                   ------------------------------------
-                  {turnos.map((e, i) => {
-                    if (i <= 1) {
-                      return (
-                        <ListGroup variant="flush">
-                          <ListGroup.Item key={i}>
-                            Fecha: {e ? e.date : ""}
-                          </ListGroup.Item>
-                          <ListGroup.Item key={i + 1}>
-                            Hora: {e ? e.time : ""}
-                          </ListGroup.Item>
-                          <ListGroup.Item key={i + 2}>
-                            Profesional: {e ? e.professional.name : ""}
-                          </ListGroup.Item>
-                          <ListGroup.Item key={i + 3}>
-                            Domicilio: Av Libertador 1521
-                          </ListGroup.Item>
-                          ------------------------------------
-                          <br />
-                        </ListGroup>
-                      );
-                    }
+                  {turnos.slice(0, 1).map((e, i) => {
+                    return (
+                      <ListGroup key={i} variant="flush">
+                        <ListGroup.Item key={i}>
+                          Fecha: {e ? e.date : ""}
+                        </ListGroup.Item>
+                        <ListGroup.Item key={i + 1}>
+                          Hora: {e ? e.time : ""}
+                        </ListGroup.Item>
+                        <ListGroup.Item key={i + 2}>
+                          Profesional: {e ? e.professional.name : ""}
+                        </ListGroup.Item>
+                        <ListGroup.Item key={i + 3}>
+                          Domicilio: Av Libertador 1521
+                        </ListGroup.Item>
+                        ------------------------------------
+                        <br />
+                      </ListGroup>
+                    );
                   })}
                   <br />
                   <Card.Link href="#">Cancelar turno</Card.Link>
@@ -76,13 +63,10 @@ export default function HomePatients({ userInfo }) {
                 </Card.Body>
               </Card>
             </div>
-
-
             <div>
               <Card style={{ width: "22rem" }}>
                 <Card.Body>
                   <Card.Title>Informacion basica</Card.Title>
-
                   <Card.Text>Lleva tus principales detalles medicos</Card.Text>
                   <ListGroup variant="flush">
                     <ListGroup.Item>
@@ -91,12 +75,14 @@ export default function HomePatients({ userInfo }) {
                     <ListGroup.Item>
                       Vacunas:{" "}
                       {userInfo.vaccines?.length > 0 &&
-                        userInfo.vaccines.map(el => <a>{el}/ </a>)}
+                        userInfo.vaccines.map((el, i) => (
+                          <span key={i}>{el}/ </span>
+                        ))}
                     </ListGroup.Item>
                     <ListGroup.Item>
                       Alergias:{" "}
                       {userInfo.allergies?.length > 0 &&
-                        userInfo.allergies.map(el => <a>{el}/ </a>)}
+                        userInfo.allergies.map((el, i) => <span key={i}>{el}/ </span>)}
                     </ListGroup.Item>
                     <ListGroup.Item>
                       Donante: {userInfo.donation}
@@ -107,13 +93,12 @@ export default function HomePatients({ userInfo }) {
                     <ListGroup.Item>
                       Enfermedades crónicas:{" "}
                       {userInfo.chronicles?.length > 0 &&
-                        userInfo.chronicles.map(el => <a>{el}/ </a>)}
+                        userInfo.chronicles.map((el, i) => <span key={i}>{el}/ </span>)}
                     </ListGroup.Item>
                     <ListGroup.Item>Obra Social: {userInfo.oS}</ListGroup.Item>
                   </ListGroup>
 
                   <br />
-
 
                   <Card.Link href="#">Actualizar Informacion</Card.Link>
                 </Card.Body>

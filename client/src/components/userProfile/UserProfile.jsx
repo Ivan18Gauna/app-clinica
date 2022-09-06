@@ -15,19 +15,20 @@ import "../login/Login.module.css";
 import ProfessionalProfile from "../professionalsProfile/ProfessionalsProfile";
 
 export default function UserProfile() {
-  const cookies = new Cookies();
   const history = useHistory();
   const dispatch = useDispatch();
   const state = useSelector(state => state.user);
   const obras = useSelector(state => state.os);
   const specialties = useSelector(state => state.specialties);
   const { isAuthenticated, logout } = useAuth0();
+  const cookies = new Cookies();
 
   useEffect(() => {
+    const cookies = new Cookies();
     dispatch(getObrasSociales());
     dispatch(get_specialties());
     dispatch(getUserDetail(cookies.get("userEmail")));
-  }, []);
+  }, [dispatch]);
 
   function logoutCookies() {
     if (isAuthenticated) {

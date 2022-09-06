@@ -15,7 +15,7 @@ const Calendar = () => {
   useEffect(() => {
     const cookies = new Cookies();
     dispatch(getUserDetail(cookies.get("userEmail")));
-  }, []);
+  }, [dispatch]);
 
   const user = useSelector(state => state.user);
   console.log("user", user);
