@@ -12,13 +12,15 @@ import {
   GET_NOTES,
   GET_TURNO_PROF,
   GET_TURNO_PAT,
+  GET_INVOICE,
   GET_PATIENTS_DETAIL,
   GET_FACTURA,
   GET_TOTAL_PROFESSIONALS,
   GET_TOTAL_PATIENTS,
   GET_TOTAL_TURNOS,
-  GET_TOTAL_HISTORYS
-  /* POST_TURNO_MAIL, */
+  GET_TOTAL_HISTORYS,
+  SET
+
 
 } from "../actions/actions";
 import axios from "axios";
@@ -184,6 +186,16 @@ export function getPatients() {
   };
 }
 
+export function getInvoice(id) {
+  return async function(dispatch) {
+    const invoice = await axios.get("/invoice/detail/" + id);
+    console.log('action', invoice.data)
+    return dispatch({
+      type: GET_INVOICE,
+      payload: invoice.data
+    });
+  };
+}
 
 export function getPatientsByName(payload) {
   return async function(dispatch) {
@@ -351,6 +363,20 @@ export function deletePatients(id) {
     }
   };
 }
+
+export function set() {
+  return async function(dispatch) {
+    try {
+      return dispatch({
+        type: SET,
+        payload: []
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
 export function postTurnoMail(payload, mail) {
   return async function() {
     try {

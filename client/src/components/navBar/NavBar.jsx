@@ -4,15 +4,26 @@ import { Link, useHistory } from "react-router-dom";
 import styles from "./NavBar.module.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import logo from "../../Icons/logo.svg";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Cookies from "universal-cookie";
+import { useEffect } from "react";
+import { getInvoice } from "../../redux/actions";
 
 function NavBarEdit() {
+
+  const dispatch = useDispatch()
   const history = useHistory();
   const cookies = new Cookies();
   const conf = cookies.get("userEmail");
   const { isAuthenticated, logout } = useAuth0();
   const globalUser = useSelector((state) => state.user);
+  const paid = useSelector((state) => state.suscribed)
+  console.log(paid, 'paid')
+
+  useEffect(() => {
+    dispatch(getInvoice(globalUser.id))
+  }, [globalUser.id])
+
   function handleClick() {
     if (isAuthenticated) {
       logout();
@@ -43,7 +54,7 @@ function NavBarEdit() {
               <Nav.Link as={Link} to="/about">
                 Nosotros
               </Nav.Link>
-              {globalUser && globalUser.license ? (
+              {globalUser && globalUser.license && !paid[0] ? (
                 <Nav.Link as={Link} to="/price">
                   Precios
                 </Nav.Link>
