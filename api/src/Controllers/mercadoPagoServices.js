@@ -117,10 +117,10 @@ const getPayments = async (req, res) => {
         });
         console.log(info);
         console.info("redirect success");
-        res.redirect(`http://localhost:3000/home`);
+        res.redirect(`https://app-salud.vercel.app/home`);
     } catch (error) {
         console.error("error al crear la factura", error);
-        return res.redirect(`http://localhost:3000/home`);
+        return res.redirect(`https://app-salud.vercel.app/home`);
     }
   }
   
