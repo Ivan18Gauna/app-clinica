@@ -63,6 +63,10 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      suscribed: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      }
     },
     {
       createdAt: false,

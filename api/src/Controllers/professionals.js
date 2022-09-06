@@ -510,6 +510,25 @@ const deleteProfessionals = async (req, res) => {
   }
 };
 
+const restoreProfessional = async(req, res) => {
+	let { id } = req.params;
+	try {
+		await Professionals.restore({
+			where: {
+				id: id
+			}
+		});
+		const restoredProf = await Professionals.findOne({
+			where: {
+				id: id
+			}
+		})
+		res.status(200).send(restoredProf)
+	} catch (error) {
+		res.status(400).send('Hubo un problema recuperando el usuario')
+	}
+}
+
 
 module.exports = {
   getInfoApi,
@@ -520,7 +539,8 @@ module.exports = {
   putProfessionals,
   getObrasSociales,
   addProfDb,
-  deleteProfessionals
+  deleteProfessionals,
+  restoreProfessional
 };
 
 
