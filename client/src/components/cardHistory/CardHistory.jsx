@@ -1,13 +1,14 @@
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import { Link } from 'react-router-dom';
-import question from '../../Icons/question.svg';
-import login from '../../Icons/longIn.svg';
-import calendar from '../../Icons/calendar.svg';
-import search from '../../Icons/search.svg';
-import styles from './CardHistory.module.css';
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import { Link } from "react-router-dom";
+import question from "../../Icons/question.svg";
+import login from "../../Icons/longIn.svg";
+import calendar from "../../Icons/calendar.svg";
+import search from "../../Icons/search.svg";
+import styles from "./CardHistory.module.css";
 
 function CardHistory() {
+
 	return (
 		<div className={styles.container}>
 			<Row className={styles.row} lg={2}>
@@ -59,6 +60,7 @@ function CardHistory() {
 			</Row>
 		</div>
 	);
+
 }
 
 export default CardHistory;
