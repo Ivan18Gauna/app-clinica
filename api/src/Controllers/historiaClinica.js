@@ -4,27 +4,32 @@ const { Op, where } = require("sequelize");
 
 const {
   Professionals,
+  Specialties,
+  ObrasSociales,
   HistoriaClinica,
   Patients,
 } = require("../db");
 
 const postHistoriaClinica = async (req, res) => {
-  let { reason, image, description, date, diagnosis, professional, patient } = req.body;
+  let { reason, image, description, date, diagnosis, professional, patient } =
+    req.body;
+
   try {
     const historiaClinica = { reason, image, description, date, diagnosis, };
     if (!reason || !image || !description || !date || !diagnosis) {
       res.send("Falta infornacion");
     } else {
        let newHistoriaClinica = await HistoriaClinica.create(historiaClinica);
+       
+
       let professionaldb = await Professionals.findOne({
-         where: {id: professional}
+         where: {name: professional}
         })
        let patientdb = await Patients.findOne({
-        where: {document: patient}
+        where:{name:patient}        
        })
-       console.log(professionaldb, patientdb)
-      await professionaldb.addHistoriaClinica(newHistoriaClinica);
-      await patientdb.addHistoriaClinica(newHistoriaClinica);
+      await newHistoriaClinica.addProfessionals(professionaldb);
+      await newHistoriaClinica.addPatients(patientdb);
        res.status(200).send("Historia Credad con Exito");
      
     }
@@ -91,6 +96,8 @@ const getHistoriaClinicaByPat = async (req, res) => {
   res.status(200).send(hist);
   //:res.status(404).send('Id de paciente no encontrado');
 };
+
+
 
 module.exports = {
   postHistoriaClinica,

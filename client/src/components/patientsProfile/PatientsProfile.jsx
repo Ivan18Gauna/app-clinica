@@ -16,6 +16,7 @@ import stylesForm from "../formPatients/FormPatients.module.css";
 import styles from "./PatientsProfile.module.css";
 import Cookies from "universal-cookie";
 import { useDispatch } from "react-redux";
+import swal from "sweetalert";
 
 const blood_type = ["A+", "A-", "B+", "B-", "AB+", "AB+", "AB-", "O+", "O-"];
 const provinces = [
@@ -176,7 +177,10 @@ export default function UserProfile({ globalUser, obras }) {
   function handleSelectVaccines(e) {
     e.preventDefault();
     if (info.vaccines && info.vaccines.includes(e.target.value)) {
-      alert("Ya se selecciono esa vacuna.");
+      swal({
+        icon: 'warning',
+        text: "Vacuna ya ingresada."
+      });
     } else {
       if (info.vaccines) {
         setInfo({
@@ -204,7 +208,10 @@ export default function UserProfile({ globalUser, obras }) {
   function handleSubmitAllergies(e) {
     e.preventDefault();
     if (info.allergies && info.allergies.includes(allergies_)) {
-      alert("Alergia ya ingresada.");
+      swal({
+        icon: 'warning',
+        text: 'Alergia ya ingresada.'
+      });
     } else {
       if (info.allergies) {
         setInfo({
@@ -250,7 +257,10 @@ export default function UserProfile({ globalUser, obras }) {
   function handleSubmitChronicles(e) {
     e.preventDefault();
     if (info.chronicles && info.chronicles.includes(chronicles_)) {
-      alert("Enfermedad crónica ya ingresada.");
+      swal({
+        icon: 'warning',
+        text: 'Enfermedad crónica ya ingresada.'
+      });
     } else {
       if (info.chronicles) {
         setInfo({
@@ -386,6 +396,11 @@ export default function UserProfile({ globalUser, obras }) {
       infoModify.oS = info.oS;
     }
     dispatch(modifyUsers(infoModify, globalUser.id, globalUser.mail));
+    swal({
+      icon:'success',
+      text:'Los datos se han modificado correctamente.',
+      timer:1500
+    })
     setEditInfoPersonal(false);
     setEditInfoSalud(false);
     setInfo({});
@@ -643,9 +658,9 @@ export default function UserProfile({ globalUser, obras }) {
                         {(info.password &&
                           info.new_password &&
                           info.password !== info.new_password) ||
-                        error.password ||
-                        error.new_password ||
-                        (info.password && !info.new_password) ? (
+                          error.password ||
+                          error.new_password ||
+                          (info.password && !info.new_password) ? (
                           <Button
                             disabled
                             variant="danger"

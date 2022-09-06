@@ -8,7 +8,7 @@ import styles from "./FormPatients.module.css";
 import { useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import Cookie from 'universal-cookie'
-
+import swal from "sweetalert";
 
 function validate(input) {
   let error = {};
