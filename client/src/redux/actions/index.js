@@ -141,9 +141,10 @@ export function getPatientsByName(payload) {
 }
 
 export function postHistory(payload) {
+  console.log('payload', payload)
   return async function() {
     try {
-      const res = await axios.post("/historiaclinica");
+      const res = await axios.post("/historiaclinica", payload);
       return res;
     } catch (error) {
       console.log(error);
