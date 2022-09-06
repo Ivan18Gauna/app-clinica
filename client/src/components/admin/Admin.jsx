@@ -106,7 +106,10 @@ export default function Sidebar(){
       };
     
     const [currentPage, setCurrentPage] = useState(1);
+
     const [doctorsPage, setDoctorsPage] = useState(6);
+
+
     const indexOfLastDoctor = currentPage * doctorsPage; //10
     const indexFirstDoctor = indexOfLastDoctor - doctorsPage; // 10 - 10 = 0
     
@@ -145,7 +148,7 @@ export default function Sidebar(){
                     <nav class="nav nav-pills flex-column">
                     <a class="nav-link" href="#item-1" id='Margin-Top-About'><FaIcons.FaBriefcaseMedical className="me-2" />
                     
-                        Profesionales</a>
+                    Profesionales</a>
 
             
                     <a class="nav-link" href="#item-2"> <FaIcons.FaHospitalUser className="me-2"/>
@@ -195,6 +198,7 @@ export default function Sidebar(){
                         <br />
                         {facturas.length>=1 ?<div><p>${facturas[0].sumaFacturas}</p></div> : <p>$0</p>}
                         <p>
+
                         
                         <Line data={data}/>
                         <br />
@@ -202,6 +206,7 @@ export default function Sidebar(){
                         <br />
                         <h4>Cantidad de pacientes y profesionales:</h4>
                         <Doughnut data={data2} />
+
                         </p>
                     </div>
                     </div>
