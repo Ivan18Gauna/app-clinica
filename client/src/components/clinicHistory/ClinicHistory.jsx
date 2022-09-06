@@ -11,7 +11,6 @@ import './ClinicHistory.css';
 import '../../App.css';
 
 export default function ClinicHistory() {
-
 	const dispatch = useDispatch();
     const { user, isAuthenticated } = useAuth0();
 	const globalUser = useSelector((state) => state.user);
