@@ -118,7 +118,26 @@ export default function HomePatients({ userInfo }) {
                     <ListGroup.Item>Obra Social: {userInfo.oS}</ListGroup.Item>
                   </ListGroup>
 
-                  <br />
+
+        <div>
+          <Card style={{ width: '22rem' }}>
+            <Card.Body>
+              <Card.Title>Informacion basica</Card.Title>
+          
+              <Card.Text>
+                Lleva tus principales detalles medicos
+              </Card.Text>
+              <ListGroup variant="flush">
+              <ListGroup.Item>Grupo Sanguineo: {userInfo.blood}</ListGroup.Item>
+              <ListGroup.Item>Vacunas: {userInfo.vaccines?.length > 0 && userInfo.vaccines.map(el => <a>{el}/ </a>)}</ListGroup.Item>
+              <ListGroup.Item>Alergias: {userInfo.allergies?.length > 0 && userInfo.allergies.map(el => <a>{el}/ </a>)}</ListGroup.Item>
+              <ListGroup.Item>Donante: {userInfo.donation}</ListGroup.Item>
+              <ListGroup.Item>Transfundible: {userInfo.transfusion}</ListGroup.Item>
+              <ListGroup.Item>Enfermedades crónicas: {userInfo.chronicles?.length > 0 && userInfo.chronicles.map(el => <a>{el}/ </a>)}</ListGroup.Item>
+              <ListGroup.Item>Obra Social: {userInfo.oS}</ListGroup.Item>
+            </ListGroup>
+            
+
 
                   <Card.Link href="#">Actualizar Informacion</Card.Link>
                 </Card.Body>

@@ -179,7 +179,7 @@ export default function UserProfile({ globalUser, obras }) {
     if (info.vaccines && info.vaccines.includes(e.target.value)) {
       swal({
         icon: 'warning',
-        text: "Vacuna ya ingresada."
+        title: "Vacuna ya ingresada."
       });
     } else {
       if (info.vaccines) {
@@ -207,22 +207,24 @@ export default function UserProfile({ globalUser, obras }) {
   }
   function handleSubmitAllergies(e) {
     e.preventDefault();
-    if (info.allergies && info.allergies.includes(allergies_)) {
-      swal({
-        icon: 'warning',
-        text: 'Alergia ya ingresada.'
-      });
-    } else {
-      if (info.allergies) {
-        setInfo({
-          ...info,
-          allergies: [...info.allergies, allergies_]
+    if (allergies_ && allergies_.length > 0) {
+      if (info.allergies && info.allergies.includes(allergies_)) {
+        swal({
+          icon: 'warning',
+          title: 'Alergia ya ingresada.'
         });
       } else {
-        setInfo({
-          ...info,
-          allergies: allergies_
-        });
+        if (info.allergies) {
+          setInfo({
+            ...info,
+            allergies: [...info.allergies, allergies_]
+          });
+        } else {
+          setInfo({
+            ...info,
+            allergies: allergies_
+          });
+        }
       }
     }
     setAllergies("");
@@ -254,24 +256,30 @@ export default function UserProfile({ globalUser, obras }) {
     e.preventDefault();
     setChronicles(e.target.value);
   }
+
   function handleSubmitChronicles(e) {
     e.preventDefault();
-    if (info.chronicles && info.chronicles.includes(chronicles_)) {
-      swal({
-        icon: 'warning',
-        text: 'Enfermedad crónica ya ingresada.'
-      });
-    } else {
-      if (info.chronicles ) {
-        setInfo({
-          ...info,
-          chronicles: [...info.chronicles, chronicles_]
+
+    if (chronicles_ && chronicles_.length > 0) {
+      if (info.chronicles && info.chronicles.includes(chronicles_)) {
+        swal({
+          icon: 'warning',
+          title: 'Enfermedad crónica ya ingresada.'
+
+  
         });
       } else {
-        setInfo({
-          ...info,
-          chronicles: chronicles_
-        });
+        if (info.chronicles) {
+          setInfo({
+            ...info,
+            chronicles: [...info.chronicles, chronicles_]
+          });
+        } else {
+          setInfo({
+            ...info,
+            chronicles: chronicles_
+          });
+        }
       }
     }
     setChronicles("");
@@ -397,9 +405,9 @@ export default function UserProfile({ globalUser, obras }) {
     }
     dispatch(modifyUsers(infoModify, globalUser.id, globalUser.mail));
     swal({
-      icon:'success',
-      text:'Los datos se han modificado correctamente.',
-      timer:1500
+      icon: 'success',
+      title: 'Los datos se han modificado correctamente.',
+      timer: 1500
     })
     setEditInfoPersonal(false);
     setEditInfoSalud(false);
@@ -434,7 +442,7 @@ export default function UserProfile({ globalUser, obras }) {
               <Accordion.Header>Mis Datos</Accordion.Header>
               <Accordion.Body>
                 <p>Fecha de nacimiento: {globalUser.birth}</p>
-                <p>Número de Documento {globalUser.document}</p>
+                <p>Número de Documento: {globalUser.document}</p>
                 <p>Número de telefono: {globalUser.phone}</p>
                 <p>Email: {globalUser.mail}</p>
                 <p>Provincia: {globalUser.province}</p>
@@ -683,7 +691,7 @@ export default function UserProfile({ globalUser, obras }) {
               </Accordion.Body>
             </Accordion.Item>
             <Accordion.Item eventKey="1">
-              <Accordion.Header>Información de salud basica</Accordion.Header>
+              <Accordion.Header>Información de salud básica</Accordion.Header>
               <Accordion.Body>
                 <p>
                   Grupo Sanguineo:{" "}
@@ -703,7 +711,7 @@ export default function UserProfile({ globalUser, obras }) {
                 </ul>
                 <p>Enfermedades Crónicas: </p>
                 <ul className={styles.lista}>
-                  {globalUser.chronicles && globalUser.allergies.length > 0
+                  {globalUser.chronicles && globalUser.chronicles.length > 0
                     ? globalUser.chronicles.map(el => <li>{el}</li>)
                     : "Sin información"}
                 </ul>
