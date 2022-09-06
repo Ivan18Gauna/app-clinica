@@ -7,19 +7,21 @@ const {
    deletePatients,
    getAllPatients,
    getPatByOnsearchName,
-   getPatByDocument}= require ('../Controllers/patients')
+   getPatByDocument,
+   restorePatient
+}= require ('../Controllers/patients')
 const express = require('express')
 const router =express.Router();
 
 
 router.get('/', getPatByName)
-router.get('/allpatients', getAllPatients)
-router.get('/onsearch', getPatByOnsearchName)
-
-router.get('/detail/:id', getPatById),
-router.get('/document/:document', getPatByDocument),
 router.post('/', postPatients),
+router.get('/onsearch', getPatByOnsearchName)
+router.get('/restore/:id', restorePatient)
 router.put('/edit/:id', putPatients),
+router.get('/detail/:id', getPatById),
+router.get('/allpatients', getAllPatients)
 router.delete('/delete/:id', deletePatients)
+router.get('/document/:document', getPatByDocument),
 
 module.exports=router;
