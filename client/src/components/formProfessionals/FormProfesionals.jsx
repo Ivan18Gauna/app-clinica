@@ -125,7 +125,7 @@ export default function RegisterDoctor() {
   });
 
   const [error, setError] = useState({});
-
+  console.log(input)
   function handleInput(e) {
     setInput({
       ...input,
