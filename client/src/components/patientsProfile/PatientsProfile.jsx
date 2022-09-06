@@ -811,6 +811,7 @@ export default function UserProfile({ globalUser, obras }) {
                               placeholder="Alergias que posee"
                               name="allergies"
                               value={allergies_}
+                              onKeyDown={(e) => onKeyDown(e)}
                               onChange={handleInputAllergies}
                             />
                           </Col>
