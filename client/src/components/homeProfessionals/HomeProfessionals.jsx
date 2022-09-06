@@ -45,7 +45,7 @@ export default function HomeProfessional({ globalUser }) {
   useEffect(() => {
     dispatch(getTurnoProf(globalUser.id));
     //dispatch(getNotes());
-  }, []);
+  }, [dispatch, globalUser.id]);
   // function notesProfessionals(e){
   //     e.preventDefault();
   //     dispatch(deleteNotes(e.target.key));

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -8,6 +8,8 @@ import styles from "./FormPatients.module.css";
 import { useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import Cookie from 'universal-cookie'
+import { getUserDetail } from "../../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
 
 
 function validate(input) {
@@ -97,6 +99,8 @@ const provinces = [
 
 export default function RegisterPatient() {
 
+  const cookie = new Cookie()
+  const dispatch = useDispatch()
   const { isAuthenticated, user } = useAuth0();
   const history = useHistory();
   const [error, setError] = useState({});
@@ -135,26 +139,35 @@ export default function RegisterPatient() {
     });
   }
 
+  useEffect(() => {
+    dispatch(getUserDetail(input.mail))
+  }, [dispatch, input.mail])
+
+  const userForEmail = useSelector((state) => state.user)
+
   function handleSubmit(e) {
     e.preventDefault();
-    const cookie = new Cookie()
-    cookie.set('userEmail', input.mail, {path: '/'})
-    setInput({
-      name: "",
-      lastname: "",
-      document: "",
-      birth: "",
-      phone: "",
-      mail: "",
-      province: "",
-      city: "",
-      number: "",
-      street: "",
-      username: "",
-      password: "",
-      new_password: "",
-    });
-    history.push(`/healthData`, input);
+    if (userForEmail ? false : true) {
+      cookie.set('userEmail', input.mail, {path: '/'})
+      setInput({
+        name: "",
+        lastname: "",
+        document: "",
+        birth: "",
+        phone: "",
+        mail: "",
+        province: "",
+        city: "",
+        number: "",
+        street: "",
+        username: "",
+        password: "",
+        new_password: "",
+      });
+      history.push(`/healthData`, input);
+    }else {
+      alert('El email que ingresaste ya esta registrado')
+    }
   }
 
   return (
