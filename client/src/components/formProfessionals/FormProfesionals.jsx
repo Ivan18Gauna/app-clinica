@@ -68,6 +68,10 @@ function validate(input) {
     error.number = "Número no valida.";
     return error;
   }
+  if (!/([A-z])/.test(input.city)) {
+    error.city= 'Ingrese un nombre de ciudad válido.';
+     return error;
+  }
   return error;
 }
 
@@ -125,7 +129,7 @@ export default function RegisterDoctor() {
   });
 
   const [error, setError] = useState({});
-
+  console.log(input)
   function handleInput(e) {
     setInput({
       ...input,
@@ -150,7 +154,7 @@ export default function RegisterDoctor() {
     if (input.specialty.includes(e.target.value)) {
       swal({
         icon: 'warning',
-        text: "Ya se seleccionó la especialidad."
+        title: "Ya se seleccionó la especialidad."
       });
     } else {
       setInput({
@@ -173,7 +177,7 @@ export default function RegisterDoctor() {
     dispatch(registerDoctors(input));
     swal({
       icon: 'success',
-      text: 'Usuario creado con éxito.',
+      title: 'Usuario registrado.',
       timer: 1500
     })
     setInput({

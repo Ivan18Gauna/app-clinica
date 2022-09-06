@@ -6,7 +6,6 @@ import { get_PatientesDetail, deletePatients } from '../../redux/actions';
 import Button from 'react-bootstrap/esm/Button';
 import Loading from '../loading/Loading';
 import styles from '../detail/Details.module.css';
-import img from '../../Icons/iconfinder-icon.svg';
 import login from '../login/Login.module.css'
 import swal from 'sweetalert';
 
@@ -26,7 +25,7 @@ export default function DetailsPatients() {
 		history.push("/admin")
 		swal({
 			icon: 'success',
-			text:"Paciente suspendido con exito",
+			title:"Paciente suspendido con éxito",
 			timer:1500
 		})
 	} 
@@ -39,7 +38,7 @@ export default function DetailsPatients() {
 		<div className={styles.container}>
 			<div className={styles.info}>
 				<div className={styles.perfil}>
-					<img src={img} />
+					<img src={patient.avatar} alt='avatar'/>
 					<h4>
 						Sr {patient.name} {patient.lastname}
 					</h4>

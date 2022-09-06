@@ -11,8 +11,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
 	getPatients,
 	getPatientsByName,
+	getUserDetail,
 	postHistory,
 } from '../../redux/actions';
+import Cookies from 'universal-cookie'
 
 function validate(input) {
 	let error = {};
@@ -34,24 +36,28 @@ function validate(input) {
 }
 
 export default function FormUpProfessionals() {
-	
+	const cookies = new Cookies()
     const dispatch = useDispatch();
-	const allPatients = useSelector((state) => state.patients);   
+	const allPatients = useSelector((state) => state.patients); 
+	const globalUser = useSelector((state) => state.user)  
     const [imagen, setImagen] = useState("")
 	const [error, setError] = useState({});
-
-    useEffect(() => {
-		dispatch(getPatients());
-	}, [dispatch]);
-
+	
 	const [input, setInput] = useState({
-		patient: [],
 		reason: '',
         image: '',
 		description: '',
 		date: '',
 		diagnosis: '',
+		patient: [],
+		professional: ''
 	});
+
+	useEffect(() => {
+		dispatch(getUserDetail(cookies.get("userEmail")));
+		dispatch(getPatients());
+	}, [dispatch]);
+	console.log(globalUser.id, input)
 
 	function handleMotivo(e) {
 		setInput({
@@ -69,6 +75,10 @@ export default function FormUpProfessionals() {
 
 	function handleSearch(e) {
 		e.preventDefault();
+		setInput({
+			...input,
+			professional: globalUser.id
+		})
 		dispatch(getPatientsByName(input.patient));
 	}
     
@@ -97,15 +107,15 @@ export default function FormUpProfessionals() {
 		dispatch(postHistory(input));
 		swal({
 			icon:'success',
-			text:'Registraste correctamente tu atención a  ' + input.patient
+			title:'Registraste correctamente tu atención a  ' + input.patient
 		});
 		setInput({
-			patient: [],
 			reason: '',
 			image: '',
 			description: '',
 			date: '',
 			diagnosis: '',
+			patient: [],
 		});
 	}
 
@@ -114,15 +124,16 @@ export default function FormUpProfessionals() {
 		<div className={styles.container}>
 			<Form className={`${styles.form}`} onSubmit={handleSubmit}>
 				<div className={styles.titulo}>
-					<h3>Historia Clinica</h3>
+					<h3>Historia Clínica</h3>
 				</div>
 				<Row lg={2} className={`${styles.row}`}>
 					<Col className={`${styles.col}`} lg={8}>
+						<Form.Label>Ingrese el número de documento del Paciente</Form.Label>
 						<Form.Control
 							type="search"
 							name="patient"
 							value={input.patient}
-							placeholder="Paciente"
+							placeholder="Nro de documento"
 							onChange={handleMotivo}
 							isInvalid={!!error.patient}
 						/>
@@ -140,17 +151,17 @@ export default function FormUpProfessionals() {
 					<Col className={`${styles.col}`}>
 						{allPatients && allPatients.document === parseInt(input.patient[0]) ? (
 							<div>
-								<p> {allPatients.name}</p>
-								<p> {allPatients.lastname}</p>
+								<p>Nombre: {allPatients.name}</p>
+								<p>Apellido: {allPatients.lastname}</p>
 							</div>
 						) : (
-							<div>No se encontro paciente</div>
+							<div>No se encontró paciente</div>
 						)}
 					</Col>
 				</Row>
 				<Row className={`${styles.row}`}>
 					<Col className={`${styles.col}`}>
-						<Form.Label>Razon</Form.Label>
+						<Form.Label>Ingrese el motivo de la consulta</Form.Label>
 						<Form.Control
 							type="text"
 							name="reason"
@@ -184,7 +195,7 @@ export default function FormUpProfessionals() {
 				</Row>
 				<Row className={`${styles.row}`}>
 					<Col className={`${styles.col}`}>
-						<Form.Label>Descripcion consulta</Form.Label>
+						<Form.Label>Descripción consulta</Form.Label>
 						<Form.Control
 							type="textarea"
 							name="description"
@@ -199,7 +210,7 @@ export default function FormUpProfessionals() {
 				</Row>
 				<Row className={`${styles.row}`}>
 					<Col className={`${styles.col}`}>
-						<Form.Label>Fecha atencion</Form.Label>
+						<Form.Label>Fecha atención</Form.Label>
 						<Form.Control
 							type="date"
 							name="date"

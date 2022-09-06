@@ -12,14 +12,18 @@ import {
   GET_NOTES,
   GET_TURNO_PROF,
   GET_TURNO_PAT,
+
   GET_PATIENTS_DETAIL,
   POST_TURNO_MAIL,
-  GET_FACTURA
+  GET_FACTURA,
+  GET_TOTAL_PROFESSIONALS,
+  GET_TOTAL_PATIENTS,
+  GET_TOTAL_TURNOS,
+  GET_TOTAL_HISTORYS
+  
+
 } from "../actions/actions";
 import axios from "axios";
-import { bindActionCreators } from "redux";
-
-//const URL = 'http://localhost:3001';
 
 export function get_Doctors() {
   return async function(dispatch) {
@@ -43,6 +47,49 @@ export function get_factura(){
   }
 }
 
+export function get_total_proffesionals(){
+  return async function(dispatch){
+    const totalProf = await axios.get(`/admin/professionals`)
+
+      return dispatch({
+      type: GET_TOTAL_PROFESSIONALS,
+      payload: totalProf.data
+  })}
+}
+
+export function get_total_patients(){
+  return async function(dispatch){
+
+    const totalPatients = await axios.get(`/admin/patients`)
+
+    return dispatch({
+      type: GET_TOTAL_PATIENTS,
+      payload: totalPatients.data
+    })
+  }
+}
+
+export function get_total_turnos(){
+  return async function(dispatch){
+    const totalTurnos = await axios.get(`/admin/turnos`)
+
+    return dispatch({
+      type: GET_TOTAL_TURNOS,
+      payload: totalTurnos.data
+    })
+  }
+}
+
+export function get_total_historys(){
+  return async function(dispatch){
+    const totalHistorys = await axios.get(`/admin/historiaclinica`)
+
+    return dispatch({
+      type: GET_TOTAL_HISTORYS,
+      payload: totalHistorys.data
+    })
+  }
+}
 export function get_specialties() {
   return async function(dispatch) {
     const specialties = await axios(`/especialties`);
@@ -155,9 +202,10 @@ export function getPatientsByName(payload) {
 }
 
 export function postHistory(payload) {
+  console.log("payload", payload);
   return async function() {
     try {
-      const res = await axios.post("/historiaclinica");
+      const res = await axios.post("/historiaclinica", payload);
       return res;
     } catch (error) {
       console.log(error);
@@ -275,9 +323,9 @@ export function newTurno(payload) {
   return async function() {
     try {
       const turno = await axios.post("/turnos", payload);
-      return turno;
+      return turno
     } catch (error) {
-      console.log(error);
+      alert(error.response.data);
     }
   };
 }
@@ -308,10 +356,7 @@ export function deletePatients(id) {
 export function postTurnoMail(payload, mail) {
   return async function() {
     try {
-      const patient = await axios.post(
-        `/mailer/send-email/${mail}`,
-        payload
-      );
+      const patient = await axios.post(`/mailer/send-email/${mail}`, payload);
       return patient;
     } catch (e) {
       console.log(e.message);
