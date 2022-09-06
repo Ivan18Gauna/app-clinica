@@ -36,6 +36,7 @@ const schema = yup
   .required();
 
 export default function Login() {
+
   const cookies = new Cookies();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -218,22 +219,12 @@ export default function Login() {
         </div>
       ) : (
         <div>
-          <div id={styles.loadingLogin}>
-            <Loading />
-          </div>
-          <div id={styles.loadingNum}>
-            {setTimeout(() => {
-              dispatch(getUserDetail(cookies.get("userEmail")));
-            }, 1000)}
-            {setTimeout(() => {
-              if (globalUser && globalUser.mail) {
-                return history.push("/home");
-              }
-              if (globalUser && !globalUser.mail) {
-                return history.push("/signin");
-              }
-            }, 2000)}
-          </div>
+          dispatch(getUserDetail(cookies.get('userEmail')))
+          if (globalUser.name === null) {
+            history.push('/signin')
+          }else {
+            history.push('/home')
+          }
         </div>
       )}
     </div>

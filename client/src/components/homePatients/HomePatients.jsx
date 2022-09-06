@@ -90,12 +90,12 @@ export default function HomePatients({ userInfo }) {
                     </ListGroup.Item>
                     <ListGroup.Item>
                       Vacunas:{" "}
-                      {userInfo.vaccines.length > 0 &&
+                      {userInfo.vaccines?.length > 0 &&
                         userInfo.vaccines.map(el => <a>{el}/ </a>)}
                     </ListGroup.Item>
                     <ListGroup.Item>
                       Alergias:{" "}
-                      {userInfo.allergies.length > 0 &&
+                      {userInfo.allergies?.length > 0 &&
                         userInfo.allergies.map(el => <a>{el}/ </a>)}
                     </ListGroup.Item>
                     <ListGroup.Item>
@@ -106,7 +106,7 @@ export default function HomePatients({ userInfo }) {
                     </ListGroup.Item>
                     <ListGroup.Item>
                       Enfermedades crónicas:{" "}
-                      {userInfo.chronicles.length > 0 &&
+                      {userInfo.chronicles?.length > 0 &&
                         userInfo.chronicles.map(el => <a>{el}/ </a>)}
                     </ListGroup.Item>
                     <ListGroup.Item>Obra Social: {userInfo.oS}</ListGroup.Item>
