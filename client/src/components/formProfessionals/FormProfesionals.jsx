@@ -68,6 +68,10 @@ function validate(input) {
     error.number = "Número no valida.";
     return error;
   }
+  if (!/([A-z])/.test(input.city)) {
+    error.city= 'Ingrese un nombre de ciudad válido.';
+     return error;
+  }
   return error;
 }
 

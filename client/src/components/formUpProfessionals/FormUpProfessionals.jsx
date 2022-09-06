@@ -124,15 +124,16 @@ export default function FormUpProfessionals() {
 		<div className={styles.container}>
 			<Form className={`${styles.form}`} onSubmit={handleSubmit}>
 				<div className={styles.titulo}>
-					<h3>Historia Clinica</h3>
+					<h3>Historia Clínica</h3>
 				</div>
 				<Row lg={2} className={`${styles.row}`}>
 					<Col className={`${styles.col}`} lg={8}>
+						<Form.Label>Ingrese el número de documento del Paciente</Form.Label>
 						<Form.Control
 							type="search"
 							name="patient"
 							value={input.patient}
-							placeholder="Paciente"
+							placeholder="Nro de documento"
 							onChange={handleMotivo}
 							isInvalid={!!error.patient}
 						/>
@@ -150,17 +151,17 @@ export default function FormUpProfessionals() {
 					<Col className={`${styles.col}`}>
 						{allPatients && allPatients.document === parseInt(input.patient[0]) ? (
 							<div>
-								<p> {allPatients.name}</p>
-								<p> {allPatients.lastname}</p>
+								<p>Nombre: {allPatients.name}</p>
+								<p>Apellido: {allPatients.lastname}</p>
 							</div>
 						) : (
-							<div>No se encontro paciente</div>
+							<div>No se encontró paciente</div>
 						)}
 					</Col>
 				</Row>
 				<Row className={`${styles.row}`}>
 					<Col className={`${styles.col}`}>
-						<Form.Label>Razon</Form.Label>
+						<Form.Label>Ingrese el motivo de la consulta</Form.Label>
 						<Form.Control
 							type="text"
 							name="reason"
@@ -194,7 +195,7 @@ export default function FormUpProfessionals() {
 				</Row>
 				<Row className={`${styles.row}`}>
 					<Col className={`${styles.col}`}>
-						<Form.Label>Descripcion consulta</Form.Label>
+						<Form.Label>Descripción consulta</Form.Label>
 						<Form.Control
 							type="textarea"
 							name="description"
@@ -209,7 +210,7 @@ export default function FormUpProfessionals() {
 				</Row>
 				<Row className={`${styles.row}`}>
 					<Col className={`${styles.col}`}>
-						<Form.Label>Fecha atencion</Form.Label>
+						<Form.Label>Fecha atención</Form.Label>
 						<Form.Control
 							type="date"
 							name="date"
