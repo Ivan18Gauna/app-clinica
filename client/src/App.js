@@ -1,4 +1,3 @@
-import "./App.css";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Home from './components/home/Home'
 import LandingPage from './components/landingPage/LandingPage'
@@ -22,6 +21,7 @@ import UserProfile from './components/userProfile/UserProfile';
 import Sidebar from './components/admin/Admin'
 import DetailsPatients from "./components/detailPatAdmin/DetailPatAdmin";
 import DetailsDrAdmin from "./components/detailProfAdmin/DetailProfAdmin";
+import "./App.css";
 
 function App() {
   return (

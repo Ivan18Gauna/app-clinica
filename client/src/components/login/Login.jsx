@@ -15,7 +15,6 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import InputLabel from "@mui/material/InputLabel";
-import Loading from "../loading/Loading";
 import { Link, useHistory } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useDispatch, useSelector } from "react-redux";
@@ -36,10 +35,11 @@ const schema = yup
   .required();
 
 export default function Login() {
+
   const cookies = new Cookies();
   const history = useHistory();
   const dispatch = useDispatch();
-  const globalUser = useSelector(state => state.user);
+  /* const globalUser = useSelector(state => state.user); */
   const { loginWithPopup, isAuthenticated, user } = useAuth0();
   const {
     setValue,
@@ -104,7 +104,7 @@ export default function Login() {
     // dispatch(getPatients());
     // dispatch(get_Doctors());
     dispatch(getUserDetail(email.email));
-  }, [email.email]);
+  }, [dispatch, email.email]);
 
   if (isAuthenticated) {
     cookies.set("userEmail", user.email, { path: "/" });
@@ -218,22 +218,12 @@ export default function Login() {
         </div>
       ) : (
         <div>
-          <div id={styles.loadingLogin}>
-            <Loading />
-          </div>
-          <div id={styles.loadingNum}>
-            {setTimeout(() => {
-              dispatch(getUserDetail(cookies.get("userEmail")));
-            }, 1000)}
-            {setTimeout(() => {
-              if (globalUser && globalUser.mail) {
-                return history.push("/home");
-              }
-              if (globalUser && !globalUser.mail) {
-                return history.push("/signin");
-              }
-            }, 2000)}
-          </div>
+          dispatch(getUserDetail(cookies.get('userEmail')))
+          if (globalUser.name === null) {
+            history.push('/signin')
+          }else {
+            history.push('/home')
+          }
         </div>
       )}
     </div>
