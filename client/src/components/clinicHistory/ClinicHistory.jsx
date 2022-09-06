@@ -9,20 +9,22 @@ import Button from 'react-bootstrap/esm/Button';
 import { useAuth0 } from '@auth0/auth0-react';
 import './ClinicHistory.css';
 import '../../App.css';
+import Cookies from 'universal-cookie';
 
 export default function ClinicHistory() {
-
+    const cookies = new Cookies()
 	const dispatch = useDispatch();
     const { user, isAuthenticated } = useAuth0();
 	const globalUser = useSelector((state) => state.user);
 	const clinicHistorys = useSelector((state) => state.clinicHistory);
+    console.log(clinicHistorys[0])
     
 	useEffect(() => {
-		dispatch(getClinicHistory(globalUser.id));
-	}, [dispatch, globalUser]);
+        dispatch(getUserDetail(cookies.get('userEmail')))
+        dispatch(getClinicHistory(globalUser.id));
+	}, [globalUser.id]);
 
     if((isAuthenticated && !globalUser) || (isAuthenticated && globalUser && !globalUser.name)){
-		/* dispatch(getUserDetail(user.email)) */
 	}
 
 	return (
@@ -36,10 +38,10 @@ export default function ClinicHistory() {
                         <h1>Tu historial clinico</h1>
                         { clinicHistorys && clinicHistorys.length > 0 ? (
                             <div>
-                                <h1>{clinicHistorys[0].patient.name}</h1>
+                                <h1>{clinicHistorys[0].patient.name + ' ' + clinicHistorys[0].patient.lastname}</h1>
                                 {clinicHistorys.map((oneClinicHistory) => (
                                     <div className='clinic-history'>
-                                        <h3 className='doctor-clinic'>Medico: {oneClinicHistory.professional.name}</h3>
+                                        <h3 className='doctor-clinic'>Medico: {oneClinicHistory.professional.name + ' ' + oneClinicHistory.professional.lastname}</h3>
                                         <p>Fecha atencion: {oneClinicHistory.date}</p>
                                         <p>Motivo: {oneClinicHistory.reason}</p>
                                         <p>Detalle consulta: {oneClinicHistory.description}</p>

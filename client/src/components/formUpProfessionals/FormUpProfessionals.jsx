@@ -11,8 +11,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
 	getPatients,
 	getPatientsByName,
+	getUserDetail,
 	postHistory,
 } from '../../redux/actions';
+import Cookies from 'universal-cookie'
 
 function validate(input) {
 	let error = {};
@@ -34,24 +36,28 @@ function validate(input) {
 }
 
 export default function FormUpProfessionals() {
-	
+	const cookies = new Cookies()
     const dispatch = useDispatch();
-	const allPatients = useSelector((state) => state.patients);   
+	const allPatients = useSelector((state) => state.patients); 
+	const globalUser = useSelector((state) => state.user)  
     const [imagen, setImagen] = useState("")
 	const [error, setError] = useState({});
-
-    useEffect(() => {
-		dispatch(getPatients());
-	}, [dispatch]);
-
+	
 	const [input, setInput] = useState({
-		patient: [],
 		reason: '',
         image: '',
 		description: '',
 		date: '',
 		diagnosis: '',
+		patient: [],
+		professional: ''
 	});
+
+	useEffect(() => {
+		dispatch(getUserDetail(cookies.get("userEmail")));
+		dispatch(getPatients());
+	}, [dispatch]);
+	console.log(globalUser.id, input)
 
 	function handleMotivo(e) {
 		setInput({
@@ -69,6 +75,10 @@ export default function FormUpProfessionals() {
 
 	function handleSearch(e) {
 		e.preventDefault();
+		setInput({
+			...input,
+			professional: globalUser.id
+		})
 		dispatch(getPatientsByName(input.patient));
 	}
     
@@ -100,12 +110,12 @@ export default function FormUpProfessionals() {
 			title:'Registraste correctamente tu atención a  ' + input.patient
 		});
 		setInput({
-			patient: [],
 			reason: '',
 			image: '',
 			description: '',
 			date: '',
 			diagnosis: '',
+			patient: [],
 		});
 	}
 
