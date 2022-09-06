@@ -68,6 +68,10 @@ function validate(input) {
     error.number = "Número no valida.";
     return error;
   }
+  if (!/([A-z])/.test(input.city)) {
+    error.city= 'Ingrese un nombre de ciudad válido.';
+     return error;
+  }
   return error;
 }
 
@@ -125,7 +129,7 @@ export default function RegisterDoctor() {
   });
 
   const [error, setError] = useState({});
-
+  console.log(input)
   function handleInput(e) {
     setInput({
       ...input,
