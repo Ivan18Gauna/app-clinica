@@ -17,6 +17,7 @@ import styles from './ProfessionalsProfile.module.css';
 import Loading from '../loading/Loading';
 import Cookies from 'universal-cookie';
 import { inputAdornmentClasses } from '@mui/material';
+import swal from 'sweetalert';
 
 
 function validate(input) {
@@ -167,7 +168,10 @@ export default function ProfessionalProfile({ globalUser, specialties }) {
     function handleSelectSpecialities(e) {
         if (input.specialty && input.specialty.length > 0 &&
             input.specialty.includes(e.target.value)) {
-            alert('Ya se selecciono la especialidad.');
+            swal({
+                icon: 'warning',
+                title: "Ya se seleccionó la especialidad."
+            });
         } else {
             setInput({
                 ...input,
@@ -211,11 +215,16 @@ export default function ProfessionalProfile({ globalUser, specialties }) {
         if (input.street && input.street !== '') { infoModify.street = input.street };
         if (input.number && input.number !== '') { infoModify.number = input.number };
         dispatch(modifyProfessionals(infoModify, globalUser.id, globalUser.mail));
+        swal({
+            icon:'success',
+            title:'Los datos se han modificado correctamente.',
+            timer:1500
+          })
         setEditInfoPersonal(false);
         setInput({})
     }
     function logoutCookies() {
-        if(isAuthenticated) { logout() }
+        if (isAuthenticated) { logout() }
         cookie.remove('userEmail', { path: '/' });
         history.push('/');
     }
