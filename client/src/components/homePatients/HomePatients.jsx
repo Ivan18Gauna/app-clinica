@@ -155,24 +155,3 @@ export default function HomePatients({userInfo}) {
     </div>     
   )
 }
-
-// allergies: []
-// birth: "1990-01-01"
-// blood: "A-"
-// chronicles: []
-// city: "La Plata"
-// deletedAt: null
-// document: 11333444
-// donation: "no"
-// id: 16
-// lastname: "ferr"
-// mail: "seba48484@gmail.com"
-// name: "perri"
-// number: 1
-// oS: "OSPROTURA"
-// phone: "22133344456"
-// province: "Buenos Aires"
-// street: "1"
-// transfusion: "yes"
-// vaccines: []
-// [[Prototype]]: Obj

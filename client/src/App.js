@@ -23,7 +23,6 @@ import Sidebar from './components/admin/Admin'
 import DetailsPatients from "./components/detailPatAdmin/DetailPatAdmin";
 import DetailsDrAdmin from "./components/detailProfAdmin/DetailProfAdmin";
 
-
 function App() {
   return (
     <BrowserRouter>
