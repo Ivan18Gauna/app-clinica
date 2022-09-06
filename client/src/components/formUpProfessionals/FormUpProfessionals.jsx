@@ -18,38 +18,53 @@ import Cookies from 'universal-cookie'
 
 function validate(input) {
 	let error = {};
-	
-    if(/([A-z])/.test(input.patient)){
-        error.patient = "Ingrese un dni valido"
-    }
-    
-    if (!/([A-z])/.test(input.reason)) {
-		error.reason = 'Ingrese un motivo valido';
+
+	if (!/([0-9])/.test(input.patient)) {
+		error.patient = "Ingrese un DNI válido";
+		return error;
 	}
-	if (!/([A-z])/.test(input.description)) {
-		error.description = 'Ingrese una descripcion valida';
+
+	if (!/([A-Za-z0-9])/.test(input.reason)) {
+		error.reason = 'Ingrese un motivo válido';
+		return error;
 	}
-	if (!/([A-z])/.test(input.diagnosis)) {
-		error.diagnosis = 'Ingrese un diagnostico valido';
+	if (!/([A-Za-z0-9])/.test(input.description)) {
+		error.description = 'Ingrese una descripción válida';
+		return error;
 	}
+	if (!/([A-Za-z0-9])/.test(input.diagnosis)) {
+		error.diagnosis = 'Ingrese un diagnostico válido';
+		return error;
+	}
+	let newDate = input.date;
+	let Date1 = new Date(newDate);
+	let Date2 = new Date();
+	let Date3 = (Date2 - Date1) / (1000 * 60 * 60 * 24 * 365);
+	if (Date1 > Date2) {
+		error.date = "La fecha no puede ser posterior a la actual.";
+		return error;
+	} else
+		if (Date3 > 73) {
+			error.date = 'La fecha no puede ser anterior a 1950.'
+			return error;
+		}
 	return error;
 }
 
 export default function FormUpProfessionals() {
 	const cookies = new Cookies()
-    const dispatch = useDispatch();
-	const allPatients = useSelector((state) => state.patients); 
-	const globalUser = useSelector((state) => state.user)  
-    const [imagen, setImagen] = useState("")
+	const dispatch = useDispatch();
+	const allPatients = useSelector((state) => state.patients);
+	const globalUser = useSelector((state) => state.user)
+	const [imagen, setImagen] = useState("")
 	const [error, setError] = useState({});
-	
 	const [input, setInput] = useState({
 		reason: '',
-        image: '',
+		image: '',
 		description: '',
 		date: '',
 		diagnosis: '',
-		patient: [],
+		patient: '',
 		professional: ''
 	});
 
@@ -57,21 +72,19 @@ export default function FormUpProfessionals() {
 		dispatch(getUserDetail(cookies.get("userEmail")));
 		dispatch(getPatients());
 	}, [dispatch]);
-	console.log(globalUser.id, input)
+
 
 	function handleMotivo(e) {
 		setInput({
 			...input,
-			[e.target.name]: [e.target.value],
+			[e.target.name]: e.target.value,
 		});
 		let existeError = validate({
 			...input,
-			[e.target.name]: [e.target.value],
+			[e.target.name]: e.target.value,
 		});
 		setError(existeError);
 	}
-
-	
 
 	function handleSearch(e) {
 		e.preventDefault();
@@ -81,33 +94,33 @@ export default function FormUpProfessionals() {
 		})
 		dispatch(getPatientsByName(input.patient));
 	}
-    
 
-    const uploadImage = async (e) => {
-        
-        const files = e.target.files;
-        const data = new FormData();
-        data.append("file", files[0]);
-        data.append("upload_preset", "appclinica");
-    
-        const respuesta = await axios.post(
-          "https://api.cloudinary.com/v1_1/appclinica/image/upload",data
-        );
-    
-        setImagen(respuesta.data.secure_url);
-        setInput({
-        ...input,
-        image: respuesta.data.secure_url
-    })  
-     
-    }
- 
-      function handleSubmit(e) {
+
+	const uploadImage = async (e) => {
+
+		const files = e.target.files;
+		const data = new FormData();
+		data.append("file", files[0]);
+		data.append("upload_preset", "appclinica");
+
+		const respuesta = await axios.post(
+			"https://api.cloudinary.com/v1_1/appclinica/image/upload", data
+		);
+
+		setImagen(respuesta.data.secure_url);
+		setInput({
+			...input,
+			image: respuesta.data.secure_url
+		})
+
+	}
+
+	function handleSubmit(e) {
 		e.preventDefault(e);
 		dispatch(postHistory(input));
 		swal({
-			icon:'success',
-			title:'Registraste correctamente tu atención a  ' + input.patient
+			icon: 'success',
+			title: 'Registraste correctamente tu atención a  ' + allPatients.name + ' ' + allPatients.lastname
 		});
 		setInput({
 			reason: '',
@@ -115,7 +128,7 @@ export default function FormUpProfessionals() {
 			description: '',
 			date: '',
 			diagnosis: '',
-			patient: [],
+			patient: '',
 		});
 	}
 
@@ -124,15 +137,16 @@ export default function FormUpProfessionals() {
 		<div className={styles.container}>
 			<Form className={`${styles.form}`} onSubmit={handleSubmit}>
 				<div className={styles.titulo}>
-					<h3>Historia Clinica</h3>
+					<h3>Historia Clínica</h3>
 				</div>
 				<Row lg={2} className={`${styles.row}`}>
 					<Col className={`${styles.col}`} lg={8}>
+						<Form.Label>Ingrese el número de documento del Paciente</Form.Label>
 						<Form.Control
 							type="search"
 							name="patient"
 							value={input.patient}
-							placeholder="Paciente"
+							placeholder="Nro de documento"
 							onChange={handleMotivo}
 							isInvalid={!!error.patient}
 						/>
@@ -148,19 +162,19 @@ export default function FormUpProfessionals() {
 				</Row>
 				<Row className={`${styles.row}`}>
 					<Col className={`${styles.col}`}>
-						{allPatients && allPatients.document === parseInt(input.patient[0]) ? (
+						{allPatients && allPatients.document === parseInt(input.patient) ? (
 							<div>
-								<p> {allPatients.name}</p>
-								<p> {allPatients.lastname}</p>
+								<p>Nombre: {allPatients.name}</p>
+								<p>Apellido: {allPatients.lastname}</p>
 							</div>
 						) : (
-							<div>No se encontro paciente</div>
+							<div>No se encontró paciente</div>
 						)}
 					</Col>
 				</Row>
 				<Row className={`${styles.row}`}>
 					<Col className={`${styles.col}`}>
-						<Form.Label>Razon</Form.Label>
+						<Form.Label>Ingrese el motivo de la consulta</Form.Label>
 						<Form.Control
 							type="text"
 							name="reason"
@@ -179,14 +193,14 @@ export default function FormUpProfessionals() {
 						<Form.Control
 							type="file"
 							name="image"
-						
+
 							onChange={uploadImage}
 							isInvalid={!!error.image}
 						/>
-                        <div>
-                            <img src={imagen} alt=""/>
-                        </div>
-                
+						<div>
+							<img src={imagen} alt="" />
+						</div>
+
 						<Form.Control.Feedback type="invalid">
 							{error.image}
 						</Form.Control.Feedback>
@@ -194,7 +208,7 @@ export default function FormUpProfessionals() {
 				</Row>
 				<Row className={`${styles.row}`}>
 					<Col className={`${styles.col}`}>
-						<Form.Label>Descripcion consulta</Form.Label>
+						<Form.Label>Descripción consulta</Form.Label>
 						<Form.Control
 							type="textarea"
 							name="description"
@@ -209,7 +223,7 @@ export default function FormUpProfessionals() {
 				</Row>
 				<Row className={`${styles.row}`}>
 					<Col className={`${styles.col}`}>
-						<Form.Label>Fecha atencion</Form.Label>
+						<Form.Label>Fecha atención</Form.Label>
 						<Form.Control
 							type="date"
 							name="date"
@@ -218,7 +232,7 @@ export default function FormUpProfessionals() {
 							isInvalid={!!error.date}
 						/>
 						<Form.Control.Feedback type="invalid">
-							{error.description}
+							{error.date}
 						</Form.Control.Feedback>
 					</Col>
 				</Row>
@@ -239,9 +253,25 @@ export default function FormUpProfessionals() {
 				</Row>
 				<Row className={`${styles.row}`}>
 					<Col lg={6} className={`${styles.col}`}>
-						<Button className={`${styles.buttonSubmit}`} type="subtmit">
-							Enviar
-						</Button>
+						{input.patient != allPatients.document ||
+							input.patient === '' ||
+							input.reason === '' ||
+							input.description === '' ||
+							input.date === '' ||
+							input.diagnosis === '' ||
+							error.date ? (
+							<Button
+								className={`${styles.buttonSubmit}`}
+								variant="danger"
+								disabled
+							>
+								Faltan datos por completar
+							</Button>
+						) :
+							<Button className={`${styles.buttonSubmit}`} type="subtmit">
+								Enviar
+							</Button>
+						}
 					</Col>
 				</Row>
 			</Form>

@@ -266,6 +266,7 @@ export default function UserProfile({ globalUser, obras }) {
           icon: 'warning',
           title: 'Enfermedad crónica ya ingresada.'
 
+
         });
       } else {
         if (info.chronicles) {
