@@ -22,7 +22,7 @@ export default function DetailsPatients() {
 
 	function handleSubmit(e){
 		dispatch(deletePatients(id))
-		history.push("/admin")
+		history.push("/home")
 		swal({
 			icon: 'success',
 			title:"Paciente suspendido con éxito",
@@ -57,7 +57,7 @@ export default function DetailsPatients() {
 					</p>
 				</div>
 				<div className={styles.btnHome}>
-					<Link to={'/admin'}>
+					<Link to={'/home'}>
 						<Button variant="outline-primary">Volver</Button>
 					</Link>
 				</div>

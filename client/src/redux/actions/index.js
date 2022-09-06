@@ -351,6 +351,19 @@ export function deletePatients(id) {
     }
   };
 }
+
+export function deleteProf(id) {
+  return async function() {
+    try {
+      const professionalsDelete = await axios.delete("/professionals/delete/" + id);
+
+      return professionalsDelete;
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
+}
+
 export function postTurnoMail(payload, mail) {
   return async function() {
     try {

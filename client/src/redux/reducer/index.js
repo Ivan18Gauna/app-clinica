@@ -38,7 +38,8 @@ const initialState = {
   totalPatients: [],
   totalProf: [],
   totalTurnos: [],
-  totalHistorys: []
+  totalHistorys: [],
+  patientsDelete: []
 };
 
 function rootReducer(state = initialState, action) {
@@ -48,7 +49,7 @@ function rootReducer(state = initialState, action) {
         ...state,
         turnos: action.payload
       };
-      
+           
       case GET_TURNO_PAT:
       return {
         ...state,
