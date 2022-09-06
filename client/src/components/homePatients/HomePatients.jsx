@@ -150,7 +150,7 @@ export default function HomePatients({userInfo}) {
       : <div className="loading.login">
           <Loading />
         </div>
-      }
+      } 
       
     </div>     
   )
