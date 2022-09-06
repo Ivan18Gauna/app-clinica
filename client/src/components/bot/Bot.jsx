@@ -8,30 +8,30 @@ export default function Bot() {
   const steps = [
     {
       id: "0",
-      message: "Hola ¿cómo podemos ayudarte?",
+      message: "Hola como podemos ayudarte?",
       trigger: "1"
     },
     {
       id: "1",
       options: [
         { value: "l", label: "Soy nuevo", trigger: "login" },
-        { value: "f", label: "Busco un médico", trigger: "filtros" },
-        { value: "n", label: "¿Quiénes somos?", trigger: "nosotros" }
+        { value: "f", label: "Busco un medico", trigger: "filtros" },
+        { value: "n", label: "Quienes somos?", trigger: "nosotros" }
       ]
     },
     {
       id: "login",
-      message: "Dale clic al botón Ingresar (arriba, ala derecha)",
+      message: "aca estaria el link del signin",
       trigger: "5"
     },
     {
       id: "filtros",
-      message: "Los puedes buscar en la página principal",
+      message: "aca estaria el link del filtros",
       trigger: "5"
     },
     {
       id: "nosotros",
-      message: "Dale clic al botón NOSOTROS (arriba, ala izquierda)",
+      message: "aca va el link de nosotros",
       trigger: "5"
     },
     {
@@ -43,7 +43,7 @@ export default function Bot() {
     },
     {
       id: "Bye",
-      message: "Adiós, esperamos poder haber sido de ayuda!",
+      message: "Bye!",
       end: true
     }
   ];

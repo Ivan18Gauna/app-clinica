@@ -259,14 +259,11 @@ export default function UserProfile({ globalUser, obras }) {
 
   function handleSubmitChronicles(e) {
     e.preventDefault();
-
     if (chronicles_ && chronicles_.length > 0) {
       if (info.chronicles && info.chronicles.includes(chronicles_)) {
         swal({
           icon: 'warning',
           title: 'Enfermedad crónica ya ingresada.'
-
-  
         });
       } else {
         if (info.chronicles) {

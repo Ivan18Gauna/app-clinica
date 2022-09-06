@@ -43,7 +43,7 @@ export default function Sidebar(){
                     <nav class="nav nav-pills flex-column">
                     <a class="nav-link" href="#item-1" id='Margin-Top-About'><FaIcons.FaBriefcaseMedical className="me-2" />
                     
-                    Profesionales</a>
+                        Profesionales</a>
 
             
                     <a class="nav-link" href="#item-2"> <FaIcons.FaHospitalUser className="me-2"/>
@@ -90,7 +90,7 @@ export default function Sidebar(){
                     <div id="item-3">
                         <h4>Dinero Ingresado a la fecha:</h4>
                         <p>
-                        Acá irían unos gráficos mostrando los millones que tenemos acumulados. 
+                        Aca irian unos graficos mostrando los millones que tenemos acumulados. 
                         </p>
                     </div>
                     </div>
