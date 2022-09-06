@@ -48,7 +48,7 @@ export default function ClinicHistory() {
             <Button variant="outline-secondary">Volver</Button>
           </Link>
           <div className={styles.form}>
-            <h1>Tu historial clinico</h1>
+            <h1>Tu historial clínico</h1>
             {clinicHistorys && clinicHistorys.length > 0 ? (
               <div>
                 <h1>
@@ -59,12 +59,12 @@ export default function ClinicHistory() {
                 {clinicHistorys.map(oneClinicHistory => (
                   <div className="clinic-history">
                     <h3 className="doctor-clinic">
-                      Medico:{" "}
+                      Médico:{" "}
                       {oneClinicHistory.professional.name +
                         " " +
                         oneClinicHistory.professional.lastname}
                     </h3>
-                    <p>Fecha atencion: {oneClinicHistory.date}</p>
+                    <p>Fecha atención: {oneClinicHistory.date}</p>
 
                     <p>Motivo: {oneClinicHistory.reason}</p>
                     <p>Detalle consulta: {oneClinicHistory.description}</p>
