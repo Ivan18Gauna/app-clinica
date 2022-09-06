@@ -120,7 +120,6 @@ const getProfByName = async (req, res) => {
         //offset: req.query.page,
         //order:[['lastname', req.query.order]]
       });
-      console.log(dbProfName);
       dbProfName.length
         ? res.status(200).send(dbProfName)
         : res
