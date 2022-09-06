@@ -13,10 +13,7 @@ const getInfoApiPatients = async (req, res) => {
       where: {
         name: e.name.split(" ")[0],
         lastname: e.name.split(" ")[1],
-<<<<<<< HEAD
-=======
         avatar: e.avatar,
->>>>>>> dev-front
         birth: e.birth,
         phone: e.phone,
         mail: e.mail,
