@@ -364,6 +364,16 @@ export function deletePatients(id) {
   };
 }
 
+
+export function deleteProf(id) {
+  return async function() {
+    try {
+      const professionalsDelete = await axios.delete("/professionals/delete/" + id);
+
+      return professionalsDelete;
+    } catch (e) {
+      console.log(e.message);
+
 export function set() {
   return async function(dispatch) {
     try {
@@ -373,6 +383,7 @@ export function set() {
       });
     } catch (error) {
       console.log(error);
+
     }
   };
 }

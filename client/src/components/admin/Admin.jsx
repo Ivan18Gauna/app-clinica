@@ -12,8 +12,8 @@ import {
   get_total_historys,
   get_total_patients,
   get_total_turnos,
-  get_total_proffesionals
-} from "../../redux/actions";
+  get_total_proffesionals,
+ } from "../../redux/actions";
 import Pagination from "../paginate/Pagination";
 import PaginatePatients from "../paginatePatients/PaginatePatients";
 
@@ -46,9 +46,11 @@ export default function Sidebar() {
   const globalUser = useSelector(state => state.user);
   const doctors = useSelector(state => state.doctors);
   const patients = useSelector(state => state.patients);
+  console.log("soy pacientes", patients)
   const facturas = useSelector(state => state.facturas);
   const numProffesionals = useSelector(state => state.totalProf);
   const numPatients = useSelector(state => state.totalPatients);
+  const patientsDelete = useSelector(state => state.patientsDelete)
   /* const numTurnos = useSelector(state => state.totalTurnos); */
   /* const numHistorys = useSelector(state => state.totalHistorys); */
 
@@ -62,7 +64,7 @@ export default function Sidebar() {
     dispatch(get_total_turnos());
   }, [dispatch]);
 
-  //console.log(numPatients, numProffesionals )
+  //console.log("soy estado global de delete",patientsDelete )
 
   let mesActual = facturas[0] ? facturas[0].sumaFacturas : 0;
 
