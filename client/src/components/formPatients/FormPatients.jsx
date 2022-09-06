@@ -10,6 +10,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import Cookie from 'universal-cookie'
 import { getUserDetail } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
+import swal from "sweetalert";
 
 
 function validate(input) {
@@ -63,7 +64,7 @@ function validate(input) {
     return error;
   }
   if (!/([A-z])/.test(input.city)) {
-    error.city= 'Ingrese un nombre de ciudad válido.';
+    error.city = 'Ingrese un nombre de ciudad válido.';
     return error;
   }
   return error;
@@ -110,14 +111,14 @@ export default function RegisterPatient() {
     document: "",
     birth: "",
     phone: "",
-    mail: isAuthenticated?user.email:"",
+    mail: isAuthenticated ? user.email : "",
     province: "",
     city: "",
     number: "",
     street: "",
-    username:"",
-    password: isAuthenticated?"Yoivan2.0":"",
-    new_password: isAuthenticated?"Yoivan2.0":"",
+    username: "",
+    password: isAuthenticated ? "Yoivan2.0" : "",
+    new_password: isAuthenticated ? "Yoivan2.0" : "",
   });
 
   function handleInput(e) {
@@ -148,7 +149,7 @@ export default function RegisterPatient() {
   function handleSubmit(e) {
     e.preventDefault();
     if (userForEmail ? false : true) {
-      cookie.set('userEmail', input.mail, {path: '/'})
+      cookie.set('userEmail', input.mail, { path: '/' })
       setInput({
         name: "",
         lastname: "",
@@ -165,8 +166,11 @@ export default function RegisterPatient() {
         new_password: "",
       });
       history.push(`/healthData`, input);
-    }else {
-      alert('El email que ingresaste ya esta registrado')
+    } else {
+      swal({
+        icon: 'warning',
+        title: 'El email ingresado ya se encuentra registrado'
+      })
     }
   }
 
@@ -368,42 +372,43 @@ export default function RegisterPatient() {
         <Row className={`${styles.row}`} lg={1}>
           <Col className={`${styles.col}`}>
             {input.name === "" ||
-            input.lastname === "" ||
-            input.document === "" ||
-            input.phone === "" ||
-            // input.mail === "" ||
-            input.province === "" ||
-            input.city === "" ||
-            input.street === "" ||
-            input.number === "" ||
-            // input.password === "" ||
-            // input.new_password === "" ||
-            error.name ||
-            error.lastname ||
-            error.document ||
-            error.birth ||
-            error.phone ||
-            // error.mail ||
-            // error.password ||
-            // error.new_password ||
-            error.number 
-            ? (
-              <Button
-                disabled
-                variant="danger"
-                className={`${styles.buttonSubmit}`}
-              >
-                Faltan datos por completar
-              </Button>
-            ) : (
-              <Button
-                className={`${styles.buttonSubmit}`}
-                type="submit"
-                variant="success"
-              >
-                Siguiente
-              </Button>
-            )}
+              input.lastname === "" ||
+              input.document === "" ||
+              input.phone === "" ||
+              // input.mail === "" ||
+              input.province === "" ||
+              input.city === "" ||
+              input.street === "" ||
+              input.number === "" ||
+              // input.password === "" ||
+              // input.new_password === "" ||
+              error.name ||
+              error.lastname ||
+              error.document ||
+              error.birth ||
+              error.phone ||
+              error.city ||
+              // error.mail ||
+              // error.password ||
+              // error.new_password ||
+              error.number
+              ? (
+                <Button
+                  disabled
+                  variant="danger"
+                  className={`${styles.buttonSubmit}`}
+                >
+                  Faltan datos por completar
+                </Button>
+              ) : (
+                <Button
+                  className={`${styles.buttonSubmit}`}
+                  type="submit"
+                  variant="success"
+                >
+                  Siguiente
+                </Button>
+              )}
           </Col>
         </Row>
       </Form>
