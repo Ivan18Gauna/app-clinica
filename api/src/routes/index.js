@@ -6,10 +6,10 @@ const routersHistoriaClinica = require('./routersHistoriaClinica')
 const routerInvoice = require ('./routesInvoice')
 const routesTurnos = require('./routesTurnos')
 const routesNotes = require('./routesNotes')
-const routesMercadoPago = require('./routesMercadoPago')
-
-const {Professionals, Specialties} = require ('../db');
+const routersMailer = require('./routersMailer')
+const routesMercadoPago = require('./routesMercadoPago.js')
 const { actualUser } = require('../Controllers/actualUser');
+const { registerNewAdmin } = require('../Controllers/admin');
 
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -27,7 +27,8 @@ router.use('/invoice', routerInvoice);
 router.use('/turnos', routesTurnos);
 router.use('/notes', routesNotes)
 router.get('/user/:mail', actualUser)
+router.post('/admin', registerNewAdmin)
 router.use("/mercadopago",routesMercadoPago )
-
+router.use("/mailer",routersMailer)
 
 module.exports = router;

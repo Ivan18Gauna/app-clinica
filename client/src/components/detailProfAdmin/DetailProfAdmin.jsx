@@ -23,7 +23,6 @@ export default function DetailsDrAdmin() {
 	if (doctor.length > 0 && Array.isArray(doctor.specialties)) {
 		var temp = doctor.specialties.map((e) => e.name);
 	}
-	console.log(doctor);
 
 	return (
 		<div>
@@ -41,7 +40,7 @@ export default function DetailsDrAdmin() {
 					<h5>{doctor.phone}</h5>
 					<h5>{temp}</h5>
 					<h5>{doctor.mail}</h5>
-					<h5>Matricula: {doctor.license}</h5>
+					<h5>Matrícula: {doctor.license}</h5>
 						<Button  variant="outline-success">Suspender</Button>
 				</div>
 				<div className={styles.text}>

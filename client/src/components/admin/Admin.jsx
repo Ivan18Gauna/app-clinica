@@ -31,14 +31,10 @@ export default function Sidebar(){
         setCurrentPage(pageNumber);
     };
 
-
-    //console.log("soy pat", patients)
     useEffect(() => {
 		dispatch(get_Doctors());
         dispatch(getPatients());
 	},[dispatch]);
-    //console.log("soy drs",doctors)
-
 
     return(
         <div class="row" id='row'>
@@ -47,7 +43,7 @@ export default function Sidebar(){
                     <nav class="nav nav-pills flex-column">
                     <a class="nav-link" href="#item-1" id='Margin-Top-About'><FaIcons.FaBriefcaseMedical className="me-2" />
                     
-                        Profesionales</a>
+                    Profesionales</a>
 
             
                     <a class="nav-link" href="#item-2"> <FaIcons.FaHospitalUser className="me-2"/>
@@ -94,7 +90,7 @@ export default function Sidebar(){
                     <div id="item-3">
                         <h4>Dinero Ingresado a la fecha:</h4>
                         <p>
-                        Aca irian unos graficos mostrando los millones que tenemos acumulados. 
+                        Acá irían unos gráficos mostrando los millones que tenemos acumulados. 
                         </p>
                     </div>
                     </div>

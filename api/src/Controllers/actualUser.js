@@ -1,11 +1,10 @@
 const Sequelize = require("sequelize");
 const { default: axios } = require("axios");
 const { Op } = require("sequelize");
-const { Professionals, Patients, ObrasSociales, Specialties } = require("../db");
+const { Professionals, Patients, ObrasSociales, Specialties, User } = require("../db");
 
 const actualUser = async(req, res) => {
     const { mail } = req.params
-    console.log(mail)
     try {
         const prof = await Professionals.findOne({
             where: {
@@ -28,13 +27,18 @@ const actualUser = async(req, res) => {
             where: {
                 mail: mail
             },
-             attributes: ["name"],
-
+        })
+        const admin = await User.findOne({
+            where: {
+                email: mail
+            },
         })
         if (prof) {
             res.status(200).send(prof)
-        }else {
+        }else if (pat) {
             res.status(200).send(pat)
+        }else {
+            res.status(200).send(admin)
         }
     } catch (error) {
         res.status(400).send('usuarion no encontrado')
