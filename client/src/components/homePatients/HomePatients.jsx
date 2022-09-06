@@ -16,8 +16,6 @@ import { getTurnoPat, getUserDetail } from "../../redux/actions";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-export default function HomePatients({ userInfo }) {
-  const dispatch = useDispatch();
 
 
 export default function HomePatients({ userInfo }) {
@@ -187,5 +185,4 @@ export default function HomePatients({ userInfo }) {
       )}
     </div>
   );
-}
 }
