@@ -19,7 +19,7 @@ function CardEditPatients({ id, name, lastname, avatar, city, mail}) {
 					<h5>{name} {lastname}</h5>
 				</div>
 				<p>{city}</p>
-				<h6> Soy un profesional especializado con años de experiencia y con muchas referencias </h6>
+				<h6> Soy un profesional especializado, con años de experiencia y con muchas referencias. </h6>
 				<Link  to={`/detailPatAdmin/${id}`}> 
 					<Button type="button">Ver detalle</Button>
 				</Link>
