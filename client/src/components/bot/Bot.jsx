@@ -21,8 +21,8 @@ export default function Bot() {
     },
     {
       id: "login",
-      message: "Dale clic al botón Ingresar (arriba, ala derecha)",
-      trigger: "5"
+      message: "Dale clic al botón Ingresar (arriba, a la derecha)",
+      trigger: "5" 
     },
     {
       id: "filtros",
