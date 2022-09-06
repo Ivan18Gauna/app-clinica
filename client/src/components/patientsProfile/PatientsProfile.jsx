@@ -18,7 +18,7 @@ import Cookies from "universal-cookie";
 import { useDispatch } from "react-redux";
 import swal from "sweetalert";
 
-const blood_type = ["A+", "A-", "B+", "B-", "AB+", "AB+", "AB-", "O+", "O-"];
+const blood_type = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 const provinces = [
   "Buenos Aires",
   "Ciudad Autónoma de Buenos Aires",
@@ -259,11 +259,14 @@ export default function UserProfile({ globalUser, obras }) {
 
   function handleSubmitChronicles(e) {
     e.preventDefault();
+
     if (chronicles_ && chronicles_.length > 0) {
       if (info.chronicles && info.chronicles.includes(chronicles_)) {
         swal({
           icon: 'warning',
           title: 'Enfermedad crónica ya ingresada.'
+
+
         });
       } else {
         if (info.chronicles) {
@@ -811,6 +814,7 @@ export default function UserProfile({ globalUser, obras }) {
                               placeholder="Alergias que posee"
                               name="allergies"
                               value={allergies_}
+                              onKeyDown={(e) => onKeyDown(e)}
                               onChange={handleInputAllergies}
                             />
                           </Col>

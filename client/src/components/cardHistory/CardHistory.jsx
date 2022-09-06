@@ -59,6 +59,7 @@ function CardHistory() {
 			</Row>
 		</div>
 	);
+
 }
 
 export default CardHistory;
