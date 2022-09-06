@@ -18,7 +18,7 @@ import Cookies from "universal-cookie";
 import { useDispatch } from "react-redux";
 import swal from "sweetalert";
 
-const blood_type = ["A+", "A-", "B+", "B-", "AB+", "AB+", "AB-", "O+", "O-"];
+const blood_type = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 const provinces = [
   "Buenos Aires",
   "Ciudad Autónoma de Buenos Aires",
