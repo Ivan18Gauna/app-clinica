@@ -13,13 +13,8 @@ import Cookies from "universal-cookie";
 
 export default function ClinicHistory() {
   const cookies = new Cookies();
-  const dispatch = useDispatch();
-  const { isAuthenticated } = useAuth0();
-  const globalUser = useSelector(state => state.user);
-  const clinicHistorys = useSelector(state => state.clinicHistory);
-  console.log(clinicHistorys[0]);
 	const dispatch = useDispatch();
-    const { user, isAuthenticated } = useAuth0();
+  const { user, isAuthenticated } = useAuth0();
 	const globalUser = useSelector((state) => state.user);
 	const clinicHistorys = useSelector((state) => state.clinicHistory);
     console.log(clinicHistorys[0])
