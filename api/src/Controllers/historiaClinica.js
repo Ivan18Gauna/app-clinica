@@ -11,8 +11,8 @@ const {
 const postHistoriaClinica = async (req, res) => {
   let { reason, image, description, date, diagnosis, professional, patient } = req.body;
   try {
-    const historiaClinica = { reason, image, description, date, diagnosis, };
-    if (!reason || !image || !description || !date || !diagnosis) {
+    const historiaClinica = { reason: reason[0], image, description: description[0], date: date[0], diagnosis: diagnosis[0] };
+    if (!reason || !description || !date || !diagnosis) {
       res.send("Falta infornacion");
     } else {
        let newHistoriaClinica = await HistoriaClinica.create(historiaClinica);
@@ -20,13 +20,12 @@ const postHistoriaClinica = async (req, res) => {
          where: {id: professional}
         })
        let patientdb = await Patients.findOne({
-        where: {document: patient}
+        where: {document: patient[0]}
        })
        console.log(professionaldb, patientdb)
       await professionaldb.addHistoriaClinica(newHistoriaClinica);
       await patientdb.addHistoriaClinica(newHistoriaClinica);
        res.status(200).send("Historia Credad con Exito");
-     
     }
   } catch (error) {
     console.log(error);
@@ -69,27 +68,32 @@ const getHistoriaClinica = async (req, res) => {
 
 const getHistoriaClinicaByPat = async (req, res) => {
   let { id } = req.params;
-  const pat = await Patients.findOne({
-    where: {
-      id: id
-    }
-  })
-  const hist = await pat.getHistoriaClinicas({
-    include: [
-      {
-        model: Patients,
-        attributes: ['id', 'name'],
-      },
-      {
-        model: Professionals,
-        attributes: ['id', 'name']
+  try {
+    const pat = await Patients.findOne({
+      where: {
+        id: id
       }
-    ],
-  })
-  //console.log(dbPatId)
-  //dbPatId.length?
-  res.status(200).send(hist);
-  //:res.status(404).send('Id de paciente no encontrado');
+    })
+    const hist = await pat.getHistoriaClinicas({
+      include: [
+        {
+          model: Patients,
+          attributes: ['id', 'name', 'lastname'],
+        },
+        {
+          model: Professionals,
+          attributes: ['id', 'name', 'lastname']
+        }
+      ],
+    })
+    //console.log(dbPatId)
+    //dbPatId.length?
+    res.status(200).send(hist);
+    //:res.status(404).send('Id de paciente no encontrado');
+  } catch (error) {
+    res.status(400).send('deja de joder')
+  }
+  
 };
 
 module.exports = {

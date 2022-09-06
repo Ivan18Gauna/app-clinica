@@ -11,6 +11,7 @@ export default function CardsPatients({ patients }) {
 						key={e.id}
 						name={e.name}
 						lastname={e.lastname}
+						avatar={e.avatar}
 						city={e.city}
 						mail={e.mail}
 						id={e.id}
