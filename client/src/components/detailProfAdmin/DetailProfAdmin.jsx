@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { get_DoctorsDetail } from '../../redux/actions';
@@ -12,7 +12,6 @@ import login from '../login/Login.module.css'
 
 export default function DetailsDrAdmin() {
 	const { id } = useParams();
-	const history = useHistory();
 	const dispatch = useDispatch();
 	const doctor = useSelector((state) => state.detail);
 
@@ -30,7 +29,7 @@ export default function DetailsDrAdmin() {
 		<div className={styles.container}>
 			<div className={styles.info}>
 				<div className={styles.perfil}>
-					<img src={img} />
+					<img src={img} alt='img' />
 					<h4>
 						Dr. {doctor.name} {doctor.lastname}
 					</h4>

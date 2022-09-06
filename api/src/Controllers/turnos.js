@@ -56,8 +56,10 @@ const getTurnoByProf = async(req, res) => {
                 }
               ],
         })
+      console.log(profTurnos)
         res.status(200).send(profTurnos)
     } catch (error) {
+      console.log(error.message)
         res.status(400).send('hubo un problema cargando los turnos')
     }
 }

@@ -12,7 +12,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { registerPatients } from '../../redux/actions';
 import swal from 'sweetalert';
 
-const blood_type = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB+', 'AB-', 'O+', 'O-'];
+const blood_type = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
 const vaccines_data = [
 	'BCG',
 	'Hepatitis B',

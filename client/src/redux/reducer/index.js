@@ -13,7 +13,12 @@ import {
   GET_NOTES,
   GET_TURNO_PROF,
   GET_TURNO_PAT,
-  GET_PATIENTS_DETAIL
+  GET_PATIENTS_DETAIL,
+  GET_FACTURA,
+  GET_TOTAL_PROFESSIONALS,
+  GET_TOTAL_PATIENTS,
+  GET_TOTAL_TURNOS,
+  GET_TOTAL_HISTORYS
 } from "../actions/actions";
 
 const initialState = {
@@ -29,6 +34,11 @@ const initialState = {
   notes: [],
   turnos: [],
   patientsDetail: [],
+  facturas: [],
+  totalPatients: [],
+  totalProf: [],
+  totalTurnos: [],
+  totalHistorys: []
 };
 
 function rootReducer(state = initialState, action) {
@@ -45,12 +55,33 @@ function rootReducer(state = initialState, action) {
         turnos: action.payload.data
       };
 
+
     case GET_DOCTORS:
       return {
         ...state,
         doctors: action.payload,
         alDoc: action.payload,
       };
+
+      case GET_TOTAL_PROFESSIONALS: 
+      return  {
+        ...state, totalProf: action.payload
+      };
+
+      case GET_TOTAL_PATIENTS:
+        return {
+          ...state, totalPatients: action.payload
+        }
+
+        case GET_TOTAL_HISTORYS:
+          return {
+            ...state, totalHistorys: action.payload
+          }
+
+          case GET_TOTAL_TURNOS:
+            return {
+              ...state, totalTurnos: action.payload
+            }
 
     case GET_SPECIALTIES:
       return { ...state, specialties: action.payload };
@@ -109,6 +140,12 @@ function rootReducer(state = initialState, action) {
 
     case GET_NOTES: 
       return { ...state, notes: action.payload };
+
+      case GET_FACTURA:
+        return{
+          ...state,
+          facturas: action.payload,
+        }
 
     default:
       return state;
