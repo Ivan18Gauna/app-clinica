@@ -72,7 +72,7 @@ const getHistoriaClinicaByPat = async (req, res) => {
     const pat = await Patients.findOne({
       where: {
         id: id
-      }
+      } 
     })
     const hist = await pat.getHistoriaClinicas({
       include: [
