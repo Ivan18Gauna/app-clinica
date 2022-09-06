@@ -245,8 +245,9 @@ const getProfByName = async(req, res) => {
 const postProfessionals = async (req, res) => {
   let {
     name,
+    password,
     lastname,
-	avatar,
+	  avatar,
     license,
     birth,
     phone,
@@ -260,8 +261,9 @@ const postProfessionals = async (req, res) => {
   try {
     const professional = {
       name: name,
+      password: password,
       lastname: lastname,
-	  avatar: avatar,
+	    avatar: avatar,
       license: license,
       birth: birth,
       phone: phone,
@@ -275,6 +277,7 @@ const postProfessionals = async (req, res) => {
       return res.send("El valor ingresado no debe ser numerico.");
     if (
       !name ||
+      !password ||
       !lastname ||
       !license ||
       !birth ||
