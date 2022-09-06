@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
-import Row from "react-bootstrap/Row";
-import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getTurnoProf } from "../../redux/actions";
@@ -19,14 +16,8 @@ export default function HomeProfessional({ globalUser }) {
     title: "",
     note: "",
     day: new Date()
-    // professional: userInfo.license
+    //professional: userInfo.license
   });
-
-  console.log(globalUser.id);
-  useEffect(() => {
-    dispatch(getTurnoProf(globalUser.id));
-    //     dispatch(getNotes());
-  }, []);
 
   function hanldeChange(e) {
     e.preventDefault();
@@ -51,7 +42,10 @@ export default function HomeProfessional({ globalUser }) {
       day: new Date()
     });
   }
-
+  useEffect(() => {
+    dispatch(getTurnoProf(globalUser.id));
+    //dispatch(getNotes());
+  }, []);
   // function notesProfessionals(e){
   //     e.preventDefault();
   //     dispatch(deleteNotes(e.target.key));
@@ -60,38 +54,32 @@ export default function HomeProfessional({ globalUser }) {
   //
   // }
 
-  console.log(turnos);
+  console.log("turnos", turnos);
   return (
     <div className={styles.container}>
-      <div className={`${styles.turnos}`}>
+      <div className={`${styles.turnosContenedor}`}>
         <div>
           <h3 className={styles.h3}>PROXIMOS TURNOS</h3>
           {turnos.length > 0 ? null : <p>Sin Turnos</p>}
         </div>
-        <div className={styles.prueba}>
-          <div className={styles.turnosContent}>
-            {Array.from({ length: 6 })
-              .slice(0, 3)
-              .map(e => {
-                return (
-                  <ListGroup variant="flush">
-                    <ListGroup.Item>Fecha: Lunes, 4 sept </ListGroup.Item>
-                    <ListGroup.Item>Hora: </ListGroup.Item>
-                    <ListGroup.Item>
-                      Profesional:{" "}
-                      {e
-                        ? `${e.professional.name} ${e.professional.lastname}`
-                        : ""}
-                    </ListGroup.Item>
-                    <ListGroup.Item>
-                      Domicilio: Av Libertador 1521
-                    </ListGroup.Item>
-                    ------------------------------------
-                    <br />
-                  </ListGroup>
-                );
-              })}
-          </div>
+        <div className={styles.turnos}>
+          {Array.from({ length: 6 })
+            .slice(0, 3)
+            .map((e, i) => {
+              return (
+                <ListGroup key={i} variant="flush">
+                  <ListGroup.Item>Fecha: Lunes, 4 sept </ListGroup.Item>
+                  <ListGroup.Item>Hora: </ListGroup.Item>
+                  <ListGroup.Item>
+                    Profesional:{" "}
+                    {e
+                      ? `${e.professional.name} ${e.professional.lastname}`
+                      : ""}
+                  </ListGroup.Item>
+                  <ListGroup.Item>Domicilio: Av Libertador 1521</ListGroup.Item>
+                </ListGroup>
+              );
+            })}
         </div>
       </div>
       <div className={styles.notes}>

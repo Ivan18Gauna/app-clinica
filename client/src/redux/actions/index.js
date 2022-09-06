@@ -12,13 +12,10 @@ import {
   GET_NOTES,
   GET_TURNO_PROF,
   GET_TURNO_PAT,
-  GET_PATIENTS_DETAIL,
-  POST_TURNO_MAIL
+  GET_PATIENTS_DETAIL
+  /* POST_TURNO_MAIL */
 } from "../actions/actions";
 import axios from "axios";
-import { bindActionCreators } from "redux";
-
-//const URL = 'http://localhost:3001';
 
 export function get_Doctors() {
   return async function(dispatch) {
@@ -141,7 +138,7 @@ export function getPatientsByName(payload) {
 }
 
 export function postHistory(payload) {
-  console.log('payload', payload)
+  console.log("payload", payload);
   return async function() {
     try {
       const res = await axios.post("/historiaclinica", payload);
@@ -295,10 +292,7 @@ export function deletePatients(id) {
 export function postTurnoMail(payload, mail) {
   return async function() {
     try {
-      const patient = await axios.post(
-        `/mailer/send-email/${mail}`,
-        payload
-      );
+      const patient = await axios.post(`/mailer/send-email/${mail}`, payload);
       return patient;
     } catch (e) {
       console.log(e.message);

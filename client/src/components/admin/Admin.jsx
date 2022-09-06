@@ -16,7 +16,8 @@ export default function Sidebar(){
     const doctors = useSelector((state) => state.doctors);
     const patients = useSelector((state) => state.patients);
     const [currentPage, setCurrentPage] = useState(1);
-    const [doctorsPage, setDoctorsPage] = useState(10);
+    /* setDoctorsPage */
+    const [doctorsPage] = useState(10);
     const indexOfLastDoctor = currentPage * doctorsPage; //10
     const indexFirstDoctor = indexOfLastDoctor - doctorsPage; // 10 - 10 = 0
     const currentDoctors = doctors.slice(

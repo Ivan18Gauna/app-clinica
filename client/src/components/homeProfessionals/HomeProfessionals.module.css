@@ -6,13 +6,18 @@
   margin: 2rem 0 2rem 0;
 }
 
-.turnos {
+.turnosContenedor {
   display: flex;
   flex-direction: column;
-  padding: 3rem;
+  justify-content: center;
+  padding: 2.5rem;
   border-radius: 5rem;
   border: 1px solid;
   width: 45%;
+}
+
+.turnos {
+  height: 100%;
 }
 
 .notes {
