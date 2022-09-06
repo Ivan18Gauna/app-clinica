@@ -71,7 +71,7 @@ const getProParanoid = async (req, res) => {
     res.status(200).send(profParanoid);
   };
   
-
+//comment
 // const getParanoidProfessionals = async (req, res) => {
 //     try {
 //         const profParanoid = await Professionals.findAll();
