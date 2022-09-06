@@ -141,7 +141,7 @@ export default function RegisterPatient() {
 
   useEffect(() => {
     dispatch(getUserDetail(input.mail))
-  }, [input.mail])
+  }, [dispatch, input.mail])
 
   const userForEmail = useSelector((state) => state.user)
 

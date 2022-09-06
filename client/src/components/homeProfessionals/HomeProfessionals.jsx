@@ -45,7 +45,7 @@ export default function HomeProfessional({ globalUser }) {
   useEffect(() => {
     dispatch(getTurnoProf(globalUser.id));
     //dispatch(getNotes());
-  }, []);
+  }, [dispatch, globalUser.id]);
   // function notesProfessionals(e){
   //     e.preventDefault();
   //     dispatch(deleteNotes(e.target.key));
@@ -71,12 +71,11 @@ export default function HomeProfessional({ globalUser }) {
                   <ListGroup.Item>Fecha: Lunes, 4 sept </ListGroup.Item>
                   <ListGroup.Item>Hora: </ListGroup.Item>
                   <ListGroup.Item>
-                    Profesional:{" "}
+                    Paciente:{" "}
                     {e
                       ? `${e.professional.name} ${e.professional.lastname}`
                       : ""}
                   </ListGroup.Item>
-                  <ListGroup.Item>Domicilio: Av Libertador 1521</ListGroup.Item>
                 </ListGroup>
               );
             })}

@@ -49,8 +49,6 @@ export default function Bot() {
   ];
   const [active, setActive] = useState(false);
   const [activeIcon, setActiveIcon] = useState(false);
-  console.log(active);
-  console.log(activeIcon);
   return (
     <>
       <div className={`bot ${active ? "active" : "disabled"}`}>
