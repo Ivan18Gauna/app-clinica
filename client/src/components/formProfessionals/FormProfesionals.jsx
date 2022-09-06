@@ -174,6 +174,7 @@ export default function RegisterDoctor() {
 
   function handleSubmit(e) {
     e.preventDefault();
+    console.log('3', input.password)
     dispatch(registerDoctors(input));
     swal({
       icon: 'success',
