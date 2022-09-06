@@ -15,15 +15,15 @@ import swal from 'sweetalert';
 function validate(input) {
   let error = {};
   if (!/([A-z])/.test(input.name)) {
-    error.name = "Ingrese un nombre valido.";
+    error.name = "Ingrese un nombre válido.";
     return error;
   }
   if (!/([A-z])/.test(input.lastname)) {
-    error.lastname = "Ingrese un apellido valido.";
+    error.lastname = "Ingrese un apellido válido.";
     return error;
   }
   if (!/\S+@\S+\.\S+/.test(input.mail)) {
-    error.mail = "Dirección de correo no valida.";
+    error.mail = "Dirección de correo no válida.";
     return error;
   }
   if (
@@ -51,21 +51,21 @@ function validate(input) {
     return error;
   }
   if (!/[0-9]/.test(input.license)) {
-    error.license = "Matrícula no valida.";
+    error.license = "Matrícula no válida.";
     return error;
   } else if (input.license <= 0) {
-    error.license = "Matrícula no valida.";
+    error.license = "Matrícula no válida.";
     return error;
   }
   if (!/^\d{10}$$/.test(input.phone)) {
-    error.phone = "Número de telefono no valido.";
+    error.phone = "Número de telefono no válido.";
     return error;
   }
   if (!/[0-9]/.test(input.number)) {
-    error.number = "Número no valido.";
+    error.number = "Número no válido.";
     return error;
   } else if (input.number <= 0) {
-    error.number = "Número no valida.";
+    error.number = "Número no válida.";
     return error;
   }
   if (!/([A-z])/.test(input.city)) {
@@ -174,6 +174,7 @@ export default function RegisterDoctor() {
 
   function handleSubmit(e) {
     e.preventDefault();
+    console.log('3', input.password)
     dispatch(registerDoctors(input));
     swal({
       icon: 'success',

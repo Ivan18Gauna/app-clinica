@@ -16,19 +16,23 @@ import Cookies from "universal-cookie";
 import Sidebar from "../admin/Admin.jsx";
 
 export default function Home() {
-  const cookie = new Cookies();
   const dispatch = useDispatch();
   const globalUser = useSelector(state => state.user);
 
   useEffect(() => {
+    const cookie = new Cookies();
     dispatch(getUserDetail(cookie.get("userEmail")));
-  }, []);
+  }, [dispatch]);
 
   return (
     <>
       {globalUser && globalUser.rolUser && <Sidebar />}
-      {globalUser && globalUser.document && <HomePatients userInfo={globalUser} />}
-      {globalUser && globalUser.license && ( <HomeProfessional globalUser={globalUser} /> )}
+      {globalUser && globalUser.document && (
+        <HomePatients userInfo={globalUser} />
+      )}
+      {globalUser && globalUser.license && (
+        <HomeProfessional globalUser={globalUser} />
+      )}
       {!globalUser || (globalUser && !globalUser.name) ? (
         <div className={`${styles.container}`}>
           <Bot />

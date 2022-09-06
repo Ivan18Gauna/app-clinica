@@ -245,9 +245,9 @@ const getProfByName = async(req, res) => {
 const postProfessionals = async (req, res) => {
   let {
     name,
-    password,
     lastname,
-	  avatar,
+	password,
+	avatar,
     license,
     birth,
     phone,
@@ -261,9 +261,9 @@ const postProfessionals = async (req, res) => {
   try {
     const professional = {
       name: name,
-      password: password,
       lastname: lastname,
-	    avatar: avatar,
+	  password: password,
+	  avatar: avatar,
       license: license,
       birth: birth,
       phone: phone,
@@ -277,7 +277,6 @@ const postProfessionals = async (req, res) => {
       return res.send("El valor ingresado no debe ser numerico.");
     if (
       !name ||
-      !password ||
       !lastname ||
       !license ||
       !birth ||
@@ -368,6 +367,25 @@ const deleteProfessionals = async (req, res) => {
 }
    
 
+const restoreProfessional = async(req, res) => {
+	let { id } = req.params;
+	try {
+		await Professionals.restore({
+			where: {
+				id: id
+			}
+		});
+		const restoredProf = await Professionals.findOne({
+			where: {
+				id: id
+			}
+		})
+		res.status(200).send(restoredProf)
+	} catch (error) {
+		res.status(400).send('Hubo un problema recuperando el usuario')
+	}
+}
+
 
 module.exports = {
   getInfoApi,
@@ -380,5 +398,11 @@ module.exports = {
   putProfessionals,
   getObrasSociales,
   addProfDb,
-  deleteProfessionals
+  deleteProfessionals,
+  restoreProfessional
 };
+
+
+
+
+

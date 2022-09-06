@@ -18,7 +18,6 @@ module.exports = (sequelize) => {
       },
       username: {
         type: DataTypes.STRING,
-        // allowNull: false,
       },
       password: {
         type: DataTypes.STRING,
@@ -64,6 +63,10 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      suscribed: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      }
     },
     {
       createdAt: false,

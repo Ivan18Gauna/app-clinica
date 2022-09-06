@@ -12,15 +12,13 @@ import {
   GET_NOTES,
   GET_TURNO_PROF,
   GET_TURNO_PAT,
-
   GET_PATIENTS_DETAIL,
-  POST_TURNO_MAIL,
   GET_FACTURA,
   GET_TOTAL_PROFESSIONALS,
   GET_TOTAL_PATIENTS,
   GET_TOTAL_TURNOS,
   GET_TOTAL_HISTORYS
-  
+  /* POST_TURNO_MAIL, */
 
 } from "../actions/actions";
 import axios from "axios";
@@ -323,9 +321,10 @@ export function newTurno(payload) {
   return async function() {
     try {
       const turno = await axios.post("/turnos", payload);
-      return turno
+      alert("Turno creado correctamente!")
+      return turno;
     } catch (error) {
-      alert(error.response.data);
+      alert("El turno ya existe o no esta disponible el horario");
     }
   };
 }
