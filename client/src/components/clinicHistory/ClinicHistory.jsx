@@ -12,17 +12,16 @@ import "../../App.css";
 import Cookies from "universal-cookie";
 
 export default function ClinicHistory() {
-  const cookies = new Cookies();
   const dispatch = useDispatch();
   const { isAuthenticated } = useAuth0();
   const globalUser = useSelector(state => state.user);
   const clinicHistorys = useSelector(state => state.clinicHistory);
-  console.log(clinicHistorys[0]);
 
   useEffect(() => {
+    const cookies = new Cookies();
     dispatch(getUserDetail(cookies.get("userEmail")));
     dispatch(getClinicHistory(globalUser.id));
-  }, [globalUser.id]);
+  }, [dispatch, globalUser.id]);
 
   if (
     (isAuthenticated && !globalUser) ||

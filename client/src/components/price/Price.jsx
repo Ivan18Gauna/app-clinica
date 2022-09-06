@@ -11,7 +11,6 @@ import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 
 export default function Price() {
-  const cookies = new Cookies();
   const dispatch = useDispatch();
   const user = useSelector(state => state.user);
   const [pricer] = useState({
@@ -25,8 +24,9 @@ export default function Price() {
   const date = arr[2] + "/" + arr[1] + "/" + arr[3];
 
   useEffect(() => {
+    const cookies = new Cookies();
     dispatch(getUserDetail(cookies.get("userEmail")));
-  }, []);
+  }, [dispatch]);
 
   const onClickBuy = async e => {
     const res = await axios.post("/mercadopago", {

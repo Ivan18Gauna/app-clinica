@@ -205,6 +205,25 @@ const deletePatients = async (req, res) => {
   }
 };
 
+const restorePatient = async(req, res) => {
+	let { id } = req.params;
+	try {
+		await Patients.restore({
+			where: {
+				id: id
+			}
+		});
+		const restoredPat = await Patients.findOne({
+			where: {
+				id: id
+			}
+		})
+		res.status(200).send(restoredPat)
+	} catch (error) {
+		res.status(400).send('Hubo un problema recuperando el usuario')
+	}
+}
+
 module.exports = {
   getInfoApiPatients,
   getAllPatients,
@@ -215,4 +234,5 @@ module.exports = {
   putPatients,
   getPatByOnsearchName,
   deletePatients,
+  restorePatient
 };

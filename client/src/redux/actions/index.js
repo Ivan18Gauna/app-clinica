@@ -12,8 +12,14 @@ import {
   GET_NOTES,
   GET_TURNO_PROF,
   GET_TURNO_PAT,
-  GET_PATIENTS_DETAIL
-  /* POST_TURNO_MAIL */
+  GET_PATIENTS_DETAIL,
+  GET_FACTURA,
+  GET_TOTAL_PROFESSIONALS,
+  GET_TOTAL_PATIENTS,
+  GET_TOTAL_TURNOS,
+  GET_TOTAL_HISTORYS
+  /* POST_TURNO_MAIL, */
+
 } from "../actions/actions";
 import axios from "axios";
 
@@ -28,6 +34,60 @@ export function get_Doctors() {
   };
 }
 
+export function get_factura(){
+  return async function(dispatch){
+    const facturacion = await axios.get(`/invoice`);
+
+    return dispatch({
+      type: GET_FACTURA,
+      payload: facturacion.data
+    });
+  }
+}
+
+export function get_total_proffesionals(){
+  return async function(dispatch){
+    const totalProf = await axios.get(`/admin/professionals`)
+
+      return dispatch({
+      type: GET_TOTAL_PROFESSIONALS,
+      payload: totalProf.data
+  })}
+}
+
+export function get_total_patients(){
+  return async function(dispatch){
+
+    const totalPatients = await axios.get(`/admin/patients`)
+
+    return dispatch({
+      type: GET_TOTAL_PATIENTS,
+      payload: totalPatients.data
+    })
+  }
+}
+
+export function get_total_turnos(){
+  return async function(dispatch){
+    const totalTurnos = await axios.get(`/admin/turnos`)
+
+    return dispatch({
+      type: GET_TOTAL_TURNOS,
+      payload: totalTurnos.data
+    })
+  }
+}
+
+export function get_total_historys(){
+  return async function(dispatch){
+    const totalHistorys = await axios.get(`/admin/historiaclinica`)
+
+    return dispatch({
+      type: GET_TOTAL_HISTORYS,
+      payload: totalHistorys.data
+    })
+  }
+}
 export function get_specialties() {
   return async function(dispatch) {
     const specialties = await axios(`/especialties`);
@@ -123,6 +183,8 @@ export function getPatients() {
     });
   };
 }
+
+
 export function getPatientsByName(payload) {
   return async function(dispatch) {
     try {
