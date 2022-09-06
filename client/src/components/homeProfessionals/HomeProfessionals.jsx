@@ -1,35 +1,38 @@
 import React, { useEffect, useState } from "react";
 import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
- import { useDispatch, useSelector } from "react-redux";
+import Row from "react-bootstrap/Row";
+import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { getTurnoProf } from "../../redux/actions";
-// import Loading from "../loading/Loading";
+import styles from "./HomeProfessionals.module.css";
 // import { postNotes, getNotes } from "../../redux/actions";
 
-export default function HomeProfessional({globalUser}) {
-   const dispatch = useDispatch();
+export default function HomeProfessional({ globalUser }) {
+  const dispatch = useDispatch();
+  const [createNote, setCreateNote] = useState(false);
+  const turnos = useSelector(state => state.turnos);
   // const userInfo = useSelector( state => state.user )
-  // const notesProfessionals = useSelector( state => state.user )
+  const notesProfessionals = useSelector(state => state.user);
   const [notes, setNotes] = useState({
     title: "",
     note: "",
-    day: new Date(),
+    day: new Date()
     // professional: userInfo.license
   });
-  const [createNote, setCreateNote] = useState(false);
 
+  console.log(globalUser.id);
   useEffect(() => {
-    dispatch(getTurnoProf(globalUser.id))
+    dispatch(getTurnoProf(globalUser.id));
     //     dispatch(getNotes());
   }, []);
-  const turnos = useSelector((state) => state.turnos)
 
   function hanldeChange(e) {
     e.preventDefault();
     setNotes({
       ...notes,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     });
   }
 
@@ -45,7 +48,7 @@ export default function HomeProfessional({globalUser}) {
     setNotes({
       title: "",
       note: "",
-      day: new Date(),
+      day: new Date()
     });
   }
 
@@ -57,25 +60,28 @@ export default function HomeProfessional({globalUser}) {
   //
   // }
 
+  console.log(turnos);
   return (
-    <div>
-      {/* { userInfo && notesProfessionals.lentgh > 0 ? */}
-      <div>
-        <h1>Medico</h1>
-        <Card style={{ width: "22rem" }}>
-          <Card.Body>
-            <Card.Title>Proximos Turnos</Card.Title>
-            <Card.Text>
-              Recorda pedirle a tu medico que actualice tu historia clinica!
-            </Card.Text>
-            ------------------------------------
-            {turnos.map((e, i) => {
+    <div className={styles.container}>
+      <div className={`${styles.turnos}`}>
+        <div>
+          <h3 className={styles.h3}>PROXIMOS TURNOS</h3>
+          {turnos.length > 0 ? null : <p>Sin Turnos</p>}
+        </div>
+        <div className={styles.prueba}>
+          <div className={styles.turnosContent}>
+            {Array.from({ length: 6 })
+              .slice(0, 3)
+              .map(e => {
                 return (
                   <ListGroup variant="flush">
-                    <ListGroup.Item>Fecha: {e ? e.date : ""}</ListGroup.Item>
-                    <ListGroup.Item>Hora: {e ? e.time : ""}</ListGroup.Item>
+                    <ListGroup.Item>Fecha: Lunes, 4 sept </ListGroup.Item>
+                    <ListGroup.Item>Hora: </ListGroup.Item>
                     <ListGroup.Item>
-                      Profesional: {e ? e.professional.name : ""}
+                      Profesional:{" "}
+                      {e
+                        ? `${e.professional.name} ${e.professional.lastname}`
+                        : ""}
                     </ListGroup.Item>
                     <ListGroup.Item>
                       Domicilio: Av Libertador 1521
@@ -84,50 +90,45 @@ export default function HomeProfessional({globalUser}) {
                     <br />
                   </ListGroup>
                 );
-            })}
-            <br />
-            <Card.Link href="#">Cancelar turno</Card.Link>
-            <Card.Link href="#">Pedir otro turno</Card.Link>
-          </Card.Body>
-        </Card>
-        <div>
-          <h3>Block de notas</h3>
-          {/* { // PUEDE SER UN COMPONENTE IGUAL
-                        notesProfessionals.length > 0 ?
-                        notesProfessionals.map( element => (
-                            <div key={element.id}>
-                                <h4>{element.title}</h4>
-                                <p>{element.note}</p>
-                                <button onClick={e => handleDelete(e)} >X</button>
-                            </div>
-                        ))
-                        : null
-                    } */}
-          {createNote === false ? (
-            <button onClick={(e) => handleClick(e)}>Crear nota</button>
-          ) : (
-            <div>
-              <label>Titulo</label>
-              <input
-                name="title"
-                value={notes.title}
-                onChange={(e) => hanldeChange(e)}
-              />
-              <label>Nota</label>
-              <input
-                name="note"
-                value={notes.note}
-                onChange={(e) => hanldeChange(e)}
-              />
-              <button onClick={(e) => handleNote(e)}>Añadir nota</button>
-            </div>
-          )}
+              })}
+          </div>
         </div>
+      </div>
+      <div className={styles.notes}>
+        <h3>Block de notas</h3>
+        {// PUEDE SER UN COMPONENTE IGUAL
+        notesProfessionals.length > 0
+          ? notesProfessionals.map(element => (
+              <div key={element.id}>
+                <h4>{element.title}</h4>
+                <p>{element.note}</p>
+                <button>X</button>
+              </div>
+            ))
+          : null}
+        {createNote === false ? (
+          <button onClick={e => handleClick(e)}>Crear nota</button>
+        ) : (
+          <div>
+            <label>Titulo</label>
+            <input
+              name="title"
+              value={notes.title}
+              onChange={e => hanldeChange(e)}
+            />
+            <label>Nota</label>
+            <input
+              name="note"
+              value={notes.note}
+              onChange={e => hanldeChange(e)}
+            />
+            <button onClick={e => handleNote(e)}>Añadir nota</button>
+          </div>
+        )}
         <Link to="/form">
           <button>Cargar Historia Clinica</button>
         </Link>
       </div>
-      {/* : <Loading/>  */}
     </div>
   );
 }
