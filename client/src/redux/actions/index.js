@@ -321,9 +321,10 @@ export function newTurno(payload) {
   return async function() {
     try {
       const turno = await axios.post("/turnos", payload);
+      alert("Turno creado correctamente!")
       return turno;
     } catch (error) {
-      console.log(error);
+      alert("El turno ya existe o no esta disponible el horario");
     }
   };
 }
