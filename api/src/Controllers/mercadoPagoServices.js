@@ -45,9 +45,9 @@ const postMP = async (req, res) => {
     let preference = {
         items: itemsMp,
         back_urls: {
-            success: `http://localhost:3001/mercadopago/factura`,
-            failure: `http://localhost:3001/mercadopago/factura`,
-            pending: `http://localhost:3001/mercadopago/factura`
+            success: `https://app-salud.vercel.app/mercadopago/factura`,
+            failure: `https://app-salud.vercel.app/mercadopago/factura`,
+            pending: `https://app-salud.vercel.app/mercadopago/factura`
         },
         auto_return: "approved",
         payment_methods: {
