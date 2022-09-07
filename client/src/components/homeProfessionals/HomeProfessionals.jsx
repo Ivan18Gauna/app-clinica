@@ -66,8 +66,8 @@ export default function HomeProfessional({ globalUser }) {
   return (
     <div className={styles.container}>
       <div className={`${styles.turnosContenedor}`}>
-        <div>
-          <h3 className={styles.h3}>PROXIMOS TURNOS</h3>
+        <div className={styles.titulo}>
+          <h3 >PROXIMOS TURNOS</h3>
           {turnos.length > 0 ? null : <p>Sin Turnos</p>}
         </div>
         <div className={styles.turnos}>

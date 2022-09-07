@@ -36,8 +36,11 @@
   width: 45%;
 }
 
-.h3 {
+.titulo h3 {
   margin: 0;
   padding-bottom: 1.5rem;
   border-bottom: 1px solid #AEAEAE;
+}
+.titulo p {
+  margin: 1rem 0;
 }

@@ -10,7 +10,7 @@ import Button from "react-bootstrap/Button";
 import CheckIcon from "@mui/icons-material/Check";
 
 export default function Price() {
-  const dispatch = useDispatch();
+const dispatch = useDispatch();
   const user = useSelector(state => state.user);
   const [pricer] = useState({
     basic: 15,
