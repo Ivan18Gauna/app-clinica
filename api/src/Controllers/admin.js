@@ -72,22 +72,6 @@ const getProParanoid = async (req, res) => {
     
     res.status(200).send(profParanoid);
   };
-  //comment
-
-// const getParanoidProfessionals = async (req, res) => {
-//     try {
-//         const profParanoid = await Professionals.findAll();
-//         console.log(prof)
-//         if (!profParanoid) {
-//         return res.status(404).send({ error: "0" });
-//         }
-//         const profLength = prof.length
-//         //const sumaProf = prof.len);
-//         return res.send(profLength);
-//     } catch (error) {
-//         res.status(404).send({ error: error.message })
-//     }
-// }
 
 
 

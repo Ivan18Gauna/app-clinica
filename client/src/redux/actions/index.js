@@ -20,6 +20,7 @@ import {
   GET_TOTAL_TURNOS,
   GET_TOTAL_HISTORYS,
   SET
+
 } from "../actions/actions";
 import axios from "axios";
 
@@ -187,7 +188,6 @@ export function getPatients() {
 export function getInvoice(id) {
   return async function(dispatch) {
     const invoice = await axios.get("/invoice/detail/" + id);
-    console.log("action", invoice.data);
     return dispatch({
       type: GET_INVOICE,
       payload: invoice.data
