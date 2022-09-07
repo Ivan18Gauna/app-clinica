@@ -63,22 +63,19 @@ export default function HomeProfessional({ globalUser }) {
           {turnos.length > 0 ? null : <p>Sin Turnos</p>}
         </div>
         <div className={styles.turnos}>
-          {Array.from({ length: 6 })
-            .slice(0, 3)
-            .map((e, i) => {
-              return (
-                <ListGroup key={i} variant="flush">
-                  <ListGroup.Item>Fecha: Lunes, 4 sept </ListGroup.Item>
-                  <ListGroup.Item>Hora: </ListGroup.Item>
-                  <ListGroup.Item>
-                    Paciente:{" "}
-                    {e
-                      ? `${e.professional.name} ${e.professional.lastname}`
-                      : ""}
-                  </ListGroup.Item>
-                </ListGroup>
-              );
-            })}
+          {turnos.slice(0, 3).map((e, i) => {
+            console.log(e)
+            return (
+              <div className={styles.turnoItem} key={i}>
+                <h5>{e.date.split(',')[0].toUpperCase()}</h5>
+                <ListGroup.Item>{e.time}</ListGroup.Item>
+                <ListGroup.Item>
+                  Paciente:{" "}
+                  {e ? `${e.patient.name} ${e.patient.lastname}` : ""}
+                </ListGroup.Item>
+              </div>
+            );
+          })}
         </div>
       </div>
       <div className={styles.notes}>
