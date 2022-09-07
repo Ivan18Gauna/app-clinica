@@ -63,7 +63,9 @@ const getCountPatients = async (req, res) => {
 const getProParanoid = async (req, res) => {
     const profParanoid = await Professionals.findAll({
         where:{
-            
+            deletedAt:{
+              [Op.ne]:null
+            }
         },
         paranoid:false
     });
