@@ -3,20 +3,19 @@ import { DatePicker, TimePicker } from "@material-ui/pickers";
 import "./Calendar.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserDetail, newTurno, postTurnoMail } from "../../redux/actions";
-import { useHistory, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Cookies from "universal-cookie";
 import { useEffect } from "react";
 
 const Calendar = () => {
-  const cookies = new Cookies();
-  const history = useHistory();
   const location = useLocation();
-  const professional = location.state;
   const dispatch = useDispatch();
+  const professional = location.state;
 
   useEffect(() => {
+    const cookies = new Cookies();
     dispatch(getUserDetail(cookies.get("userEmail")));
-  }, []);
+  }, [dispatch]);
 
   const user = useSelector(state => state.user);
   console.log("user", user);
@@ -33,8 +32,8 @@ const Calendar = () => {
     month: "short",
     day: "numeric"
   });
-  console.log(arr)
-  console.log(date)
+  console.log(arr);
+  console.log(date);
   const payload = {
     date: date,
     time: arr[4].split(":")[0] + ":00",
@@ -60,6 +59,7 @@ const Calendar = () => {
           <TimePicker value={fecha} onChange={onChangeSetFecha} />
         </div>
       </div>
+      <h2>Reserve su turno de lunes a viernes de 9 hs a 18</h2>
       <button onClick={handleSubmit}>Solicitar turno</button>
     </div>
   );
