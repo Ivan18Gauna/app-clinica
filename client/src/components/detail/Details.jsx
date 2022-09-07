@@ -14,14 +14,13 @@ export default function Details() {
   const history = useHistory();
   const dispatch = useDispatch();
   const doctor = useSelector(state => state.detail);
-  const paid = useSelector((state) => state.suscribed)
-  
+  const paid = useSelector(state => state.suscribed);
 
   useEffect(() => {
-    dispatch(set())
+    dispatch(set());
     dispatch(get_DoctorsDetail(id));
-    dispatch(getInvoice(id))
-  }, [id]);
+    dispatch(getInvoice(id));
+  }, [dispatch, id]);
 
   if (doctor.length > 0 && Array.isArray(doctor.specialties)) {
     var temp = doctor.specialties.map(e => e.name);
@@ -49,15 +48,13 @@ export default function Details() {
               <h5>{temp}</h5>
               <h5>{doctor.mail}</h5>
               <h5>Matricula: {doctor.license}</h5>
-              {
-                paid && !paid[0]? (
-                  ''
-                ) : (
-              <Button onClick={handleTurnoSubmit} variant="outline-success">
-                Tomar turno
-              </Button>
-                )
-              }
+              {paid && !paid[0] ? (
+                ""
+              ) : (
+                <Button onClick={handleTurnoSubmit} variant="outline-success">
+                  Tomar turno
+                </Button>
+              )}
             </div>
             <div className={styles.text}>
               <p>
