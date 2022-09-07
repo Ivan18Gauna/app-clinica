@@ -44,6 +44,7 @@ const initialState = {
   totalTurnos: [],
   totalHistorys: [],
   patientsDelete: [],
+  prof_deleted: []
 };
 
 function rootReducer(state = initialState, action) {
@@ -58,7 +59,7 @@ function rootReducer(state = initialState, action) {
         return{
           ...state,
           prof_deleted: action.payload
-        }
+         }
 
     case GET_INVOICE:
       return {

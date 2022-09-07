@@ -60,7 +60,7 @@ export default function Sidebar() {
   /* const numHistorys = useSelector(state => state.totalHistorys); */
 
 
-  useEffect(() => {
+   useEffect(() => {
     dispatch(get_Doctors());
     dispatch(getPatients());
     dispatch(get_factura());

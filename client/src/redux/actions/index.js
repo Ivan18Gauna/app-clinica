@@ -160,7 +160,7 @@ export function get_restoreProf(id) {
   return async function() {
     const restoresProf = await axios(`professionals/restore/` + id);
     
-      return restoresProf
+       return restoresProf
   }
 }
 
