@@ -19,8 +19,11 @@
 .turnos {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
   height: 100%;
+}
+
+.turnoItem {
+  margin-top: 3rem;
 }
 
 .notes {
