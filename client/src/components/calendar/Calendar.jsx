@@ -59,7 +59,6 @@ const Calendar = () => {
           <TimePicker value={fecha} onChange={onChangeSetFecha} />
         </div>
       </div>
-      <h2>Reserve su turno de lunes a viernes de 9 hs a 18</h2>
       <button onClick={handleSubmit}>Solicitar turno</button>
     </div>
   );
