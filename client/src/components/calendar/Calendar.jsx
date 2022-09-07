@@ -18,7 +18,7 @@ const Calendar = () => {
   }, [dispatch]);
 
   const user = useSelector(state => state.user);
-  console.log("user", user);
+
 
   const [fecha, setFecha] = useState(new Date());
   const onChangeSetFecha = e => {
@@ -32,8 +32,8 @@ const Calendar = () => {
     month: "short",
     day: "numeric"
   });
-  console.log(arr);
-  console.log(date);
+  // console.log(arr);
+  // console.log(date);
   const payload = {
     date: date,
     time: arr[4].split(":")[0] + ":00",
@@ -43,8 +43,13 @@ const Calendar = () => {
 
   const handleSubmit = e => {
     e.preventDefault(e);
-    dispatch(newTurno(payload));
-    dispatch(postTurnoMail(payload, user.mail));
+    dispatch(newTurno(payload))
+      .then(res => dispatch(postTurnoMail(res, user.mail)),
+        err => console.log('err', err))
+
+    //  console.log('turno',)
+    // dispatch(postTurnoMail(payload, user.mail));
+
   };
 
   return (
