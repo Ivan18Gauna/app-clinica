@@ -55,7 +55,7 @@ function rootReducer(state = initialState, action) {
         suscribed: action.payload,
       }
 
-      case GET_PROF_DELETED:
+        case GET_PROF_DELETED:
         return{
           ...state,
           prof_deleted: action.payload

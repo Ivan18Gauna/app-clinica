@@ -157,7 +157,7 @@ export function get_DoctorsDetail(id) {
  
 export function get_restoreProf(id) {
   
-  return async function() {
+    return async function() {
     const restoresProf = await axios(`professionals/restore/` + id);
     
        return restoresProf
