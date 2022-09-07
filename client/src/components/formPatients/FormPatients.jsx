@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -8,21 +8,23 @@ import styles from "./FormPatients.module.css";
 import { useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import Cookie from 'universal-cookie'
+import { getUserDetail } from "../../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
 
 
 function validate(input) {
   let error = {};
   if (!/([A-z])/.test(input.name)) {
-    error.name = "Ingrese un nombre valido.";
+    error.name = "Ingrese un nombre válido.";
     return error;
   }
   if (!/([A-z])/.test(input.lastname)) {
-    error.lastname = "Ingrese un apellido valido.";
+    error.lastname = "Ingrese un apellido válido.";
     return error;
   }
 
   if (!/\S+@\S+\.\S+/.test(input.mail)) {
-    error.mail = "Dirección de correo no valida.";
+    error.mail = "Dirección de correo no válida.";
     return error;
   }
   if (
@@ -46,18 +48,22 @@ function validate(input) {
     return error;
   }
   if (!/^\d{5,15}$$/.test(input.document)) {
-    error.document = "Número de documento no valido.";
+    error.document = "Número de documento no válido.";
     return error;
   }
   if (!/^\d{10}$$/.test(input.phone)) {
-    error.phone = "Número de telefono no valido.";
+    error.phone = "Número de telefono no válido.";
     return error;
   }
   if (!/[0-9]/.test(input.number)) {
-    error.number = "Número no valido.";
+    error.number = "Número no válido.";
     return error;
   } else if (input.number <= 0) {
-    error.number = "Número no valida.";
+    error.number = "Número no válida.";
+    return error;
+  }
+  if (!/([A-z])/.test(input.city)) {
+    error.city= 'Ingrese un nombre de ciudad válido.';
     return error;
   }
   return error;
@@ -93,6 +99,8 @@ const provinces = [
 
 export default function RegisterPatient() {
 
+  const cookie = new Cookie()
+  const dispatch = useDispatch()
   const { isAuthenticated, user } = useAuth0();
   const history = useHistory();
   const [error, setError] = useState({});
@@ -131,26 +139,35 @@ export default function RegisterPatient() {
     });
   }
 
+  useEffect(() => {
+    dispatch(getUserDetail(input.mail))
+  }, [dispatch, input.mail])
+
+  const userForEmail = useSelector((state) => state.user)
+
   function handleSubmit(e) {
     e.preventDefault();
-    const cookie = new Cookie()
-    cookie.set('userEmail', input.mail, {path: '/'})
-    setInput({
-      name: "",
-      lastname: "",
-      document: "",
-      birth: "",
-      phone: "",
-      mail: "",
-      province: "",
-      city: "",
-      number: "",
-      street: "",
-      username: "",
-      password: "",
-      new_password: "",
-    });
-    history.push(`/healthData`, input);
+    if (userForEmail ? false : true) {
+      cookie.set('userEmail', input.mail, {path: '/'})
+      setInput({
+        name: "",
+        lastname: "",
+        document: "",
+        birth: "",
+        phone: "",
+        mail: "",
+        province: "",
+        city: "",
+        number: "",
+        street: "",
+        username: "",
+        password: "",
+        new_password: "",
+      });
+      history.push(`/healthData`, input);
+    }else {
+      alert('El email que ingresaste ya esta registrado')
+    }
   }
 
   return (
@@ -316,7 +333,7 @@ export default function RegisterPatient() {
               isInvalid={!!error.city}
             />
             <Form.Control.Feedback type="invalid">
-              {error.phone}
+              {error.city}
             </Form.Control.Feedback>
           </Col>
         </Row>
