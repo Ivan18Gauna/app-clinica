@@ -36,7 +36,7 @@ const postMP = async (req, res) => {
     const items = [
         { price: data.price, quantity: 1 },
     ]
-    const external_reference = id + "*" + data.mail + "*" + data.price + "*" + data.date;
+    const external_reference = id + "" + data.mail + "" + data.price + "*" + data.date;
     const itemsMp = items.map(item => ({
         title: "Susbcripcion App Salud",
         quantity: 1,
@@ -45,9 +45,9 @@ const postMP = async (req, res) => {
     let preference = {
         items: itemsMp,
         back_urls: {
-            success: `https://app-clinica-dev.herokuapp.com/mercadopago/factura`,
-            failure: `https://app-clinica-dev.herokuapp.com/mercadopago/factura`,
-            pending: `https://app-clinica-dev.herokuapp.com/mercadopago/factura`
+            success: `http://localhost:3001/mercadopago/factura`,
+            failure: `http://localhost:3001/mercadopago/factura`,
+            pending: `http://localhost:3001/mercadopago/factura`
         },
         auto_return: "approved",
         payment_methods: {
@@ -117,10 +117,10 @@ const getPayments = async (req, res) => {
         });
         console.log(info);
         console.info("redirect success");
-        res.redirect(`https://app-salud.vercel.app/home`);
+        res.redirect(`http://localhost:3000/home`);
     } catch (error) {
         console.error("error al crear la factura", error);
-        return res.redirect(`https://app-salud.vercel.app/home`);
+        return res.redirect(`http://localhost:3000/home`);
     }
   }
   
