@@ -9,14 +9,17 @@
 .turnosContenedor {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   padding: 2.5rem;
   border-radius: 5rem;
-  border: 1px solid;
+  box-shadow: 0.2rem 0.2rem 0.8rem #868686;
   width: 45%;
 }
 
 .turnos {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
   height: 100%;
 }
 
