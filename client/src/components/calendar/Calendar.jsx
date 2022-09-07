@@ -6,6 +6,7 @@ import { getUserDetail, newTurno, postTurnoMail } from "../../redux/actions";
 import { useLocation } from "react-router-dom";
 import Cookies from "universal-cookie";
 import { useEffect } from "react";
+import swal from "sweetalert";
 
 const Calendar = () => {
   const location = useLocation();
@@ -26,7 +27,7 @@ const Calendar = () => {
   };
 
   const arr = fecha.toString().split(" ");
-  const date = new Date(arr).toLocaleDateString("es-ES", {
+  const date = new Date(fecha).toLocaleDateString("es-ES", {
     weekday: "long",
     year: "numeric",
     month: "short",
@@ -43,12 +44,19 @@ const Calendar = () => {
 
   const handleSubmit = e => {
     e.preventDefault(e);
-    dispatch(newTurno(payload))
-      .then(res => dispatch(postTurnoMail(res, user.mail)),
-        err => console.log('err', err))
+    let turno = dispatch(newTurno(payload))
+      .then(res => {
+        if (res != undefined) {
+          dispatch(postTurnoMail(payload, user.mail))
+          alert('El turno fue creado correctamente')
+        } else {
+          alert('Horario no disponible')
+        }
+      })
+    //   err => console.log('err', err))
 
-    //  console.log('turno',)
-    // dispatch(postTurnoMail(payload, user.mail));
+    console.log('turno', turno)
+    // ;
 
   };
 
