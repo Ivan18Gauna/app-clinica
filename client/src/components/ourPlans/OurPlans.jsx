@@ -9,7 +9,7 @@ const OurPlans = () => {
 			<div className={styles.texto}>
 				<h4>Nuevos profesionales forman parte de + SALUD </h4>
 				<p>
-					Comienza a trabajar con nosotros y aumenta tus ingresos con el plan
+					Comenzá a trabajar con nosotros y aumenta tus ingresos con el plan
 					que mejor se adapte a tu necesidad.
 				</p>
 				<Button>Conoce nuestros planes</Button>
