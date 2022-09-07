@@ -6,8 +6,8 @@ import { get_PatientesDetail, deletePatients } from '../../redux/actions';
 import Button from 'react-bootstrap/esm/Button';
 import Loading from '../loading/Loading';
 import styles from '../detail/Details.module.css';
-import img from '../../Icons/iconfinder-icon.svg';
 import login from '../login/Login.module.css'
+import swal from 'sweetalert';
 
 
 export default function DetailsPatients() {
@@ -22,8 +22,12 @@ export default function DetailsPatients() {
 
 	function handleSubmit(e){
 		dispatch(deletePatients(id))
-		history.push("/admin")
-		alert("Paciente suspendido con exito")
+		history.push("/home")
+		swal({
+			icon: 'success',
+			title:"Paciente suspendido con éxito",
+			timer:1500
+		})
 	} 
 
 	
@@ -34,7 +38,7 @@ export default function DetailsPatients() {
 		<div className={styles.container}>
 			<div className={styles.info}>
 				<div className={styles.perfil}>
-					<img src={img} />
+					<img src={patient.avatar} alt='avatar'/>
 					<h4>
 						Sr {patient.name} {patient.lastname}
 					</h4>
@@ -53,7 +57,7 @@ export default function DetailsPatients() {
 					</p>
 				</div>
 				<div className={styles.btnHome}>
-					<Link to={'/admin'}>
+					<Link to={'/home'}>
 						<Button variant="outline-primary">Volver</Button>
 					</Link>
 				</div>

@@ -1,17 +1,17 @@
 import React from 'react';
 import Button from 'react-bootstrap/esm/Button';
 import { Link } from 'react-router-dom';
-import doctor from '../../Icons/iconfinder-icon.svg';
 import doctorIcon from '../../Icons/user-doctor-solid.svg';
 import styles from '../card/Card.module.css'
 
 
-function CardEditPatients({ id, name, lastname, city, mail}) {
+function CardEditPatients({ id, name, lastname, avatar, city, mail}) {
 
 	return (
 		<div className={`${styles.container}`}>
 			<div className={styles.ImgUser}>
-				<img src={doctor} alt="doctor"/>
+				<img src={avatar} alt="doctor"/>
+				{console.log(avatar)}
 			</div>
 			<div className={styles.info}>
 				<div>

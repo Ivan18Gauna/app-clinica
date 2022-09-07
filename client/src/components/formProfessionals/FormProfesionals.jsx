@@ -10,19 +10,20 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { get_specialties, registerDoctors } from "../../redux/actions";
+import swal from 'sweetalert';
 
 function validate(input) {
   let error = {};
   if (!/([A-z])/.test(input.name)) {
-    error.name = "Ingrese un nombre valido.";
+    error.name = "Ingrese un nombre válido.";
     return error;
   }
   if (!/([A-z])/.test(input.lastname)) {
-    error.lastname = "Ingrese un apellido valido.";
+    error.lastname = "Ingrese un apellido válido.";
     return error;
   }
   if (!/\S+@\S+\.\S+/.test(input.mail)) {
-    error.mail = "Dirección de correo no valida.";
+    error.mail = "Dirección de correo no válida.";
     return error;
   }
   if (
@@ -31,7 +32,7 @@ function validate(input) {
     )
   ) {
     error.password =
-      "La contraseña debe contener al menos 8 digitos, una mayúscula, un número y un caracter especial.";
+      "La contraseña debe contener al menos 8 digitos, una mayúscula y un número.";
     return error;
   }
   if (input.password !== input.new_password) {
@@ -50,22 +51,26 @@ function validate(input) {
     return error;
   }
   if (!/[0-9]/.test(input.license)) {
-    error.license = "Matrícula no valida.";
+    error.license = "Matrícula no válida.";
     return error;
   } else if (input.license <= 0) {
-    error.license = "Matrícula no valida.";
+    error.license = "Matrícula no válida.";
     return error;
   }
   if (!/^\d{10}$$/.test(input.phone)) {
-    error.phone = "Número de telefono no valido.";
+    error.phone = "Número de telefono no válido.";
     return error;
   }
   if (!/[0-9]/.test(input.number)) {
-    error.number = "Número no valido.";
+    error.number = "Número no válido.";
     return error;
   } else if (input.number <= 0) {
-    error.number = "Número no valida.";
+    error.number = "Número no válida.";
     return error;
+  }
+  if (!/([A-z])/.test(input.city)) {
+    error.city= 'Ingrese un nombre de ciudad válido.';
+     return error;
   }
   return error;
 }
@@ -124,7 +129,7 @@ export default function RegisterDoctor() {
   });
 
   const [error, setError] = useState({});
-
+  console.log(input)
   function handleInput(e) {
     setInput({
       ...input,
@@ -147,7 +152,10 @@ export default function RegisterDoctor() {
 
   function handleSelectSpecialities(e) {
     if (input.specialty.includes(e.target.value)) {
-      alert("Ya se selecciono la especialidad.");
+      swal({
+        icon: 'warning',
+        title: "Ya se seleccionó la especialidad."
+      });
     } else {
       setInput({
         ...input,
@@ -166,7 +174,13 @@ export default function RegisterDoctor() {
 
   function handleSubmit(e) {
     e.preventDefault();
+    console.log('3', input.password)
     dispatch(registerDoctors(input));
+    swal({
+      icon: 'success',
+      title: 'Usuario registrado.',
+      timer: 1500
+    })
     setInput({
       name: "",
       lastname: "",
@@ -412,26 +426,26 @@ export default function RegisterDoctor() {
         <Row className={`${styles.row}`} lg={1}>
           <Col className={`${styles.col}`} lg={6}>
             {input.name === "" ||
-            input.lastname === "" ||
-            input.license === "" ||
-            input.phone === "" ||
-            input.mail === "" ||
-            input.province === "" ||
-            input.city === "" ||
-            input.street === "" ||
-            input.number === "" ||
-            // input.username === '' ||
-            input.password === "" ||
-            input.new_password === "" ||
-            input.specialty.length < 1 ||
-            error.name ||
-            error.lastname ||
-            error.license ||
-            error.phone ||
-            error.mail ||
-            error.number ||
-            error.password ||
-            error.new_password ? (
+              input.lastname === "" ||
+              input.license === "" ||
+              input.phone === "" ||
+              input.mail === "" ||
+              input.province === "" ||
+              input.city === "" ||
+              input.street === "" ||
+              input.number === "" ||
+              // input.username === '' ||
+              input.password === "" ||
+              input.new_password === "" ||
+              input.specialty.length < 1 ||
+              error.name ||
+              error.lastname ||
+              error.license ||
+              error.phone ||
+              error.mail ||
+              error.number ||
+              error.password ||
+              error.new_password ? (
               <Button
                 className={`${styles.buttonSubmit}`}
                 variant="danger"
