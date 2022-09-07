@@ -2,15 +2,15 @@ const Sequelize = require("sequelize");
 const { default: axios } = require("axios");
 const { Op } = require("sequelize");
 const { Professionals, Specialties, ObrasSociales } = require("../db");
+const { query } = require("express");
 
 const getInfoApi = async (req, res) => {
   res.status(200).send(
     await Professionals.findAll({
-      include: [{ model: Specialties }, { model: ObrasSociales }],
+      include: [{ model: Specialties }],
     })
   );
 };
-
 
 const addProfDb = async () => {
   const dbProf = await Professionals.findAll();
@@ -67,7 +67,6 @@ const addProfDb = async () => {
   }
 };
 
-
 const getObrasSociales = async () => {
   const apiObras = await axios.get(
     "https://obras-sociales-be310-default-rtdb.firebaseio.com/results.json"
@@ -85,20 +84,11 @@ const getObrasSociales = async () => {
 
 const getProfById = async (req, res) => {
   let { id } = req.params;
-  let dbProfId = await Professionals.findOne({
-    where: { id },
-    include: [
-      {
-        model: ObrasSociales,
-        attributes: ["name"],
-        through: { attributes: [] },
-      },
-      {
-        model: Specialties,
-        attributes: ["name"],
-        through: { attributes: [] },
-      },
-    ],
+  const dbProfId = await Professionals.findOne({
+    include: [{ model: Specialties, attributes: ["name"] }],
+    where: {
+      id: id,
+    },
   });
   res.status(200).send(dbProfId);
 };
@@ -106,18 +96,7 @@ const getProfById = async (req, res) => {
 const getAllProfessionals = async (req, res) => {
   try {
     let allProfessional = await Professionals.findAll({
-      include: [
-        {
-          model: ObrasSociales,
-          attributes: ["name"],
-          through: { attributes: [] },
-        },
-        {
-          model: Specialties,
-          attributes: ["name"],
-          through: { attributes: [] },
-        },
-      ],
+      include: [{ model: Specialties, attributes: ["name"] }],
       limit: 150,
       //offset: req.query.page,
       //order:[['name', req.query.order]],
@@ -128,269 +107,192 @@ const getAllProfessionals = async (req, res) => {
   }
 };
 
-
 const getProfByName = async (req, res) => {
-	let { lastname } = req.query;
-	let { filterEsp } = req.query;
-	let { filterProfProv } = req.query;
-	let { page } = req.query;
-  let { order } = req.query;
+  const { lastname, filterEsp, filterProfProv, order } = req.query;
 
-	//***FILTRO SE RECIBE APELLIDO Y NO SE RECIBE ESPECIALIDAD NI PROVINCIA
-	if (lastname && !filterEsp && !filterProfProv && order) {
-		try {
-			let dbProfName = await Professionals.findAll({
-				include: [
-					{
-						model: ObrasSociales,
-						attributes: ['name'],
-						through: { attributes: [] },
-					},
-					{
-						model: Specialties,
-						attributes: ['name'],
-						through: { attributes: [] },
-					},
-				],
-
-				where: { lastname: { [Op.iLike]: lastname + '%' } },
-				limit: 9,
-				//offset: req.query.page,
-				order:[['lastname', req.query.order]]
-			});
-
-			dbProfName.length
-				? res.status(200).send(dbProfName)
-				: res
-						.status(404)
-						.send('No encontramos profesionales con estos filtros');
-		} catch (error) {
-			console.log(error);
-		}
-	}
-	//***FILTRO SE RECIBE APELLIDO Y ESPECIALIDAD NO PROVINCIA
-	if (lastname && filterEsp && !filterProfProv && order) {
-		try {
-			let dbPatfName = await Professionals.findAll({
-				where: {
-					[Op.and]: [{ lastname: { [Op.iLike]: lastname + '%' } }],
-				},
-				include: [
-					{
-						model: ObrasSociales,
-						attributes: ['name'],
-						through: { attributes: [] },
-					},
-					{
-						model: Specialties,
-						attributes: ['name'],
-						through: { attributes: [] },
-						where: { name: req.query.filterEsp },
-					},
-				],
-			}); //ASC DESC
-			dbPatfName.length
-				? res.status(200).send(dbPatfName)
-				: res
-						.status(404)
-						.send(
-							'No encontramos profesionales con estos filtros'
-						);
-		} catch (error) {
-			console.log(error);
-		}
-	}
-
-	//***FILTRO SE RECIBE APELLIDO Y PROVINCIA NO SE RECIBE ESPECIALIDAD
-	if (lastname && !filterEsp && filterProfProv && order) {
-		try {
-			let dbProfName = await Professionals.findAll({
-				include: [
-					{
-						model: ObrasSociales,
-						attributes: ['name'],
-						through: { attributes: [] },
-					},
-					{
-						model: Specialties,
-						attributes: ['name'],
-						through: { attributes: [] },
-					},
-				],
-
-				where: {
-					[Op.and]: [
-						{ lastname: { [Op.iLike]: lastname + '%' } },
-						{ province: req.query.filterProfProv },
-					],
-				},
-				limit: 9,
-
-				//offset: req.query.page,
-				order:[['lastname', req.query.order]]
-			});
-
-			dbProfName.length
-				? res.status(200).send(dbProfName)
-				: res
-						.status(404)
-						.send(
-							'No existe registro del profesional a buscar por apellido'
-						);
-		} catch (error) {
-			console.log(error);
-		}
-	}
-	//***FILTRO SE RECIBE PROVINCIA NO SE RECIBE ESPECIALIDAD NI APELLIDO
-	if (!lastname && !filterEsp && filterProfProv && order) {
-		try {
-			let dbProfName = await Professionals.findAll({
-				include: [
-					{
-						model: ObrasSociales,
-						attributes: ['name'],
-						through: { attributes: [] },
-					},
-					{
-						model: Specialties,
-						attributes: ['name'],
-						through: { attributes: [] },
-					},
-				],
-				where: { province: req.query.filterProfProv },
-				limit: 9,
-				//offset: req.query.page,
-				order:[['name', req.query.order]]//ASC DESC
-			});
-
-			dbProfName.length
-				? res.status(200).send(dbProfName)
-				: res
-						.status(404)
-						.send('No encontramos profesionales con estos filtros');
-		} catch (error) {
-			console.log(error);
-		}
-	}
-	//***FILTRO SE RECIBE ESPECIALIDAD NO SE RECIBE PROVINCIA NI APELLIDO
-	if (!lastname && filterEsp && !filterProfProv && order) {
-		try {
-			let dbPatfName = await Professionals.findAll({
-				include: [
-					{
-						model: ObrasSociales,
-						attributes: ['name'],
-						through: { attributes: [] },
-					},
-					{
-						model: Specialties,
-						attributes: ['name'],
-						through: { attributes: [] },
-						where: { name: req.query.filterEsp },
-					},
-				],
-				limit: 9,
-				//offset: req.query.page,
-				order:[['name', req.query.order]]//ASC DESC
-			});
-			dbPatfName.length
-				? res.status(200).send(dbPatfName)
-				: res
-						.status(404)
-						.send(
-							'No encontramos profesionales con estos filtros'
-						);
-		} catch (error) {
-			console.log(error);
-		}
-	}
-	//***FILTRO SE RECIBE ESPECIALIDAD  Y PROVINCIA NO SE RECIBE APELLIDO
-
-	if (!lastname && filterEsp && filterProfProv && order) {
-		try {
-			let dbPatfName = await Professionals.findAll({
-				where: { province: req.query.filterProfProv },
-				include: [
-					{
-						model: ObrasSociales,
-						attributes: ['name'],
-						through: { attributes: [] },
-					},
-					{
-						model: Specialties,
-						attributes: ['name'],
-						through: { attributes: [] },
-						where: { name: req.query.filterEsp },
-					},
-				],
-			});
-			dbPatfName.length
-				? res.status(200).send(dbPatfName)
-				: res
-						.status(404)
-						.send(
-							'No encontramos profesionales con estos filtros'
-						);
-		} catch (error) {
-			console.log(error);
-		}
-	}
-	//***SE RECIBE ESPECIALIDAD, PROVINCIA, APELLIDO
-	if (lastname && filterEsp && filterProfProv && order) {
-		try {
-			let dbPatfName = await Professionals.findAll({
-				where: {
-					[Op.and]: [
-						{ lastname: { [Op.iLike]: lastname + '%' } },
-						{ province: req.query.filterProfProv },
-					],
-				},
-
-				include: [
-					{
-						model: ObrasSociales,
-						attributes: ['name'],
-						through: { attributes: [] },
-					},
-					{
-						model: Specialties,
-						attributes: ['name'],
-						through: { attributes: [] },
-						where: { name: req.query.filterEsp },
-					},
-				],
-			});
-
-			dbPatfName.length
-				? res.status(200).send(dbPatfName)
-				: res
-						.status(404)
-						.send(
-							'No encontramos profesionales con estos filtros'
-						);
-		} catch (error) {
-			console.log(error);
-		}
-	} else if (
-		!req.query.lastname &&
-		!req.query.filterProfProv &&
-		!req.query.filterEsp
-	) {
-		try {
-			res.status(404).send('Debe seleccionar un valor a consultar');
-		} catch (error) {
-			res.status(200).send('Debe seleccionar un filtro a consultar');
-		}
-	}
+  //FILTRO SE RECIBE APELLIDO Y NO SE RECIBE ESPECIALIDAD NI PROVINCIA
+  if (lastname && !filterEsp && !filterProfProv && order) {
+    try {
+      let dbProfName = await Professionals.findAll({
+        include: [{ model: Specialties, attributes: ["name"] }],
+        where: { lastname: { [Op.iLike]: lastname + "%" } },
+        limit: 9,
+        //offset: req.query.page,
+        //order:[['lastname', req.query.order]]
+      });
+      dbProfName.length
+        ? res.status(200).send(dbProfName)
+        : res
+            .status(404)
+            .send("No encontramos profesionales con estos filtros");
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  //FILTRO SE RECIBE APELLIDO Y RECIBE ESPECIALIDAD NO RECIBE PROVINCIA
+  if (lastname && filterEsp && !filterProfProv && order) {
+    try {
+      let dbPatfName = await Professionals.findAll({
+        where: {
+          [Op.and]: [{ lastname: { [Op.iLike]: lastname + "%" } }],
+        },
+        include: [
+          {
+            model: ObrasSociales,
+            attributes: ["name"],
+            through: { attributes: [] },
+          },
+          {
+            model: Specialties,
+            attributes: ["name"],
+            through: { attributes: [] },
+            where: { name: req.query.filterEsp },
+          },
+        ],
+      });
+      dbPatfName.length
+        ? res.status(200).send(dbPatfName)
+        : res
+            .status(404)
+            .send("No encontramos profesionales con estos filtros");
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  //FILTRO SE RECIBE APELLIDO Y PROVINCIA NO SE RECIBE ESPECIALIDAD
+  if (lastname && !filterEsp && filterProfProv && order) {
+    try {
+      let dbProfName = await Professionals.findAll({
+        include: [{ model: Specialties, attributes: ["name"] }],
+        where: {
+          [Op.and]: [
+            { lastname: { [Op.iLike]: lastname + "%" } },
+            { province: req.query.filterProfProv },
+          ],
+        },
+        limit: 9,
+        //offset: req.query.page,
+        order:[['lastname', order]]
+      });
+      dbProfName.length
+        ? res.status(200).send(dbProfName)
+        : res
+            .status(404)
+            .send("No encontramos profesionales con estos filtros");
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  //FILTRO SE RECIBE PROVINCIA NO SE RECIBE ESPECIALIDAD NI APELLIDO
+  if (!lastname && !filterEsp && filterProfProv && order) {
+    try {
+      let dbProfName = await Professionals.findAll({
+        include: [{ model: Specialties, attributes: ["name"] }],
+        where: { province: req.query.filterProfProv },
+        limit: 5,
+        //offset: req.query.page,
+        order:[['lastname', order]]
+      });
+      dbProfName.length
+        ? res.status(200).send(dbProfName)
+        : res
+            .status(404)
+            .send("No encontramos profesionales con estos filtros");
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  //FILTRO SE RECIBE ESPECIALIDAD NO SE RECIBE PROVINCIA NI APELLIDO
+  if (!lastname && filterEsp && !filterProfProv && order) {
+    try {
+      let dbPatfName = await Professionals.findAll({
+        include: [
+          {
+            model: Specialties,
+            attributes: ["name"],
+            where: { name: req.query.filterEsp },
+          },
+        ],
+        limit: 5,
+        order:[['lastname', order]]
+        //offset: req.query.page,
+      });
+      dbPatfName.length
+        ? res.status(200).send(dbPatfName)
+        : res
+            .status(404)
+            .send("No encontramos profesionales con estos filtros");
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  //FILTRO SE RECIBE ESPECIALIDAD  Y PROVINCIA NO SE RECIBE APELLIDO
+  if (!lastname && filterEsp && filterProfProv && order) {
+    try {
+      let dbPatfName = await Professionals.findAll({
+        where: { province: req.query.filterProfProv },
+        include: [
+          {
+            model: Specialties,
+            attributes: ["name"],
+            where: { name: req.query.filterEsp },
+          },
+        ],
+      });
+      dbPatfName.length
+        ? res.status(200).send(dbPatfName)
+        : res
+            .status(404)
+            .send("No encontramos profesionales con estos filtros");
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  //SE RECIBE ESPECIALIDAD, PROVINCIA, APELLIDO
+  if (lastname && filterEsp && filterProfProv && order) {
+    try {
+      let dbPatfName = await Professionals.findAll({
+        where: {
+          [Op.and]: [
+            { lastname: { [Op.iLike]: lastname + "%" } },
+            { province: req.query.filterProfProv },
+          ],
+        },
+        include: [
+          {
+            model: Specialties,
+            attributes: ["name"],
+            where: { name: req.query.filterEsp },
+          },
+        ],
+      });
+      dbPatfName.length
+        ? res.status(200).send(dbPatfName)
+        : res
+            .status(404)
+            .send("No encontramos profesionales con estos filtros");
+    } catch (error) {
+      console.log(error);
+    }
+  } else if (
+    !req.query.lastname &&
+    !req.query.filterProfProv &&
+    !req.query.filterEsp
+  ) {
+    try {
+      res.status(404).send("Debe seleccionar un valor a consultar");
+    } catch (error) {
+      res.status(200).send("Debe seleccionar un filtro a consultar");
+    }
+  }
 };
 
 const postProfessionals = async (req, res) => {
   let {
     name,
-    username,
-    password,
     lastname,
-	avatar,
+    password,
+    avatar,
     license,
     birth,
     phone,
@@ -404,10 +306,9 @@ const postProfessionals = async (req, res) => {
   try {
     const professional = {
       name: name,
-      username: username,
-      password: password,
       lastname: lastname,
-	  avatar: avatar,
+      password: password,
+      avatar: avatar,
       license: license,
       birth: birth,
       phone: phone,
@@ -464,12 +365,12 @@ const putProfessionals = async (req, res) => {
     const {
       name,
       lastname,
-	  avatar,
+      avatar,
       license,
       birth,
       phone,
       mail,
-	  password,
+      password,
       province,
       city,
       number,
@@ -479,12 +380,12 @@ const putProfessionals = async (req, res) => {
       {
         name,
         lastname,
-		avatar,
+        avatar,
         license,
         birth,
         phone,
         mail,
-		password,
+        password,
         province,
         city,
         number,
@@ -510,20 +411,36 @@ const deleteProfessionals = async (req, res) => {
   }
 };
 
+const restoreProfessional = async (req, res) => {
+  let { id } = req.params;
+  try {
+    await Professionals.restore({
+      where: {
+        id: id,
+      },
+    });
+    const restoredProf = await Professionals.findOne({
+      where: {
+        id: id,
+      },
+    });
+    res.status(200).send(restoredProf);
+  } catch (error) {
+    res.status(400).send("Hubo un problema recuperando el usuario");
+  }
+};
 
 module.exports = {
   getInfoApi,
+  //getProfByName,
   getProfByName,
   getAllProfessionals,
   getProfById,
   postProfessionals,
+  //getFilterByCity,
   putProfessionals,
   getObrasSociales,
   addProfDb,
-  deleteProfessionals
+  deleteProfessionals,
+  restoreProfessional,
 };
-
-
-
-
-

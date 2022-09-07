@@ -1,31 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
-import FormControl from '@mui/material/FormControl';
-import FormHelperText from '@mui/material/FormHelperText';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import PersonIcon from '@mui/icons-material/Person';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputAdornment from '@mui/material/InputAdornment';
-import IconButton from '@mui/material/IconButton';
-import InputLabel from '@mui/material/InputLabel';
-import Loading from '../loading/Loading';
-import { Link, useHistory } from 'react-router-dom';
-import { useAuth0 } from '@auth0/auth0-react';
-import { useDispatch, useSelector } from 'react-redux';
-import{getUserDetail} from '../../redux/actions';
-import google from '../../Icons/google.svg';
-import styles from './Login.module.css';
-import stylesForm from '../formPatients/FormPatients.module.css';
-import Cookies from 'universal-cookie';
-import { Alert } from '@mui/material';
-import '../auth0/Auth0';
+import React, { useEffect, useState } from "react";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import FormControl from "@mui/material/FormControl";
+import FormHelperText from "@mui/material/FormHelperText";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import PersonIcon from "@mui/icons-material/Person";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
+import InputLabel from "@mui/material/InputLabel";
+import { Link, useHistory } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserDetail } from "../../redux/actions";
+import google from "../../Icons/google.svg";
+import styles from "./Login.module.css";
+import Cookies from "universal-cookie";
+import "../auth0/Auth0";
 
 const schema = yup
   .object({
@@ -42,7 +39,7 @@ export default function Login() {
   const cookies = new Cookies();
   const history = useHistory();
   const dispatch = useDispatch();
-  const globalUser = useSelector(state => state.user);
+  /* const globalUser = useSelector(state => state.user); */
   const { loginWithPopup, isAuthenticated, user } = useAuth0();
   const {
     setValue,
@@ -66,7 +63,7 @@ export default function Login() {
 
   const values = getValues();
   const userForEmail = useSelector(state => state.user);
-  console.log("userForEmail",userForEmail)
+  console.log("userForEmail", userForEmail);
   const [email, setEmail] = useState({
     email: "",
     password: ""
@@ -77,11 +74,10 @@ export default function Login() {
       [e.target.name]: e.target.value
     });
   }
-  
 
   const submitForm = data => {
-    console.log('x',userForEmail.length)
-    if (userForEmail?true:false) {
+    console.log("x", userForEmail.length);
+    if (userForEmail ? true : false) {
       if (data.password === userForEmail.password) {
         dispatch(getUserDetail(data.email));
         cookies.set("userEmail", `${data.email}`, { patch: "/" });
@@ -99,7 +95,7 @@ export default function Login() {
       });
     }
   };
- 
+
   const handleMouseDownPassword = event => {
     event.preventDefault();
   };
@@ -107,12 +103,12 @@ export default function Login() {
   useEffect(() => {
     // dispatch(getPatients());
     // dispatch(get_Doctors());
-    dispatch(getUserDetail(email.email))
-  }, [email.email]);
-  
-  if(isAuthenticated){
-		cookies.set('userEmail', user.email, {path: '/'})
-	}
+    dispatch(getUserDetail(email.email));
+  }, [dispatch, email.email]);
+
+  if (isAuthenticated) {
+    cookies.set("userEmail", user.email, { path: "/" });
+  }
 
   return (
     <div>
@@ -222,22 +218,12 @@ export default function Login() {
         </div>
       ) : (
         <div>
-          <div id={styles.loadingLogin}>
-            <Loading />
-          </div>
-          <div id={styles.loadingNum}>
-            {setTimeout(() => {
-							dispatch(getUserDetail(cookies.get('userEmail')));
-						}, 1000)}
-						{setTimeout(() => {
-							if (globalUser && globalUser.mail) {
-								return history.push('/home');
-							} 
-							if (globalUser && !globalUser.mail) {
-								return history.push('/signin');
-							}
-						}, 2000)}
-          </div>
+          dispatch(getUserDetail(cookies.get('userEmail')))
+          if (globalUser.name === null) {
+            history.push('/signin')
+          }else {
+            history.push('/home')
+          }
         </div>
       )}
     </div>

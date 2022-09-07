@@ -13,10 +13,18 @@ import {
   GET_NOTES,
   GET_TURNO_PROF,
   GET_TURNO_PAT,
-  GET_PATIENTS_DETAIL
+  GET_PATIENTS_DETAIL,
+  GET_FACTURA,
+  GET_TOTAL_PROFESSIONALS,
+  GET_TOTAL_PATIENTS,
+  GET_TOTAL_TURNOS,
+  GET_TOTAL_HISTORYS,
+  GET_INVOICE,
+  SET
 } from "../actions/actions";
 
 const initialState = {
+  suscribed: [],
   doctors: [],
   allDoc: [],
   detail: [],
@@ -29,21 +37,40 @@ const initialState = {
   notes: [],
   turnos: [],
   patientsDetail: [],
+  facturas: [],
+  totalPatients: [],
+  totalProf: [],
+  totalTurnos: [],
+  totalHistorys: [],
+  patientsDelete: []
 };
 
 function rootReducer(state = initialState, action) {
   switch (action.type) {
+    case SET:
+      return {
+        ...state,
+        suscribed: action.payload,
+      }
+
+    case GET_INVOICE:
+      return {
+        ...state,
+        suscribed: action.payload
+      }
+
     case GET_TURNO_PROF:
       return {
         ...state,
         turnos: action.payload
       };
-      
+           
       case GET_TURNO_PAT:
       return {
         ...state,
         turnos: action.payload.data
       };
+
 
     case GET_DOCTORS:
       return {
@@ -51,6 +78,26 @@ function rootReducer(state = initialState, action) {
         doctors: action.payload,
         alDoc: action.payload,
       };
+
+      case GET_TOTAL_PROFESSIONALS: 
+      return  {
+        ...state, totalProf: action.payload
+      };
+
+      case GET_TOTAL_PATIENTS:
+        return {
+          ...state, totalPatients: action.payload
+        }
+
+        case GET_TOTAL_HISTORYS:
+          return {
+            ...state, totalHistorys: action.payload
+          }
+
+          case GET_TOTAL_TURNOS:
+            return {
+              ...state, totalTurnos: action.payload
+            }
 
     case GET_SPECIALTIES:
       return { ...state, specialties: action.payload };
@@ -109,6 +156,12 @@ function rootReducer(state = initialState, action) {
 
     case GET_NOTES: 
       return { ...state, notes: action.payload };
+
+      case GET_FACTURA:
+        return{
+          ...state,
+          facturas: action.payload,
+        }
 
     default:
       return state;
