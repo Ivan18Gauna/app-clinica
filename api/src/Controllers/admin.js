@@ -63,29 +63,15 @@ const getCountPatients = async (req, res) => {
 const getProParanoid = async (req, res) => {
     const profParanoid = await Professionals.findAll({
         where:{
-            
+            deletedAt:{
+              [Op.ne]:null
+            }
         },
         paranoid:false
     });
     
     res.status(200).send(profParanoid);
   };
-  
-
-// const getParanoidProfessionals = async (req, res) => {
-//     try {
-//         const profParanoid = await Professionals.findAll();
-//         console.log(prof)
-//         if (!profParanoid) {
-//         return res.status(404).send({ error: "0" });
-//         }
-//         const profLength = prof.length
-//         //const sumaProf = prof.len);
-//         return res.send(profLength);
-//     } catch (error) {
-//         res.status(404).send({ error: error.message })
-//     }
-// }
 
 
 
