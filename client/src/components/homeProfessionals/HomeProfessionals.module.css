@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-around;
   width: 100%;
-  height: 100%;
+  height: 78%;
   margin: 2rem 0 2rem 0;
 }
 
@@ -19,8 +19,17 @@
 .turnos {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: center;
+  align-items: center;
   height: 100%;
+}
+
+.prueba {
+  height: 90%;
+}
+
+.turnoItem {
+  margin-top: 3rem;
 }
 
 .notes {
@@ -29,4 +38,6 @@
 
 .h3 {
   margin: 0;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #AEAEAE;
 }
