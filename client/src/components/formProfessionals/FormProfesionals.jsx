@@ -177,6 +177,8 @@ export default function RegisterDoctor() {
 
   function handleSubmit(e) {
     e.preventDefault();
+    cookie.set('userEmail', input.mail, {path: '/'})
+    console.log('cookie', cookie.get('userEmail'))
     dispatch(registerDoctors(input));
     swal({
       icon: 'success',
