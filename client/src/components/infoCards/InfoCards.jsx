@@ -15,8 +15,8 @@ function CardsTriple() {
 					<img src={gear} alt="update" />
 					<h2>Siempre actualizados</h2>
 					<p>
-						+Salud brinda sus herramientas tecnologicas para que cada atencion
-						medica que obtengas quede registrada.
+						+Salud brinda sus herramientas tecnologicas para que cada atención
+						médica que obtengas quede registrada.
 					</p>
 					<div className={styles.divide}></div>
 				</div>
@@ -34,8 +34,8 @@ function CardsTriple() {
 					<img src={doctorIcon} alt="update" />
 					<h2>Medicos de calidad</h2>
 					<p>
-						Eleji tu medico preferido de la plataforma y consegui un turno con
-						el. Toda la informacion del mismo en +Salud.
+						Elegí tu médico preferido de la plataforma y consegui un turno con
+						el. Toda la información del mismo en +Salud.
 					</p>
 					<div className={styles.divide}></div>
 				</div>
@@ -45,7 +45,7 @@ function CardsTriple() {
 					<img src={clipboard} alt="update" />
 					<h2>Historia Clinica</h2>
 					<p>
-						Toda tu informacion basica de salud y estudios a lo largo de la vida
+						Toda tu información básica de salud y estudios a lo largo de la vida
 						en una misma plataforma. Nos preocupamos para que cada centro de
 						salud obtenga las herramientas necesarias para darte el mejor
 						tratamiento.

@@ -115,6 +115,10 @@ function validate(info) {
     error.number = "Número no valida.";
     return error;
   }
+  if (info.city && !/([A-z])/.test(info.city)) {
+    error.city = 'Ingrese un nombre de ciudad válido.';
+    return error;
+  }
   return error;
 }
 
@@ -403,6 +407,7 @@ export default function UserProfile({ globalUser, obras }) {
     if (info.oS && info.oS !== "") {
       infoModify.oS = info.oS;
     }
+    
     dispatch(modifyUsers(infoModify, globalUser.id, globalUser.mail));
     swal({
       icon: 'success',
@@ -668,6 +673,7 @@ export default function UserProfile({ globalUser, obras }) {
                           info.password !== info.new_password) ||
                           error.password ||
                           error.new_password ||
+                          error.city ||
                           (info.password && !info.new_password) ? (
                           <Button
                             disabled

@@ -33,7 +33,7 @@ const Calendar = () => {
     day: "numeric"
   });
   console.log(arr);
-  console.log(date);
+
   const payload = {
     date: date,
     time: arr[4].split(":")[0] + ":00",
@@ -59,6 +59,7 @@ const Calendar = () => {
           <TimePicker value={fecha} onChange={onChangeSetFecha} />
         </div>
       </div>
+      <h2>Reserve su turno de lunes a viernes de 9 hs a 18</h2>
       <button onClick={handleSubmit}>Solicitar turno</button>
     </div>
   );
