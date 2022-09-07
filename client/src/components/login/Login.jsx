@@ -76,7 +76,6 @@ export default function Login() {
   }
 
   const submitForm = data => {
-    console.log("x", userForEmail.length);
     if (userForEmail ? true : false) {
       if (data.password === userForEmail.password) {
         dispatch(getUserDetail(data.email));
