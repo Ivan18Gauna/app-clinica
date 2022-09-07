@@ -11,6 +11,7 @@ function CardEditPatients({ id, name, lastname, avatar, city, mail}) {
 		<div className={`${styles.container}`}>
 			<div className={styles.ImgUser}>
 				<img src={avatar} alt="doctor"/>
+				{console.log(avatar)}
 			</div>
 			<div className={styles.info}>
 				<div>

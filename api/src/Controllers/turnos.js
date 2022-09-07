@@ -48,7 +48,7 @@ const getTurnoByProf = async(req, res) => {
             include: [
                 {
                   model: Patients,
-                  attributes: ['id', 'name'],
+                  attributes: ['id', 'name', 'lastname'],
                 },
                 {
                   model: Professionals,
