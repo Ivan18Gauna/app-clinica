@@ -23,6 +23,7 @@ import google from "../../Icons/google.svg";
 import styles from "./Login.module.css";
 import Cookies from "universal-cookie";
 import "../auth0/Auth0";
+import Loading from '../loading/Loading'
 
 const schema = yup
   .object({
@@ -39,7 +40,7 @@ export default function Login() {
   const cookies = new Cookies();
   const history = useHistory();
   const dispatch = useDispatch();
-  /* const globalUser = useSelector(state => state.user); */
+  const globalUser = useSelector(state => state.user);
   const { loginWithPopup, isAuthenticated, user } = useAuth0();
   const {
     setValue,
@@ -63,7 +64,6 @@ export default function Login() {
 
   const values = getValues();
   const userForEmail = useSelector(state => state.user);
-  console.log("userForEmail", userForEmail);
   const [email, setEmail] = useState({
     email: "",
     password: ""
@@ -218,12 +218,22 @@ export default function Login() {
         </div>
       ) : (
         <div>
-          dispatch(getUserDetail(cookies.get('userEmail')))
-          if (globalUser.name === null) {
-            history.push('/signin')
-          }else {
-            history.push('/home')
-          }
+          <div id={styles.loadingLogin}>
+            <Loading />
+          </div>
+          <div id={styles.loadingNum}>
+            {setTimeout(() => {
+							dispatch(getUserDetail(cookies.get('userEmail')));
+						}, 1000)}
+						{setTimeout(() => {
+							if (globalUser && globalUser.mail) {
+								return history.push('/home');
+							} 
+							if ((globalUser && !globalUser.mail) || !globalUser) {
+								return history.push('/signin');
+							}
+						}, 2000)}
+          </div>
         </div>
       )}
     </div>
