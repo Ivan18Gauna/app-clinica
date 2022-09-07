@@ -1,0 +1,17 @@
+.paginado{
+    list-style: none;
+    line-height: 45px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.paginado a{
+    border-radius: 50%;
+} 
+
+.paginado a:hover{
+    background: crimson;
+}

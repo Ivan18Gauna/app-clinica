@@ -1,0 +1,53 @@
+.container {
+	display: flex;
+	height: 15rem;
+  padding: 1rem;
+	flex-direction: row;
+	background-color: #eeeeee;
+  border-radius: .5rem;
+	justify-content: center;
+	align-items: center;
+  border: 1px solid #D0D0D0;
+  transition: box-shadow 0.5s;
+}
+
+.container:hover {
+  box-shadow: .2rem .2rem 1rem grey;
+}
+
+.info {
+ margin-left: 1rem;
+}
+
+.info div {
+  display: flex;
+  flex-direction: row;
+}
+
+.info p {
+  color: grey;
+  font-size: 15px;
+}
+
+.info div h5 {
+  margin: 0;
+  margin-left: .5rem;
+}
+
+.info img {
+  width: 1rem;
+}
+
+.ImgUser {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+  border-radius: 50%;
+	background-color: #CECECE;
+	width: 15rem;
+}
+
+.ImgUser img {
+  border-radius: 50%;
+  width: 100%;
+}
