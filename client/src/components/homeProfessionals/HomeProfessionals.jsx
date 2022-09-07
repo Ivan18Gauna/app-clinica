@@ -1,9 +1,17 @@
 import React, { useEffect, useState } from "react";
-import ListGroup from "react-bootstrap/ListGroup";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getTurnoProf } from "../../redux/actions";
 import styles from "./HomeProfessionals.module.css";
+
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+
 // import { postNotes, getNotes } from "../../redux/actions";
 
 export default function HomeProfessional({ globalUser }) {
@@ -63,19 +71,33 @@ export default function HomeProfessional({ globalUser }) {
           {turnos.length > 0 ? null : <p>Sin Turnos</p>}
         </div>
         <div className={styles.turnos}>
-          {turnos.slice(0, 3).map((e, i) => {
-            console.log(e)
-            return (
-              <div className={styles.turnoItem} key={i}>
-                <h5>{e.date.split(',')[0].toUpperCase()}</h5>
-                <ListGroup.Item>{e.time}</ListGroup.Item>
-                <ListGroup.Item>
-                  Paciente:{" "}
-                  {e ? `${e.patient.name} ${e.patient.lastname}` : ""}
-                </ListGroup.Item>
-              </div>
-            );
-          })}
+          <TableContainer component={Paper} className={styles.prueba}>
+            <Table sx={{ minWidth: 250 }} aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <TableCell>Fecha</TableCell>
+                  <TableCell align="right">Hora</TableCell>
+                  <TableCell align="right">Paciente</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {turnos.map((paciente, i) => (
+                  <TableRow
+                    key={i}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="row">
+                      {`${paciente.date.split("de")[0]} de ${paciente.date.split("de")[1]}`}
+                    </TableCell>
+                    <TableCell align="right">{paciente.time}</TableCell>
+                    <TableCell align="right">
+                      {paciente.patient.name} {paciente.patient.lastname}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
         </div>
       </div>
       <div className={styles.notes}>
