@@ -33,7 +33,7 @@ const Calendar = () => {
     day: "numeric"
   });
   console.log(arr);
-  console.log(date);
+
   const payload = {
     date: date,
     time: arr[4].split(":")[0] + ":00",
