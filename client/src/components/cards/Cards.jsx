@@ -6,8 +6,8 @@ import NotFoundPro from '../error/NotFoundPro.jsx';
 
 export default function Cards({ doctors }) {
 
-	console.log('doctors', doctors[0].name)
-	if (doctors[0].name) {
+/* 	console.log('doctors', doctors[0].name)
+	if (doctors[0].name) { */
 		return (
 			<div className={styles.container}>
 				{doctors.length && doctors?.map((e) => {
@@ -23,11 +23,11 @@ export default function Cards({ doctors }) {
 				})}
 			</div>
 		);
-	}else {
+	/* }else {
 		return (
 			<div>
 				<NotFoundPro />
 			</div>
 		)
-	}
+	} */
 }

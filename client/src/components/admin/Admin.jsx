@@ -12,7 +12,9 @@ import {
   get_total_historys,
   get_total_patients,
   get_total_turnos,
-  get_total_proffesionals
+  get_total_proffesionals,
+  get_prof_deleted,
+  get_restoreProf
 } from "../../redux/actions";
 import Pagination from "../paginate/Pagination";
 import PaginatePatients from "../paginatePatients/PaginatePatients";
@@ -42,17 +44,21 @@ ChartJS.register(
 );
 
 export default function Sidebar() {
+  
+  const [restore, setRestore] = useState();
   const dispatch = useDispatch();
   const globalUser = useSelector(state => state.user);
   const doctors = useSelector(state => state.doctors);
   const patients = useSelector(state => state.patients);
-  console.log("soy pacientes", patients);
+  //console.log("soy pacientes", patients);
   const facturas = useSelector(state => state.facturas);
   const numProffesionals = useSelector(state => state.totalProf);
   const numPatients = useSelector(state => state.totalPatients);
-  /* const patientsDelete = useSelector(state => state.patientsDelete); */
-  /* const numTurnos = useSelector(state => state.totalTurnos); */
+  const prof_deleted = useSelector(state => state.prof_deleted)
+
+   /* const numTurnos = useSelector(state => state.totalTurnos); */
   /* const numHistorys = useSelector(state => state.totalHistorys); */
+
 
   useEffect(() => {
     dispatch(get_Doctors());
@@ -62,9 +68,10 @@ export default function Sidebar() {
     dispatch(get_total_patients());
     dispatch(get_total_historys());
     dispatch(get_total_turnos());
+    dispatch(get_prof_deleted());
   }, [dispatch]);
 
-  //console.log("soy estado global de delete",patientsDelete )
+  console.log("soy estado global de delete",prof_deleted )
 
   let mesActual = facturas[0] ? facturas[0].sumaFacturas : 0;
 
@@ -133,6 +140,20 @@ export default function Sidebar() {
     setCurrentPagePatients(pageNumbersPatients);
   };
 
+  function handleRestore(e) {
+    dispatch(get_restoreProf(restore))
+    setRestore("");
+    setTimeout(() => {
+      dispatch(get_Doctors());
+      dispatch(get_prof_deleted());
+    }, 1000);
+    window.scrollTo(0, 0);
+  }
+
+  function handleClick(e){
+    setRestore(e.target.value)
+  }
+
   return (
     <div class="row" id="row">
       {globalUser && globalUser.rolUser === "admin" ? (
@@ -156,6 +177,10 @@ export default function Sidebar() {
 
                 <a class="nav-link" href="#item-3">
                   <FaIcons.FaChartLine className="me-2" /> Ingresos
+                </a>
+
+                <a class="nav-link" href="#item-4">
+                  <FaIcons.FaBan className="me-2" /> Suspendidos
                 </a>
               </nav>
             </nav>
@@ -217,12 +242,28 @@ export default function Sidebar() {
                   <Doughnut data={data2} />
                 </p>
               </div>
+                  <br />
+                  <hr />
+                  <br />
+              <div id="item-4">
+                <h4>Usuarios suspendidos:</h4>
+            
+                <select onClick={e => handleClick(e)}>
+                 {  prof_deleted && prof_deleted.length>=1 ? prof_deleted.map((e) =>{ return <option value={e.id}>{e.name}, {e.lastname}</option>
+
+                  }) : <option>No hay usuarios susp.</option>
+                          }
+                </select> <button onClick={ e =>handleRestore(e)}>Reactivar</button>
+       
+              </div>
             </div>
           </div>
         </>
       ) : (
         <p>Estas en el lugar equivocado, esta ruta no te pertenece</p>
       )}
+    
     </div>
+    
   );
 }
