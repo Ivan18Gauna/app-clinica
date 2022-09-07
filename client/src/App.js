@@ -24,6 +24,7 @@ import DetailsDrAdmin from "./components/detailProfAdmin/DetailProfAdmin";
 import "./App.css";
 import OurPlans from "./components/ourPlans/OurPlans";
 
+
 function App() {
   return (
     <BrowserRouter>
