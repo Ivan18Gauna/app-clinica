@@ -11,27 +11,30 @@ const postTurno = async(req, res) => {
                 id: professional,
             }
         })
+
         const profTurn = await prof.getTurnos()
+
         const pat = await Patients.findOne({
             where: {
                 id: patient,
             }
         })
-        // try{
         const exist = profTurn.filter((e) => e.date === date && e.time.split(':')[0] === time.split(':')[0])
+        
         if (exist[0] === undefined && time.split(':')[0] > 09 && time.split(':')[0] < 18) {
             const newTurno = await Turnos.create({ date, time })
             await prof.addTurnos(newTurno)
             await pat.addTurnos(newTurno)
             return res.status(200).send(newTurno)
-    //    }}catch(error){
-    //     res.status(400).send('El turno ya existe o no esta disponible el horario')
+        }else {
+            res.status(400).send('El turno ya existe o no esta disponible el horario')
         }
+
+
     }catch(error) {
-        res.status(400).send('Por favor pida un turno en otro horario, que sea entre las 9hs y 18hs')
+        res.status(400).send('hubo un problema cargando la fecha')
     }
 }
-
 
 const getTurnoByProf = async(req, res) => {
     let { id } = req.params

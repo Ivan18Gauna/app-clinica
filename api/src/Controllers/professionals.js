@@ -246,6 +246,7 @@ const postProfessionals = async (req, res) => {
   let {
     name,
     lastname,
+	password,
 	avatar,
     license,
     birth,
@@ -261,6 +262,7 @@ const postProfessionals = async (req, res) => {
     const professional = {
       name: name,
       lastname: lastname,
+	  password: password,
 	  avatar: avatar,
       license: license,
       birth: birth,
