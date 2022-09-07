@@ -8,6 +8,7 @@ import { getUserDetail } from "../../redux/actions";
 import ListGroup from "react-bootstrap/ListGroup";
 import Button from "react-bootstrap/Button";
 import CheckIcon from "@mui/icons-material/Check";
+import CloseIcon from "@mui/icons-material/Close";
 
 export default function Price() {
   const dispatch = useDispatch();
