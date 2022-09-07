@@ -324,8 +324,7 @@ export function newTurno(payload) {
       alert("Turno creado correctamente!")
       return turno;
     } catch (error) {
-      let err=error.response.data;
-      return err
+      alert("El turno ya existe o no esta disponible el horario");
     }
   };
 }
