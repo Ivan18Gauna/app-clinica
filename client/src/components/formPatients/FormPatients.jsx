@@ -6,7 +6,6 @@ import Button from "react-bootstrap/Button";
 import { useHistory } from "react-router-dom";
 import styles from "./FormPatients.module.css";
 import { useState } from "react";
-import { useAuth0 } from "@auth0/auth0-react";
 import Cookie from 'universal-cookie'
 import { getUserDetail } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
@@ -102,7 +101,6 @@ export default function RegisterPatient() {
 
   const cookie = new Cookie()
   const dispatch = useDispatch()
-  const { isAuthenticated, user } = useAuth0();
   const history = useHistory();
   const [error, setError] = useState({});
   const [input, setInput] = useState({
@@ -111,14 +109,14 @@ export default function RegisterPatient() {
     document: "",
     birth: "",
     phone: "",
-    mail: isAuthenticated ? user.email : "",
+    mail: cookie.get("userEmail")? cookie.get("userEmail") : "",
     province: "",
     city: "",
     number: "",
     street: "",
     username: "",
-    password: isAuthenticated ? "Yoivan2.0" : "",
-    new_password: isAuthenticated ? "Yoivan2.0" : "",
+    password: "",
+    new_password: "",
   });
 
   function handleInput(e) {
@@ -219,7 +217,7 @@ export default function RegisterPatient() {
             />
           </Col>
         </Row> */}
-        {!isAuthenticated && (
+        {!cookie.get("userEmail") && (
           <Row className={`${styles.row}`} lg={1}>
             <Col className={`${styles.col}`}>
               <Form.Control
@@ -236,36 +234,34 @@ export default function RegisterPatient() {
             </Col>
           </Row>
         )}
-        {!isAuthenticated && (
-          <Row className={`${styles.row}`} lg={2}>
-            <Col className={`${styles.col}`}>
-              <Form.Control
-                type="password"
-                name="password"
-                placeholder="Contraseña"
-                value={input.password}
-                onChange={handleInput}
-                isInvalid={!!error.password}
-              />
-              <Form.Control.Feedback type="invalid">
-                {error.password}
-              </Form.Control.Feedback>
-            </Col>
-            <Col className={`${styles.col}`}>
-              <Form.Control
-                type="password"
-                name="new_password"
-                placeholder="Repetir contraseña"
-                value={input.new_password}
-                onChange={handleInput}
-                isInvalid={!!error.new_password}
-              />
-              <Form.Control.Feedback type="invalid">
-                {error.new_password}
-              </Form.Control.Feedback>
-            </Col>
-          </Row>
-        )}
+        <Row className={`${styles.row}`} lg={2}>
+          <Col className={`${styles.col}`}>
+            <Form.Control
+              type="password"
+              name="password"
+              placeholder="Contraseña"
+              value={input.password}
+              onChange={handleInput}
+              isInvalid={!!error.password}
+            />
+            <Form.Control.Feedback type="invalid">
+              {error.password}
+            </Form.Control.Feedback>
+          </Col>
+          <Col className={`${styles.col}`}>
+            <Form.Control
+              type="password"
+              name="new_password"
+              placeholder="Repetir contraseña"
+              value={input.new_password}
+              onChange={handleInput}
+              isInvalid={!!error.new_password}
+            />
+            <Form.Control.Feedback type="invalid">
+              {error.new_password}
+            </Form.Control.Feedback>
+          </Col>
+        </Row>
         <Row className={`${styles.row}`} lg={1}>
           <Col className={`${styles.col}`}>
             <Form.Label>Fecha de Nacimiento</Form.Label>
