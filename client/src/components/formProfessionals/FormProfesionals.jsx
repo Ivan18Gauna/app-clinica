@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { get_specialties, registerDoctors } from "../../redux/actions";
 import swal from 'sweetalert';
+import Cookie from 'universal-cookie'
 
 function validate(input) {
   let error = {};
@@ -103,6 +104,8 @@ const provinces = [
 ];
 
 export default function RegisterDoctor() {
+
+  const cookie = new Cookie()
   const dispatch = useDispatch();
   const especialities_data = useSelector(state => state.specialties);
   const history = useHistory();
@@ -118,18 +121,18 @@ export default function RegisterDoctor() {
     license: "",
     birth: "",
     phone: "",
-    mail: "",
+    mail: cookie.get("userEmail")? cookie.get("userEmail") : "",
     province: "",
     city: "",
     number: "",
     street: "",
     username: "",
     password: "",
-    new_password: ""
+    new_password: "",
   });
 
   const [error, setError] = useState({});
-  console.log(input)
+
   function handleInput(e) {
     setInput({
       ...input,
@@ -174,13 +177,13 @@ export default function RegisterDoctor() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log('3', input.password)
     dispatch(registerDoctors(input));
     swal({
       icon: 'success',
       title: 'Usuario registrado.',
       timer: 1500
     })
+    cookie.set('userEmail', input.mail, { path: '/' })
     setInput({
       name: "",
       lastname: "",
@@ -249,21 +252,23 @@ export default function RegisterDoctor() {
 						</Form.Control.Feedback>
 					</Col>
 				</Row> */}
-        <Row className={`${styles.row}`} lg={1}>
-          <Col className={`${styles.col}`}>
-            <Form.Control
-              type="text"
-              name="mail"
-              placeholder="Correo electronico"
-              value={input.mail}
-              onChange={handleInput}
-              isInvalid={!!error.mail}
-            />
-            <Form.Control.Feedback type="invalid">
-              {error.lastname}
-            </Form.Control.Feedback>
-          </Col>
-        </Row>
+        {!cookie.get("userEmail") && (
+          <Row className={`${styles.row}`} lg={1}>
+            <Col className={`${styles.col}`}>
+              <Form.Control
+                type="email"
+                name="mail"
+                placeholder="Correo electrónico"
+                value={input.mail}
+                onChange={handleInput}
+                isInvalid={!!error.mail}
+              />
+              <Form.Control.Feedback type="invalid">
+                {error.mail}
+              </Form.Control.Feedback>
+            </Col>
+          </Row>
+        )}
         <Row className={`${styles.row}`} lg={2}>
           <Col className={`${styles.col}`}>
             <Form.Control

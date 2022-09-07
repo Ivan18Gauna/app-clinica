@@ -8,6 +8,7 @@ import { getUserDetail } from "../../redux/actions";
 import ListGroup from "react-bootstrap/ListGroup";
 import Button from "react-bootstrap/Button";
 import CheckIcon from "@mui/icons-material/Check";
+import CloseIcon from "@mui/icons-material/Close";
 
 export default function Price() {
   const dispatch = useDispatch();
@@ -58,7 +59,7 @@ export default function Price() {
                   <br />
                 </div>
                 <p className="card-text">
-                  Registra de manera segura, eficiente e inteligente tu servicio de control de turnos y seguimiento de pacientes.
+                  Registra de manera segura, inteligente y eficiente tu servicio de control de turnos y seguimiento de pacientes.
                 </p>
               </div>
               <ListGroup variant="flush">

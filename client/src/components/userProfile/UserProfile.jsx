@@ -11,8 +11,9 @@ import { useAuth0 } from "@auth0/auth0-react";
 import Cookies from "universal-cookie";
 import PatientProfile from "../patientsProfile/PatientsProfile";
 import Loading from "../loading/Loading";
-import "../login/Login.module.css";
+import styles from "../login/Login.module.css";
 import ProfessionalProfile from "../professionalsProfile/ProfessionalsProfile";
+import Button from "react-bootstrap/esm/Button";
 
 export default function UserProfile() {
   const history = useHistory();
@@ -56,9 +57,16 @@ export default function UserProfile() {
         </div>
       ) : (
         <div>
-          <Loading />
-          <button onClick={logoutCookies}>Cerrar sesion</button>
-          <button onClick={register}>Continuar con el registro</button>
+          <div id={styles.loadingLogin}>
+            <Loading />
+          </div>
+          <div className={styles.userProfile}>
+            <h3>Todavia necesitamos algunos datos tuyos</h3>
+          </div>
+          <div className={styles.buttonsProfile}>
+            <Button className={styles.buttonRegister} onClick={register}>Continuar con el registro</Button>
+            <Button onClick={logoutCookies}>Cerrar sesion</Button>
+          </div>
         </div>
       )}
     </div>

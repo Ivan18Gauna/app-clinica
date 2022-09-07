@@ -36,7 +36,7 @@ const postMP = async (req, res) => {
   const price = Number(data.price)
   const items = [{ price, quantity: 1 }];
   const external_reference =
-    id + "" + data.mail + "" + data.price + "*" + data.date;
+    id + "*" + data.mail + "*" + data.price + "*" + data.date;
   const itemsMp = items.map((item) => ({
     title: "Susbcripcion App Salud",
     quantity: 1,
