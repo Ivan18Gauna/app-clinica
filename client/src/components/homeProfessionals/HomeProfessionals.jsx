@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import ListGroup from "react-bootstrap/ListGroup";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getTurnoProf } from "../../redux/actions";
@@ -76,8 +75,7 @@ export default function HomeProfessional({ globalUser }) {
             <Table sx={{ minWidth: 250 }} aria-label="simple table">
               <TableHead>
                 <TableRow>
-                  <TableCell>Día</TableCell>
-                  <TableCell align="right">Mes</TableCell>
+                  <TableCell>Fecha</TableCell>
                   <TableCell align="right">Hora</TableCell>
                   <TableCell align="right">Paciente</TableCell>
                 </TableRow>
@@ -89,9 +87,8 @@ export default function HomeProfessional({ globalUser }) {
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     <TableCell component="th" scope="row">
-                      {paciente.date.split(",")[0]}
+                      {`${paciente.date.split("de")[0]} de ${paciente.date.split("de")[1]}`}
                     </TableCell>
-                    <TableCell align="right">{paciente.date.split(' ')[3]}</TableCell>
                     <TableCell align="right">{paciente.time}</TableCell>
                     <TableCell align="right">
                       {paciente.patient.name} {paciente.patient.lastname}
