@@ -4,6 +4,7 @@ import MessageIcon from "@mui/icons-material/Message";
 import CloseIcon from "@mui/icons-material/Close";
 import "./Bot.css";
 
+
 export default function Bot() {
   const steps = [
     {
