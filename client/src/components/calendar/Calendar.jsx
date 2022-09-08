@@ -48,9 +48,15 @@ const Calendar = () => {
       .then(res => {
         if (res != undefined) {
           dispatch(postTurnoMail(payload, user.mail))
-          alert('El turno fue creado correctamente')
+          swal({
+            icon:'success',
+            title:'El turno fue creado correctamente',
+            timer: 2000})
         } else {
-          alert('Horario no disponible')
+          swal({
+            icon:'warning',
+            title:'Horario no disponible',
+          })
         }
       })
     //   err => console.log('err', err))
