@@ -15,7 +15,7 @@ const postHistoriaClinica = async (req, res) => {
     req.body;
 
   try {
-    const historiaClinica = { reason: reason[0], image, description: description[0], date: date[0], diagnosis: diagnosis[0] };
+    const historiaClinica = { reason: reason, image, description: description, date: date, diagnosis: diagnosis };
     if (!reason || !description || !date || !diagnosis) {
       res.send("Falta infornacion");
     } else {
