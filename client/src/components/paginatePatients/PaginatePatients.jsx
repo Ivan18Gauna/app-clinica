@@ -13,7 +13,7 @@ function PaginatePatients ({patientsPage, patients, paginado}){
             { pageNumbersPatients && 
             pageNumbersPatients.map(number => (
                 
-                <a onClick={() => paginado(number)} href>|{number}|</a>
+                <a onClick={() => paginado(number)} href>{number}</a>
               
             ))}
             </ul>

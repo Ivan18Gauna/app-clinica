@@ -22,11 +22,12 @@ export default function Cards({ doctors }) {
 				})}
 			</div>
 		);
-	}else {
+	/* }else {
 		return (
 			<div>
 				<NotFoundPro />
 			</div>
 		)
-	}
+	} */
+}
 }

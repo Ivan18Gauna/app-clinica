@@ -31,6 +31,8 @@ const transporter = nodemailer.createTransport({
 
 //genera la URL a mercado pago
 const postMP = async (req, res) => {
+
+
     const data = req.body;
     const id = data.id;
     const items = [
@@ -48,6 +50,7 @@ const postMP = async (req, res) => {
             success: `https://app-clinica-dev.herokuapp.com/mercadopago/factura`,
             failure: `https://app-clinica-dev.herokuapp.com/mercadopago/factura`,
             pending: `https://app-clinica-dev.herokuapp.com/mercadopago/factura`
+
         },
         auto_return: "approved",
         payment_methods: {
@@ -79,6 +82,7 @@ const postMP = async (req, res) => {
 }
 
 const getPayments = async (req, res) => {
+
     try {
         let { payment_id } = req.query;
         //const payment_id = req.query.payment_id;
@@ -124,6 +128,7 @@ const getPayments = async (req, res) => {
     }
   }
   
+
 
 
 

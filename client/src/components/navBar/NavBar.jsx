@@ -44,7 +44,9 @@ function NavBarEdit() {
         <h4>SALUD</h4>
       </Navbar.Brand>
       {globalUser && globalUser.rolUser && conf ? (
-        <button onClick={handleClick}>Cerrar sesión</button>
+       <Nav className="me-auto" >
+       <Nav.Link onClick={handleClick} >
+     Cerrar sesión</Nav.Link></Nav>
       ) : (
         <>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
