@@ -12,10 +12,12 @@ const getInfoApiPatients = async (req, res) => {
     Patients.findOrCreate({
       where: {
         name: e.name.split(" ")[0],
-        lastname: e.name.split(" ")[0],
+        lastname: e.name.split(" ")[1],
+        avatar: e.avatar,
         birth: e.birth,
         phone: e.phone,
         mail: e.mail,
+        password: e.password,
         province: e.province,
         city: e.city,
         number: e.number,
@@ -114,10 +116,10 @@ const getPatByOnsearchName = async(req, res) => {
 
 
 const postPatients = async (req, res) => {
-  let { name, lastname, document, birth, phone, mail, province, city, number, street, blood, vaccines, allergies, transfusion, donation, chronicles, oS
+  let { name, lastname, avatar, document, password, birth, phone, mail, province, city, number, street, blood, vaccines, allergies, transfusion, donation, chronicles, oS
   } = req.body;
   try {
-    const patients = { name, lastname, document, birth, phone, mail, province, city, number, street, blood, vaccines, allergies, transfusion, donation, chronicles, oS };
+    const patients = { name, lastname, avatar, document, password, birth, phone, mail, province, city, number, street, blood, vaccines, allergies, transfusion, donation, chronicles, oS };
     if (isNaN(name) === false)
       return res.send("El valor ingresado no debe ser numerico.");
     if ( !name || !lastname || !document || !birth || !phone || !mail || !province || !city || !number || !street || !blood || !vaccines || !allergies || !transfusion || !donation || !chronicles || !oS ) {
@@ -143,7 +145,9 @@ const putPatients = async (req, res) => {
     const {
       name,
       lastname,
+      avatar,
       document,
+      password,
       birth,
       phone,
       mail,
@@ -164,6 +168,8 @@ const putPatients = async (req, res) => {
         name,
         lastname,
         document,
+        password,
+        avatar,
         birth,
         phone,
         mail,
@@ -199,6 +205,25 @@ const deletePatients = async (req, res) => {
   }
 };
 
+const restorePatient = async(req, res) => {
+	let { id } = req.params;
+	try {
+		await Patients.restore({
+			where: {
+				id: id
+			}
+		});
+		const restoredPat = await Patients.findOne({
+			where: {
+				id: id
+			}
+		})
+		res.status(200).send(restoredPat)
+	} catch (error) {
+		res.status(400).send('Hubo un problema recuperando el usuario')
+	}
+}
+
 module.exports = {
   getInfoApiPatients,
   getAllPatients,
@@ -209,4 +234,5 @@ module.exports = {
   putPatients,
   getPatByOnsearchName,
   deletePatients,
+  restorePatient
 };

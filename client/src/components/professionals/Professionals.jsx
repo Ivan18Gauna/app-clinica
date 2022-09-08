@@ -8,6 +8,7 @@ import styles from './Professionals.module.css';
 
 export default function Professionals() {
 	const doctors = useSelector((state) => state.doctors);
+	console.log(doctors)
 	return (
 		<div className={styles.container}>
 			<Filters />
@@ -17,7 +18,7 @@ export default function Professionals() {
 			) : doctors === 'Debe seleccionar un valor a consultar' ? (
 				<ModifyFilter />
 			) : (
-				<Cards doctors={doctors} />
+				doctors.length && <Cards doctors={doctors} />
 			)}
 		</div>
 	);

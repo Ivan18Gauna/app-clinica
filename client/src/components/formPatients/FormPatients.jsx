@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -6,22 +6,25 @@ import Button from "react-bootstrap/Button";
 import { useHistory } from "react-router-dom";
 import styles from "./FormPatients.module.css";
 import { useState } from "react";
-import { useAuth0 } from "@auth0/auth0-react";
+import Cookie from 'universal-cookie'
+import { getUserDetail } from "../../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+import swal from "sweetalert";
 
 
 function validate(input) {
   let error = {};
   if (!/([A-z])/.test(input.name)) {
-    error.name = "Ingrese un nombre valido.";
+    error.name = "Ingrese un nombre válido.";
     return error;
   }
   if (!/([A-z])/.test(input.lastname)) {
-    error.lastname = "Ingrese un apellido valido.";
+    error.lastname = "Ingrese un apellido válido.";
     return error;
   }
 
   if (!/\S+@\S+\.\S+/.test(input.mail)) {
-    error.mail = "Dirección de correo no valida.";
+    error.mail = "Dirección de correo no válida.";
     return error;
   }
   if (
@@ -30,7 +33,7 @@ function validate(input) {
     )
   ) {
     error.password =
-      "La contraseña debe contener al menos 8 digitos, una mayúscula, un número y un caracter especial.";
+      "La contraseña debe contener al menos 8 digitos, una mayúscula y un número.";
     return error;
   }
   if (input.password !== input.new_password) {
@@ -45,18 +48,22 @@ function validate(input) {
     return error;
   }
   if (!/^\d{5,15}$$/.test(input.document)) {
-    error.document = "Número de documento no valido.";
+    error.document = "Número de documento no válido.";
     return error;
   }
-  if (!/^\d{8,15}$$/.test(input.phone)) {
-    error.phone = "Número de telefono no valido.";
+  if (!/^\d{10}$$/.test(input.phone)) {
+    error.phone = "Número de telefono no válido.";
     return error;
   }
   if (!/[0-9]/.test(input.number)) {
-    error.number = "Número no valido.";
+    error.number = "Número no válido.";
     return error;
   } else if (input.number <= 0) {
-    error.number = "Número no valida.";
+    error.number = "Número no válida.";
+    return error;
+  }
+  if (!/([A-z])/.test(input.city)) {
+    error.city = 'Ingrese un nombre de ciudad válido.';
     return error;
   }
   return error;
@@ -92,7 +99,8 @@ const provinces = [
 
 export default function RegisterPatient() {
 
-  const { isAuthenticated, user } = useAuth0();
+  const cookie = new Cookie()
+  const dispatch = useDispatch()
   const history = useHistory();
   const [error, setError] = useState({});
   const [input, setInput] = useState({
@@ -101,14 +109,14 @@ export default function RegisterPatient() {
     document: "",
     birth: "",
     phone: "",
-    mail: isAuthenticated?user.email:"",
+    mail: cookie.get("userEmail")? cookie.get("userEmail") : "",
     province: "",
     city: "",
     number: "",
     street: "",
-    username:"",
-    password: isAuthenticated?"Yoivan2.0":"",
-    new_password: isAuthenticated?"Yoivan2.0":"",
+    username: "",
+    password: "",
+    new_password: "",
   });
 
   function handleInput(e) {
@@ -130,24 +138,38 @@ export default function RegisterPatient() {
     });
   }
 
+  useEffect(() => {
+    dispatch(getUserDetail(input.mail))
+  }, [dispatch, input.mail])
+
+  const userForEmail = useSelector((state) => state.user)
+
   function handleSubmit(e) {
     e.preventDefault();
-    setInput({
-      name: "",
-      lastname: "",
-      document: "",
-      birth: "",
-      phone: "",
-      mail: "",
-      province: "",
-      city: "",
-      number: "",
-      street: "",
-      username: "",
-      password: "",
-      new_password: "",
-    });
-    history.push(`/healthData`, input);
+    if (userForEmail ? false : true) {
+      cookie.set('userEmail', input.mail, { path: '/' })
+      setInput({
+        name: "",
+        lastname: "",
+        document: "",
+        birth: "",
+        phone: "",
+        mail: "",
+        province: "",
+        city: "",
+        number: "",
+        street: "",
+        username: "",
+        password: "",
+        new_password: "",
+      });
+      history.push(`/healthData`, input);
+    } else {
+      swal({
+        icon: 'warning',
+        title: 'El email ingresado ya se encuentra registrado'
+      })
+    }
   }
 
   return (
@@ -184,7 +206,7 @@ export default function RegisterPatient() {
             </Form.Control.Feedback>
           </Col>
         </Row>
-        <Row className={`${styles.row}`} lg={1}>
+        {/* <Row className={`${styles.row}`} lg={1}>
           <Col className={`${styles.col}`}>
             <Form.Control
               type="text"
@@ -194,8 +216,8 @@ export default function RegisterPatient() {
               onChange={handleInput}
             />
           </Col>
-        </Row>
-        {!isAuthenticated && (
+        </Row> */}
+        {!cookie.get("userEmail") && (
           <Row className={`${styles.row}`} lg={1}>
             <Col className={`${styles.col}`}>
               <Form.Control
@@ -212,36 +234,34 @@ export default function RegisterPatient() {
             </Col>
           </Row>
         )}
-        {!isAuthenticated && (
-          <Row className={`${styles.row}`} lg={2}>
-            <Col className={`${styles.col}`}>
-              <Form.Control
-                type="password"
-                name="password"
-                placeholder="Contraseña"
-                value={input.password}
-                onChange={handleInput}
-                isInvalid={!!error.password}
-              />
-              <Form.Control.Feedback type="invalid">
-                {error.password}
-              </Form.Control.Feedback>
-            </Col>
-            <Col className={`${styles.col}`}>
-              <Form.Control
-                type="password"
-                name="new_password"
-                placeholder="Repetir contraseña"
-                value={input.new_password}
-                onChange={handleInput}
-                isInvalid={!!error.new_password}
-              />
-              <Form.Control.Feedback type="invalid">
-                {error.new_password}
-              </Form.Control.Feedback>
-            </Col>
-          </Row>
-        )}
+        <Row className={`${styles.row}`} lg={2}>
+          <Col className={`${styles.col}`}>
+            <Form.Control
+              type="password"
+              name="password"
+              placeholder="Contraseña"
+              value={input.password}
+              onChange={handleInput}
+              isInvalid={!!error.password}
+            />
+            <Form.Control.Feedback type="invalid">
+              {error.password}
+            </Form.Control.Feedback>
+          </Col>
+          <Col className={`${styles.col}`}>
+            <Form.Control
+              type="password"
+              name="new_password"
+              placeholder="Repetir contraseña"
+              value={input.new_password}
+              onChange={handleInput}
+              isInvalid={!!error.new_password}
+            />
+            <Form.Control.Feedback type="invalid">
+              {error.new_password}
+            </Form.Control.Feedback>
+          </Col>
+        </Row>
         <Row className={`${styles.row}`} lg={1}>
           <Col className={`${styles.col}`}>
             <Form.Label>Fecha de Nacimiento</Form.Label>
@@ -313,7 +333,7 @@ export default function RegisterPatient() {
               isInvalid={!!error.city}
             />
             <Form.Control.Feedback type="invalid">
-              {error.phone}
+              {error.city}
             </Form.Control.Feedback>
           </Col>
         </Row>
@@ -348,43 +368,43 @@ export default function RegisterPatient() {
         <Row className={`${styles.row}`} lg={1}>
           <Col className={`${styles.col}`}>
             {input.name === "" ||
-            input.lastname === "" ||
-            input.document === "" ||
-            input.phone === "" ||
-            // input.mail === "" ||
-            input.province === "" ||
-            input.city === "" ||
-            input.street === "" ||
-            input.number === "" ||
-            input.username === "" ||
-            // input.password === "" ||
-            // input.new_password === "" ||
-            error.name ||
-            error.lastname ||
-            error.document ||
-            error.birth ||
-            error.phone ||
-            // error.mail ||
-            // error.password ||
-            // error.new_password ||
-            error.number 
-            ? (
-              <Button
-                disabled
-                variant="danger"
-                className={`${styles.buttonSubmit}`}
-              >
-                Faltan datos por completar
-              </Button>
-            ) : (
-              <Button
-                className={`${styles.buttonSubmit}`}
-                type="submit"
-                variant="success"
-              >
-                Siguiente
-              </Button>
-            )}
+              input.lastname === "" ||
+              input.document === "" ||
+              input.phone === "" ||
+              // input.mail === "" ||
+              input.province === "" ||
+              input.city === "" ||
+              input.street === "" ||
+              input.number === "" ||
+              // input.password === "" ||
+              // input.new_password === "" ||
+              error.name ||
+              error.lastname ||
+              error.document ||
+              error.birth ||
+              error.phone ||
+              error.city ||
+              // error.mail ||
+              // error.password ||
+              // error.new_password ||
+              error.number
+              ? (
+                <Button
+                  disabled
+                  variant="danger"
+                  className={`${styles.buttonSubmit}`}
+                >
+                  Faltan datos por completar
+                </Button>
+              ) : (
+                <Button
+                  className={`${styles.buttonSubmit}`}
+                  type="submit"
+                  variant="success"
+                >
+                  Siguiente
+                </Button>
+              )}
           </Col>
         </Row>
       </Form>

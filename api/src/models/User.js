@@ -6,11 +6,6 @@ module.exports = (sequelize)=>{
             type : DataTypes.STRING,
             allowNull : false
         },
-        avatar : {
-            type : DataTypes.STRING,
-            allowNull : true
-        }
-        ,
         lastname : {
             type : DataTypes.STRING,
             allowNull : false
@@ -24,33 +19,12 @@ module.exports = (sequelize)=>{
             type : DataTypes.STRING,
             allowNull : false
         },
-        telephone : {
-            type : DataTypes.BIGINT,
-            allowNull : false
-        },
-        address : {
-            type : DataTypes.STRING,
-            allowNull : false
-        },
-        birth : {
-            type : DataTypes.STRING,
-            allowNull : false
-        },
-        state : {
-            type : DataTypes.BOOLEAN,
-            defaultValue : true
-        },
-        online : {
-            type : DataTypes.BOOLEAN,
-            defaultValue : false
-        },
-        genero : {
-            type : DataTypes.STRING,
-            allowNull : false
+        phone : {
+            type : DataTypes.BIGINT
         },
         rolUser:{
-             type:DataTypes.ENUM('gol', 'standar', 'premmium'),
-          
+            type:DataTypes.STRING,
+            defaultValue: 'admin'
         }
     },{
         timestamps : false

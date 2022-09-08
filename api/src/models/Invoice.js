@@ -11,6 +11,10 @@ module.exports = (sequelize)=>{
             type: DataTypes.STRING,
             defaultValue: '',
         },
+        merchant_order_id:{
+            type: DataTypes.BIGINT,
+            defaultValue: 0,
+        },
         date: {
             type: DataTypes.DATEONLY
         },
@@ -20,12 +24,8 @@ module.exports = (sequelize)=>{
         saldado: {
             type: DataTypes.BOOLEAN
         },
-        plan: {
-            type:DataTypes.ENUM('gol', 'standar', 'premmium'),
-
-        },
         status:{
-            type:DataTypes.ENUM('creado', 'procesando', 'cancelado', 'pagado'),
+            type:DataTypes.ENUM('created', 'processing', 'cancelled', 'paid'),
             allowNull:false,
         },
     },
