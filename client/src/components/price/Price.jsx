@@ -11,10 +11,10 @@ import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 
 export default function Price() {
-  const dispatch = useDispatch();
+const dispatch = useDispatch();
   const user = useSelector(state => state.user);
   const [pricer] = useState({
-    basic: 8,
+    basic: 15,
     standar: 20,
     premium: 40
   });
@@ -55,32 +55,25 @@ export default function Price() {
                   <h5 className="card-title">Basico</h5>
                   <small>Individual</small>
                   <br />
-                  <span className="h2">$8</span>/Mes
+                  <span className="h2">$15</span>/Mes
                   <br />
                 </div>
                 <p className="card-text">
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.
+                  Registra de manera segura, inteligente y eficiente tu servicio de control de turnos y seguimiento de pacientes.
                 </p>
               </div>
               <ListGroup variant="flush">
                 <ListGroup.Item>
-                  <CheckIcon sx={{ fontSize: 15 }} color="success" /> Dapibus ac
-                  Cras justo odio
+                  <CheckIcon sx={{ fontSize: 15 }} color="success" />
+                  Tomar turnos
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  <CloseIcon
-                    sx={{ fontSize: 15, color: "red" }}
-                    color="success"
-                  />{" "}
-                  Cras justo odio Dapibus ac
+                  <CheckIcon sx={{ fontSize: 15 }} color="success" />
+                  Registrar historias clinicas
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  <CloseIcon
-                    sx={{ fontSize: 15, color: "red" }}
-                    color="success"
-                  />{" "}
-                  Cras justo odio Vestibulum
+                  <CheckIcon sx={{ fontSize: 15 }} color="success" />
+                  Acceso directo a tus pacientes
                 </ListGroup.Item>
               </ListGroup>
               <div className="card-body text-center">
@@ -103,29 +96,25 @@ export default function Price() {
                   <h5 className="card-title">Estandar</h5>
                   <small>Small Business</small>
                   <br />
-                  <span className="h2">$20</span>/Mes
+                  <span className="h2">$20</span>/Bimentral
                   <br />
                 </div>
                 <p className="card-text">
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.
+                Registra de manera segura, eficiente e inteligente tu servicio de control de turnos y seguimiento de pacientes.
                 </p>
               </div>
               <ListGroup variant="flush">
                 <ListGroup.Item>
-                  <CheckIcon sx={{ fontSize: 15 }} color="success" /> Cras justo
-                  odio
+                  <CheckIcon sx={{ fontSize: 15 }} color="success" />
+                  Tomar turnos
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  <CheckIcon sx={{ fontSize: 15 }} color="success" /> Dapibus ac
-                  facilisis in
+                  <CheckIcon sx={{ fontSize: 15 }} color="success" />
+                  Registrar historias clinicas
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  <CloseIcon
-                    sx={{ fontSize: 15, color: "red" }}
-                    color="success"
-                  />{" "}
-                  Vestibulum at eros
+                  <CheckIcon sx={{ fontSize: 15 }} color="success" />
+                  Acceso directo a tus pacientes
                 </ListGroup.Item>
               </ListGroup>
               <div className="card-body text-center">
@@ -148,26 +137,25 @@ export default function Price() {
                   <h5 className="card-title">Premium</h5>
                   <small>Large Companies</small>
                   <br />
-                  <span className="h2">$40</span>/Mes
+                  <span className="h2">$40</span>/Semestral
                   <br />
                 </div>
                 <p className="card-text">
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.
+                Registra de manera segura, eficiente e inteligente tu servicio de control de turnos y seguimiento de pacientes.
                 </p>
               </div>
               <ListGroup variant="flush">
                 <ListGroup.Item>
-                  <CheckIcon sx={{ fontSize: 15 }} color="success" /> Cras justo
-                  odio
+                  <CheckIcon sx={{ fontSize: 15 }} color="success" />
+                  Tomar turnos
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  <CheckIcon sx={{ fontSize: 15 }} color="success" /> Dapibus ac
-                  facilisis in
+                  <CheckIcon sx={{ fontSize: 15 }} color="success" />
+                  Registrar historias clinicas
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  <CheckIcon sx={{ fontSize: 15 }} color="success" /> Vestibulum
-                  at eros
+                  <CheckIcon sx={{ fontSize: 15 }} color="success" />
+                  Acceso directo a tus pacientes
                 </ListGroup.Item>
               </ListGroup>
               <div className="card-body text-center">

@@ -247,6 +247,7 @@ export default function ProfessionalProfile({ globalUser, specialties }) {
     setEditInfoPersonal(false);
     setInput({});
   }
+
   function logoutCookies() {
     if (isAuthenticated) {
       logout();
@@ -541,8 +542,9 @@ export default function ProfessionalProfile({ globalUser, specialties }) {
                       {(input.password &&
                         input.new_password &&
                         input.password !== input.new_password) ||
-                      error.password ||
-                      error.new_password ? (
+                        error.password ||
+                        error.mail ||
+                        error.new_password ? (
                         <Button
                           disabled
                           variant="danger"

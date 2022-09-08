@@ -22,9 +22,8 @@ const { conn } = require('./src/db.js');
 const {getInfoApiPatients}= require ('./src/Controllers/patients');
 const { getObrasSociales, addProfDb } = require('./src/Controllers/professionals.js');
 
-
 // Syncing all the models at once.
-conn.sync({ force: true }).then(() => {
+conn.sync({ force: false }).then(() => {
   server.listen(process.env.PORT, () => {
     getInfoApiPatients();
     getObrasSociales();

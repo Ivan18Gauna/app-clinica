@@ -22,7 +22,7 @@ import Sidebar from './components/admin/Admin'
 import DetailsPatients from "./components/detailPatAdmin/DetailPatAdmin";
 import DetailsDrAdmin from "./components/detailProfAdmin/DetailProfAdmin";
 import "./App.css";
-
+import OurPlans from "./components/ourPlans/OurPlans";
 
 function App() {
   return (
@@ -54,6 +54,7 @@ function App() {
         <Route path="/professionals" component={Professionals} />
         <Route path="/auth0" component={Auth0} />
         <Route path="/homepatients" component={HomePatients} />
+        <Route path="/ourplans" component={OurPlans} />
       </Switch>
     </BrowserRouter>
   );

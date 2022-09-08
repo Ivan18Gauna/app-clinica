@@ -1,0 +1,17 @@
+.paginado{
+    list-style: none;
+    line-height: 45px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.paginado a{
+    border-radius: 10%;
+} 
+
+.paginado a:hover{
+    background: rgb(20, 20, 220);
+}

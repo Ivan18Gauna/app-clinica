@@ -58,8 +58,8 @@ export default function HomePatients({ userInfo }) {
                     );
                   })}
                   <br />
-                  <Card.Link href="#">Cancelar turno</Card.Link>
-                  <Card.Link href="#">Pedir otro turno</Card.Link>
+                  {/* <Card.Link href="#">Cancelar turno</Card.Link>
+                  <Card.Link href="#">Pedir otro turno</Card.Link> */}
                 </Card.Body>
               </Card>
             </div>
@@ -76,13 +76,13 @@ export default function HomePatients({ userInfo }) {
                       Vacunas:{" "}
                       {userInfo.vaccines?.length > 0 &&
                         userInfo.vaccines.map((el, i) => (
-                          <span key={i}>{el}/ </span>
+                          <span key={i}>{el} / </span>
                         ))}
                     </ListGroup.Item>
                     <ListGroup.Item>
                       Alergias:{" "}
                       {userInfo.allergies?.length > 0 &&
-                        userInfo.allergies.map((el, i) => <span key={i}>{el}/ </span>)}
+                        userInfo.allergies.map((el, i) => <span key={i}>{el} / </span>)}
                     </ListGroup.Item>
                     <ListGroup.Item>
                       Donante: {userInfo.donation}
@@ -93,19 +93,19 @@ export default function HomePatients({ userInfo }) {
                     <ListGroup.Item>
                       Enfermedades crónicas:{" "}
                       {userInfo.chronicles?.length > 0 &&
-                        userInfo.chronicles.map((el, i) => <span key={i}>{el}/ </span>)}
+                        userInfo.chronicles.map((el, i) => <span key={i}>{el} / </span>)}
                     </ListGroup.Item>
                     <ListGroup.Item>Obra Social: {userInfo.oS}</ListGroup.Item>
                   </ListGroup>
 
                   <br />
 
-                  <Card.Link href="#">Actualizar Informacion</Card.Link>
+                  <Card.Link href="/userProfile">Actualizar Informacion</Card.Link>
                 </Card.Body>
               </Card>
             </div>
             <div>
-              <Card style={{ width: "22rem" }}>
+              {/* <Card style={{ width: "22rem" }}>
                 <Card.Body>
                   <Card.Title>Ultima atención</Card.Title>
 
@@ -123,7 +123,7 @@ export default function HomePatients({ userInfo }) {
 
                   <Card.Link href="#">Repetir atención</Card.Link>
                 </Card.Body>
-              </Card>
+              </Card> */}
             </div>
           </div>
           <div className="botones">

@@ -115,6 +115,10 @@ function validate(info) {
     error.number = "Número no valida.";
     return error;
   }
+  if (info.city && !/([A-z])/.test(info.city)) {
+    error.city = 'Ingrese un nombre de ciudad válido.';
+    return error;
+  }
   return error;
 }
 
@@ -403,6 +407,7 @@ export default function UserProfile({ globalUser, obras }) {
     if (info.oS && info.oS !== "") {
       infoModify.oS = info.oS;
     }
+    
     dispatch(modifyUsers(infoModify, globalUser.id, globalUser.mail));
     swal({
       icon: 'success',
@@ -668,6 +673,7 @@ export default function UserProfile({ globalUser, obras }) {
                           info.password !== info.new_password) ||
                           error.password ||
                           error.new_password ||
+                          error.city ||
                           (info.password && !info.new_password) ? (
                           <Button
                             disabled
@@ -710,9 +716,10 @@ export default function UserProfile({ globalUser, obras }) {
                     : "Sin información"}
                 </ul>
                 <p>Enfermedades Crónicas: </p>
-                <ul className={styles.lista}>
+                <ul >
+                {/* className={styles.lista} */}
                   {globalUser.chronicles && globalUser.chronicles.length > 0
-                    ? globalUser.chronicles.map(el => <li>{el}</li>)
+                    ? globalUser.chronicles.map(el =>  <li>{el}</li>)
                     : "Sin información"}
                 </ul>
                 <p>

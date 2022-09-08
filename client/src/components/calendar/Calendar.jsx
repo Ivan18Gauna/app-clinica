@@ -6,6 +6,9 @@ import { getUserDetail, newTurno, postTurnoMail } from "../../redux/actions";
 import { useLocation } from "react-router-dom";
 import Cookies from "universal-cookie";
 import { useEffect } from "react";
+import swal from "sweetalert";
+import styles from "../login/Login.module.css";
+import Button from "react-bootstrap/esm/Button";
 
 const Calendar = () => {
   const location = useLocation();
@@ -18,7 +21,7 @@ const Calendar = () => {
   }, [dispatch]);
 
   const user = useSelector(state => state.user);
-  console.log("user", user);
+
 
   const [fecha, setFecha] = useState(new Date());
   const onChangeSetFecha = e => {
@@ -26,14 +29,14 @@ const Calendar = () => {
   };
 
   const arr = fecha.toString().split(" ");
-  const date = new Date(arr).toLocaleDateString("es-ES", {
+  const date = new Date(fecha).toLocaleDateString("es-ES", {
     weekday: "long",
     year: "numeric",
     month: "short",
     day: "numeric"
   });
-  console.log(arr);
-  console.log(date);
+  // console.log(arr);
+  // console.log(date);
   const payload = {
     date: date,
     time: arr[4].split(":")[0] + ":00",
@@ -43,8 +46,27 @@ const Calendar = () => {
 
   const handleSubmit = e => {
     e.preventDefault(e);
-    dispatch(newTurno(payload));
-    dispatch(postTurnoMail(payload, user.mail));
+    let turno = dispatch(newTurno(payload))
+      .then(res => {
+        if (res != undefined) {
+          dispatch(postTurnoMail(payload, user.mail))
+          swal({
+            icon: 'success',
+            title: 'El turno fue creado correctamente',
+            timer: 2000
+          })
+        } else {
+          swal({
+            icon: 'warning',
+            title: 'Horario no disponible',
+          })
+        }
+      })
+    //   err => console.log('err', err))
+
+    console.log('turno', turno)
+    // ;
+
   };
 
   return (
@@ -59,7 +81,9 @@ const Calendar = () => {
           <TimePicker value={fecha} onChange={onChangeSetFecha} />
         </div>
       </div>
-      <button onClick={handleSubmit}>Solicitar turno</button>
+      <div className={styles.buttonsProfile}>
+        <Button className={styles.buttonRegister} onClick={handleSubmit} >Solicitar turno</Button>
+      </div>
     </div>
   );
 };

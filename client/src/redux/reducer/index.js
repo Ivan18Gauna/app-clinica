@@ -18,10 +18,16 @@ import {
   GET_TOTAL_PROFESSIONALS,
   GET_TOTAL_PATIENTS,
   GET_TOTAL_TURNOS,
-  GET_TOTAL_HISTORYS
+  GET_TOTAL_HISTORYS,
+  GET_INVOICE,
+  DELETE_NOTE,
+  SET,
+  GET_PROF_DELETED
+
 } from "../actions/actions";
 
 const initialState = {
+  suscribed: [],
   doctors: [],
   allDoc: [],
   detail: [],
@@ -38,50 +44,73 @@ const initialState = {
   totalPatients: [],
   totalProf: [],
   totalTurnos: [],
-  totalHistorys: []
+  totalHistorys: [],
+  patientsDelete: [],
+  prof_deleted: []
 };
 
 function rootReducer(state = initialState, action) {
   switch (action.type) {
+    case SET:
+      return {
+        ...state,
+        suscribed: action.payload
+      };
+
+        case GET_PROF_DELETED:
+        return{
+          ...state,
+          prof_deleted: action.payload
+         }
+
+    case GET_INVOICE:
+      return {
+        ...state,
+        suscribed: action.payload
+      };
+
     case GET_TURNO_PROF:
       return {
         ...state,
         turnos: action.payload
       };
-      
-      case GET_TURNO_PAT:
+
+    case GET_TURNO_PAT:
       return {
         ...state,
         turnos: action.payload.data
       };
 
-
     case GET_DOCTORS:
       return {
         ...state,
         doctors: action.payload,
-        alDoc: action.payload,
+        allDoc: action.payload
       };
 
-      case GET_TOTAL_PROFESSIONALS: 
-      return  {
-        ...state, totalProf: action.payload
+    case GET_TOTAL_PROFESSIONALS:
+      return {
+        ...state,
+        totalProf: action.payload
       };
 
-      case GET_TOTAL_PATIENTS:
-        return {
-          ...state, totalPatients: action.payload
-        }
+    case GET_TOTAL_PATIENTS:
+      return {
+        ...state,
+        totalPatients: action.payload
+      };
 
-        case GET_TOTAL_HISTORYS:
-          return {
-            ...state, totalHistorys: action.payload
-          }
+    case GET_TOTAL_HISTORYS:
+      return {
+        ...state,
+        totalHistorys: action.payload
+      };
 
-          case GET_TOTAL_TURNOS:
-            return {
-              ...state, totalTurnos: action.payload
-            }
+    case GET_TOTAL_TURNOS:
+      return {
+        ...state,
+        totalTurnos: action.payload
+      };
 
     case GET_SPECIALTIES:
       return { ...state, specialties: action.payload };
@@ -97,55 +126,61 @@ function rootReducer(state = initialState, action) {
     case GET_DOCTORS_DETAIL:
       return {
         ...state,
-        detail: action.payload,
+        detail: action.payload
       };
 
-      case GET_PATIENTS_DETAIL:
-        return{
-          ...state,
-          patientsDetail: action.payload,
-        }
+    case GET_PATIENTS_DETAIL:
+      return {
+        ...state,
+        patientsDetail: action.payload
+      };
 
     case POST_REGISTER_DOCTOR:
       return {
-        ...state,
+        ...state
       };
 
     case GET_OS:
       return {
         ...state,
-        os: action.payload,
+        os: action.payload
       };
 
     case GET_PATIENTS:
       return {
         ...state,
-        patients: action.payload,
+        patients: action.payload
       };
 
     case GET_PATIENTS_NAME:
       return {
         ...state,
-        patients: action.payload,
+        patients: action.payload
       };
 
     case GET_USER_MAIL:
       return {
         ...state,
-        user: action.payload,
+        user: action.payload
       };
 
     case GET_CLINIC_HISTORY:
       return { ...state, clinicHistory: action.payload };
 
-    case GET_NOTES: 
-      return { ...state, notes: action.payload };
+    case GET_NOTES:
+      return { ...state, notes: action.payload.data };
 
-      case GET_FACTURA:
-        return{
-          ...state,
-          facturas: action.payload,
-        }
+    case DELETE_NOTE:
+      return {
+        ...state,
+        notes: state.notes.filter(e => e.id !== action.payload)
+      };
+
+    case GET_FACTURA:
+      return {
+        ...state,
+        facturas: action.payload
+      };
 
     default:
       return state;

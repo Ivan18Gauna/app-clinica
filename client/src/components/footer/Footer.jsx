@@ -20,7 +20,7 @@ const Footer = () => {
 					<div className={styles.salud}>
 						<h5>+ SALUD</h5>
 						<div className={styles.links}>
-							<Link to="/">
+							<Link to="/ourplans">
 								<p>Planes</p>
 							</Link>
 							<Link to="/">
@@ -31,11 +31,11 @@ const Footer = () => {
 					<div className={styles.unete}>
 						<h5>ÚNETE</h5>
 						<div className={styles.links}>
-							<Link to="/">
+							<Link to="/login">
 								<p>Soy paciente</p>
 							</Link>
-							<Link to="/">
-								<p>Soy Profesinal</p>
+							<Link to="/login">
+								<p>Soy Profesional</p>
 							</Link>
 						</div>
 					</div>

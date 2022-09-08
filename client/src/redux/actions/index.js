@@ -12,14 +12,16 @@ import {
   GET_NOTES,
   GET_TURNO_PROF,
   GET_TURNO_PAT,
+  GET_INVOICE,
   GET_PATIENTS_DETAIL,
   GET_FACTURA,
   GET_TOTAL_PROFESSIONALS,
   GET_TOTAL_PATIENTS,
   GET_TOTAL_TURNOS,
-  GET_TOTAL_HISTORYS
-  /* POST_TURNO_MAIL, */
-
+  GET_TOTAL_HISTORYS,
+  DELETE_NOTE,
+  SET,
+  GET_PROF_DELETED
 } from "../actions/actions";
 import axios from "axios";
 
@@ -34,59 +36,59 @@ export function get_Doctors() {
   };
 }
 
-export function get_factura(){
-  return async function(dispatch){
+export function get_factura() {
+  return async function(dispatch) {
     const facturacion = await axios.get(`/invoice`);
 
     return dispatch({
       type: GET_FACTURA,
       payload: facturacion.data
     });
-  }
+  };
 }
 
-export function get_total_proffesionals(){
-  return async function(dispatch){
-    const totalProf = await axios.get(`/admin/professionals`)
+export function get_total_proffesionals() {
+  return async function(dispatch) {
+    const totalProf = await axios.get(`/admin/professionals`);
 
-      return dispatch({
+    return dispatch({
       type: GET_TOTAL_PROFESSIONALS,
       payload: totalProf.data
-  })}
+    });
+  };
 }
 
-export function get_total_patients(){
-  return async function(dispatch){
-
-    const totalPatients = await axios.get(`/admin/patients`)
+export function get_total_patients() {
+  return async function(dispatch) {
+    const totalPatients = await axios.get(`/admin/patients`);
 
     return dispatch({
       type: GET_TOTAL_PATIENTS,
       payload: totalPatients.data
-    })
-  }
+    });
+  };
 }
 
-export function get_total_turnos(){
-  return async function(dispatch){
-    const totalTurnos = await axios.get(`/admin/turnos`)
+export function get_total_turnos() {
+  return async function(dispatch) {
+    const totalTurnos = await axios.get(`/admin/turnos`);
 
     return dispatch({
       type: GET_TOTAL_TURNOS,
       payload: totalTurnos.data
-    })
-  }
+    });
+  };
 }
 
-export function get_total_historys(){
-  return async function(dispatch){
-    const totalHistorys = await axios.get(`/admin/historiaclinica`)
+export function get_total_historys() {
+  return async function(dispatch) {
+    const totalHistorys = await axios.get(`/admin/historiaclinica`);
 
     return dispatch({
       type: GET_TOTAL_HISTORYS,
       payload: totalHistorys.data
-    })
-  }
+    });
+  };
 }
 export function get_specialties() {
   return async function(dispatch) {
@@ -184,6 +186,16 @@ export function getPatients() {
   };
 }
 
+export function getInvoice(id) {
+  return async function(dispatch) {
+    const invoice = await axios.get("/invoice/detail/" + id);
+    console.log("action", invoice.data);
+    return dispatch({
+      type: GET_INVOICE,
+      payload: invoice.data
+    });
+  };
+}
 
 export function getPatientsByName(payload) {
   return async function(dispatch) {
@@ -264,8 +276,7 @@ export function getClinicHistory(id) {
 export function getNotes(license) {
   return async function(dispatch) {
     try {
-      const notes = await axios("/notes/" + license);
-
+      const notes = await axios(`/notes/profnotes/${license}`);
       return dispatch({
         type: GET_NOTES,
         payload: notes
@@ -280,7 +291,6 @@ export function postNotes(payload) {
   return async function() {
     try {
       const notes = await axios.post("/notes", payload);
-
       return notes;
     } catch (e) {
       console.log(e.message);
@@ -322,18 +332,18 @@ export function newTurno(payload) {
     try {
       const turno = await axios.post("/turnos", payload);
       return turno;
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 }
 
-export function deleteNotes(payload) {
-  return async function() {
+export function deleteNotes(id) {
+  return async function(dispatch) {
     try {
-      const notes = await axios.delete("/notes/" + payload);
-
-      return notes;
+      await axios.delete(`/notes/${id}`);
+      return dispatch({
+        type: DELETE_NOTE,
+        payload: id
+      });
     } catch (e) {
       console.log(e.message);
     }
@@ -344,13 +354,40 @@ export function deletePatients(id) {
   return async function() {
     try {
       const patient = await axios.delete("/patients/delete/" + id);
-
       return patient;
     } catch (e) {
       console.log(e.message);
     }
   };
 }
+
+export function deleteProf(id) {
+  return async function() {
+    try {
+      const professionalsDelete = await axios.delete(
+        "/professionals/delete/" + id
+      );
+
+      return professionalsDelete;
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
+}
+
+export function set() {
+  return async function(dispatch) {
+    try {
+      return dispatch({
+        type: SET,
+        payload: []
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
 export function postTurnoMail(payload, mail) {
   return async function() {
     try {
@@ -359,5 +396,24 @@ export function postTurnoMail(payload, mail) {
     } catch (e) {
       console.log(e.message);
     }
+  };
+}
+
+export function get_prof_deleted() {
+  return async function(dispatch) {
+    const prof_deleted = await axios(`admin/deletedprofessionals`);
+
+    return dispatch({
+      type: GET_PROF_DELETED,
+      payload: prof_deleted.data
+    });
+  };
+}
+
+export function get_restoreProf(id) {
+  return async function() {
+    const restoresProf = await axios(`professionals/restore/` + id);
+
+    return restoresProf;
   };
 }

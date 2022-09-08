@@ -295,13 +295,28 @@ export default function HealthData() {
 							/>
 						</Col>
 						<Col className={`${styles.col}`} lg={3}>
-							<Button
-								className={`${styles.buttonSubmit}`}
-								type="button"
-								onClick={handleSubmitAllergies}
-							>
-								Agregar
-							</Button>
+							{
+								allergies_ ? (
+									<Button
+										className={`${styles.buttonSubmit}`}
+										type="button"
+										onClick={handleSubmitAllergies}
+									>
+										Agregar
+									</Button>
+								) : (
+									<Button
+										disabled
+										className={`${styles.buttonSubmit}`}
+										type="button"
+										onClick={handleSubmitAllergies}
+									>
+										Agregar
+									</Button>
+
+								)
+							}
+
 						</Col>
 					</Row>
 					<Col className={`${styles.tabla}`}>
@@ -369,13 +384,29 @@ export default function HealthData() {
 							/>
 						</Col>
 						<Col className={`${styles.col}`} lg={3}>
-							<Button
-								className={`${styles.buttonSubmit}`}
-								type="button"
-								onClick={handleSubmitChronicles}
-							>
-								Agregar
-							</Button>
+							{
+								chronicles_ ?
+									(
+										<Button
+											className={`${styles.buttonSubmit}`}
+											type="button"
+											onClick={handleSubmitChronicles}
+										>
+											Agregar
+										</Button>
+
+									) : (
+										<Button
+											disabled
+											className={`${styles.buttonSubmit}`}
+											type="button"
+											onClick={handleSubmitChronicles}
+										>
+											Agregar
+										</Button>
+									)
+							}
+
 						</Col>
 					</Row>
 					<Col className={`${styles.tabla}`}>

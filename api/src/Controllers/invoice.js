@@ -4,17 +4,22 @@ const { Invoice, Professionals} = require("../db")
 
 const getFacturaByProfessionalID = async (req, res) => {
     let { id } = req.params;
-    let dbProfId = await Professionals.findOne({
-      where: { id },
-      include: [
-        {
-          model: Invoice,
-          //attributes: ["name"],
-          //through: { attributes: [] },
-        }
-      ],
-    });
-    res.status(200).send(dbProfId);
+    try {
+      let dbProfId = await Professionals.findOne({
+        where: { id },
+        include: [
+          {
+            model: Invoice,
+            //attributes: ["name"],
+            //through: { attributes: [] },
+          }
+        ],
+      });
+      const large = dbProfId.invoices.length - 1
+      res.status(200).send(dbProfId.invoices[large].status);
+    } catch (error) {
+      console.log('no invoices')
+    }
   };
 
 const getAllInvoices = async (req, res) => {
