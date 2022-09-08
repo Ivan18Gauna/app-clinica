@@ -11,7 +11,7 @@ import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 
 export default function Price() {
-const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const user = useSelector(state => state.user);
   const [pricer] = useState({
     basic: 15,
