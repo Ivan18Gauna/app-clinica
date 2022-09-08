@@ -1,21 +1,18 @@
-#row {
-    width: 100%;
+.dinero {
+    color: red;
 }
 
-#NavBar-About {
-    width: 25%;
-    padding-left: 2.25%;
+.container-graf{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    flex-direction: row;
 }
 
-#Margin-Top-About {
-    margin-top: 25px;
+.box1{
+    max-width: 48%;
 }
 
-.Info-About {
-    width: 80%;
-    margin-top: 25px;
-    padding-left: 5%;
-    padding-right: 5%;
+.box2{
+    max-width: 48%;
 }
-
-

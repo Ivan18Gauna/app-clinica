@@ -22,11 +22,8 @@ import {
   GET_INVOICE,
   DELETE_NOTE,
   SET,
-<<<<<<< HEAD
-  GET_PROF_DELETED,
-=======
   GET_PROF_DELETED
->>>>>>> d188fe23ccfffe2599008b486722f39e00f675dc
+
 } from "../actions/actions";
 
 const initialState = {
@@ -82,12 +79,6 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         turnos: action.payload.data
-      };
-
-    case GET_PROF_DELETED:
-      return {
-        ...state,
-        prof_deleted: action.payload
       };
 
     case GET_DOCTORS:

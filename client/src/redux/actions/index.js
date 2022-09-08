@@ -144,15 +144,6 @@ export function get_DoctorsDetail(id) {
   };
 }
 
-export function get_restoreProf(id) {
-  
-    return async function() {
-    const restoresProf = await axios(`professionals/restore/` + id);
-    
-       return restoresProf
-  }
-}
-
 export function get_PatientesDetail(id) {
   return async function(dispatch) {
     const patients_detail = await axios(`/patients/detail/${id}`);
