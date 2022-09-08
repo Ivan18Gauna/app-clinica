@@ -32,11 +32,10 @@ export default function Price() {
     const res = await axios.post("/mercadopago", {
       id: user.id,
       mail: user.mail,
-      price: e.target.value,
+      price: Number(e.target.value),
       quantity,
       date
     });
-    console.log(res.data.id)
     window.location.href = res.data.id;
   };
 
