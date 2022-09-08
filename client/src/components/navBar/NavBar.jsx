@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import { getInvoice } from "../../redux/actions";
 
 function NavBarEdit() {
+  
   const dispatch = useDispatch();
   const history = useHistory();
   const cookies = new Cookies();
@@ -17,7 +18,6 @@ function NavBarEdit() {
   const { isAuthenticated, logout } = useAuth0();
   const globalUser = useSelector(state => state.user);
   const paid = useSelector(state => state.suscribed);
-  console.log(paid, "paid");
 
   useEffect(() => {
     dispatch(getInvoice(globalUser.id));
