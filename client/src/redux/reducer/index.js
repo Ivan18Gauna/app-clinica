@@ -23,6 +23,7 @@ import {
   DELETE_NOTE,
   SET,
   GET_PROF_DELETED
+
 } from "../actions/actions";
 
 const initialState = {
@@ -56,6 +57,12 @@ function rootReducer(state = initialState, action) {
         suscribed: action.payload
       };
 
+        case GET_PROF_DELETED:
+        return{
+          ...state,
+          prof_deleted: action.payload
+         }
+
     case GET_INVOICE:
       return {
         ...state,
@@ -72,12 +79,6 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         turnos: action.payload.data
-      };
-
-    case GET_PROF_DELETED:
-      return {
-        ...state,
-        prof_deleted: action.payload
       };
 
     case GET_DOCTORS:

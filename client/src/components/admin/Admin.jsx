@@ -1,5 +1,8 @@
 import React from "react";
 import "../about/About.css";
+import Form from 'react-bootstrap/Form';
+import "./sidebar.css";
+import Button from 'react-bootstrap/Button';
 import * as FaIcons from "react-icons/fa";
 import { useEffect, useState } from "react";
 import Cards from "../cards/Cards";
@@ -164,21 +167,25 @@ export default function Sidebar() {
               class="h-100 flex-column align-items-stretch pe-4 border-end"
             >
               <nav class="nav nav-pills flex-column">
-                <a class="nav-link" href="#item-1" id="Margin-Top-About">
+               
+
+
+              <a class="nav-link" href="#item-1" id="Margin-Top-About">
+                  <FaIcons.FaChartLine className="me-2" /> Ingresos
+                </a>
+
+                <a class="nav-link" href="#item-2" >
                   <FaIcons.FaBriefcaseMedical className="me-2" />
                   Profesionales
                 </a>
 
-                <a class="nav-link" href="#item-2">
+                <a class="nav-link" href="#item-3">
                   {" "}
                   <FaIcons.FaHospitalUser className="me-2" />
                   Pacientes
                 </a>
 
-                <a class="nav-link" href="#item-3">
-                  <FaIcons.FaChartLine className="me-2" /> Ingresos
-                </a>
-
+              
                 <a class="nav-link" href="#item-4">
                   <FaIcons.FaBan className="me-2" /> Suspendidos
                 </a>
@@ -194,22 +201,46 @@ export default function Sidebar() {
               tabindex="0"
               className="Info-About"
             >
-              <div id="item-1">
+  <div id="item-1">
+                <br />
+                <h6>Dinero Ingresado a la fecha:</h6>
+                <br />
+                {facturas.length >= 1 ? (
+                  <div>
+                    <p className="dinero">${facturas[0].sumaFacturas}</p>
+                  </div>
+                ) : (
+                  <p className="dinero">$0</p>
+                )}
+               
+                <div className="container-graf">
+                  <div className="box1">
+                  <Line data={data} />
+                 </div>
+                 {/*  <br />
+                  <hr />
+                  <br /> */}
+                 <div className="box2">
+                  <h6>Cantidad de pacientes y profesionales:</h6>
+                  <Doughnut data={data2} />
+                </div>
+             </div>
+             
+              </div>
+
+
+              <hr />
+              <div id="item-2">
                 <h6>Doctores</h6>
-                <hr />
-                {/*    <Pagination count={10} color="primary" 
-                    
-                        /> */}
                 <Pagination
                   doctorsPage={doctorsPage}
                   doctors={doctors.length}
                   paginado={paginado}
                 />
-                <br />
-                <hr />
+                
                 <Cards doctors={currentDoctors} />
               </div>
-              <div id="item-2">
+              <div id="item-3">
                 <hr />
                 <h6>Pacientes:</h6>
 
@@ -222,40 +253,24 @@ export default function Sidebar() {
                 <CardsPatients patients={currentPatients} />
                 <hr />
               </div>
-              <div id="item-3">
-                <br />
-                <h4>Dinero Ingresado a la fecha:</h4>
-                <br />
-                {facturas.length >= 1 ? (
-                  <div>
-                    <p>${facturas[0].sumaFacturas}</p>
-                  </div>
-                ) : (
-                  <p>$0</p>
-                )}
-                <p>
-                  <Line data={data} />
-                  <br />
-                  <hr />
-                  <br />
-                  <h4>Cantidad de pacientes y profesionales:</h4>
-                  <Doughnut data={data2} />
-                </p>
-              </div>
-                  <br />
-                  <hr />
-                  <br />
+             
+             
+                  
               <div id="item-4">
                 <h4>Usuarios suspendidos:</h4>
             
-                <select onClick={e => handleClick(e)}>
+                <Form.Select aria-label="Default select example" onClick={e => handleClick(e)}>
+    
                  {  prof_deleted && prof_deleted.length>=1 ? prof_deleted.map((e) =>{ return <option value={e.id}>{e.name}, {e.lastname}</option>
 
                   }) : <option>No hay usuarios susp.</option>
-                          }
-                </select> <button onClick={ e =>handleRestore(e)}>Reactivar</button>
-       
+                          } 
+                  </Form.Select>
+                  <hr />
+                <Button onClick={ e =>handleRestore(e)}>Reactivar</Button>
+                <hr />
               </div>
+              
             </div>
           </div>
         </>

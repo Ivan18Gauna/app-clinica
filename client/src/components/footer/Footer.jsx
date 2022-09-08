@@ -35,7 +35,7 @@ const Footer = () => {
 								<p>Soy paciente</p>
 							</Link>
 							<Link to="/login">
-								<p>Soy Profesinal</p>
+								<p>Soy Profesional</p>
 							</Link>
 						</div>
 					</div>

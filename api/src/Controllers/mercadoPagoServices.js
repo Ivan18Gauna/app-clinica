@@ -30,6 +30,7 @@ const transporter = nodemailer.createTransport({
 
 //genera la URL a mercado pago
 const postMP = async (req, res) => {
+
   const data = req.body;
   console.log(data);
   const id = data.id;
@@ -88,11 +89,13 @@ const getPayments = async (req, res) => {
     const payment_status = req.query.status;
     console.log("soy payment_status", payment_status);
 
+
     const merchant_order_id = req.query.merchant_order_id;
     console.log("soy merchant_order_id", merchant_order_id);
 
     const external_reference = req.query.external_reference;
     console.log("soy external_reference", external_reference);
+
 
     const [id, mail, price, date] = external_reference.split("*");
 
