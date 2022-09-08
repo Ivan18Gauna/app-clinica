@@ -36,7 +36,8 @@ export default function Price() {
       quantity,
       date
     });
-    window.location.href = `${res.data.id}`;
+    console.log(res.data.id)
+    window.location.href = res.data.id;
   };
 
   return (
