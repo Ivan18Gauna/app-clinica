@@ -31,7 +31,7 @@ const schema = yup
     title: yup.string().required("Este campo es requerido"),
     note: yup
       .string()
-      .max(90)
+      .max(100)
       .required("Este campo es requerido")
   })
   .required();
@@ -43,7 +43,7 @@ export default function HomeProfessional({ globalUser }) {
   const userInfo = useSelector(state => state.user);
   const notesProfessionals = useSelector(state => state.user);
   const [createNote, setCreateNote] = useState(false);
-  const [state, setState] = useState([])
+  const [state, setState] = useState([]);
 
   const [num, setNum] = useState(1);
   const deleteNote = id => {
@@ -53,15 +53,13 @@ export default function HomeProfessional({ globalUser }) {
 
   const onSubmitNote = data => {
     setNum(num + 1);
-    dispatch(postNotes(data))
-    .then(res => setState(res.data.id))
+    dispatch(postNotes(data)).then(res => setState(res.data.id));
     setCreateNote(false);
   };
 
   useEffect(() => {
     dispatch(getTurnoProf(globalUser.id));
-    dispatch(getNotes(globalUser.id))
-    
+    dispatch(getNotes(globalUser.id));
   }, [state]);
 
   const { register, handleSubmit } = useForm({
@@ -154,6 +152,7 @@ export default function HomeProfessional({ globalUser }) {
                   <Form.Control
                     {...register("note")}
                     placeholder="Escribe tu nota aqui"
+                    maxlength={100}
                     as="textarea"
                     rows={3}
                   />
@@ -180,7 +179,12 @@ export default function HomeProfessional({ globalUser }) {
             )}
           </div>
           {notes.length > 0 ? (
-            <Notes num={num} userInfo={userInfo} notes={notes} deleteNote={deleteNote} />
+            <Notes
+              num={num}
+              userInfo={userInfo}
+              notes={notes}
+              deleteNote={deleteNote}
+            />
           ) : null}
         </div>
       </div>
