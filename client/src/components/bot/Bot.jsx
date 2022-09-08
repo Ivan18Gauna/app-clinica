@@ -4,35 +4,34 @@ import MessageIcon from "@mui/icons-material/Message";
 import CloseIcon from "@mui/icons-material/Close";
 import "./Bot.css";
 
-
 export default function Bot() {
   const steps = [
     {
       id: "0",
-      message: "Hola como podemos ayudarte?",
+      message: "Hola ¿cómo podemos ayudarte?",
       trigger: "1"
     },
     {
       id: "1",
       options: [
         { value: "l", label: "Soy nuevo", trigger: "login" },
-        { value: "f", label: "Busco un medico", trigger: "filtros" },
-        { value: "n", label: "Quienes somos?", trigger: "nosotros" }
+        { value: "f", label: "Busco un médico", trigger: "filtros" },
+        { value: "n", label: "¿Quiénes somos?", trigger: "nosotros" }
       ]
     },
     {
       id: "login",
-      message: "aca estaria el link del signin",
+      message: "Dale clic al botón Ingresar (arriba, ala derecha)",
       trigger: "5"
     },
     {
       id: "filtros",
-      message: "aca estaria el link del filtros",
+      message: "Los puedes buscar en la página principal",
       trigger: "5"
     },
     {
       id: "nosotros",
-      message: "aca va el link de nosotros",
+      message: "Dale clic al botón NOSOTROS (arriba, ala izquierda)",
       trigger: "5"
     },
     {
@@ -44,12 +43,14 @@ export default function Bot() {
     },
     {
       id: "Bye",
-      message: "Bye!",
+      message: "Adiós, esperamos poder haber sido de ayuda!",
       end: true
     }
   ];
   const [active, setActive] = useState(false);
   const [activeIcon, setActiveIcon] = useState(false);
+  console.log(active);
+  console.log(activeIcon);
   return (
     <>
       <div className={`bot ${active ? "active" : "disabled"}`}>
