@@ -23,7 +23,8 @@ const postNote = async (req, res) => {
 const deleteNoteProf = async (req, res) => {
   const { id } = req.params;
   try {
-    await Notes.distroy({ where: { id: Number(id) } });
+    await Notes.destroy({ where: { id: Number(id) } });
+    res.status(200).send('Nota eliminada correctamente')
   } catch (error) {
     console.log(error.message)
   }

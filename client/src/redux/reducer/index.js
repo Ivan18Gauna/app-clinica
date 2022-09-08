@@ -20,10 +20,8 @@ import {
   GET_TOTAL_TURNOS,
   GET_TOTAL_HISTORYS,
   GET_INVOICE,
-  DELETE_NOTE,
   SET,
   GET_PROF_DELETED
-
 } from "../actions/actions";
 
 const initialState = {
@@ -57,11 +55,11 @@ function rootReducer(state = initialState, action) {
         suscribed: action.payload
       };
 
-        case GET_PROF_DELETED:
-        return{
-          ...state,
-          prof_deleted: action.payload
-         }
+    case GET_PROF_DELETED:
+      return {
+        ...state,
+        prof_deleted: action.payload
+      };
 
     case GET_INVOICE:
       return {
@@ -169,12 +167,6 @@ function rootReducer(state = initialState, action) {
 
     case GET_NOTES:
       return { ...state, notes: action.payload.data };
-
-    case DELETE_NOTE:
-      return {
-        ...state,
-        notes: state.notes.filter(e => e.id !== action.payload)
-      };
 
     case GET_FACTURA:
       return {

@@ -19,7 +19,6 @@ import {
   GET_TOTAL_PATIENTS,
   GET_TOTAL_TURNOS,
   GET_TOTAL_HISTORYS,
-  DELETE_NOTE,
   SET,
   GET_PROF_DELETED
 } from "../actions/actions";
@@ -337,13 +336,9 @@ export function newTurno(payload) {
 }
 
 export function deleteNotes(id) {
-  return async function(dispatch) {
+  return async function() {
     try {
-      await axios.delete(`/notes/${id}`);
-      return dispatch({
-        type: DELETE_NOTE,
-        payload: id
-      });
+      await axios.delete(`/notes/profnotes/${id}`);
     } catch (e) {
       console.log(e.message);
     }

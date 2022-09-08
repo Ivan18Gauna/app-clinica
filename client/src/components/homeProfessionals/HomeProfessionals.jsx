@@ -5,6 +5,7 @@ import {
   getTurnoProf,
   postNotes,
   getNotes,
+  deleteNotes
 } from "../../redux/actions";
 import styles from "./HomeProfessionals.module.css";
 
@@ -43,15 +44,23 @@ export default function HomeProfessional({ globalUser }) {
   const notesProfessionals = useSelector(state => state.user);
   const [createNote, setCreateNote] = useState(false);
   console.log("notes", notes);
+
+  const [num, setNum] = useState(1);
+  const deleteNote = id => {
+    setNum(num + 1);
+    dispatch(deleteNotes(id));
+  };
+
   const onSubmitNote = data => {
     dispatch(postNotes(data));
     setCreateNote(false);
   };
 
+  console.log(num)
   useEffect(() => {
     dispatch(getTurnoProf(globalUser.id));
     dispatch(getNotes(globalUser.id));
-  }, [dispatch, globalUser.id]);
+  }, [num]);
 
   const { register, handleSubmit } = useForm({
     mode: "onBlur",
@@ -63,7 +72,7 @@ export default function HomeProfessional({ globalUser }) {
       day: new Date().toLocaleDateString("es-ES", {
         weekday: "long",
         year: "numeric",
-        month: "short",
+        month: "long",
         day: "numeric"
       })
     }
@@ -147,7 +156,13 @@ export default function HomeProfessional({ globalUser }) {
                     rows={3}
                   />
                 </Form.Group>
-                <Button className="mb-3 me-2 mt-2" type="submit">
+                <Button
+                  onClick={() => {
+                    setNum(num + 1);
+                  }}
+                  className="mb-3 me-2 mt-2"
+                  type="submit"
+                >
                   Guardar
                 </Button>
                 <Button
@@ -162,7 +177,9 @@ export default function HomeProfessional({ globalUser }) {
               </Form>
             )}
           </div>
-          <Notes notes={notes} />
+          {notes.length > 0 ? (
+            <Notes notes={notes} deleteNote={deleteNote} />
+          ) : null}
         </div>
       </div>
       <Link to="/form">
