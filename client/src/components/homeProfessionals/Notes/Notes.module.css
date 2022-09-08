@@ -1,0 +1,28 @@
+.contenedor {
+  border: 1px solid #b3b3b3;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  padding: 0 .8rem 0 .8rem;
+  overflow-y: scroll;
+  height: 100%;
+}
+
+.nota {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.8rem;
+  border: 1px solid #b3b3b3;
+  border-radius: 0.4rem;
+  padding: 0.5rem;
+}
+
+.delete {
+  display: grid;
+  width: 50%;
+}
+
+.delete button {
+  justify-self: end;
+  padding: .5rem !important;
+}

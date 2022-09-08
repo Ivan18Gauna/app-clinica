@@ -138,3 +138,21 @@
 #loadingNum {
 	color: rgba(255, 255, 255, 1);
 }
+
+.userProfile {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 2em;
+	margin-bottom: 0.5em;
+}
+
+.buttonsProfile {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.buttonRegister {
+	margin-right: 2em;
+}

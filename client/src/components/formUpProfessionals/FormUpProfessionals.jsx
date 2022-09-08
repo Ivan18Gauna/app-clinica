@@ -4,7 +4,7 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-import styles from "../formPatients/FormPatients.module.css";
+import styles from "./FormUpProfessionals.module.css";
 import { useState, useEffect } from "react";
 import swal from "sweetalert";
 import { useDispatch, useSelector } from "react-redux";
@@ -62,9 +62,10 @@ export default function FormUpProfessionals() {
     description: "",
     date: "",
     diagnosis: "",
-    patient: "",
-    professional: ""
+    patient: allPatients.document,
+    professional: globalUser.id
   });
+  console.log(input)
 
   useEffect(() => {
     const cookies = new Cookies();
@@ -251,7 +252,7 @@ export default function FormUpProfessionals() {
         </Row>
         <Row className={`${styles.row}`}>
           <Col lg={6} className={`${styles.col}`}>
-            {input.patient !== allPatients.document ||
+            {/* input.patient !== allPatients.document || */
             input.patient === "" ||
             input.reason === "" ||
             input.description === "" ||

@@ -10,19 +10,18 @@ import { useEffect } from "react";
 import { getInvoice } from "../../redux/actions";
 
 function NavBarEdit() {
-
-  const dispatch = useDispatch()
+  
+  const dispatch = useDispatch();
   const history = useHistory();
   const cookies = new Cookies();
   const conf = cookies.get("userEmail");
   const { isAuthenticated, logout } = useAuth0();
-  const globalUser = useSelector((state) => state.user);
-  const paid = useSelector((state) => state.suscribed)
-  console.log(paid, 'paid')
+  const globalUser = useSelector(state => state.user);
+  const paid = useSelector(state => state.suscribed);
 
   useEffect(() => {
-    dispatch(getInvoice(globalUser.id))
-  }, [globalUser.id])
+    dispatch(getInvoice(globalUser.id));
+  }, [dispatch, globalUser.id]);
 
   function handleClick() {
     if (isAuthenticated) {
@@ -44,7 +43,7 @@ function NavBarEdit() {
         <img src={logo} alt="logo" />
         <h4>SALUD</h4>
       </Navbar.Brand>
-      {globalUser && globalUser.rolUser ? (
+      {globalUser && globalUser.rolUser && conf ? (
         <button onClick={handleClick}>Cerrar sesión</button>
       ) : (
         <>
@@ -54,14 +53,14 @@ function NavBarEdit() {
               <Nav.Link as={Link} to="/about">
                 Nosotros
               </Nav.Link>
-              {globalUser && globalUser.license && !paid[0] ? (
+              {globalUser && globalUser.license && !paid[0] && conf ? (
                 <Nav.Link as={Link} to="/price">
                   Precios
                 </Nav.Link>
               ) : null}
             </Nav>
             <Nav>
-              {isAuthenticated || (globalUser && globalUser.mail) || conf ? (
+              {isAuthenticated || (globalUser && globalUser.mail && conf) ? (
                 <Nav.Link as={Link} to="/userProfile">
                   Mi perfil
                 </Nav.Link>

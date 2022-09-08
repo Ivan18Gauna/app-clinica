@@ -34,8 +34,8 @@ function CardHistory() {
 								<h6>2. BUSCA UN PROFESIONAL</h6>
 							</div>
 							<p>
-								Al ingresar veras casilleros vacios en donde completaras tu
-								informacion básica de salud y enfermedades preexistentes.
+								Al ingresar veras casilleros vacios en donde completarás tu
+								información básica de salud y enfermedades preexistentes.
 							</p>
 						</Col>
 						<Col className={styles.info}>
@@ -44,8 +44,8 @@ function CardHistory() {
 								<h6>3. AGENDA EL TURNO</h6>
 							</div>
 							<p>
-								+Salud ideo una aplicacion para que cada vez que visites un
-								profesional, este mismo pueda cargar tu atencion de manera facil
+								+Salud ideó una aplicacion para que cada vez que visites un
+								profesional, este mismo pueda cargar tu atención de manera fácil
 							</p>
 						</Col>
 					</Row>
