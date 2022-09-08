@@ -11,9 +11,10 @@ h1{
     padding: 10px;
    justify-content: space-between; 
 }
-/* .info1{
-    margin-right: 200px;
-} */
+.info1{
+    display: flex;
+    flex-direction: column;
+}
 
 .botones{
     display: flex;

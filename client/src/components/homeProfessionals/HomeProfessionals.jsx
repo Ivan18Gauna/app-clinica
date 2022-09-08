@@ -189,8 +189,12 @@ export default function HomeProfessional({ globalUser }) {
         </div>
       </div>
       <Link to="/form">
-        <button>Cargar Historia Clinica</button>
+        <div className={styles.buttonsProfile}>
+          <Button className={styles.buttonRegister}>Cargar historia clínica</Button>
+        </div>
       </Link>
     </>
   );
 }
+
+

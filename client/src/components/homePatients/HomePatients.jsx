@@ -62,8 +62,6 @@ export default function HomePatients({ userInfo }) {
                   <Card.Link href="#">Pedir otro turno</Card.Link> */}
                 </Card.Body>
               </Card>
-            </div>
-            <div>
               <Card style={{ width: "22rem" }}>
                 <Card.Body>
                   <Card.Title>Informacion basica</Card.Title>
@@ -99,34 +97,14 @@ export default function HomePatients({ userInfo }) {
                   </ListGroup>
 
                   <br />
-
-                  <Card.Link href="/userProfile">Actualizar Informacion</Card.Link>
+                  <Link to="/userProfile">
+                    <Button variant="primary">Actualizar información</Button>
+                  </Link>
                 </Card.Body>
               </Card>
             </div>
             <div>
-              {/* <Card style={{ width: "22rem" }}>
-                <Card.Body>
-                  <Card.Title>Ultima atención</Card.Title>
-
-                  <Card.Text>
-                    Recorda la ultima vez que utilizaste la plataforma!
-                  </Card.Text>
-                  <ListGroup variant="flush">
-                    <ListGroup.Item>Dia: 22/06/2022</ListGroup.Item>
-                    <ListGroup.Item>Hora: 07:45</ListGroup.Item>
-                    <ListGroup.Item>Profesional: Raul Bazanme</ListGroup.Item>
-                    <ListGroup.Item>Motivo: Mareos</ListGroup.Item>
-                  </ListGroup>
-
-                  <br />
-
-                  <Card.Link href="#">Repetir atención</Card.Link>
-                </Card.Body>
-              </Card> */}
-            </div>
-          </div>
-          <div className="botones">
+            <div className="botones">
             <div className="botones1">
               <Card className="text-center">
                 <Card.Header>Historia Clinica</Card.Header>
@@ -162,6 +140,28 @@ export default function HomePatients({ userInfo }) {
               </Card>
             </div>
           </div>
+              {/* <Card style={{ width: "22rem" }}>
+                <Card.Body>
+                  <Card.Title>Ultima atención</Card.Title>
+
+                  <Card.Text>
+                    Recorda la ultima vez que utilizaste la plataforma!
+                  </Card.Text>
+                  <ListGroup variant="flush">
+                    <ListGroup.Item>Dia: 22/06/2022</ListGroup.Item>
+                    <ListGroup.Item>Hora: 07:45</ListGroup.Item>
+                    <ListGroup.Item>Profesional: Raul Bazanme</ListGroup.Item>
+                    <ListGroup.Item>Motivo: Mareos</ListGroup.Item>
+                  </ListGroup>
+
+                  <br />
+
+                  <Card.Link href="#">Repetir atención</Card.Link>
+                </Card.Body>
+              </Card> */}
+            </div>
+          </div>
+          
         </div>
       ) : (
         <div className="loading.login">

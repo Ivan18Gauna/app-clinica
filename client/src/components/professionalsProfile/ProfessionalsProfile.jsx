@@ -104,6 +104,7 @@ const provinces = [
 ];
 
 export default function ProfessionalProfile({ globalUser, specialties }) {
+  console.log(globalUser)
   const dispatch = useDispatch();
   const { user, logout, isAuthenticated } = useAuth0();
   const history = useHistory();
@@ -274,13 +275,13 @@ export default function ProfessionalProfile({ globalUser, specialties }) {
             <Accordion.Header>Mis Datos</Accordion.Header>
             <Accordion.Body>
               <p>
-                Especialidad:{" "}
-                {globalUser.specialty &&
-                  globalUser.specialty.length > 0 &&
-                  globalUser.specialty.map(el => <p> {el} </p>)}{" "}
+                Especialidad:
+                {globalUser.specialties &&
+                  globalUser.specialties.length > 0 &&
+                  globalUser.specialties.map(el => <p> {el.name} </p>)}
               </p>
               <p>Fecha de nacimiento: {globalUser.birth}</p>
-              <p>Número de Matricula {globalUser.license}</p>
+              <p>Número de Matricula: {globalUser.license}</p>
               <p>Número de telefono: {globalUser.phone}</p>
               <p>Email: {globalUser.mail}</p>
               <p>Provincia: {globalUser.province}</p>
