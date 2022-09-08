@@ -9,8 +9,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getTurnoPat, getUserDetail } from "../../redux/actions";
 import "./HomePatients.css";
+import Avatar from "@mui/material/Avatar";
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import { green } from '@mui/material/colors';
+import Stack from '@mui/material/Stack';
+import img1 from "./img1.jpeg"
 
-export default function HomePatients({ userInfo }) {
+
+
+export default function HomePatients({ userInfo}) {
   const dispatch = useDispatch();
   const turnos = useSelector(state => state.turnos);
 
@@ -23,20 +30,30 @@ export default function HomePatients({ userInfo }) {
   turnos && console.log("turno:", turnos);
   // let userInfo = ["a+", "Covid",  "al Polen", "si, donante", "si, transfundible", "Hipertension", "Accord Salud 3.2"]
   return (
-    <div>
+    <div >
       {userInfo && userInfo.document ? (
         <div>
-          <h1>Bienvenido {userInfo.name} a +Salud</h1>
-          <div className="Info">
-            <div className="info1">
+       
+            <div className="Info">
+             <div className="info1">
               <Card style={{ width: "22rem" }}>
                 <Card.Body>
-                  <Card.Title>Proximos Turnos</Card.Title>
+                  <Card.Title>Mis datos</Card.Title>
                   <Card.Text>
-                    Recorda pedirle a tu medico que actualice tu historia
-                    clinica!
+                  <Stack direction="row" spacing={2}>
+                  <Link to="/userProfile">
+                  <Avatar src={ userInfo.avatar? userInfo.avatar : null }>
+                  </Avatar>
+                  </Link>
+                  <Link to="/clinic_history">
+                  <Avatar sx={{ bgcolor: green[500] }}>
+                  <AssignmentIcon />
+                  </Avatar>
+                  </Link>
+                  </Stack>
                   </Card.Text>
-                  ------------------------------------
+                  <hr/>
+                  <Card.Text>Próximos turnos</Card.Text>
                   {turnos.slice(0, 1).map((e, i) => {
                     return (
                       <ListGroup key={i} variant="flush">
@@ -62,10 +79,13 @@ export default function HomePatients({ userInfo }) {
                   <Card.Link href="#">Pedir otro turno</Card.Link> */}
                 </Card.Body>
               </Card>
+              </div>
+          
+             <div className="info1">
               <Card style={{ width: "22rem" }}>
                 <Card.Body>
-                  <Card.Title>Informacion basica</Card.Title>
-                  <Card.Text>Lleva tus principales detalles medicos</Card.Text>
+                  <Card.Title>Información básica</Card.Title>
+                  <Card.Text>Llevá tus principales detalles médicos</Card.Text>
                   <ListGroup variant="flush">
                     <ListGroup.Item>
                       Grupo Sanguineo: {userInfo.blood}
@@ -98,27 +118,37 @@ export default function HomePatients({ userInfo }) {
 
                   <br />
                   <Link to="/userProfile">
-                    <Button variant="primary">Actualizar información</Button>
-                  </Link>
-                </Card.Body>
+                  <Button variant="primary">Actualizar Información</Button></Link>
+                 </Card.Body>
               </Card>
             </div>
             <div>
-            <div className="botones">
+
+      <Card>
+        <Card.Body>
+          <Card.Text>
+          <h1>Bienvenido {userInfo.name} a +Salud</h1>
+          </Card.Text>
+        </Card.Body>
+        <Card.Img variant="bottom" src={img1} />
+      </Card>
+            </div>
+        </div>
+        <div className="botones">
             <div className="botones1">
               <Card className="text-center">
                 <Card.Header>Historia Clinica</Card.Header>
                 <Card.Body>
-                  <Card.Title>Accede a tu Historia Clinica</Card.Title>
+                  <Card.Title>Accede a tu Historia Clínica</Card.Title>
                   <Card.Text>
-                    Revisa cada consulta y detalle de tus ultimos estudios.
+                    Revisá cada consulta y detalle de tus ultimos estudios.
                   </Card.Text>{" "}
                   <Link to="/clinic_history">
                     <Button variant="primary">Llevame!</Button>
                   </Link>
                 </Card.Body>
                 <Card.Footer className="text-muted">
-                  Ultima actualizacion: 2hs
+                  Última actualización: 2hs
                 </Card.Footer>
               </Card>
             </div>
@@ -127,9 +157,9 @@ export default function HomePatients({ userInfo }) {
               <Card className="text-center">
                 <Card.Header>Profesionales</Card.Header>
                 <Card.Body>
-                  <Card.Title>¿Necesitas un medico?</Card.Title>
+                  <Card.Title>¿Necesitas un médico?</Card.Title>
                   <Card.Text>
-                    Busca el medico que necesitas para tus problemas, filtra por
+                    Buscá el médico que necesitas para tus problemas, filtrá por
                     especialidad o nombre.
                   </Card.Text>
                   <Link to="/professionals">
@@ -139,30 +169,9 @@ export default function HomePatients({ userInfo }) {
                 <Card.Footer className="text-muted">+Salud</Card.Footer>
               </Card>
             </div>
-          </div>
-              {/* <Card style={{ width: "22rem" }}>
-                <Card.Body>
-                  <Card.Title>Ultima atención</Card.Title>
-
-                  <Card.Text>
-                    Recorda la ultima vez que utilizaste la plataforma!
-                  </Card.Text>
-                  <ListGroup variant="flush">
-                    <ListGroup.Item>Dia: 22/06/2022</ListGroup.Item>
-                    <ListGroup.Item>Hora: 07:45</ListGroup.Item>
-                    <ListGroup.Item>Profesional: Raul Bazanme</ListGroup.Item>
-                    <ListGroup.Item>Motivo: Mareos</ListGroup.Item>
-                  </ListGroup>
-
-                  <br />
-
-                  <Card.Link href="#">Repetir atención</Card.Link>
-                </Card.Body>
-              </Card> */}
-            </div>
+       </div>
           </div>
           
-        </div>
       ) : (
         <div className="loading.login">
           <Loading />
