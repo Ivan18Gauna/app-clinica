@@ -5,6 +5,7 @@ import {
   getTurnoProf,
   postNotes,
   getNotes,
+  deleteNotes
 } from "../../redux/actions";
 import styles from "./HomeProfessionals.module.css";
 
@@ -30,7 +31,7 @@ const schema = yup
     title: yup.string().required("Este campo es requerido"),
     note: yup
       .string()
-      .max(90)
+      .max(100)
       .required("Este campo es requerido")
   })
   .required();
@@ -42,16 +43,24 @@ export default function HomeProfessional({ globalUser }) {
   const userInfo = useSelector(state => state.user);
   const notesProfessionals = useSelector(state => state.user);
   const [createNote, setCreateNote] = useState(false);
-  console.log("notes", notes);
+  const [state, setState] = useState([]);
+
+  const [num, setNum] = useState(1);
+  const deleteNote = id => {
+    setNum(num + 1);
+    dispatch(deleteNotes(id));
+  };
+
   const onSubmitNote = data => {
-    dispatch(postNotes(data));
+    setNum(num + 1);
+    dispatch(postNotes(data)).then(res => setState(res.data.id));
     setCreateNote(false);
   };
 
   useEffect(() => {
     dispatch(getTurnoProf(globalUser.id));
     dispatch(getNotes(globalUser.id));
-  }, [dispatch, globalUser.id]);
+  }, [state]);
 
   const { register, handleSubmit } = useForm({
     mode: "onBlur",
@@ -63,7 +72,7 @@ export default function HomeProfessional({ globalUser }) {
       day: new Date().toLocaleDateString("es-ES", {
         weekday: "long",
         year: "numeric",
-        month: "short",
+        month: "long",
         day: "numeric"
       })
     }
@@ -143,11 +152,18 @@ export default function HomeProfessional({ globalUser }) {
                   <Form.Control
                     {...register("note")}
                     placeholder="Escribe tu nota aqui"
+                    maxlength={100}
                     as="textarea"
                     rows={3}
                   />
                 </Form.Group>
-                <Button className="mb-3 me-2 mt-2" type="submit">
+                <Button
+                  onClick={() => {
+                    setNum(num + 1);
+                  }}
+                  className="mb-3 me-2 mt-2"
+                  type="submit"
+                >
                   Guardar
                 </Button>
                 <Button
@@ -162,7 +178,14 @@ export default function HomeProfessional({ globalUser }) {
               </Form>
             )}
           </div>
-          <Notes notes={notes} />
+          {notes.length > 0 ? (
+            <Notes
+              num={num}
+              userInfo={userInfo}
+              notes={notes}
+              deleteNote={deleteNote}
+            />
+          ) : null}
         </div>
       </div>
       <Link to="/form">

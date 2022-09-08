@@ -1,16 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useDispatch } from "react-redux";
-import { deleteNotes } from "../../../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+/* import { deleteNotes } from "../../../redux/actions"; */
 import styles from "./Notes.module.css";
+import { getNotes } from "../../../redux/actions";
 
-const Notes = ({ notes }) => {
+const Notes = ({ notes, deleteNote, userInfo, num }) => {
   const dispatch = useDispatch();
-
-  const deleteNote = (id) => {
-    dispatch(deleteNotes(id));
-  };
+  useEffect(() => {
+    dispatch(getNotes(userInfo.id))
+  }, [num])
 
   return (
     <div className={styles.contenedor}>
@@ -23,7 +23,13 @@ const Notes = ({ notes }) => {
               <p>{e.note}</p>
             </div>
             <div className={styles.delete}>
-              <Button onClick={() => deleteNote(e.id)} variant="danger">
+              <Button
+                onClick={() => {
+                  const id = e.id;
+                  deleteNote(id);
+                }}
+                variant="danger"
+              >
                 <DeleteIcon fontSize="large" />
               </Button>
             </div>
