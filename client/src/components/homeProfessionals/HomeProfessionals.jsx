@@ -43,7 +43,7 @@ export default function HomeProfessional({ globalUser }) {
   const userInfo = useSelector(state => state.user);
   const notesProfessionals = useSelector(state => state.user);
   const [createNote, setCreateNote] = useState(false);
-  console.log("notes", notes);
+  const [state, setState] = useState([])
 
   const [num, setNum] = useState(1);
   const deleteNote = id => {
@@ -52,15 +52,17 @@ export default function HomeProfessional({ globalUser }) {
   };
 
   const onSubmitNote = data => {
-    dispatch(postNotes(data));
+    setNum(num + 1);
+    dispatch(postNotes(data))
+    .then(res => setState(res.data.id))
     setCreateNote(false);
   };
 
-  console.log(num)
   useEffect(() => {
     dispatch(getTurnoProf(globalUser.id));
-    dispatch(getNotes(globalUser.id));
-  }, [num]);
+    dispatch(getNotes(globalUser.id))
+    
+  }, [state]);
 
   const { register, handleSubmit } = useForm({
     mode: "onBlur",
@@ -178,7 +180,7 @@ export default function HomeProfessional({ globalUser }) {
             )}
           </div>
           {notes.length > 0 ? (
-            <Notes notes={notes} deleteNote={deleteNote} />
+            <Notes num={num} userInfo={userInfo} notes={notes} deleteNote={deleteNote} />
           ) : null}
         </div>
       </div>

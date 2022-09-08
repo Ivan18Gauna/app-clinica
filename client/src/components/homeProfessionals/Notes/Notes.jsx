@@ -1,12 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 /* import { deleteNotes } from "../../../redux/actions"; */
 import styles from "./Notes.module.css";
+import { getNotes } from "../../../redux/actions";
 
-const Notes = ({ notes, deleteNote }) => {
+const Notes = ({ notes, deleteNote, userInfo, num }) => {
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getNotes(userInfo.id))
+  }, [num])
+
   return (
     <div className={styles.contenedor}>
       {notes &&
