@@ -20,6 +20,7 @@ import {
   GET_TOTAL_TURNOS,
   GET_TOTAL_HISTORYS,
   GET_INVOICE,
+  DELETE_NOTE,
   SET,
 <<<<<<< HEAD
   GET_PROF_DELETED,
@@ -56,8 +57,8 @@ function rootReducer(state = initialState, action) {
     case SET:
       return {
         ...state,
-        suscribed: action.payload,
-      }
+        suscribed: action.payload
+      };
 
         case GET_PROF_DELETED:
         return{
@@ -69,14 +70,14 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         suscribed: action.payload
-      }
+      };
 
     case GET_TURNO_PROF:
       return {
         ...state,
         turnos: action.payload
       };
-           
+
     case GET_TURNO_PAT:
       return {
         ...state,
@@ -84,37 +85,41 @@ function rootReducer(state = initialState, action) {
       };
 
     case GET_PROF_DELETED:
-      return{
+      return {
         ...state,
         prof_deleted: action.payload
-      }
+      };
 
     case GET_DOCTORS:
       return {
         ...state,
         doctors: action.payload,
-        alDoc: action.payload,
+        allDoc: action.payload
       };
 
-    case GET_TOTAL_PROFESSIONALS: 
-      return  {
-        ...state, totalProf: action.payload
+    case GET_TOTAL_PROFESSIONALS:
+      return {
+        ...state,
+        totalProf: action.payload
       };
 
     case GET_TOTAL_PATIENTS:
       return {
-        ...state, totalPatients: action.payload
-      }
+        ...state,
+        totalPatients: action.payload
+      };
 
     case GET_TOTAL_HISTORYS:
       return {
-        ...state, totalHistorys: action.payload
-      }
+        ...state,
+        totalHistorys: action.payload
+      };
 
     case GET_TOTAL_TURNOS:
       return {
-        ...state, totalTurnos: action.payload
-      }
+        ...state,
+        totalTurnos: action.payload
+      };
 
     case GET_SPECIALTIES:
       return { ...state, specialties: action.payload };
@@ -130,55 +135,61 @@ function rootReducer(state = initialState, action) {
     case GET_DOCTORS_DETAIL:
       return {
         ...state,
-        detail: action.payload,
+        detail: action.payload
       };
 
     case GET_PATIENTS_DETAIL:
-      return{
+      return {
         ...state,
-        patientsDetail: action.payload,
-      }
+        patientsDetail: action.payload
+      };
 
     case POST_REGISTER_DOCTOR:
       return {
-        ...state,
+        ...state
       };
 
     case GET_OS:
       return {
         ...state,
-        os: action.payload,
+        os: action.payload
       };
 
     case GET_PATIENTS:
       return {
         ...state,
-        patients: action.payload,
+        patients: action.payload
       };
 
     case GET_PATIENTS_NAME:
       return {
         ...state,
-        patients: action.payload,
+        patients: action.payload
       };
 
     case GET_USER_MAIL:
       return {
         ...state,
-        user: action.payload,
+        user: action.payload
       };
 
     case GET_CLINIC_HISTORY:
       return { ...state, clinicHistory: action.payload };
 
-    case GET_NOTES: 
-      return { ...state, notes: action.payload };
+    case GET_NOTES:
+      return { ...state, notes: action.payload.data };
 
-      case GET_FACTURA:
-        return{
-          ...state,
-          facturas: action.payload,
-        }
+    case DELETE_NOTE:
+      return {
+        ...state,
+        notes: state.notes.filter(e => e.id !== action.payload)
+      };
+
+    case GET_FACTURA:
+      return {
+        ...state,
+        facturas: action.payload
+      };
 
     default:
       return state;

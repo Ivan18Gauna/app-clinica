@@ -43,7 +43,7 @@ function NavBarEdit() {
         <img src={logo} alt="logo" />
         <h4>SALUD</h4>
       </Navbar.Brand>
-      {globalUser && globalUser.rolUser ? (
+      {globalUser && globalUser.rolUser && conf ? (
         <button onClick={handleClick}>Cerrar sesión</button>
       ) : (
         <>
@@ -53,14 +53,14 @@ function NavBarEdit() {
               <Nav.Link as={Link} to="/about">
                 Nosotros
               </Nav.Link>
-              {globalUser && globalUser.license && !paid[0] ? (
+              {globalUser && globalUser.license && !paid[0] && conf ? (
                 <Nav.Link as={Link} to="/price">
                   Precios
                 </Nav.Link>
               ) : null}
             </Nav>
             <Nav>
-              {isAuthenticated || (globalUser && globalUser.mail) || conf ? (
+              {isAuthenticated || (globalUser && globalUser.mail && conf) ? (
                 <Nav.Link as={Link} to="/userProfile">
                   Mi perfil
                 </Nav.Link>

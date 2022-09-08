@@ -19,6 +19,7 @@ import {
   GET_TOTAL_PATIENTS,
   GET_TOTAL_TURNOS,
   GET_TOTAL_HISTORYS,
+  DELETE_NOTE,
   SET,
   GET_PROF_DELETED
 } from "../actions/actions";
@@ -284,8 +285,7 @@ export function getClinicHistory(id) {
 export function getNotes(license) {
   return async function(dispatch) {
     try {
-      const notes = await axios("/notes/" + license);
-
+      const notes = await axios(`/notes/profnotes/${license}`);
       return dispatch({
         type: GET_NOTES,
         payload: notes
@@ -300,7 +300,6 @@ export function postNotes(payload) {
   return async function() {
     try {
       const notes = await axios.post("/notes", payload);
-
       return notes;
     } catch (e) {
       console.log(e.message);
@@ -342,18 +341,18 @@ export function newTurno(payload) {
     try {
       const turno = await axios.post("/turnos", payload);
       return turno;
-    } catch (error) {
-
-    }
+    } catch (error) {}
   };
 }
 
-export function deleteNotes(payload) {
-  return async function() {
+export function deleteNotes(id) {
+  return async function(dispatch) {
     try {
-      const notes = await axios.delete("/notes/" + payload);
-
-      return notes;
+      await axios.delete(`/notes/${id}`);
+      return dispatch({
+        type: DELETE_NOTE,
+        payload: id
+      });
     } catch (e) {
       console.log(e.message);
     }
@@ -364,7 +363,6 @@ export function deletePatients(id) {
   return async function() {
     try {
       const patient = await axios.delete("/patients/delete/" + id);
-
       return patient;
     } catch (e) {
       console.log(e.message);
@@ -410,22 +408,21 @@ export function postTurnoMail(payload, mail) {
   };
 }
 
-export function get_prof_deleted(){
-  return async function(dispatch){
-    const prof_deleted = await axios(`admin/deletedprofessionals`)
+export function get_prof_deleted() {
+  return async function(dispatch) {
+    const prof_deleted = await axios(`admin/deletedprofessionals`);
 
     return dispatch({
-      type:GET_PROF_DELETED,
+      type: GET_PROF_DELETED,
       payload: prof_deleted.data
     });
   };
 }
 
 export function get_restoreProf(id) {
-  
   return async function() {
-  const restoresProf = await axios(`professionals/restore/` + id);
-  
-     return restoresProf
-}
+    const restoresProf = await axios(`professionals/restore/` + id);
+
+    return restoresProf;
+  };
 }

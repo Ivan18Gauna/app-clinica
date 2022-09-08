@@ -4,7 +4,7 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-import styles from "../formPatients/FormPatients.module.css";
+import styles from "./FormUpProfessionals.module.css";
 import { useState, useEffect } from "react";
 import swal from "sweetalert";
 import { useDispatch, useSelector } from "react-redux";
