@@ -21,7 +21,8 @@ import {
   GET_TOTAL_HISTORYS,
   GET_INVOICE,
   DELETE_NOTE,
-  SET
+  SET,
+  GET_PROF_DELETED
 } from "../actions/actions";
 
 const initialState = {
@@ -43,7 +44,8 @@ const initialState = {
   totalProf: [],
   totalTurnos: [],
   totalHistorys: [],
-  patientsDelete: []
+  patientsDelete: [],
+  prof_deleted: []
 };
 
 function rootReducer(state = initialState, action) {
@@ -70,6 +72,12 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         turnos: action.payload.data
+      };
+
+    case GET_PROF_DELETED:
+      return {
+        ...state,
+        prof_deleted: action.payload
       };
 
     case GET_DOCTORS:

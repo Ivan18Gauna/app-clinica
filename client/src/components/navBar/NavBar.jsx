@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import { getInvoice } from "../../redux/actions";
 
 function NavBarEdit() {
+  
   const dispatch = useDispatch();
   const history = useHistory();
   const cookies = new Cookies();
