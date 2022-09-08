@@ -84,7 +84,7 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         doctors: action.payload,
-        alDoc: action.payload
+        allDoc: action.payload
       };
 
     case GET_TOTAL_PROFESSIONALS:

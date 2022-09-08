@@ -45,17 +45,17 @@ export default function UserProfile() {
 
   return (
     <div>
-      {state && state.document ? (
+      {state && state.document && cookies.get("userEmail") ? (
         <div>
           <PatientProfile globalUser={state} obras={obras} />
           {/* <Button className={styles.button} onClick={logoutCookies}>Cerrar sesion</Button> */}
         </div>
-      ) : state && state.license ? (
+      ) : state && state.license && cookies.get("userEmail") ? (
         <div>
           <ProfessionalProfile globalUser={state} specialties={specialties} />
           {/* <Button className={styles.button} onClick={logoutCookies}>Cerrar sesion</Button> */}
         </div>
-      ) : (
+      ) : cookies.get("userEmail") ? (
         <div>
           <div id={styles.loadingLogin}>
             <Loading />
@@ -67,6 +67,10 @@ export default function UserProfile() {
             <Button className={styles.buttonRegister} onClick={register}>Continuar con el registro</Button>
             <Button onClick={logoutCookies}>Cerrar sesion</Button>
           </div>
+        </div>
+      ) : (
+        <div id={styles.loadingLogin}>
+          <Loading />
         </div>
       )}
     </div>

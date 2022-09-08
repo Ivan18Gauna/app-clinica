@@ -8,29 +8,31 @@ import CardHistory from "../cardHistory/CardHistory";
 import OurPlans from "../ourPlans/OurPlans.jsx";
 import Footer from "../footer/Footer.jsx";
 import styles from "./Home.module.css";
+import styless from "../login/Login.module.css";
 // import { useAuth0 } from '@auth0/auth0-react';
 import HomePatients from "../homePatients/HomePatients.jsx";
 import HomeProfessional from "../homeProfessionals/HomeProfessionals.jsx";
 import { getUserDetail } from "../../redux/actions/index.js";
 import Cookies from "universal-cookie";
 import Sidebar from "../admin/Admin.jsx";
+import Loading from "../loading/Loading.jsx";
 
 export default function Home() {
   const dispatch = useDispatch();
   const globalUser = useSelector(state => state.user);
+  const cookie = new Cookies();
 
   useEffect(() => {
-    const cookie = new Cookies();
     dispatch(getUserDetail(cookie.get("userEmail")));
   }, [dispatch]);
 
   return (
     <>
-      {globalUser && globalUser.rolUser && <Sidebar />}
-      {globalUser && globalUser.document && (
+      {globalUser && globalUser.rolUser && cookie.get("userEmail") && <Sidebar />}
+      {globalUser && globalUser.document && cookie.get("userEmail") && (
         <HomePatients userInfo={globalUser} />
       )}
-      {globalUser && globalUser.license && (
+      {globalUser && globalUser.license && cookie.get("userEmail") && (
         <HomeProfessional globalUser={globalUser} />
       )}
       {!globalUser || (globalUser && !globalUser.name) ? (
@@ -42,7 +44,11 @@ export default function Home() {
           <CardHistory />
           <Footer />
         </div>
-      ) : null}
+      ) : (
+        <div id={styless.loadingLogin}>
+          <Loading />
+        </div>
+      )}
     </>
   );
 }
