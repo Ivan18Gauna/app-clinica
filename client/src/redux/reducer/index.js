@@ -21,7 +21,11 @@ import {
   GET_TOTAL_HISTORYS,
   GET_INVOICE,
   SET,
+<<<<<<< HEAD
   GET_PROF_DELETED,
+=======
+  GET_PROF_DELETED
+>>>>>>> d188fe23ccfffe2599008b486722f39e00f675dc
 } from "../actions/actions";
 
 const initialState = {
@@ -73,12 +77,17 @@ function rootReducer(state = initialState, action) {
         turnos: action.payload
       };
            
-      case GET_TURNO_PAT:
+    case GET_TURNO_PAT:
       return {
         ...state,
         turnos: action.payload.data
       };
 
+    case GET_PROF_DELETED:
+      return{
+        ...state,
+        prof_deleted: action.payload
+      }
 
     case GET_DOCTORS:
       return {
@@ -87,25 +96,25 @@ function rootReducer(state = initialState, action) {
         alDoc: action.payload,
       };
 
-      case GET_TOTAL_PROFESSIONALS: 
+    case GET_TOTAL_PROFESSIONALS: 
       return  {
         ...state, totalProf: action.payload
       };
 
-      case GET_TOTAL_PATIENTS:
-        return {
-          ...state, totalPatients: action.payload
-        }
+    case GET_TOTAL_PATIENTS:
+      return {
+        ...state, totalPatients: action.payload
+      }
 
-        case GET_TOTAL_HISTORYS:
-          return {
-            ...state, totalHistorys: action.payload
-          }
+    case GET_TOTAL_HISTORYS:
+      return {
+        ...state, totalHistorys: action.payload
+      }
 
-          case GET_TOTAL_TURNOS:
-            return {
-              ...state, totalTurnos: action.payload
-            }
+    case GET_TOTAL_TURNOS:
+      return {
+        ...state, totalTurnos: action.payload
+      }
 
     case GET_SPECIALTIES:
       return { ...state, specialties: action.payload };
@@ -124,11 +133,11 @@ function rootReducer(state = initialState, action) {
         detail: action.payload,
       };
 
-      case GET_PATIENTS_DETAIL:
-        return{
-          ...state,
-          patientsDetail: action.payload,
-        }
+    case GET_PATIENTS_DETAIL:
+      return{
+        ...state,
+        patientsDetail: action.payload,
+      }
 
     case POST_REGISTER_DOCTOR:
       return {

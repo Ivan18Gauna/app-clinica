@@ -20,8 +20,7 @@ import {
   GET_TOTAL_TURNOS,
   GET_TOTAL_HISTORYS,
   SET,
-  GET_PROF_DELETED,
-  RESTORE_PROF
+  GET_PROF_DELETED
 } from "../actions/actions";
 import axios from "axios";
 
@@ -32,17 +31,6 @@ export function get_Doctors() {
     return dispatch({
       type: GET_DOCTORS,
       payload: doctors.data
-    });
-  };
-}
-
-export function get_prof_deleted(){
-  return async function(dispatch){
-    const prof_deleted = await axios(`admin/deletedprofessionals`)
-
-    return dispatch({
-      type:GET_PROF_DELETED,
-      payload: prof_deleted.data
     });
   };
 }
@@ -154,7 +142,7 @@ export function get_DoctorsDetail(id) {
     });
   };
 }
- 
+
 export function get_restoreProf(id) {
   
     return async function() {
@@ -420,4 +408,24 @@ export function postTurnoMail(payload, mail) {
       console.log(e.message);
     }
   };
+}
+
+export function get_prof_deleted(){
+  return async function(dispatch){
+    const prof_deleted = await axios(`admin/deletedprofessionals`)
+
+    return dispatch({
+      type:GET_PROF_DELETED,
+      payload: prof_deleted.data
+    });
+  };
+}
+
+export function get_restoreProf(id) {
+  
+  return async function() {
+  const restoresProf = await axios(`professionals/restore/` + id);
+  
+     return restoresProf
+}
 }

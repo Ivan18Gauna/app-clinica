@@ -23,15 +23,16 @@ const postHistoriaClinica = async (req, res) => {
        
 
       let professionaldb = await Professionals.findOne({
-         where: {name: professional}
+         where: {id: professional}
         })
        let patientdb = await Patients.findOne({
 
-        where: {document: patient[0]}
+        where: {document: patient}
 
        })
-      await newHistoriaClinica.addProfessionals(professionaldb);
-      await newHistoriaClinica.addPatients(patientdb);
+       console.log('pat', patientdb, 'prof', professionaldb)
+      await professionaldb.addHistoriaClinica(newHistoriaClinica);
+      await patientdb.addHistoriaClinica(newHistoriaClinica);
        res.status(200).send("Historia Credad con Exito");
     }
   } catch (error) {

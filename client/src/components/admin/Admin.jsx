@@ -50,7 +50,7 @@ export default function Sidebar() {
   const globalUser = useSelector(state => state.user);
   const doctors = useSelector(state => state.doctors);
   const patients = useSelector(state => state.patients);
-  //console.log("soy pacientes", patients);
+   //console.log("soy pacientes", patients);
    const facturas = useSelector(state => state.facturas);
    const numProffesionals = useSelector(state => state.totalProf);
    const numPatients = useSelector(state => state.totalPatients);
