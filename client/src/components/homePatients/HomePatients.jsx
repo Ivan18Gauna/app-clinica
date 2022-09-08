@@ -58,8 +58,8 @@ export default function HomePatients({ userInfo }) {
                     );
                   })}
                   <br />
-                  <Card.Link href="#">Cancelar turno</Card.Link>
-                  <Card.Link href="#">Pedir otro turno</Card.Link>
+                  {/* <Card.Link href="#">Cancelar turno</Card.Link>
+                  <Card.Link href="#">Pedir otro turno</Card.Link> */}
                 </Card.Body>
               </Card>
             </div>
@@ -100,7 +100,7 @@ export default function HomePatients({ userInfo }) {
 
                   <br />
 
-                  <Card.Link href="#">Actualizar Informacion</Card.Link>
+                  <Card.Link href="/userProfile">Actualizar Informacion</Card.Link>
                 </Card.Body>
               </Card>
             </div>
