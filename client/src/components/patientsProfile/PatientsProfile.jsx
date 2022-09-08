@@ -716,9 +716,10 @@ export default function UserProfile({ globalUser, obras }) {
                     : "Sin información"}
                 </ul>
                 <p>Enfermedades Crónicas: </p>
-                <ul className={styles.lista}>
+                <ul >
+                {/* className={styles.lista} */}
                   {globalUser.chronicles && globalUser.chronicles.length > 0
-                    ? globalUser.chronicles.map(el => <li>{el}</li>)
+                    ? globalUser.chronicles.map(el =>  <li>{el}</li>)
                     : "Sin información"}
                 </ul>
                 <p>

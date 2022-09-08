@@ -7,6 +7,8 @@ import { useLocation } from "react-router-dom";
 import Cookies from "universal-cookie";
 import { useEffect } from "react";
 import swal from "sweetalert";
+import styles from "../login/Login.module.css";
+import Button from "react-bootstrap/esm/Button";
 
 const Calendar = () => {
   const location = useLocation();
@@ -49,13 +51,14 @@ const Calendar = () => {
         if (res != undefined) {
           dispatch(postTurnoMail(payload, user.mail))
           swal({
-            icon:'success',
-            title:'El turno fue creado correctamente',
-            timer: 2000})
+            icon: 'success',
+            title: 'El turno fue creado correctamente',
+            timer: 2000
+          })
         } else {
           swal({
-            icon:'warning',
-            title:'Horario no disponible',
+            icon: 'warning',
+            title: 'Horario no disponible',
           })
         }
       })
@@ -78,7 +81,9 @@ const Calendar = () => {
           <TimePicker value={fecha} onChange={onChangeSetFecha} />
         </div>
       </div>
-      <button onClick={handleSubmit}>Solicitar turno</button>
+      <div className={styles.buttonsProfile}>
+        <Button className={styles.buttonRegister} onClick={handleSubmit} >Solicitar turno</Button>
+      </div>
     </div>
   );
 };
