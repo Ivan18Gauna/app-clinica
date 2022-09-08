@@ -47,9 +47,9 @@ const postMP = async (req, res) => {
     let preference = {
         items: itemsMp,
         back_urls: {
-            success: `https://app-clinica-dev.herokuapp.com/mercadopago/factura`,
-            failure: `https://app-clinica-dev.herokuapp.com/mercadopago/factura`,
-            pending: `https://app-clinica-dev.herokuapp.com/mercadopago/factura`
+            success: `https://app-massalud.herokuapp.com/mercadopago/factura`,
+            failure: `https://app-massalud.herokuapp.com/mercadopago/factura`,
+            pending: `https://app-massalud.herokuapp.com/mercadopago/factura`
 
         },
         auto_return: "approved",
@@ -121,10 +121,10 @@ const getPayments = async (req, res) => {
         });
         console.log(info);
         console.info("redirect success");
-        res.redirect(`https://app-salud.vercel.app/home`);
+        res.redirect(`https://app-clinica.vercel.app/home`);
     } catch (error) {
         console.error("error al crear la factura", error);
-        return res.redirect(`https://app-salud.vercel.app/home`);
+        return res.redirect(`https://app-clinica.vercel.app/home`);
     }
   }
   
