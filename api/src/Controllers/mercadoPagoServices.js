@@ -4,7 +4,7 @@ const { Invoice, Professionals } = require("../db")
 
 const server = require('express').Router();
 
-//SDK de MercadoPago,
+
 const mercadopago = require('mercadopago');
 const e = require("express");
 const { ACCESS_TOKEN } = process.env;
