@@ -16,7 +16,7 @@ import { getUserDetail } from "../../redux/actions/index.js";
 import Cookies from "universal-cookie";
 import Sidebar from "../admin/Admin.jsx";
 import Loading from "../loading/Loading.jsx";
-
+//ok
 export default function Home() {
   const dispatch = useDispatch();
   const globalUser = useSelector(state => state.user);
