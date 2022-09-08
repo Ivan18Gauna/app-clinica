@@ -44,11 +44,10 @@ export default function Home() {
           <CardHistory />
           <Footer />
         </div>
-      ) : (
-        <div id={styless.loadingLogin}>
+      ) : null }
+        {/* <div id={styless.loadingLogin}>
           <Loading />
-        </div>
-      )}
+        </div> */}
     </>
   );
 }
