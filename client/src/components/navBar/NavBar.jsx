@@ -17,7 +17,6 @@ function NavBarEdit() {
   const { isAuthenticated, logout } = useAuth0();
   const globalUser = useSelector(state => state.user);
   const paid = useSelector(state => state.suscribed);
-  console.log(paid, "paid");
 
   useEffect(() => {
     dispatch(getInvoice(globalUser.id));

@@ -19,6 +19,7 @@ import {
   GET_TOTAL_PATIENTS,
   GET_TOTAL_TURNOS,
   GET_TOTAL_HISTORYS,
+  DELETE_NOTE,
   SET
 } from "../actions/actions";
 import axios from "axios";
@@ -274,8 +275,7 @@ export function getClinicHistory(id) {
 export function getNotes(license) {
   return async function(dispatch) {
     try {
-      const notes = await axios("/notes/" + license);
-
+      const notes = await axios(`/notes/profnotes/${license}`);
       return dispatch({
         type: GET_NOTES,
         payload: notes
@@ -290,7 +290,6 @@ export function postNotes(payload) {
   return async function() {
     try {
       const notes = await axios.post("/notes", payload);
-
       return notes;
     } catch (e) {
       console.log(e.message);
@@ -331,7 +330,7 @@ export function newTurno(payload) {
   return async function() {
     try {
       const turno = await axios.post("/turnos", payload);
-      alert("Turno creado correctamente!")
+      alert("Turno creado correctamente!");
       return turno;
     } catch (error) {
       alert("El turno ya existe o no esta disponible el horario");
@@ -339,12 +338,14 @@ export function newTurno(payload) {
   };
 }
 
-export function deleteNotes(payload) {
-  return async function() {
+export function deleteNotes(id) {
+  return async function(dispatch) {
     try {
-      const notes = await axios.delete("/notes/" + payload);
-
-      return notes;
+      await axios.delete(`/notes/${id}`);
+      return dispatch({
+        type: DELETE_NOTE,
+        payload: id
+      });
     } catch (e) {
       console.log(e.message);
     }
