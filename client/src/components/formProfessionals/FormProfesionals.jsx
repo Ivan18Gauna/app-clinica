@@ -121,7 +121,7 @@ export default function RegisterDoctor() {
     license: "",
     birth: "",
     phone: "",
-    mail: cookie.get("userEmail")? cookie.get("userEmail") : "",
+    mail: cookie.get("userEmail") ? cookie.get("userEmail") : "",
     province: "",
     city: "",
     number: "",
