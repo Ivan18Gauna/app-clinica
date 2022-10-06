@@ -14,7 +14,7 @@ import swal from 'sweetalert';
 import Cookie from 'universal-cookie'
 
 function validate(input) {
-  let error = {};
+  let error = {}; 
   if (!/([A-z])/.test(input.name)) {
     error.name = "Ingrese un nombre válido.";
     return error;
