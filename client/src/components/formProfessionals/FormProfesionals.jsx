@@ -17,7 +17,7 @@ function validate(input) {
   let error = {}; 
   if (!/([A-z])/.test(input.name)) {
     error.name = "Ingrese un nombre válido.";
-    return error;
+    return error; 
   }
   if (!/([A-z])/.test(input.lastname)) {
     error.lastname = "Ingrese un apellido válido.";
